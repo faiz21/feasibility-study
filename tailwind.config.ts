@@ -11,6 +11,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        /* ── shadcn/ui semantic tokens ──────────────────────────────────── */
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -44,23 +45,45 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+
+        /* ── Chart palette — shared tokens (see globals.css Zone 1) ─────── */
         chart: {
-          "1": "hsl(var(--chart-1))",
-          "2": "hsl(var(--chart-2))",
-          "3": "hsl(var(--chart-3))",
-          "4": "hsl(var(--chart-4))",
-          "5": "hsl(var(--chart-5))",
+          "1": "hsl(var(--chart-1))",   /* Steel blue   — primary series   */
+          "2": "hsl(var(--chart-2))",   /* Slate teal   — secondary series  */
+          "3": "hsl(var(--chart-3))",   /* Warm amber   — tertiary          */
+          "4": "hsl(var(--chart-4))",   /* Iris violet  — quaternary        */
+          "5": "hsl(var(--chart-5))",   /* Claret rose  — fifth             */
+          "6": "hsl(var(--chart-6))",   /* Forest green — sixth             */
         },
-        /* ── Report / Editorial palette ─────────────────────────────────── */
+
+        /* ── Report design system ───────────────────────────────────────── */
         report: {
-          bg: "hsl(var(--report-bg))",
-          surface: "hsl(var(--report-surface))",
-          ink: "hsl(var(--report-ink))",
+          /* Zone 3 · Editorial base (fixed) */
+          bg:           "hsl(var(--report-bg))",
+          surface:      "hsl(var(--report-surface))",
+          ink:          "hsl(var(--report-ink))",
           "ink-subtle": "hsl(var(--report-ink-subtle))",
-          "ink-surface": "hsl(var(--report-ink-surface))",
-          gold: "hsl(var(--report-gold))",
-          "gold-light": "hsl(var(--report-gold-light))",
-          rule: "hsl(var(--report-rule))",
+          "ink-surface":"hsl(var(--report-ink-surface))",
+          rule:         "hsl(var(--report-rule))",
+
+          /* Zone 2 · Client brand (overrideable) */
+          brand:        "hsl(var(--report-brand))",
+          "brand-light":"hsl(var(--report-brand-light))",
+          "brand-on":   "hsl(var(--report-brand-on))",
+          "brand-dark": "hsl(var(--report-brand-dark))",
+
+          /* Zone 1 · Chart series (overrideable) — mirrors chart.* tokens  */
+          "chart-1":    "hsl(var(--chart-1))",
+          "chart-2":    "hsl(var(--chart-2))",
+          "chart-3":    "hsl(var(--chart-3))",
+          "chart-4":    "hsl(var(--chart-4))",
+          "chart-5":    "hsl(var(--chart-5))",
+          "chart-6":    "hsl(var(--chart-6))",
+
+          /* Semantic chart roles (overrideable) */
+          "chart-positive": "hsl(var(--report-chart-positive))",
+          "chart-negative": "hsl(var(--report-chart-negative))",
+          "chart-neutral":  "hsl(var(--report-chart-neutral))",
         },
       },
       borderRadius: {
@@ -69,7 +92,12 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        display: ["var(--font-playfair)", "Georgia", "Times New Roman", "serif"],
+        display: [
+          "var(--font-playfair)",
+          "Georgia",
+          "Times New Roman",
+          "serif",
+        ],
         "body-serif": [
           "var(--font-source-serif)",
           "Georgia",

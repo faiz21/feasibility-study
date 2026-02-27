@@ -1,3 +1,5 @@
+/* ── Report component system ──────────────────────────────────────────────── */
+
 export { ReportCover } from "./ReportCover";
 export type { ReportCoverProps } from "./ReportCover";
 
@@ -16,3 +18,15 @@ export type { InsightCardProps, InsightCardVariant } from "./InsightCard";
 
 export { PullQuote } from "./PullQuote";
 export type { PullQuoteProps } from "./PullQuote";
+
+/* ── Theming ──────────────────────────────────────────────────────────────── */
+
+export {
+  ReportThemeProvider,
+  REPORT_THEME_PRESETS,
+} from "./ReportThemeProvider";
+export type {
+  ReportThemeProviderProps,
+  ReportBrand,
+  ReportCharts,
+} from "./ReportThemeProvider";

@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    /* ── shadcn/ui base tokens ────────────────────────────────────────────── */
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -23,35 +24,65 @@
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
     --radius: 0.5rem;
 
-    /* ── Report / Editorial design tokens ──────────────────────────────── */
-    /* Warm off-white page background */
-    --report-bg: 55 30% 97%;
-    /* Pure white for raised surfaces (cards, panels) */
-    --report-surface: 0 0% 100%;
-    /* Near-black ink for primary text */
-    --report-ink: 0 0% 11%;
-    /* Softened ink for secondary / caption text */
-    --report-ink-subtle: 0 0% 42%;
-    /* Gold accent – headline underlines, tags, highlights */
-    --report-gold: 39 58% 53%;
-    /* Pale gold for tinted backgrounds */
-    --report-gold-light: 39 58% 94%;
-    /* Warm rule / divider color */
-    --report-rule: 38 18% 87%;
-    /* Dark ink surface for cover / hero blocks */
-    --report-ink-surface: 220 20% 12%;
-    /* Serif font variable (Playfair Display) */
-    --font-display: var(--font-playfair);
-    /* Body serif (Source Serif 4) */
-    --font-body: var(--font-source-serif);
+    /* ════════════════════════════════════════════════════════════════════════
+       ZONE 1 · CHART PALETTE                                    CLIENT AREA
+       ────────────────────────────────────────────────────────────────────────
+       Six categorical colours for data visualisation (bar, line, pie, etc.).
+       These are shared between shadcn chart tokens and report chart tokens.
+
+       ✏️  Per-client override: swap any or all six to match client brand,
+           or pass overrides via <ReportThemeProvider charts={{...}} />.
+
+       Colour order:  use chart-1 first, then chart-2 … chart-6 in sequence.
+       Hue spacing is intentional — do not reorder without re-testing contrast.
+       ════════════════════════════════════════════════════════════════════════ */
+    --chart-1: 214 80% 46%;   /* Steel blue    #1867C9 — primary series      */
+    --chart-2: 171 70% 30%;   /* Slate teal    #15877A — secondary series     */
+    --chart-3:  35 90% 40%;   /* Warm amber    #C2790A — tertiary / accent    */
+    --chart-4: 258 65% 55%;   /* Iris violet   #6840D4 — quaternary series    */
+    --chart-5: 340 65% 45%;   /* Claret rose   #C0305A — fifth series         */
+    --chart-6: 148 60% 30%;   /* Forest green  #1F8B50 — sixth series         */
+
+    /* ════════════════════════════════════════════════════════════════════════
+       ZONE 2 · CLIENT BRAND                                      CLIENT AREA
+       ────────────────────────────────────────────────────────────────────────
+       Accent / brand colour used for: cover stripe, section numbers,
+       pull-quote rules, tag badges, highlighted card borders, and any
+       decorative accent element throughout the report.
+
+       ✏️  Per-client override: change --report-brand (and derived tokens)
+           to the client's primary colour, or inject via
+           <ReportThemeProvider brand={{ primary: "H S% L%" }} />.
+
+       Default brand = editorial gold (warm, print-friendly).
+       ════════════════════════════════════════════════════════════════════════ */
+    --report-brand:       39 58% 53%;   /* Brand primary   #C99840  (gold)    */
+    --report-brand-light: 39 58% 94%;   /* Brand tint bg   #FAF3E1             */
+    --report-brand-on:     0  0% 100%;  /* Text on brand   #FFFFFF (white)    */
+    --report-brand-dark:  39 55% 36%;   /* Brand dark      #8A6520             */
+
+    /* ════════════════════════════════════════════════════════════════════════
+       ZONE 3 · EDITORIAL BASE                                  DO NOT CHANGE
+       ────────────────────────────────────────────────────────────────────────
+       Structural chrome: paper, ink, surfaces, and dividers.
+       These define the editorial identity and must stay consistent across
+       all client versions of the report.
+       ════════════════════════════════════════════════════════════════════════ */
+    --report-bg:          55 30% 97%;   /* Warm paper      #F9F8F3             */
+    --report-surface:      0  0% 100%;  /* Card surface    #FFFFFF             */
+    --report-ink:          0  0% 11%;   /* Primary text    #1C1C1C             */
+    --report-ink-subtle:   0  0% 43%;   /* Secondary text  #6E6E6E             */
+    --report-ink-surface: 222 22% 13%;  /* Cover bg        #19213A             */
+    --report-rule:        38 18% 87%;   /* Divider line    #E3DED4             */
+
+    /* Semantic chart roles — also client-overrideable */
+    --report-chart-positive: 161 78% 34%;  /* Positive / growth   #12925D     */
+    --report-chart-negative:   0 72% 51%;  /* Negative / decline  #DC2626     */
+    --report-chart-neutral:  215 14% 47%;  /* Neutral / flat      #64748B     */
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -72,11 +103,14 @@
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+
+    /* Chart palette — lightened for dark backgrounds */
+    --chart-1: 214 80% 65%;
+    --chart-2: 171 70% 50%;
+    --chart-3:  35 90% 60%;
+    --chart-4: 258 65% 72%;
+    --chart-5: 340 65% 65%;
+    --chart-6: 148 60% 50%;
   }
 }
 
@@ -98,14 +132,14 @@
     font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
   }
 
-  /* Thin rule above section headings */
+  /* Thin horizontal rule */
   .report-rule-top {
     border-top: 1px solid hsl(var(--report-rule));
   }
 
-  /* Gold rule – decorative underline for display headings */
-  .report-gold-rule {
-    border-bottom: 2px solid hsl(var(--report-gold));
+  /* Brand underline accent for display headings */
+  .report-brand-rule {
+    border-bottom: 2px solid hsl(var(--report-brand));
     padding-bottom: 0.25rem;
   }
 
