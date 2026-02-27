@@ -29,6 +29,28 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+
+    /* ── Report / Editorial design tokens ──────────────────────────────── */
+    /* Warm off-white page background */
+    --report-bg: 55 30% 97%;
+    /* Pure white for raised surfaces (cards, panels) */
+    --report-surface: 0 0% 100%;
+    /* Near-black ink for primary text */
+    --report-ink: 0 0% 11%;
+    /* Softened ink for secondary / caption text */
+    --report-ink-subtle: 0 0% 42%;
+    /* Gold accent – headline underlines, tags, highlights */
+    --report-gold: 39 58% 53%;
+    /* Pale gold for tinted backgrounds */
+    --report-gold-light: 39 58% 94%;
+    /* Warm rule / divider color */
+    --report-rule: 38 18% 87%;
+    /* Dark ink surface for cover / hero blocks */
+    --report-ink-surface: 220 20% 12%;
+    /* Serif font variable (Playfair Display) */
+    --font-display: var(--font-playfair);
+    /* Body serif (Source Serif 4) */
+    --font-body: var(--font-source-serif);
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -64,5 +86,35 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* ── Report typography utilities ─────────────────────────────────────────── */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-playfair), Georgia, "Times New Roman", serif;
+  }
+  .font-body-serif {
+    font-family: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  }
+
+  /* Thin rule above section headings */
+  .report-rule-top {
+    border-top: 1px solid hsl(var(--report-rule));
+  }
+
+  /* Gold rule – decorative underline for display headings */
+  .report-gold-rule {
+    border-bottom: 2px solid hsl(var(--report-gold));
+    padding-bottom: 0.25rem;
+  }
+
+  /* Pull quote typographic treatment */
+  .report-pull-quote {
+    font-family: var(--font-playfair), serif;
+    font-style: italic;
+    font-size: 1.375rem;
+    line-height: 1.65;
+    color: hsl(var(--report-ink));
   }
 }

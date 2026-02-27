@@ -51,11 +51,31 @@ export default {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        /* ── Report / Editorial palette ─────────────────────────────────── */
+        report: {
+          bg: "hsl(var(--report-bg))",
+          surface: "hsl(var(--report-surface))",
+          ink: "hsl(var(--report-ink))",
+          "ink-subtle": "hsl(var(--report-ink-subtle))",
+          "ink-surface": "hsl(var(--report-ink-surface))",
+          gold: "hsl(var(--report-gold))",
+          "gold-light": "hsl(var(--report-gold-light))",
+          rule: "hsl(var(--report-rule))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        display: ["var(--font-playfair)", "Georgia", "Times New Roman", "serif"],
+        "body-serif": [
+          "var(--font-source-serif)",
+          "Georgia",
+          "Times New Roman",
+          "serif",
+        ],
       },
     },
   },
