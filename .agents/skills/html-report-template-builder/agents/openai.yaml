@@ -1,0 +1,4 @@
+interface:
+  display_name: "HTML Report Template Builder"
+  short_description: "Convert source reports to governed JSON+HTML templates"
+  default_prompt: "Use $html-report-template-builder to run Draft or Update mode and produce Step 1 plan, Step 2 JSON, and Step 3 HTML."

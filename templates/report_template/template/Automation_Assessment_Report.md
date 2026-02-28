@@ -1,0 +1,825 @@
+Automation Assessment Report (L1–L3)
+
+PT Indonesia Asahan Alumunium – Green Plant (Green Plant)
+
+Scope: INA-PL-GRP
+Content: Sections 1–9 only (executive summary included)
+Document date: 23 February 2026
+
+---
+
+1. Executive Summary
+
+Plant Context and Assessment Scope
+
+PT Indonesia Asahan Aluminium (INALUM) operates the Green Plant as the front-end carbon preparation and green anode forming stage supporting the smelter’s reduction lines. This assessment evaluates automation maturity across L1–L3 layers only (basic control, supervisory visibility, and structured reporting readiness) to determine feasibility for phased digitalisation.
+
+Overall Automation Maturity Snapshot
+
+The Green Plant operates with a mixed automation baseline. Core assets are PLC-controlled, but manual intervention, relay islands, sensor reliability issues, and fragmented supervisory integration limit data trust and optimisation readiness.
+
+Structural realities observed:
+
+* Distributed multi-brand PLC estate (Rockwell, Siemens, Omron) with uneven integration.
+* Significant manual RPM settings and damper adjustments in solids handling.
+* Instrument accuracy issues (e.g., silo level dust impact, 12% belt scale variance).
+* Limited alarm/event logging and structured stop-cause capture.
+* Quality and sampling processes remain largely manual and transcription-based.
+
+Overall maturity indicates L1 is partially established, L2 is fragmented, and L3 readiness is limited without foundational improvements.
+
+Key Risk Themes Impacting Digitalisation
+
+* Conveyor and bulk solids flow events (choking, bridging, overflow) are not systematically instrumented.
+* Sensor degradation in dusty environments reduces stock and material visibility trust.
+* Alarm/event history is not consistently logged, limiting root cause analysis.
+* Protective sensing has previously been disabled due to false alarms.
+* Manual traceability and QC transcription create quality feedback latency.
+
+These constraints directly affect feasibility of higher-layer optimisation initiatives.
+
+Feasibility Outlook (L1–L3)
+
+Early L1 stabilisation initiatives are feasible with incremental upgrades. L2 supervisory consolidation is achievable once instrumentation accuracy and event logging improve. L3 analytics and structured reporting are not feasible without systematic alarm capture, inventory trust restoration, and baseline integration improvements.
+
+Classification:
+
+* Early Wins: Conveyor integrity sensing, digital pressure transmitters, motor ampere monitoring.
+* Foundational Upgrades Required: Standardised alarm logging, trusted mass flow measurement.
+* Structural Gaps to Close: Unified data architecture and systematic condition monitoring.
+
+Recommended Strategic Roadmap Direction
+
+A phased roadmap (Phase 0–3) is recommended:
+
+* Establish instrumentation trust and documentation (Phase 0).
+* Close critical L1 integrity gaps (Phase 1).
+* Standardise supervisory integration and logging (Phase 2).
+* Enable structured operational intelligence (Phase 3).
+
+Sequencing should prioritise availability protection before optimisation layers.
+
+Immediate Executive Priorities (Next 90–180 Days)
+
+* Commission detailed L1 instrumentation and PLC integration survey.
+* Restore or replace critical disabled sensors (belt tear, choking detection).
+* Implement plant-wide alarm logging and historian baseline.
+* Validate silo level and mass flow measurement accuracy.
+* Standardise time synchronisation across PLC/SCADA estate.
+
+---
+
+2. Scope and Methodology
+
+2.1 Assessment purpose and boundaries
+
+Purpose:
+Assess L1–L3 automation readiness of the Green Plant to support structured feasibility planning.
+
+In scope:
+Eight in-scope process groups:
+
+* GRP Green Scrap and Butt Receiving Control System
+* GRP Cooling Water Control System
+* GRP Coke Receiving Control System
+* GRP Coke Grinding Control System
+* GRP Blending and Kneading Control System
+* GRP Anode Forming Control System
+* GRP Tar Pitch Receiving and Heating Oil Control System
+* GRP Green Block Line Conveying Control System
+
+Out of scope:
+Business case modelling, operating model redesign, ERP integration, and enterprise IT architecture alignment.
+
+2.2 Information sources used
+
+Assessment inputs included:
+
+* Process research documentation (carbon preparation, forming, handling).
+* Automation elicitation notes (sensor gaps, PLC estate, operational constraints).
+* PLC, SCADA, HMI inventories.
+* Equipment lists mapped to process groups.
+* Findings & issue registers.
+* Process elicitation workflow records.
+
+Incomplete as-built documentation and missing tag lists were treated conservatively.
+
+2.3 Data quality controls and interpretation rules
+
+* Plant boundary control: Only Green Plant L1–L3 layers considered.
+* Evidence hierarchy: Documented inventory and structured tables > observation notes.
+* No inference where explicitly uncertain: “To validate” and unknown items logged as gaps.
+* Reasonable inference elsewhere: Confidence adjusted accordingly (Draft Mode).
+* Validation flags: All TBD elements reflected in Section 9.
+
+2.4 Assessment outputs
+
+* L1/L2/L3 readiness scores (1–5) per process group + confidence.
+* Key evidence and priority actions (L1 → L3).
+* Cross-cutting plant-wide findings.
+* Phased technical roadmap.
+
+---
+
+3. Green Plant Baseline: Process and Automation Landscape
+
+The Green Plant supports coke receiving, grinding, blending, kneading, forming, cooling, and utilities supporting carbon preparation. Renewal and retrofit themes are evident across conveyor systems, cooling loops, and kneading controls. Supervisory integration is partially implemented but inconsistent.
+
+3.1 Automation inventory snapshot
+
+PLC estate (assessment consolidation)
+
+Total PLC entries recorded: 7
+
+PLC brands (as recorded):
+
+Column 1	Column 2
+Brand	Count
+Rockwell Automation	3
+Siemens	2
+Omron	1
+To validate	1
+
+
+PLC family / controller type (as recorded):
+
+Column 1	Column 2
+PLC family	Count
+Logix-5575	1
+Logix-5583E	1
+CompactLogix L30ER	1
+ControlLogix 5580	1
+S7-1500	1
+S7-1200	1
+CJ1M	1
+
+
+Inventory note:
+Several PLCs list unknown protocols, incomplete lifecycle fields, and partial SCADA linkage. Integration depth is inconsistent across process groups.
+
+Supervisory systems (context only)
+
+SCADA estate includes Citect (Granulation), FactoryTalk View (Vibration), and one partially defined system. Protocols include Modbus RTU/TCP and MQTT. Integration completeness requires validation.
+
+Instrument register summary (assessment consolidation)
+
+Column 1	Column 2
+Metric	Value
+Total instruments	580
+PLC-readable	367
+Relay/local	213
+Closed-loop module / partial integration	0
+Obtained (O)	154
+Inferred (I)	426
+
+
+Coverage note:
+Instrumentation distribution per process group is not fully segmented. Detailed I/O mapping requires survey (TBD – see Section 9).
+
+---
+
+4. Assessment Framework and Scoring
+
+4.1 Automation level definitions (L1–L3)
+
+* L1 — Basic Control Layer: Field instrumentation, PLC logic, and equipment-level control.
+* L2 — Supervisory Layer: SCADA/HMI visibility, alarm handling, historical capture.
+* L3 — Structured Intelligence Layer: Event logging, reporting, traceability, analytics readiness.
+
+4.2 Scoring scale (1–5; 5 is worst)
+
+Higher scores indicate larger structural gaps and integration effort.
+
+Score 1 — Structured and integrated baseline
+Robust PLC coverage, integrated supervisory layer, trusted data. Example: Fully PLC-sequenced conveyor line with historian.
+
+Score 2 — Functional with minor gaps
+Stable automation but partial standardisation or logging gaps.
+
+Score 3 — Partial automation
+Mixed PLC/relay/manual systems, limited event capture.
+
+Score 4 — Weak baseline
+Manual dependency, missing measurement, fragmented integration.
+
+Score 5 — Minimal automation
+Predominantly manual or isolated controls.
+
+4.3 Confidence definition
+
+* High
+* Medium
+* Low
+* Very Low (TBD)
+
+---
+
+5. Assessment Results by Process Group
+
+5.1 Summary scores and process group descriptions
+
+Column 1	Column 2	Column 3	Column 4	Column 5
+Process Group	L1	L2	L3	Confidence
+Green Scrap & Butt Receiving	4	4	5	Medium
+Cooling Water Control	3	3	4	Medium
+Coke Receiving	3	3	4	Medium
+Coke Grinding	3	4	4	Medium
+Blending & Kneading	3	3	4	Medium
+Anode Forming	3	3	4	Medium
+Tar Pitch Receiving	3	4	4	Low
+Green Block Conveying	3	3	4	Medium
+
+
+5.1.1 GRP Green Scrap and Butt Receiving Control System
+
+Process group description:
+Renewal of butt and green scrap receiving/recycling line; current PLC accommodates weighing scale while conveyors/elevators are relay controlled.
+
+Typical sub-processes (inferred):
+
+* Receiving and unloading of recycle streams
+* Conveying and elevation to screening / separation
+* Crushing and buffering into storage bins/silos
+
+Why it got the score:
+Control completeness is constrained by relay-controlled conveying sections and limited structured event capture, which keeps flow disruptions (e.g., choking, overflow) operator-dependent.
+
+5.1.2 GRP Cooling Water Control System
+
+Process group description:
+Cooling loop (pumps, cooling tower, instrumentation) supporting utility reliability and cooling stability.
+
+Typical sub-processes (inferred):
+
+* Pump sequencing and status monitoring
+* Cooling tower fan and loop performance management
+* Basic alarm and status exposure
+
+Why it got the score:
+PLC renewal intent exists, but systematic performance monitoring and event-history discipline is not evidenced, limiting L3 readiness.
+
+5.1.3 GRP Coke Receiving Control System
+
+Process group description:
+Receiving-to-storage movement (conveyors, bucket elevators, belt scale, screening, silo distribution).
+
+Typical sub-processes (inferred):
+
+* Conveyor routing and distribution
+* Screening and crushing interfaces
+* Silo fill control and stock visibility
+
+Why it got the score:
+Control exists but is weakened by manual RPM setting, untrusted level measurement in dusty conditions, and limited structured logging.
+
+5.1.4 GRP Coke Grinding Control System
+
+Process group description:
+Crusher, trommel, air separator, cyclone collector, and transfer conveyors supporting granulation.
+
+Typical sub-processes (inferred):
+
+* Crushing and size conditioning
+* Separation and fines routing
+* Sampling-driven Blaine control
+
+Why it got the score:
+Sampling-driven quality control and breakdown exposure (e.g., vibration-related issues) indicate weak instrumentation for predictive monitoring and limited L2/L3 visibility.
+
+5.1.5 GRP Blending and Kneading Control System
+
+Process group description:
+Feeders, screw conveyors, pre-heating, and kneader sequencing supporting recipe execution.
+
+Typical sub-processes (inferred):
+
+* Recipe dosing via feeder weight
+* Pre-heating and temperature stability control
+* Kneader mixing and homogenisation monitoring
+
+Why it got the score:
+PLC control is present, but throughput constraints and missing full parameter capture into PLC reduce ability to implement structured performance control loops.
+
+5.1.6 GRP Anode Forming Control System
+
+Process group description:
+Compacting/forming assets with interlocks and permissives (shaking and forming line control).
+
+Typical sub-processes (inferred):
+
+* Mold fill and shaking cycle execution
+* Vacuum/press sequencing
+* Cooling / aging interface controls
+
+Why it got the score:
+Basic automation is present, but traceability and feedback loops remain manual (labeling, aging time discipline), limiting L3 maturity.
+
+5.1.7  GRP Tar Pitch Receiving and Heating Oil Control System
+
+Process group description:
+Pitch storage/transfer and heating oil circulation controls.
+
+Typical sub-processes (inferred):
+
+* Pitch receiving and charging
+* Heating oil loop control
+* Pump operation and temperature monitoring
+
+Why it got the score:
+Integration between standalone control modules and supervisory systems is not evidenced, and key quality assurance sensing (e.g., viscosity) is not confirmed.
+
+5.1.8 GRP Green Block Line Conveying Control System
+
+Process group description:
+Transfer conveyors with sequencing and safety chain monitoring supporting green block movement.
+
+Typical sub-processes (inferred):
+
+* Transfer sequencing to downstream staging
+* Safety interlocks and permissives
+* Basic alarms and status exposure
+
+Why it got the score:
+Control exists but is constrained by missing structured event history, limited integrity sensing evidence, and incomplete stop-cause capture.
+
+5.3 Key evidence and priority actions (by process group)
+
+5.3.1 GRP Green Scrap and Butt Receiving Control System
+
+Key evidence (summary):
+
+* Conveyors/elevators remain relay-controlled while PLC covers weighing only.
+* Overflow event exposure exists without detection sensing.
+* Choking and flow disruptions recur and are managed manually.
+
+Priority actions:
+
+* L1: Migrate relay-controlled conveying sections into PLC sequencing; reintroduce flow protection sensing with tuned thresholds.
+* L2: Expose status, interlocks, and alarms to a common supervisory layer with consistent tag structure.
+* L3: Implement stop-cause logging for choking/overflow and integrate event history into downtime review.
+
+5.3.2 GRP Cooling Water Control System
+
+Key evidence (summary):
+
+* Cooling loop renewal planned for SCADA readiness.
+* Pump performance monitoring (pressure/flow) is desired but not evidenced as systematic.
+
+Priority actions:
+
+* L1: Standardise pump and cooling tower instrumentation for pressure/flow/temperature and confirm PLC capture.
+* L2: Integrate loop alarms and operating states into central monitoring for stability tracking.
+* L3: Create structured utility performance history to link cooling stability to production disturbances.
+
+5.3.3 GRP Coke Receiving Control System
+
+Key evidence (summary):
+
+* Conveyor RPM set manually.
+* Silo level sensing is impacted by dust and not consistently trusted.
+* Mass flow measurements exist but are not used as reference due to discrepancy.
+
+Priority actions:
+
+* L1: Implement RPM monitoring and closed-loop speed control where feasible; rehabilitate level measurement trust via sensor selection and maintenance discipline.
+* L2: Consolidate receiving and storage visibility into supervisory dashboards for HS/LS stock governance.
+* L3: Introduce material movement event history and structured reconciliation logic for stock accuracy.
+
+5.3.4 GRP Coke Grinding Control System
+
+Key evidence (summary):
+
+* Blaine control relies on manual sampling and manual air separator adjustment.
+* Vibration-related breakdown exposure exists.
+
+Priority actions:
+
+* L1: Upgrade core measurements (pressure transmitters, motor current) and add vibration monitoring where breakdown exposure is recurrent.
+* L2: Implement alarm capture and historian-ready tag sets for critical grinding parameters.
+* L3: Formalise quality feedback loops by linking sampling results to operational parameter history.
+
+5.3.5 GRP Blending and Kneading Control System
+
+Key evidence (summary):
+
+* Kneader is critical and experiences downtime (e.g., shaft crack).
+* Some kneading system parameters are not yet captured in PLC.
+
+Priority actions:
+
+* L1: Ensure complete parameter capture (temperature, flow, limiter data) into PLC and implement robust alarm thresholds.
+* L2: Expose kneader state and critical parameters to a unified supervisory layer.
+* L3: Implement structured downtime coding for kneader-related losses and integrate into performance review.
+
+5.3.6 GRP Anode Forming Control System
+
+Key evidence (summary):
+
+* Shaking machine is PLC-controlled.
+* Labeling and traceability remain manual.
+
+Priority actions:
+
+* L1: Strengthen cycle integrity monitoring and ensure critical permissives are fully instrumented.
+* L2: Provide supervisory exposure of cycle states and alarms.
+* L3: Digitise traceability capture to eliminate duplicate/missing numbering and improve genealogy discipline.
+
+5.3.7 GRP Tar Pitch Receiving and Heating Oil Control System
+
+Key evidence (summary):
+
+* Charging control remains partially manual.
+* CBM is desired for pumps; viscosity sensing is not evidenced.
+
+Priority actions:
+
+* L1: Instrument charging counts, pump performance (current/pressure), and thermal parameters.
+* L2: Integrate standalone PLC modules into supervisory visibility with coherent alarms.
+* L3: Establish structured quality and operating history for pitch heating performance.
+
+5.3.8 GRP Green Block Line Conveying Control System
+
+Key evidence (summary):
+
+* PLC-based conveying exists.
+* Stop-cause capture and alarm history are not evidenced.
+
+Priority actions:
+
+* L1: Add integrity sensing on critical conveyors (belt health, temperature, vibration) where access is constrained.
+* L2: Standardise alarm capture and operator guidance for transfer disruptions.
+* L3: Implement structured stop-cause taxonomy for conveying interruptions to support availability improvement.
+
+---
+
+6. Findings (Plant-wide) — Expanded
+
+A consistent pattern emerges across Green Plant: control exists, but operational stability and data trust are constrained by manual intervention points, harsh operating conditions, and limited governance of alarms/events.
+
+6.1 Bulk solids handling is not yet “closed-loop” and remains operator-dependent
+
+Bulk solids routing and flow stability depend on manual RPM settings, manual dampers, and reactive clearing actions.
+
+Observed patterns / implications:
+
+* RPM settings are manually adjusted.
+* Flow disruptions require operator intervention.
+* Distribution and routing controls are not consistently motorised.
+
+Feasibility impact:
+L1 completion is required before L2 and L3 initiatives can rely on stable, repeatable operating data.
+
+---
+
+6.2 Dust and harsh operating conditions are actively degrading data quality and trust
+
+Dust accumulation degrades level sensing reliability and contributes to the use of manual verification (e.g., sounding), limiting stock certainty.
+
+Observed patterns / implications:
+
+* Level sensors in silos are not consistently accurate.
+* Operators maintain parallel manual checks.
+* Stock data becomes less actionable for planning.
+
+Feasibility impact:
+Without sensor trust restoration, inventory-related L2 dashboards and L3 planning logic remain structurally constrained.
+
+---
+
+6.3 Conveyor integrity monitoring is a major availability gap (belt tear/slip, underground conveyors)
+
+Critical conveyors (including difficult-access areas) lack comprehensive integrity sensing, increasing the likelihood of unobserved degradation and reactive failures.
+
+Observed patterns / implications:
+
+* Limited belt tear/vibration/temperature sensing evidenced.
+* Underground or constrained-access segments have higher monitoring difficulty.
+* Failures propagate into upstream/downstream disruption.
+
+Feasibility impact:
+L1 integrity sensing is a prerequisite to improving availability and to enabling reliable L2 alarm governance.
+
+---
+
+6.4 Protective sensing has been disabled in the past due to false alarms, weakening the control baseline
+
+Sensors for choking detection were reportedly removed or disabled after nuisance trips, reducing protective controls.
+
+Observed patterns / implications:
+
+* Protective logic tuning and alarm hygiene are not institutionalized.
+* Operators revert to manual detection.
+* Trip avoidance replaces controlled detection.
+
+Feasibility impact:
+Alarm governance and threshold tuning must be addressed early to prevent recurrence when monitoring is reintroduced.
+
+---
+
+6.5 Choking and bridging are recurring loss modes, but are not yet instrumented as measurable events
+
+Choking and bridging events create recurring downtime, but are not structured as logged events with repeatable root cause analysis.
+
+Observed patterns / implications:
+
+* Choking events trigger manual intervention.
+* Bridging creates repeated short downtime.
+* Loss accounting is not systematic.
+
+Feasibility impact:
+L3 structured reporting is gated by the ability to capture, classify, and trend these loss modes.
+
+---
+
+6.6 Condition monitoring is not yet systematic for motors, rotating equipment, and pumps
+
+CBM is referenced as a need, but systematic monitoring and closure governance are not evidenced.
+
+Observed patterns / implications:
+
+* Pump performance monitoring is desired.
+* Kneader breakdowns materially constrain throughput.
+* Rotating equipment health is not consistently measured.
+
+Feasibility impact:
+Condition monitoring pilots are feasible, but require baseline instrumentation and governance linkages for sustainability.
+
+---
+
+6.7 Alarm/event history and structured stop-cause logging are not yet consistently implemented
+
+The absence of automatic alarm logging and event history limits diagnostics and performance governance.
+
+Observed patterns / implications:
+
+* Trips and abnormal events are not consistently retained.
+* Troubleshooting relies on operator knowledge and manual records.
+* Cross-area comparison of disturbance patterns is limited.
+
+Feasibility impact:
+L2 and L3 capabilities require alarm history and event discipline as foundational infrastructure.
+
+---
+
+6.8 Quality and process feedback loops are slow (sampling-driven), limiting stability and optimisation
+
+Quality sampling and reporting rely on manual transcription and staged approvals, extending feedback latency to operations.
+
+Observed patterns / implications:
+
+* Manual QC recording increases error risk.
+* Lab results can arrive after material consumption.
+* Decision velocity is reduced.
+
+Feasibility impact:
+L3 optimisation readiness is constrained until quality feedback is structured, timely, and traceable.
+
+---
+
+6.9 Inventory visibility and traceability are constrained by measurement accuracy and “not trusted” instruments
+
+Inventory governance is undermined by measurement discrepancies (e.g., untrusted mass flow readings) and manual yard transaction capture.
+
+Observed patterns / implications:
+
+* Level and flow readings are not consistently used as references.
+* Operator practice substitutes system discipline.
+* Material continuity risk is heightened during delays.
+
+Feasibility impact:
+Inventory and planning digitalisation must start with measurement trust and transaction discipline.
+
+---
+
+6.10 Utility performance monitoring is a foundational dependency (cooling spray stability as a priority)
+
+Utilities (cooling water, compressed air) are referenced as critical enablers, but performance visibility and distribution analytics are not evidenced.
+
+Observed patterns / implications:
+
+* Desire exists for flow and consumption visibility.
+* Measurement points exist but may not be connected to SCADA.
+* Utility instability can propagate into production variability.
+
+Feasibility impact:
+Utility monitoring is an early enabler for stable operation and for downstream data-driven governance.
+
+---
+
+6.11 Documentation and verification gaps increase integration risk (and should be closed early)
+
+Missing bin drawings, incomplete sensor inventories, and uncertain integration boundaries increase technical risk for any integration program.
+
+Observed patterns / implications:
+
+* Sensor status on key bins is not confirmed.
+* Architecture and connectivity details are incomplete.
+* Engineering effort increases due to verification overhead.
+
+Feasibility impact:
+Phase 0 controls survey and documentation closure is required before scalable L2/L3 deployment.
+
+---
+
+7. Feasibility Implications for Digitalisation (L1–L3)
+
+The Green Plant has sufficient baseline PLC deployment to support incremental digitalisation. However, feasibility depends on closing measurement trust gaps, reintroducing protective sensing with disciplined tuning, and implementing alarm/event governance.
+
+7.1 Feasible early (with incremental work)
+
+7.1.1 Conveyor integrity and critical motor load monitoring
+
+What is feasible early:
+
+* Add belt tear, vibration, temperature, and motor current monitoring at high-criticality conveyors.
+* Capture choke/bridging precursors using motor load and differential pressure where applicable.
+
+Why feasible:
+Control infrastructure exists across multiple conveying lines and can absorb additional signals with limited architectural change.
+
+7.1.2 Alarm logging baseline establishment
+
+What is feasible early:
+
+* Implement an automatic alarm and event log for key PLC/SCADA nodes.
+* Define a minimal alarm taxonomy for production interruptions.
+
+Why feasible:
+The need for alarm history is explicit and does not require full system consolidation to start delivering traceability.
+
+7.2 Feasible after foundational upgrades (recommended prerequisites)
+
+7.2.1 Inventory and mass flow governance
+
+Prerequisites:
+
+* Restore trust in silo level measurement through sensor selection and maintenance discipline.
+* Resolve belt scale/mass flow discrepancy and define calibration governance.
+* Establish transaction discipline for yard movement and material routing.
+
+Feasible outcomes once prerequisites are met:
+
+* Reliable HS/LS inventory dashboards.
+* Consumption-based replenishment visibility.
+* Reduced production disruption due to material uncertainty.
+
+7.2.2 Quality feedback loop acceleration
+
+Prerequisites:
+
+* Digitise QC capture at source to remove transcription dependency.
+* Define a minimal structured dataset for sampling-to-release cycle visibility.
+
+Feasible outcomes once prerequisites are met:
+
+* Faster containment of off-spec conditions.
+* Traceable linkage between quality results and operating history.
+
+7.3 Not feasible without major upgrades (baseline missing)
+
+7.3.1 Advanced optimisation and predictive governance
+
+Why gated:
+Predictive and optimisation capabilities depend on trusted sensing, consistent event logging, and consolidated data history, which are not yet evidenced as systematic.
+
+What must exist before L2/L3:
+
+* Stable alarm/event history across critical process groups.
+* Measured and trusted mass flow and inventory data.
+* Defined CBM/SPC governance loop (capture, analysis, response discipline).
+
+7.4 Practical implications for the broader feasibility study
+
+* Treat sensor trust restoration as a prerequisite workstream, not a downstream improvement.
+* Start event/alarm capture early to accelerate root cause learning.
+* Prioritize bottleneck assets (kneader, key conveyors) for integrity sensing and structured downtime capture.
+* Close documentation and connectivity gaps before platform consolidation decisions.
+
+---
+
+8. Recommended Technical Roadmap (L1 → L2 → L3)
+
+8.1 Roadmap principles
+
+* Stabilise L1 integrity and measurement trust before scaling supervisory scope.
+* Reintroduce protective sensing with tuned thresholds and alarm discipline.
+* Standardise event capture as a prerequisite to structured performance governance.
+* Expand integration only after inventory and quality data are trusted.
+
+8.2 Phase overview (indicative)
+
+Column 1	Column 2	Column 3	Column 4	Column 5
+Phase	Primary goal	Typical duration (indicative)	Priority areas	Key deliverables
+0	Verification and baseline closure	3–4 months	Survey, documentation, sensor trust	Updated asset and I/O map; validated critical sensors
+1	L1 integrity hardening	6–9 months	Conveyors, bulk solids, bottlenecks	Restored protective sensing; core integrity monitoring
+2	L2 supervisory consolidation	6–9 months	Alarm/event governance, visibility	Alarm/event history; standardized dashboards
+3	L3 structured reporting enablement	9–12 months	Loss accounting, traceability	Stop-cause system; structured performance reporting
+
+
+8.3 Phase details
+
+Phase 0 — Verification and baseline closure
+
+Objective: Establish a trusted and complete automation baseline suitable for scalable upgrades.
+
+Recommended work packages:
+
+* Confirm process group boundaries and relay/PLC segmentation.
+* Survey critical measurement points and validate sensor status.
+* Validate PLC-to-SCADA linkage and protocol posture.
+
+Deliverables:
+
+* Verified instrument and I/O register by process group.
+* Documented connectivity map and system ownership.
+* Prioritized integrity sensing and protective control list.
+
+Phase 1 — L1 integrity hardening
+
+Objective: Reduce operator dependence and protect availability through control completion.
+
+Recommended work packages:
+
+* Integrate relay islands into PLC sequencing where indicated.
+* Deploy choking, bridging, overflow, and belt integrity sensing.
+* Implement structured permissives and tuned trip logic.
+
+Deliverables:
+
+* Reduced unobserved disturbances in solids handling.
+* Measured and alarmed integrity conditions.
+* Improved stability at bottleneck equipment.
+
+Phase 2 — L2 supervisory consolidation
+
+Objective: Establish coherent monitoring, alarms, and visibility for operational governance.
+
+Recommended work packages:
+
+* Implement consistent alarm/event logging across key nodes.
+* Define minimal tag standards for critical process variables.
+* Consolidate supervisory views for inventory and production stability.
+
+Deliverables:
+
+  * Alarm/event history retained and accessible.
+* Standardized dashboards for key process groups.
+* Improved cross-area troubleshooting efficiency.
+
+Phase 3 — L3 structured reporting enablement
+
+Objective: Enable repeatable loss accounting, performance review cadence, and traceability discipline.
+
+Recommended work packages:
+
+* Implement stop-cause taxonomy and structured downtime capture.
+* Digitise quality capture and link results to operating history.
+* Create structured reporting for key stability KPIs.
+
+Deliverables:
+
+* Repeatable performance governance loop.
+* Faster problem containment and root cause analysis.
+* Data foundation for future analytics expansion.
+
+8.4 Recommended early-value pilots (first 3)
+
+1. Conveyor integrity sensing and alarm capture pilot on the most disruption-prone segments.
+2. Centralized alarm and event log pilot on one high-criticality PLC/SCADA node.
+3. Kneader CBM pilot using motor load, temperature, and stop-cause capture.
+
+8.5 Key dependencies to validate (next step)
+
+* Complete I/O and tag export per PLC (including currently non-integrated parameters).
+* SCADA integration scope confirmation per PLC and process group.
+* Time synchronization posture across PLC/SCADA nodes.
+* Sensor selection and maintenance discipline for dusty environments.
+
+---
+
+9. Risks, Assumptions, and Data Gaps
+
+9.1 Explicit data gaps (not inferred)
+
+* Instrument-to-process group mapping is incomplete (requires deterministic survey output).
+* PLC network/protocol standardization is not fully documented.
+* SCADA integration coverage per PLC is incomplete, including one SCADA entry with missing specification.
+* Alarm logging and historian posture are not evidenced as consistent plant-wide capabilities.
+
+9.2 Assumptions used for scoring
+
+* PLC presence implies baseline L1 capability, even where relay islands remain.
+* SCADA linkage implies minimum L2 visibility, but not alarm governance maturity.
+* Manual QC capture and transcription-based reporting imply limited L3 readiness.
+* Where integration details are incomplete, scores assume higher effort and risk for L2/L3 scaling.
+
+9.3 Technical risks to feasibility
+
+* Data trust risk persists if dust-related sensor degradation is not resolved, constraining inventory and planning initiatives.
+* Reintroduction of protective sensing may fail if alarm governance and threshold tuning are not institutionalized.
+* Multi-platform PLC and partial SCADA linkage increases integration and lifecycle governance complexity.
+* Absence of structured event history limits effectiveness of performance improvement programs.
+
+---
+
+End of report

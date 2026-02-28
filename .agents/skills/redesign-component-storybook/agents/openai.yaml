@@ -1,4 +1,4 @@
 interface:
-  display_name: "Redesign Component + Storybook"
-  short_description: "Redesign named UI components and keep Storybook stories in sync."
-  default_prompt: "Use $redesign-component-storybook to redesign these components and update their Storybook stories: <component names>."
+  display_name: "Create/update component"
+  short_description: "Create or update named components and sync Storybook stories."
+  default_prompt: "Use $redesign-component-storybook to create or update these components and update their Storybook stories: <component names>. Use client color_palette for colors."

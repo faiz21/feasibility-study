@@ -1,0 +1,4 @@
+interface:
+  display_name: "Document to JSON Generator"
+  short_description: "Generate structured JSON from source documents"
+  default_prompt: "Use $document-to-json-generator to convert this document into a JSON file using a chosen template reference."

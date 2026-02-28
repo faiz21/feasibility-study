@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", ".next"],
+  "include": [
+    "types/**/*.d.ts",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    "components/**/*.stories.ts",
+    "components/**/*.stories.tsx",
+    "components/**/*.stories.mdx"
+  ]
+}
