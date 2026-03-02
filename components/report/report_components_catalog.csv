@@ -1,0 +1,38 @@
+Component Name,Relative Path,Category,JSON Format,When To Use,How To Use,Description
+Cover Page,cover/cover-page.tsx,cover,"{ ""caseStudy"": { ""title"": ""..."", ""subtitle"": ""..."" }, ""heroImageUrl"": ""..."" }",For the very first page of the report.,Pass the metadata and case study details.,Renders a full screen intro with background image, company logo, and title; color surfaces are fully tokenized via report-theme.
+Report Cover,cover/report-cover.tsx,cover,"{ ""title"": ""..."", ""subtitle"": ""..."" }",Alternative cover page design.,Pass title and text metadata.,A robust cover without a large hero image, focusing on typography.
+Narrative Block,text/narrative-block.tsx,text,"{ ""title"": ""..."", ""content"": ""..."", ""size"": ""md"" }",For H1/H2 section introductions.,Provide a title (heading) and a short introductory content string.,High visual impact block for introducing a major topic.
+Narrative Card,text/narrative-card.tsx,text,"{ ""content"": ""..."" }",To break down long paragraphs.,Wrap text inside this component instead of standard paragraphs.,A standalone card making the text pop against the background.
+Paragraph,text/paragraph.tsx,text,"{ ""content"": ""..."" }",Standard body text.,Pass markdown text.,Clean, highly legible standard paragraph text.
+Quote Blocks,text/quote-blocks.tsx,text,"{ ""quote"": ""..."", ""size"": ""md"" }",For blockquotes (>) in Markdown.,Pass the quoted string.,Beautiful backdrop block emphasizing the quote with improved small-size ribbon legibility.
+Quote Statement,text/quote-statement.tsx,text,"{ ""quote"": ""..."" }",Emphasized inline statements.,Pass the statement.,A lighter variation of blockquotes for pull quotes.
+Icon Text Narrative,text/icon-text-narrative.tsx,text,"{ ""icon"": ""..."", ""text"": ""..."" }",When a paragraph needs an icon.,Map specific topics to icons and pass text.,Places an icon alongside descriptive text.
+Icon Bullet Intro,text/icon-bullet-intro.tsx,text,"{ ""title"": ""..."", ""bullets"": [...] }",Introducing a list with an icon.,Map H3 + list to this.,Nice header + visual marker for lists.
+Bullet Summary Block,list/bullet-summary-block.tsx,list,"{ ""items"": [""...""] }",Standard markdown lists (-).,Pass an array of strings.,A clean bullet list inside a summary block.
+Checklist,list/checklist.tsx,list,"{ ""items"": [""...""] }",For feature lists or to-do style lists.,Pass an array of checklist items.,Renders a list with checkmark icons.
+Highlight List,list/highlight-list.tsx,list,"{ ""items"": [""...""] }",Important lists.,Pass items.,Highlights each list item to draw attention with marker chips that inherit standardized token variables.
+Icon List,list/icon-list.tsx,list,"{ ""items"": [{ ""icon"": ""..."", ""text"": ""..."" }] }",Premium unordered lists.,Pass array of items with icon names.,Each list item gets a unique icon.
+Narrative List Block,list/narrative-list-block.tsx,list,"{ ""title"": ""..."", ""items"": [""...""] }",List with an intro heading.,Pass title and list strings.,Combines a section header and a bulleted list.
+Numbered List,list/numbered-list.tsx,list,"{ ""items"": [""...""] }",Ordered lists (1., 2.).,Pass array of list item strings.,Clean styled ordered list.
+Square Numbered List,list/square-numbered-list.tsx,list,"{ ""items"": [""...""] }",Highly styled ordered lists.,Used for step-by-step instructions.,Uses large square numbers for steps.
+Dual Metric Block,metric/dual-metric-block.tsx,metric,"{ ""metrics"": [{ ""label"": ""..."", ""value"": ""..."" }] }",Callouts with exactly 2 metrics.,Pass an array of exactly 2 metric objects.,Side-by-side comparison of two numbers.
+Gauge Narrative Grid,metric/gauge-narative-grid-block.tsx,metric,"{ ""percentage"": 85, ""text"": ""..."" }",Percentage-based metrics.,Pass a number (0-100) and description.,Visual gauge chart alongside explanatory text with token-driven remainder and center fill.
+Result Metric Card,metric/result-metric-card.tsx,metric,"{ ""title"": ""..."", ""metrics"": [...] }",Main KPI highlights.,Pass title and list of metrics.,Large typography to display key results boldly.
+Sliced Key Metric,metric/sliced-descriptive-key-metric.tsx,metric,"{ ""value"": ""..."", ""description"": ""..."" }",Single important statistic.,Pass the stat value and context.,Stylish partitioned card for a single metric.
+Summary Highlight,metric/summary-highlight.tsx,metric,"{ ""text"": ""..."", ""highlight"": ""..."" }",Calling attention to a sentence.,Pass text and words to bold.,Highlights a specific metric inside a text block.
+Age Distribution Bars,chart/age-distribution-bars.tsx,chart,"{ ""series"": [{ ""label"": ""..."", ""value"": 10 }] }",Demographic histograms.,Pass an array of label/value.,Bar chart typically used for age/demographics.
+Area Trend Chart,chart/area-trend-chart.tsx,chart,"{ ""series"": [...] }",Time-series data.,Pass an array mapping points over time.,A beautiful area chart showing trends with mobile-safe responsive SVG sizing.
+Charts,chart/charts.tsx,chart,"{ ""title"": ""..."", ""series"": [...] }",Standard bar charts.,Pass an array of data points.,Generic bar chart for multi-category data.
+Donut Breakdown Chart,chart/donut-breakdown-chart.tsx,chart,"{ ""series"": [...] }",Proportions.,Pass an array of percentages summing to 100.,Minimal donut chart showing slices with token-based empty-state fallback.
+Donut Chart Block,chart/donut-chart-block.tsx,chart,"{ ""series"": [...] }",Proportions with narrative.,Pass series data and description with optional palette/colorPicker.,Donut chart integrated into a reading block with standardized-token center fill.
+Table,table/table.tsx,table,"{ ""headers"": [...], ""rows"": [...] }",Standard markdown tables.,Pass columns and rows array.,Clean styling for generic tabular data.
+Performance Table,table/performance-table-block.tsx,table,"{ ""headers"": [...], ""rows"": [...] }",Financial or metric tables.,Pass data rows.,Emphasizes numerical data and totals with tokenized border and trend color variables.
+Demographics Block,table/demographics-block.tsx,table,"{ ""profiles"": [...] }",User personas.,Pass list of user characteristics.,Table specifically laid out for demographic profiling.
+Box With Icon Card,card/box-with-icon-card.tsx,card,"{ ""title"": ""..."", ""icon"": ""..."" }",Generic card block.,Pass title, content, icon.,Floating card with a prominent icon.
+Challenge Solution Results,card/challenge-solution-results-cards.tsx,card,"{ ""challenge"": ""..."", ""solution"": ""..."" }",Case study formats.,Pass the 3 text blocks.,Specialized grid showing the 3 phases of a project.
+Icon Card,card/icon-card.tsx,card,"{ ""icon"": ""..."", ""title"": ""..."", ""body"": ""..."" }",Feature highlights.,Use for selling points.,Simple card with an icon header.
+Package Cards,card/package-cards.tsx,card,"{ ""packages"": [...] }",Pricing or tiers.,Pass array of features/prices.,Multi-card layout for showing options with secondary-token price badges.
+Multi Column Section,section/multi-column-section.tsx,section,"{ ""columns"": [...] }",Dense text.,Split text into 2-3 columns.,Good for conserving vertical whitespace.
+Service Category Grid,section/service-category-grid.tsx,section,"{ ""categories"": [...] }",Feature grouping.,Pass list of services.,Grid of services offered.
+Service Category Item,section/service-category-item.tsx,section,N/A,Subcomponent.,Used by Service Category Grid.,Individual service item.
+Service Operations Showcase,section/service-operations-showcase-section.tsx,section,"{ ""title"": ""..."", ""items"": [...] }",Highlighting multiple case metrics.,Pass complex data.,High-fidelity section combining multiple cards.

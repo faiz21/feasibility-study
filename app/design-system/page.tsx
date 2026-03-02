@@ -107,8 +107,8 @@ export default function DesignSystemPage() {
                         <Badge className="bg-warning text-warning-foreground hover:bg-warning">
                           Risk
                         </Badge>
-                        <Badge className="bg-critical text-critical-foreground hover:bg-critical">
-                          Critical gap
+                        <Badge className="bg-error text-error-foreground hover:bg-error">
+                          Error state
                         </Badge>
                         <Badge className="bg-info text-info-foreground hover:bg-info">
                           Strategic initiative
@@ -161,7 +161,7 @@ export default function DesignSystemPage() {
 
                 <div>
                   <div className="mb-2 text-xs font-semibold tracking-[0.14em] text-muted-foreground">
-                    STATUS COLORS
+                    SYSTEM STATUS TOKENS
                   </div>
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {statusColorTokens.map((token) => (
@@ -233,7 +233,7 @@ export default function DesignSystemPage() {
                     <Button variant="outline">Outline</Button>
                     <Button variant="ghost">Ghost</Button>
                     <Button variant="link">Link</Button>
-                    <Button variant="destructive">Critical</Button>
+                    <Button variant="destructive">Error</Button>
                   </CardContent>
                 </Card>
 
@@ -272,8 +272,8 @@ export default function DesignSystemPage() {
                     <Badge className="bg-success text-success-foreground hover:bg-success">
                       Upside
                     </Badge>
-                    <Badge className="bg-critical text-critical-foreground hover:bg-critical">
-                      Gap
+                    <Badge className="bg-error text-error-foreground hover:bg-error">
+                      Error
                     </Badge>
                   </CardContent>
                 </Card>

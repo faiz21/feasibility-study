@@ -3,8 +3,6 @@ import { requireRole } from "@/lib/portal/auth";
 import { PageHeader, StatCard } from "@/components/ui/dashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ConfirmSubmitDialogButton } from "@/components/ui/confirm-submit-dialog-button";
-import { FormDialog } from "@/components/ui/form-dialog";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Link from "next/link";
@@ -17,52 +15,39 @@ import {
   DataGridTable,
 } from "@/components/ui/data-grid";
 
-async function assignReportAction(formData: FormData) {
+async function publishReportAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
 
-  const clientId = String(formData.get("client_id") ?? "").trim();
   const reportId = String(formData.get("report_id") ?? "").trim();
+  const nextStatus = String(formData.get("next_status") ?? "draft").trim();
+  const clientId = String(formData.get("client_id") ?? "").trim();
   const granularityId = String(formData.get("granularity_id") ?? "all").trim();
-  if (!clientId || !reportId) redirect("/admin/client-reports?error=Client+and+report+are+required");
 
-  const { error } = await supabase.from("client_reports").insert({
-    client_id: clientId,
-    report_id: reportId,
-  });
+  if (!reportId || !["draft", "published"].includes(nextStatus)) {
+    redirect("/admin/client-reports?error=Invalid+publish+action");
+  }
+
+  const payload =
+    nextStatus === "published"
+      ? { status: "published", published_at: new Date().toISOString(), updated_at: new Date().toISOString() }
+      : { status: "draft", published_at: null, updated_at: new Date().toISOString() };
+
+  const { error } = await supabase.from("reports").update(payload).eq("id", reportId);
   if (error) {
-    if (error.code === "23505") {
-      redirect(
-        `/admin/client-reports?client_id=${clientId}&granularity_id=${granularityId}&success=Report+already+assigned`,
-      );
-    }
-    redirect(`/admin/client-reports?client_id=${clientId}&granularity_id=${granularityId}&error=${encodeURIComponent(error.message)}`);
+    redirect(
+      `/admin/client-reports?client_id=${clientId}&granularity_id=${granularityId}&error=${encodeURIComponent(error.message)}`,
+    );
   }
 
   revalidatePath("/admin/client-reports");
-  redirect(`/admin/client-reports?client_id=${clientId}&granularity_id=${granularityId}&success=Report+assigned`);
-}
-
-async function unassignReportAction(formData: FormData) {
-  "use server";
-  await requireRole("admin");
-  const supabase = await createClient();
-
-  const clientId = String(formData.get("client_id") ?? "").trim();
-  const reportId = String(formData.get("report_id") ?? "").trim();
-  const granularityId = String(formData.get("granularity_id") ?? "all").trim();
-  if (!clientId || !reportId) redirect("/admin/client-reports?error=Client+and+report+are+required");
-
-  const { error } = await supabase
-    .from("client_reports")
-    .delete()
-    .eq("client_id", clientId)
-    .eq("report_id", reportId);
-  if (error) redirect(`/admin/client-reports?client_id=${clientId}&granularity_id=${granularityId}&error=${encodeURIComponent(error.message)}`);
-
-  revalidatePath("/admin/client-reports");
-  redirect(`/admin/client-reports?client_id=${clientId}&granularity_id=${granularityId}&success=Report+unassigned`);
+  revalidatePath("/admin/reports");
+  redirect(
+    `/admin/client-reports?client_id=${clientId}&granularity_id=${granularityId}&success=${encodeURIComponent(
+      `Report ${nextStatus === "published" ? "published" : "set to draft"}`,
+    )}`,
+  );
 }
 
 export default async function AdminClientReportsPage({
@@ -79,45 +64,52 @@ export default async function AdminClientReportsPage({
   const supabase = await createClient();
   const params = await searchParams;
 
-  const [{ data: assignments }, { data: clients }, { data: reports }, { data: entities }, { data: reportTypes }, { data: granularities }] =
+  const [
+    { data: clients },
+    { data: reports },
+    { data: entities },
+    { data: reportTypes },
+    { data: granularities },
+    { data: reportPages },
+  ] =
     await Promise.all([
-      supabase.from("client_reports").select("client_id,report_id,created_at").order("created_at", { ascending: false }),
       supabase.from("clients").select("id,name").order("name", { ascending: true }),
       supabase
         .from("reports")
-        .select("id,status,published_at,entity_id,report_type_template_id")
+        .select("id,status,published_at,entity_id,report_type_template_id,created_at")
         .order("created_at", { ascending: false }),
       supabase.from("report_entities").select("id,name,client_id,granularity_id"),
       supabase.from("report_type_templates").select("id,name").order("name", { ascending: true }),
       supabase.from("granularities").select("id,name,code").order("name", { ascending: true }),
+      supabase
+        .from("report_pages")
+        .select("report_id,page_order,report_page_templates(page_key,title)")
+        .order("page_order", { ascending: true }),
     ]);
-
-  const clientById = new Map((clients ?? []).map((client) => [client.id, client.name]));
-  const reportById = new Map((reports ?? []).map((report) => [report.id, report]));
-  const entityById = new Map((entities ?? []).map((entity) => [entity.id, entity]));
-  const reportTypeById = new Map((reportTypes ?? []).map((type) => [type.id, type.name]));
-  const granularityById = new Map((granularities ?? []).map((granularity) => [granularity.id, granularity]));
 
   const selectedClientId = params.client_id ?? clients?.[0]?.id ?? "";
   const granularityFilter = params.granularity_id ?? "all";
 
-  const selectedClientAssignmentSet = new Set(
-    (assignments ?? [])
-      .filter((assignment) => assignment.client_id === selectedClientId)
-      .map((assignment) => assignment.report_id),
-  );
+  const entityById = new Map((entities ?? []).map((entity) => [entity.id, entity]));
+  const reportTypeById = new Map((reportTypes ?? []).map((type) => [type.id, type.name]));
+  const granularityById = new Map((granularities ?? []).map((granularity) => [granularity.id, granularity]));
+  const pagesByReportId = new Map<string, string[]>();
+  (reportPages ?? []).forEach((page) => {
+    const template = Array.isArray(page.report_page_templates)
+      ? page.report_page_templates[0]
+      : page.report_page_templates;
+    const label = `${template?.title ?? "Untitled"} (${template?.page_key ?? "-"})`;
+    const existing = pagesByReportId.get(page.report_id) ?? [];
+    existing.push(label);
+    pagesByReportId.set(page.report_id, existing);
+  });
 
   const filteredReports = (reports ?? []).filter((report) => {
     const entity = entityById.get(report.entity_id);
     if (!entity) return false;
+    if (selectedClientId && entity.client_id !== selectedClientId) return false;
     if (granularityFilter !== "all" && entity.granularity_id !== granularityFilter) return false;
     return true;
-  });
-
-  const publishedReports = filteredReports.filter((report) => report.status === "published");
-  const clientCounts = new Map<string, number>();
-  (assignments ?? []).forEach((assignment) => {
-    clientCounts.set(assignment.client_id, (clientCounts.get(assignment.client_id) ?? 0) + 1);
   });
 
   const groupedByEntity = new Map<string, Array<(typeof reports)[number]>>();
@@ -133,17 +125,30 @@ export default async function AdminClientReportsPage({
     return (entityA?.name ?? "").localeCompare(entityB?.name ?? "");
   });
 
+  const publishedCount = filteredReports.filter((report) => report.status === "published").length;
+
   return (
     <div className="space-y-6">
       <PageHeader
         title="Client Reports"
-        description="Select client, filter by granularity, and manage reports grouped by entity."
+        description="Configure all generated reports from table reports: publish/draft and content editing."
       />
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <StatCard label="Assignments" value={assignments?.length ?? 0} />
-        <StatCard label="All Reports (Filtered)" value={filteredReports.length} />
+        <StatCard label="Reports (Filtered)" value={filteredReports.length} />
+        <StatCard label="Published (Filtered)" value={publishedCount} />
         <StatCard label="Clients" value={clients?.length ?? 0} />
       </section>
+
+      {params.success ? (
+        <p className="rounded-lg border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">
+          {params.success}
+        </p>
+      ) : null}
+      {params.error ? (
+        <p className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2 text-sm text-critical">
+          {params.error}
+        </p>
+      ) : null}
 
       <Card>
         <CardHeader>
@@ -162,69 +167,11 @@ export default async function AdminClientReportsPage({
                 }`}
               >
                 <p className="font-medium text-foreground">{client.name}</p>
-                <p className="text-xs">Assignments: {clientCounts.get(client.id) ?? 0}</p>
               </Link>
             ))}
           </div>
         </CardContent>
       </Card>
-      <div className="flex justify-end">
-        <FormDialog
-          title="Assign Report"
-          description="Assign one report to one client."
-          triggerLabel="Assign Report"
-          triggerVariant="default"
-        >
-          <form action={assignReportAction} className="grid gap-3 md:grid-cols-3">
-            <label className="text-sm">
-              Step 1 — Select Client
-              <select
-                name="client_id"
-                required
-                defaultValue={selectedClientId}
-                className="mt-1 block h-10 w-full rounded-lg border border-input bg-card px-3 text-sm shadow-soft"
-              >
-                <option value="">Choose client</option>
-                {(clients ?? []).map((client) => (
-                  <option key={client.id} value={client.id}>
-                    {client.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="text-sm md:col-span-2">
-              Step 2 — Select Published Report
-              <select
-                name="report_id"
-                required
-                className="mt-1 block h-10 w-full rounded-lg border border-input bg-card px-3 text-sm shadow-soft"
-              >
-                <option value="">Choose report</option>
-                {publishedReports.map((report) => (
-                  <option key={report.id} value={report.id}>
-                    {report.id.slice(0, 8)} · {reportTypeById.get(report.report_type_template_id) ?? "-"} ·{" "}
-                    {entityById.get(report.entity_id) ?? "-"}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <div className="md:col-span-3">
-              <input type="hidden" name="granularity_id" value={granularityFilter} />
-              <Button type="submit">Step 3 — Confirm Assignment</Button>
-            </div>
-          </form>
-        </FormDialog>
-      </div>
-      {params.success ? (
-        <p className="rounded-lg border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">
-          {params.success}
-        </p>
-      ) : null}
-      {params.error ? (
-        <p className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2 text-sm text-critical">
-          {params.error}
-        </p>
-      ) : null}
 
       <Card>
         <CardHeader>
@@ -258,6 +205,7 @@ export default async function AdminClientReportsPage({
           {groupedEntries.length === 0 ? (
             <p className="text-sm text-muted-foreground">No reports found in table reports.</p>
           ) : null}
+
           {groupedEntries.map(([entityId, rows]) => {
             const entity = entityById.get(entityId);
             const granularity = entity ? granularityById.get(entity.granularity_id) : null;
@@ -276,62 +224,51 @@ export default async function AdminClientReportsPage({
                     <DataGridTable>
                       <DataGridHead>
                         <DataGridRow className="border-t-0">
-                          <DataGridCell header>Report</DataGridCell>
                           <DataGridCell header>Report Type</DataGridCell>
+                          <DataGridCell header>Pages</DataGridCell>
                           <DataGridCell header>Status</DataGridCell>
-                          <DataGridCell header>Assigned</DataGridCell>
+                          <DataGridCell header>Published At</DataGridCell>
                           <DataGridCell header className="text-right">Actions</DataGridCell>
                         </DataGridRow>
                       </DataGridHead>
                       <DataGridBody>
                         {rows.map((report) => (
                           <DataGridRow key={report.id}>
-                            <DataGridCell className="text-muted-foreground">{report.id.slice(0, 8)}</DataGridCell>
                             <DataGridCell className="text-muted-foreground">
                               {reportTypeById.get(report.report_type_template_id) ?? "-"}
                             </DataGridCell>
                             <DataGridCell className="text-muted-foreground">
-                              {report.status}
+                              {(pagesByReportId.get(report.id) ?? []).slice(0, 3).join(", ") || "-"}
                             </DataGridCell>
+                            <DataGridCell className="text-muted-foreground">{report.status}</DataGridCell>
                             <DataGridCell className="text-muted-foreground">
-                              {selectedClientAssignmentSet.has(report.id) ? (
-                                <span className="text-success">Assigned</span>
-                              ) : (
-                                <span className="text-critical">Not Assigned</span>
-                              )}
+                              {report.published_at ? new Date(report.published_at).toLocaleString() : "-"}
                             </DataGridCell>
                             <DataGridCell>
-                              <div className="flex justify-end">
-                                {selectedClientId ? (
-                                  selectedClientAssignmentSet.has(report.id) ? (
-                                    <form action={unassignReportAction}>
-                                      <input type="hidden" name="client_id" value={selectedClientId} />
-                                      <input type="hidden" name="report_id" value={report.id} />
-                                      <input type="hidden" name="granularity_id" value={granularityFilter} />
-                                      <ConfirmSubmitDialogButton
-                                        type="submit"
-                                        size="sm"
-                                        variant="destructive"
-                                        confirmTitle="Unassign report"
-                                        confirmDescription="Unassign this report from the selected client?"
-                                        confirmText="Unassign"
-                                      >
-                                        Unassign
-                                      </ConfirmSubmitDialogButton>
-                                    </form>
-                                  ) : (
-                                    <form action={assignReportAction}>
-                                      <input type="hidden" name="client_id" value={selectedClientId} />
-                                      <input type="hidden" name="report_id" value={report.id} />
-                                      <input type="hidden" name="granularity_id" value={granularityFilter} />
-                                      <Button type="submit" size="sm">
-                                        Assign
-                                      </Button>
-                                    </form>
-                                  )
-                                ) : (
-                                  <span className="text-xs text-muted-foreground">Select client</span>
-                                )}
+                              <div className="flex justify-end gap-2">
+                                <form action={publishReportAction}>
+                                  <input type="hidden" name="report_id" value={report.id} />
+                                  <input
+                                    type="hidden"
+                                    name="next_status"
+                                    value={report.status === "published" ? "draft" : "published"}
+                                  />
+                                  <input type="hidden" name="client_id" value={selectedClientId} />
+                                  <input type="hidden" name="granularity_id" value={granularityFilter} />
+                                  <Button
+                                    type="submit"
+                                    size="sm"
+                                    variant={report.status === "published" ? "secondary" : "default"}
+                                  >
+                                    {report.status === "published" ? "Set Draft" : "Publish"}
+                                  </Button>
+                                </form>
+                                <Link
+                                  href={`/admin/client-reports/${report.id}/edit?client_id=${selectedClientId}&granularity_id=${granularityFilter}`}
+                                  className="inline-flex h-8 items-center rounded-md border border-border/70 px-3 text-xs font-medium hover:bg-accent/50"
+                                >
+                                  Edit Content
+                                </Link>
                               </div>
                             </DataGridCell>
                           </DataGridRow>

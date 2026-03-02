@@ -40,6 +40,15 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
+          active: "hsl(var(--primary-active))",
+          soft: "hsl(var(--primary-soft))",
+          border: "hsl(var(--primary-border))",
+        },
+        brand: {
+          DEFAULT: "hsl(var(--brand))",
+          foreground: "hsl(var(--brand-foreground))",
+          soft: "hsl(var(--brand-soft))",
         },
         accentBlue: {
           DEFAULT: "hsl(var(--accent-blue))",
@@ -65,6 +74,10 @@ export default {
           DEFAULT: "hsl(var(--success))",
           foreground: "hsl(var(--success-foreground))",
         },
+        error: {
+          DEFAULT: "hsl(var(--error))",
+          foreground: "hsl(var(--error-foreground))",
+        },
         warning: {
           DEFAULT: "hsl(var(--warning))",
           foreground: "hsl(var(--warning-foreground))",
@@ -76,6 +89,16 @@ export default {
         info: {
           DEFAULT: "hsl(var(--info))",
           foreground: "hsl(var(--info-foreground))",
+        },
+        system: {
+          success: "hsl(var(--system-success))",
+          successForeground: "hsl(var(--system-success-foreground))",
+          warning: "hsl(var(--system-warning))",
+          warningForeground: "hsl(var(--system-warning-foreground))",
+          error: "hsl(var(--system-error))",
+          errorForeground: "hsl(var(--system-error-foreground))",
+          info: "hsl(var(--system-info))",
+          infoForeground: "hsl(var(--system-info-foreground))",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

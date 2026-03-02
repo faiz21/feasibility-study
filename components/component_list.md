@@ -186,12 +186,23 @@ Rich text block format (minimal):
 
 ---
 
-## 3) Overview Page Components (Page 2) 
+## 3) Overview + Mixed Content Components (Pages 2-3)
 
-### 10. SidePanelNarrativeCard
+This spread is **multiple components in one layout table/grid**.  
+Component names below are intentionally **reusable names**, not names taken from sample titles.
+
+| # | Component Name | Type Key | Purpose |
+|---|---|---|---|
+| 10 | `NarrativeSidePanel` | `content.sidePanelNarrativeCard` | Left tall intro card with title label and rich-text body |
+| 11 | `SplitNarrativeBlock` | `content.twoColumnTextBlock` | Two text columns (e.g., context + findings) |
+| 12 | `ObjectiveCardRow` | `cards.goalsRow` | Row of objective cards with icon, heading, and supporting text |
+| 13 | `SegmentStrategyTable` | `table.simple` | Generic 3-column segment/attribute/strategy table |
+| 14 | `CategoryBarChartCard` | `chart.barCard` | Category comparison bar chart with legend and series |
+
+### 10. NarrativeSidePanel
 
 **type:** `content.sidePanelNarrativeCard`
-**Purpose:** left tall card with TITLE + OVERVIEW paragraph
+**Purpose:** left tall card with heading metadata and long-form narrative
 
 ```json
 {
@@ -205,14 +216,10 @@ Rich text block format (minimal):
 }
 ```
 
----
-
-## 4) Mixed Content Grid Components (Page 3) 
-
-### 11. TwoColumnTextBlock
+### 11. SplitNarrativeBlock
 
 **type:** `content.twoColumnTextBlock`
-**Purpose:** Overview + Key Findings & Recommendations
+**Purpose:** two independent rich-text panels in a single row
 
 ```json
 {
@@ -224,10 +231,10 @@ Rich text block format (minimal):
 }
 ```
 
-### 12. GoalsCardRow
+### 12. ObjectiveCardRow
 
 **type:** `cards.goalsRow`
-**Purpose:** 3 goal cards (Brand Awareness / Boost Sales / Market Expansion)
+**Purpose:** 3 objective cards with icon + title + outcome text
 
 ```json
 {
@@ -243,10 +250,10 @@ Rich text block format (minimal):
 }
 ```
 
-### 13. DataTableSimple
+### 13. SegmentStrategyTable
 
 **type:** `table.simple`
-**Purpose:** “Target Audience and Segmentation” table
+**Purpose:** configurable audience/segment table (not tied to a specific sample heading)
 
 ```json
 {
@@ -263,10 +270,10 @@ Rich text block format (minimal):
 }
 ```
 
-### 14. BarChartCard
+### 14. CategoryBarChartCard
 
 **type:** `chart.barCard`
-**Purpose:** “Advertising and Promotion” bar chart
+**Purpose:** generic category bar chart card (title is content, not component name)
 
 ```json
 {

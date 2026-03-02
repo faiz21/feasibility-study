@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { ConfirmSubmitDialogButton } from "@/components/ui/confirm-submit-dialog-button";
 import { FormDialog } from "@/components/ui/form-dialog";
+import { mvDefaultBrandPalette } from "@/lib/design-system/tokens";
 import {
   DataGrid,
   DataGridBody,
@@ -34,6 +35,7 @@ type ClientRow = {
   code: string;
   domain: string | null;
   logo_url: string | null;
+  cover_photo_url: string | null;
   color_palette: ClientColorPalette | null;
   default_locale: string;
   created_at: string;
@@ -53,13 +55,8 @@ type EntityRow = {
 type ReportTypeRow = { id: string; name: string; category: string | null; granularity_id: string };
 type ReportRow = { id: string; entity_id: string; report_type_template_id: string };
 
-const DEFAULT_COLOR_PALETTE: ClientColorPalette = {
-  primary: "#0f172a",
-  secondary: "#334155",
-  accent: "#0ea5e9",
-  background: "#ffffff",
-  text: "#0f172a",
-};
+const DEFAULT_COLOR_PALETTE: ClientColorPalette = { ...mvDefaultBrandPalette };
+const CLIENT_ASSET_BUCKET = process.env.NEXT_PUBLIC_CLIENT_ASSET_BUCKET ?? "client-assets";
 
 function asColorValue(value: FormDataEntryValue | null, fallback: string): string {
   const raw = String(value ?? "").trim();
@@ -94,6 +91,62 @@ function parseTags(raw: string): string[] {
     .split(",")
     .map((tag) => tag.trim())
     .filter(Boolean);
+}
+
+function resolveAssetUrl(value: string | null | undefined): string | null {
+  if (!value) return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return encodeURI(trimmed);
+  }
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL;
+  if (trimmed.startsWith("/storage/v1/object/public/")) {
+    if (!base) return null;
+    return encodeURI(`${base.replace(/\/$/, "")}${trimmed}`);
+  }
+  if (trimmed.startsWith("/")) return encodeURI(trimmed);
+  if (!trimmed.includes("/")) return null;
+  if (!base) return null;
+  return encodeURI(`${base.replace(/\/$/, "")}/storage/v1/object/public/${trimmed.replace(/^\/+/, "")}`);
+}
+
+function sanitizePathSegment(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9-_]/g, "-");
+}
+
+function getExtension(filename: string, mimeType: string): string {
+  const directExt = filename.split(".").pop()?.toLowerCase();
+  if (directExt && /^[a-z0-9]{2,6}$/.test(directExt)) return directExt;
+  if (mimeType.includes("png")) return "png";
+  if (mimeType.includes("jpeg") || mimeType.includes("jpg")) return "jpg";
+  if (mimeType.includes("webp")) return "webp";
+  if (mimeType.includes("svg")) return "svg";
+  return "bin";
+}
+
+async function uploadClientImage(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  fileValue: FormDataEntryValue | null,
+  clientCode: string,
+  kind: "logo" | "cover",
+): Promise<string | null> {
+  if (!(fileValue instanceof File) || fileValue.size <= 0) return null;
+  if (!fileValue.type.startsWith("image/")) {
+    throw new Error(`${kind} file must be an image`);
+  }
+
+  const safeCode = sanitizePathSegment(clientCode || "client");
+  const ext = getExtension(fileValue.name, fileValue.type);
+  const filePath = `clients/${safeCode}/${kind}-${Date.now()}.${ext}`;
+
+  const { error } = await supabase.storage.from(CLIENT_ASSET_BUCKET).upload(filePath, fileValue, {
+    upsert: true,
+    contentType: fileValue.type || undefined,
+  });
+  if (error) throw new Error(error.message);
+
+  return `${CLIENT_ASSET_BUCKET}/${filePath}`;
 }
 
 function parseCsvLine(line: string): string[] {
@@ -186,6 +239,7 @@ function computeSyncPreview(params: {
     for (const reportTypeId of accessIds) {
       const reportType = reportTypesById.get(reportTypeId);
       if (!reportType) continue;
+      if (reportType.granularity_id !== entity.granularity_id) continue;
       desired.set(pairKey(entity.id, reportType.id), `${entity.name} · ${reportType.name}`);
     }
   }
@@ -255,6 +309,7 @@ async function syncClientReportAssignments(
     for (const reportTypeId of accessIds) {
       const reportType = templateById.get(reportTypeId);
       if (!reportType) continue;
+      if (reportType.granularity_id !== entity.granularity_id) continue;
       desiredPairs.set(pairKey(entity.id, reportType.id), {
         entity_id: entity.id,
         report_type_template_id: reportType.id,
@@ -360,7 +415,7 @@ async function syncClientReportAssignments(
   return { added: toAdd.length, removed: toRemove.length, generated: generatedReports };
 }
 
-async function createClientAction(formData: FormData) {
+export async function createClientAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -370,7 +425,9 @@ async function createClientAction(formData: FormData) {
   const domainRaw = String(formData.get("domain") ?? "").trim();
   const domain = domainRaw.length > 0 ? domainRaw.toLowerCase() : null;
   const logoUrlRaw = String(formData.get("logo_url") ?? "").trim();
-  const logoUrl = logoUrlRaw.length > 0 ? logoUrlRaw : null;
+  const coverPhotoUrlRaw = String(formData.get("cover_photo_url") ?? "").trim();
+  let logoUrl = logoUrlRaw.length > 0 ? logoUrlRaw : null;
+  let coverPhotoUrl = coverPhotoUrlRaw.length > 0 ? coverPhotoUrlRaw : null;
   const colorPalette = paletteFromFormData(formData);
   const defaultLocale = String(formData.get("default_locale") ?? "en");
 
@@ -378,11 +435,21 @@ async function createClientAction(formData: FormData) {
     redirect("/admin/clients?error=Name+and+code+are+required");
   }
 
+  try {
+    const uploadedLogoPath = await uploadClientImage(supabase, formData.get("logo_file"), code, "logo");
+    if (uploadedLogoPath) logoUrl = uploadedLogoPath;
+    const uploadedCoverPath = await uploadClientImage(supabase, formData.get("cover_photo_file"), code, "cover");
+    if (uploadedCoverPath) coverPhotoUrl = uploadedCoverPath;
+  } catch (error) {
+    redirect(`/admin/clients?error=${encodeURIComponent((error as Error).message)}`);
+  }
+
   const { error } = await supabase.from("clients").insert({
     name,
     code,
     domain,
     logo_url: logoUrl,
+    cover_photo_url: coverPhotoUrl,
     color_palette: colorPalette,
     default_locale: defaultLocale,
   });
@@ -395,7 +462,7 @@ async function createClientAction(formData: FormData) {
   redirect("/admin/clients?success=Client+created");
 }
 
-async function updateClientAction(formData: FormData) {
+export async function updateClientAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -406,12 +473,23 @@ async function updateClientAction(formData: FormData) {
   const domainRaw = String(formData.get("domain") ?? "").trim();
   const domain = domainRaw.length > 0 ? domainRaw.toLowerCase() : null;
   const logoUrlRaw = String(formData.get("logo_url") ?? "").trim();
-  const logoUrl = logoUrlRaw.length > 0 ? logoUrlRaw : null;
+  const coverPhotoUrlRaw = String(formData.get("cover_photo_url") ?? "").trim();
+  let logoUrl = logoUrlRaw.length > 0 ? logoUrlRaw : null;
+  let coverPhotoUrl = coverPhotoUrlRaw.length > 0 ? coverPhotoUrlRaw : null;
   const colorPalette = paletteFromFormData(formData);
   const defaultLocale = String(formData.get("default_locale") ?? "en");
 
   if (!id || !name || !code) {
     redirect("/admin/clients?error=Missing+required+fields");
+  }
+
+  try {
+    const uploadedLogoPath = await uploadClientImage(supabase, formData.get("logo_file"), code, "logo");
+    if (uploadedLogoPath) logoUrl = uploadedLogoPath;
+    const uploadedCoverPath = await uploadClientImage(supabase, formData.get("cover_photo_file"), code, "cover");
+    if (uploadedCoverPath) coverPhotoUrl = uploadedCoverPath;
+  } catch (error) {
+    redirect(`/admin/clients?error=${encodeURIComponent((error as Error).message)}`);
   }
 
   const { error } = await supabase
@@ -421,6 +499,7 @@ async function updateClientAction(formData: FormData) {
       code,
       domain,
       logo_url: logoUrl,
+      cover_photo_url: coverPhotoUrl,
       color_palette: colorPalette,
       default_locale: defaultLocale,
       updated_at: new Date().toISOString(),
@@ -435,7 +514,7 @@ async function updateClientAction(formData: FormData) {
   redirect("/admin/clients?success=Client+updated");
 }
 
-async function deleteClientAction(formData: FormData) {
+export async function deleteClientAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -463,7 +542,7 @@ async function deleteClientAction(formData: FormData) {
   redirect("/admin/clients?success=Client+deleted");
 }
 
-async function saveClientGranularityAction(formData: FormData) {
+export async function saveClientGranularityAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -512,7 +591,7 @@ async function saveClientGranularityAction(formData: FormData) {
   }
 }
 
-async function saveClientAccessAction(formData: FormData) {
+export async function saveClientAccessAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -593,7 +672,7 @@ async function saveClientAccessAction(formData: FormData) {
   }
 }
 
-async function createClientEntityAction(formData: FormData) {
+export async function createClientEntityAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -644,7 +723,7 @@ async function createClientEntityAction(formData: FormData) {
   }
 }
 
-async function updateClientEntityAction(formData: FormData) {
+export async function updateClientEntityAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -700,7 +779,7 @@ async function updateClientEntityAction(formData: FormData) {
   }
 }
 
-async function deleteClientEntityAction(formData: FormData) {
+export async function deleteClientEntityAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -727,7 +806,7 @@ async function deleteClientEntityAction(formData: FormData) {
   }
 }
 
-async function importClientEntitiesCsvAction(formData: FormData) {
+export async function importClientEntitiesCsvAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -829,7 +908,7 @@ async function importClientEntitiesCsvAction(formData: FormData) {
   }
 }
 
-async function syncClientReportsAction(formData: FormData) {
+export async function syncClientReportsAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -872,7 +951,7 @@ export default async function AdminClientsPage({
 
   let query = supabase
     .from("clients")
-    .select("id,name,code,domain,logo_url,color_palette,default_locale,created_at")
+    .select("id,name,code,domain,logo_url,cover_photo_url,color_palette,default_locale,created_at")
     .order("created_at", { ascending: sortDirection });
 
   if (queryText) {
@@ -1003,6 +1082,18 @@ export default async function AdminClientsPage({
             <label className="text-sm md:col-span-2">
               Logo URL
               <Input className="mt-1" name="logo_url" type="url" placeholder="https://cdn.example.com/client-logo.png" />
+            </label>
+            <label className="text-sm md:col-span-2">
+              Upload Logo
+              <Input className="mt-1" name="logo_file" type="file" accept="image/*" />
+            </label>
+            <label className="text-sm md:col-span-2">
+              Cover Photo URL
+              <Input className="mt-1" name="cover_photo_url" type="url" placeholder="https://cdn.example.com/client-cover.jpg" />
+            </label>
+            <label className="text-sm md:col-span-2">
+              Upload Cover Photo
+              <Input className="mt-1" name="cover_photo_file" type="file" accept="image/*" />
             </label>
             <label className="text-sm">
               Default Locale
@@ -1139,7 +1230,7 @@ export default async function AdminClientsPage({
                         <div className="flex items-center gap-2">
                           {client.logo_url ? (
                             <Image
-                              src={client.logo_url}
+                              src={resolveAssetUrl(client.logo_url) ?? client.logo_url}
                               alt={`${client.name} logo`}
                               className="h-6 w-6 rounded object-contain"
                               width={24}
@@ -1191,6 +1282,18 @@ export default async function AdminClientsPage({
                               <label className="text-sm md:col-span-2">
                                 Logo URL
                                 <Input className="mt-1" name="logo_url" type="url" defaultValue={client.logo_url ?? ""} />
+                              </label>
+                              <label className="text-sm md:col-span-2">
+                                Upload Logo
+                                <Input className="mt-1" name="logo_file" type="file" accept="image/*" />
+                              </label>
+                              <label className="text-sm md:col-span-2">
+                                Cover Photo URL
+                                <Input className="mt-1" name="cover_photo_url" type="url" defaultValue={client.cover_photo_url ?? ""} />
+                              </label>
+                              <label className="text-sm md:col-span-2">
+                                Upload Cover Photo
+                                <Input className="mt-1" name="cover_photo_file" type="file" accept="image/*" />
                               </label>
                               <label className="text-sm">
                                 Default Locale

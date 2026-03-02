@@ -1,16 +1,19 @@
+import type { CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 
 export function PageHeader({
   title,
   description,
   className,
+  style,
 }: {
   title: string;
   description?: string;
   className?: string;
+  style?: CSSProperties;
 }) {
   return (
-    <div className={cn("space-y-1", className)}>
+    <div className={cn("space-y-1", className)} style={style}>
       <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
       {description ? <p className="text-sm text-muted-foreground">{description}</p> : null}
     </div>

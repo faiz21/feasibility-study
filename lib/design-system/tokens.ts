@@ -21,13 +21,41 @@ export const semanticColorTokens: ColorToken[] = [
     sampleClassName: "bg-popover text-popover-foreground border-border",
   },
   {
-    name: "primary",
-    description: "Vuexy-inspired brand purple",
+    name: "primary / default",
+    description: "Primary action color",
     sampleClassName: "bg-primary text-primary-foreground border-primary/20",
   },
   {
+    name: "primary / hover",
+    description: "Primary interaction hover state",
+    sampleClassName:
+      "bg-primary-hover text-primary-foreground border-primary-hover/20",
+  },
+  {
+    name: "primary / active",
+    description: "Primary pressed or active state",
+    sampleClassName:
+      "bg-primary-active text-primary-foreground border-primary-active/20",
+  },
+  {
+    name: "primary / soft",
+    description: "Low-emphasis primary background",
+    sampleClassName:
+      "bg-primary-soft text-primary border-primary-border/30",
+  },
+  {
+    name: "brand / default",
+    description: "Machine Vision brand identity color",
+    sampleClassName: "bg-brand text-brand-foreground border-brand/20",
+  },
+  {
+    name: "brand / soft",
+    description: "Subtle brand-emphasis surface",
+    sampleClassName: "bg-brand-soft text-brand border-brand/25",
+  },
+  {
     name: "accent blue",
-    description: "Brand secondary cyan",
+    description: "Secondary brand accent",
     sampleClassName:
       "bg-accentBlue text-accentBlue-foreground border-accentBlue/30",
   },
@@ -47,9 +75,9 @@ export const semanticColorTokens: ColorToken[] = [
     sampleClassName: "bg-accent text-accent-foreground border-accent-foreground/20",
   },
   {
-    name: "destructive",
-    description: "Destructive actions",
-    sampleClassName: "bg-destructive text-destructive-foreground border-destructive/20",
+    name: "error / destructive",
+    description: "Error states and destructive actions",
+    sampleClassName: "bg-error text-error-foreground border-error/25",
   },
   {
     name: "border / input / ring",
@@ -71,23 +99,28 @@ export const semanticColorTokens: ColorToken[] = [
 export const statusColorTokens: ColorToken[] = [
   {
     name: "success",
-    description: "Value opportunity",
+    description: "Positive system status",
     sampleClassName: "bg-success text-success-foreground border-success/25",
   },
   {
     name: "warning",
-    description: "Risk",
+    description: "Warning system status",
     sampleClassName: "bg-warning text-warning-foreground border-warning/25",
   },
   {
-    name: "critical",
-    description: "Critical gap",
-    sampleClassName: "bg-critical text-critical-foreground border-critical/25",
+    name: "error",
+    description: "Error system status",
+    sampleClassName: "bg-error text-error-foreground border-error/25",
   },
   {
     name: "info",
-    description: "Strategic initiative",
+    description: "Informational system status",
     sampleClassName: "bg-info text-info-foreground border-info/25",
+  },
+  {
+    name: "critical (alias)",
+    description: "Backward-compatible alias of error",
+    sampleClassName: "bg-critical text-critical-foreground border-critical/25",
   },
 ];
 
@@ -103,3 +136,11 @@ export const neutralScaleTokens: ColorToken[] = [
   { name: "neutral-800", sampleClassName: "bg-neutral-800 text-background border-neutral-900" },
   { name: "neutral-900", sampleClassName: "bg-neutral-900 text-background border-neutral-800" },
 ];
+
+export const mvDefaultBrandPalette = {
+  primary: "#1E40AF",
+  secondary: "#64748B",
+  accent: "#0EA5E9",
+  background: "#F8FAFC",
+  text: "#0F172A",
+} as const;

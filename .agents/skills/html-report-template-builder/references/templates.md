@@ -43,6 +43,53 @@ Use one shared `template_name` and generate these files exactly:
     "tags": [],
     "locale": "en"
   },
+  "theme": {
+    "tokens": {
+      "primary": "#0f172a",
+      "primary-foreground": "#ffffff",
+      "secondary": "#334155",
+      "secondary-foreground": "#ffffff",
+      "accent": "#0ea5e9",
+      "accent-foreground": "#001018",
+      "background": "#ffffff",
+      "foreground": "#0f172a",
+      "card": "#ffffff",
+      "card-foreground": "#0f172a",
+      "muted": "#f1f5f9",
+      "muted-foreground": "#475569",
+      "border": "#e2e8f0",
+      "input": "#ffffff",
+      "ring": "#0ea5e9",
+      "success": "#15803d",
+      "success-foreground": "#ffffff",
+      "warning": "#b45309",
+      "warning-foreground": "#ffffff",
+      "critical": "#b91c1c",
+      "critical-foreground": "#ffffff",
+      "info": "#0369a1",
+      "info-foreground": "#ffffff",
+      "cover-background": "#0f172a",
+      "cover-overlay": "rgba(15, 23, 42, 0.65)",
+      "cover-title": "#ffffff",
+      "cover-subtitle": "#cbd5e1",
+      "section-title": "#0f172a",
+      "section-body": "#1e293b",
+      "kpi-value": "#0f172a",
+      "kpi-label": "#475569",
+      "chart-grid": "#e2e8f0",
+      "chart-axis": "#64748b",
+      "chart-series-1": "#0ea5e9",
+      "chart-series-2": "#14b8a6",
+      "chart-series-3": "#f97316",
+      "table-header": "#e2e8f0",
+      "table-row": "#ffffff",
+      "table-border": "#cbd5e1",
+      "tag-background": "#dbeafe",
+      "tag-foreground": "#1e3a8a",
+      "disabled-background": "#e2e8f0",
+      "disabled-foreground": "#94a3b8"
+    }
+  },
   "pages": [
     {
       "schemaVersion": 1,
@@ -100,14 +147,65 @@ Use one shared `template_name` and generate these files exactly:
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Report Renderer</title>
   <style>
-    :root { --bg: #f3f5f7; --card: #ffffff; --ink: #111827; --muted: #6b7280; --line: #d1d5db; --brand: #0f172a; }
+    :root {
+      --primary: #0f172a;
+      --primary-foreground: #ffffff;
+      --secondary: #334155;
+      --secondary-foreground: #ffffff;
+      --accent: #0ea5e9;
+      --accent-foreground: #001018;
+      --background: #ffffff;
+      --foreground: #0f172a;
+      --card: #ffffff;
+      --card-foreground: #0f172a;
+      --muted: #f1f5f9;
+      --muted-foreground: #475569;
+      --border: #e2e8f0;
+      --input: #ffffff;
+      --ring: #0ea5e9;
+      --success: #15803d;
+      --success-foreground: #ffffff;
+      --warning: #b45309;
+      --warning-foreground: #ffffff;
+      --critical: #b91c1c;
+      --critical-foreground: #ffffff;
+      --info: #0369a1;
+      --info-foreground: #ffffff;
+      --cover-background: #0f172a;
+      --cover-overlay: rgba(15, 23, 42, 0.65);
+      --cover-title: #ffffff;
+      --cover-subtitle: #cbd5e1;
+      --section-title: #0f172a;
+      --section-body: #1e293b;
+      --kpi-value: #0f172a;
+      --kpi-label: #475569;
+      --chart-grid: #e2e8f0;
+      --chart-axis: #64748b;
+      --chart-series-1: #0ea5e9;
+      --chart-series-2: #14b8a6;
+      --chart-series-3: #f97316;
+      --table-header: #e2e8f0;
+      --table-row: #ffffff;
+      --table-border: #cbd5e1;
+      --tag-background: #dbeafe;
+      --tag-foreground: #1e3a8a;
+      --disabled-background: #e2e8f0;
+      --disabled-foreground: #94a3b8;
+    }
   </style>
 </head>
 <body>
   <main id="app"></main>
   <script>
     const DOC = window.__DOC__ || { pages: [] };
+    const TOKENS = (DOC.theme && DOC.theme.tokens) || {};
     const R = {};
+
+    function applyThemeTokens(tokens) {
+      Object.entries(tokens).forEach(([k, v]) => {
+        if (typeof v === "string") document.documentElement.style.setProperty(`--${k}`, v);
+      });
+    }
 
     function renderRichText(rt) { /* h2/p/ul only */ }
     function renderNode(node) {
@@ -121,6 +219,7 @@ Use one shared `template_name` and generate these files exactly:
       return `<article>${blocks}</article>`;
     }
 
+    applyThemeTokens(TOKENS);
     document.getElementById("app").innerHTML = (DOC.pages || []).map(renderPage).join("");
   </script>
 </body>
@@ -177,7 +276,7 @@ Use one shared `template_name` and generate these files exactly:
 
 ```tsx
 import type { Meta, StoryObj } from "@storybook/react";
-import { CaseStudyPageRenderer } from "@/components/case-study/renderer/page-renderer";
+import { ReportPageRenderer } from "@/components/report/renderer/page-renderer";
 
 const sampleDoc = {
   schemaVersion: 1,
@@ -186,13 +285,13 @@ const sampleDoc = {
 };
 
 const meta = {
-  title: "Case Study/Generated/Page Renderer",
-  component: CaseStudyPageRenderer,
+  title: "report_template/{Template Name}",
+  component: ReportPageRenderer,
   args: {
     page: sampleDoc.pages[0],
     locale: "en"
   }
-} satisfies Meta<typeof CaseStudyPageRenderer>;
+} satisfies Meta<typeof ReportPageRenderer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -210,7 +309,7 @@ export const MissingDataSafe: Story = {
 
 | Object Type | Code(s) Produced/Updated | Source | Used By | Notes |
 | ----------- | ------------------------ | ------ | ------- | ----- |
-| Storybook Stories | `{AppCode}-TPL-STORY-001` | Step 2 JSON + Step 3 registry | Storybook runtime | Include page-level and per-type coverage |
+| Storybook Stories | `{AppCode}-TPL-STORY-001` | Step 2 JSON + Step 3 registry | Storybook runtime | Place files in `components/case-study/renderer/report_template/` and include page-level + per-type coverage |
 
 ## Prompt Pack
 

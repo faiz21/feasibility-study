@@ -1,0 +1,4 @@
+interface:
+  display_name: "Evaluate UI Components"
+  short_description: "Audit spacing, alignment, hierarchy, and consistency."
+  default_prompt: "Use $evaluate-ui-components to evaluate this UI component for spacing, padding, alignment, and overall visual quality: <component/path>."

@@ -87,6 +87,21 @@ Lint a specific area:
 npx eslint app/admin/client-entities/page.tsx
 ```
 
+Reports route smoke checks (requires app running on `BASE_URL`, default `http://localhost:3000`):
+```bash
+npm run smoke:reports
+```
+
+Optional authenticated checks:
+- `AUTH_COOKIE` = browser session cookie string
+- `REPORT_TYPE_ID` = report type UUID/ID
+- `REPORT_ID` = report UUID/ID
+
+Example:
+```bash
+BASE_URL=http://localhost:3000 AUTH_COOKIE='sb-...=...' REPORT_TYPE_ID='<type-id>' REPORT_ID='<report-id>' npm run smoke:reports
+```
+
 ## Notes
 - Role hint in login metadata is not authorization; authorization is enforced by `profiles.role` and RLS.
 - Static admin password in client code is insecure and visible in browser bundles; prefer server-side validation for production.

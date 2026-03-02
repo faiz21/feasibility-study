@@ -177,17 +177,17 @@
           pageTitle: "Cover",
           layout: [
             {
-              type: "layout.watermarkBackgroundPattern",
+              type: "report.layout.watermark",
               id: "cov-wmk-001",
               data: { patternKey: "grid-dots", opacity: 0.06 }
             },
             {
-              type: "layout.headerBarBrand",
+              type: "report.layout.headerBar",
               id: "cov-hdr-002",
               data: { headerLabel: "AUTOMATION AUDIT REPORT TEMPLATE", brand: { logo: { src: "", alt: "INALUM" } } }
             },
             {
-              type: "content.longFormOverview",
+              type: "report.text.narrativeBlock",
               id: "cov-lfo-003",
               data: {
                 title: "PT Indonesia Asahan Aluminium - Green Plant",
@@ -201,7 +201,7 @@
               }
             },
             {
-              type: "kpi.card",
+              type: "report.metric.resultMetricCard",
               id: "cov-kpi-004",
               data: {
                 title: "Default Snapshot",
@@ -213,7 +213,7 @@
               }
             },
             {
-              type: "layout.footerContactStrip",
+              type: "report.layout.footerStrip",
               id: "cov-ftr-005",
               data: {
                 contacts: [
@@ -232,12 +232,12 @@
           pageTitle: "1. Executive Summary",
           layout: [
             {
-              type: "layout.headerBarBrand",
+              type: "report.layout.headerBar",
               id: "es-hdr-001",
               data: { headerLabel: "1. EXECUTIVE SUMMARY", brand: { logo: { src: "", alt: "INALUM" } } }
             },
             {
-              type: "content.longFormOverview",
+              type: "report.text.narrativeBlock",
               id: "es-lfo-002",
               data: {
                 title: "Green Plant Automation Baseline",
@@ -250,7 +250,7 @@
               }
             },
             {
-              type: "content.twoColumnTextBlock",
+              type: "report.section.multiColumn",
               id: "es-2ct-003",
               data: {
                 left: {
@@ -272,7 +272,7 @@
               }
             },
             {
-              type: "layout.footerContactStrip",
+              type: "report.layout.footerStrip",
               id: "es-ftr-004",
               data: {
                 contacts: [
@@ -291,12 +291,12 @@
           pageTitle: "2. Roadmap Snapshot",
           layout: [
             {
-              type: "layout.headerBarBrand",
+              type: "report.layout.headerBar",
               id: "rd-hdr-001",
               data: { headerLabel: "ROADMAP SNAPSHOT", brand: { logo: { src: "", alt: "INALUM" } } }
             },
             {
-              type: "process.workflowStepper",
+              type: "report.list.squareNumberedList",
               id: "rd-wfs-002",
               data: {
                 title: "Phase Sequence",
@@ -309,7 +309,7 @@
               }
             },
             {
-              type: "table.simple",
+              type: "report.table.table",
               id: "rd-tbl-003",
               data: {
                 title: "Roadmap Deliverables",
@@ -323,7 +323,7 @@
               }
             },
             {
-              type: "layout.footerContactStrip",
+              type: "report.layout.footerStrip",
               id: "rd-ftr-004",
               data: {
                 contacts: [
@@ -368,71 +368,83 @@
       return `<section class="blk ${cls}">${title ? `<h3>${esc(title)}</h3>` : ""}${body || ""}</section>`;
     }
 
-    R["layout.watermarkBackgroundPattern"] = (node) => {
+    R["report.layout.watermark"] = (node) => {
       return `<section class="blk wmk" data-id="${esc(node.id)}"></section>`;
     };
 
-    R["layout.headerBarBrand"] = (node) => {
+    R["report.layout.headerBar"] = (node) => {
       const label = node?.data?.headerLabel || "Header";
       const alt = node?.data?.brand?.logo?.alt || "Brand";
       return `<section class="blk hdr" data-id="${esc(node.id)}"><span>${esc(label)}</span><span>${esc(alt)}</span></section>`;
     };
 
-    R["layout.footerContactStrip"] = (node) => {
+    R["report.layout.footerStrip"] = (node) => {
       const contacts = Array.isArray(node?.data?.contacts) ? node.data.contacts : [];
       const parts = contacts.map((c) => `${esc(c.kind)}: ${esc(c.value)}`);
       const pageNo = node?.data?.pageNumber;
       return `<section class="blk footer" data-id="${esc(node.id)}">${parts.map((p) => `<span>${p}</span>`).join("")}${pageNo ? `<span>page: ${esc(pageNo)}</span>` : ""}</section>`;
     };
 
-    R["content.longFormOverview"] = (node) => {
+    R["report.text.narrativeBlock"] = (node) => {
       const title = node?.data?.title || "Overview";
-      return block(title, renderRichText(node?.data?.body));
+      const content = node?.data?.content || "";
+      const bullets = Array.isArray(node?.data?.bullets) ? node.data.bullets : [];
+      const html = `
+        <div class="rt">
+          ${content ? `<p>${esc(content)}</p>` : ""}
+          ${bullets.length ? `<ul>${bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}
+        </div>
+      `;
+      return block(title, html);
     };
 
-    R["content.twoColumnTextBlock"] = (node) => {
+    R["report.section.multiColumn"] = (node) => {
       const left = node?.data?.left || {};
       const right = node?.data?.right || {};
       const html = `
         <div class="two">
-          <div>${block(left.title || "Left", renderRichText(left.body))}</div>
-          <div>${block(right.title || "Right", renderRichText(right.body))}</div>
+          <div>${block(left.title || "Left", `<div class="rt"><p>${esc(left.content || "")}</p>${Array.isArray(left.bullets) && left.bullets.length ? `<ul>${left.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}</div>`)}</div>
+          <div>${block(right.title || "Right", `<div class="rt"><p>${esc(right.content || "")}</p>${Array.isArray(right.bullets) && right.bullets.length ? `<ul>${right.bullets.map((b) => `<li>${esc(b)}</li>`).join("")}</ul>` : ""}</div>`)}</div>
         </div>
       `;
       return block("", html);
     };
 
-    R["table.simple"] = (node) => {
+    R["report.table.table"] = (node) => {
       const title = node?.data?.title || "Table";
-      const columns = Array.isArray(node?.data?.columns) ? node.data.columns : [];
+      const columns = Array.isArray(node?.data?.headers) ? node.data.headers : [];
       const rows = Array.isArray(node?.data?.rows) ? node.data.rows : [];
       const head = `<tr>${columns.map((c) => `<th>${esc(c)}</th>`).join("")}</tr>`;
       const body = rows.map((r) => `<tr>${(Array.isArray(r) ? r : []).map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`).join("");
       return block(title, `<table><thead>${head}</thead><tbody>${body}</tbody></table>`);
     };
 
-    R["chart.barCard"] = (node) => {
+    R["report.chart.charts"] = (node) => {
       const title = node?.data?.title || "Bar Chart";
-      return block(title, `<div class="chart-placeholder"><strong>Chart placeholder:</strong> chart.barCard<pre>${esc(JSON.stringify(node?.data || {}, null, 2))}</pre></div>`);
+      const series = Array.isArray(node?.data?.series) ? node.data.series : [];
+      const items = series.map((s) => `${esc(s.label)}: ${esc(s.value)}`).join("<br/>");
+      return block(title, `<div class="chart-placeholder"><strong>Chart data:</strong><br/>${items || "No series"}</div>`);
     };
 
-    R["chart.gaugeSegments"] = (node) => {
+    R["report.metric.gaugeNarrativeGrid"] = (node) => {
       const title = node?.data?.title || "Gauge";
-      return block(title, `<div class="chart-placeholder"><strong>Chart placeholder:</strong> chart.gaugeSegments<pre>${esc(JSON.stringify(node?.data || {}, null, 2))}</pre></div>`);
+      const items = Array.isArray(node?.data?.items) ? node.data.items : [];
+      const rows = items.map((i) => `${esc(i.label)}: ${esc(i.percent)}%`).join("<br/>");
+      const narrative = node?.data?.narrative ? `<p>${esc(node.data.narrative)}</p>` : "";
+      return block(title, `<div class="chart-placeholder"><strong>Gauge data:</strong><br/>${rows || "No items"}${narrative}</div>`);
     };
 
-    R["kpi.card"] = (node) => {
+    R["report.metric.resultMetricCard"] = (node) => {
       const title = node?.data?.title || "KPI";
-      const body = renderRichText(node?.data?.body);
       const metrics = Array.isArray(node?.data?.metrics) ? node.data.metrics : [];
       const cards = `<div class="kpi-values">${metrics.map((m) => `<div class="kpi-value"><b>${esc(m.value)}</b><span>${esc(m.label)}</span></div>`).join("")}</div>`;
-      return block(title, `${body}${cards}`);
+      return block(title, cards);
     };
 
-    R["process.workflowStepper"] = (node) => {
+    R["report.list.squareNumberedList"] = (node) => {
       const title = node?.data?.title || "Workflow";
-      const steps = Array.isArray(node?.data?.steps) ? node.data.steps : [];
-      const body = `<ol class="step-list">${steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>`;
+      const items = Array.isArray(node?.data?.items) ? node.data.items : [];
+      const body = `<ol class="step-list">${items.map((s) => `<li><strong>${esc(s.title || "Step")}</strong><br/>${esc(s.description || "")}</li>`).join("")}</ol>`;
       return block(title, body);
     };
 

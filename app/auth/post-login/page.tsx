@@ -3,19 +3,72 @@ import { logAccess } from "@/lib/portal/logging";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
+function normalizeDomain(value: string): string {
+  return value.trim().toLowerCase().replace(/^www\./, "");
+}
+
+function getEmailDomain(email: string): string | null {
+  const domain = email.split("@").pop();
+  if (!domain) return null;
+  const normalized = normalizeDomain(domain);
+  return normalized.length > 0 ? normalized : null;
+}
+
 export default async function PostLoginPage() {
   const user = await requireAuthenticatedUser();
   const supabase = await createClient();
   let profile = await getProfile(user.id);
 
-  if (!profile) {
-    const roleHint = user.user_metadata?.role_hint;
-    const role = roleHint === "admin" ? "admin" : "client";
+  const roleHint = user.user_metadata?.role_hint;
+  const role = profile ? profile.role : (roleHint === "admin" ? "admin" : "client");
 
+  let clientId = profile?.client_id;
+
+  if (role === "client") {
+    const email = user.email ?? "";
+    const userDomain = getEmailDomain(email);
+    if (!userDomain) {
+      redirect("/auth/error?error=Unauthorized:+Invalid+email");
+    }
+
+    const { data: domainClient, error: domainLookupError } = await supabase
+        .from("clients")
+        .select("id,domain")
+        .eq("domain", userDomain)
+        .maybeSingle();
+    if (domainLookupError) {
+      redirect(`/auth/error?error=${encodeURIComponent(domainLookupError.message)}`);
+    }
+
+    if (!domainClient) {
+      redirect("/auth/error?error=Unauthorized:+Your+email+domain+is+not+registered");
+    }
+
+    if (!clientId || clientId !== domainClient.id) {
+      clientId = domainClient.id;
+      if (profile) {
+        const { error: updateProfileError } = await supabase
+          .from("profiles")
+          .update({ client_id: clientId, updated_at: new Date().toISOString() })
+          .eq("user_id", user.id);
+
+        if (updateProfileError) {
+          redirect(`/auth/error?error=${encodeURIComponent(updateProfileError.message)}`);
+        }
+
+        if (profile) {
+          profile.client_id = clientId;
+        }
+      }
+    }
+  }
+
+  if (!profile) {
     const { error } = await supabase.from("profiles").upsert(
       {
         user_id: user.id,
         role,
+        client_id: role === "client" ? clientId : null,
         locale: "en",
       },
       { onConflict: "user_id" },

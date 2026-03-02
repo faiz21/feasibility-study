@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { toLocale, type Locale } from "@/lib/i18n/dictionaries";
 import type { Profile } from "@/lib/portal/types";
+import { getAdminPreviewClientId } from "@/lib/portal/admin-preview";
 
 export async function getCurrentUser() {
   const supabase = await createClient();
@@ -42,10 +43,29 @@ export async function requireRole(role: "admin" | "client") {
   }
 
   if (role === "client" && profile.role !== "client") {
+    if (profile.role === "admin") {
+      const previewClientId = await getAdminPreviewClientId();
+      if (previewClientId) {
+        return {
+          user,
+          profile: {
+            ...profile,
+            role: "client" as const,
+            client_id: previewClientId,
+          },
+          isAdminPreview: true,
+        };
+      }
+    }
+
     redirect("/admin/reports");
   }
 
-  return { user, profile };
+  if (role === "client" && !profile.client_id) {
+    redirect("/auth/post-login");
+  }
+
+  return { user, profile, isAdminPreview: false };
 }
 
 export async function resolveLocaleForUser(profile: Profile): Promise<Locale> {

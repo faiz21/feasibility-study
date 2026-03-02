@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ document.title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --ink: #0f172a;
+        --muted: #475569;
+        --line: rgba(226, 232, 240, 0.9);
+        --report-500: #14b8a6;
+        --report-800: #115e59;
+        --slate-900: #0f172a;
+        --slate-50: #f8fafc;
+        --slate-100: #f1f5f9;
+        --shadow: 0 18px 44px rgba(15, 23, 42, 0.12);
+        {{ theme_css_vars }}
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
+        color: var(--ink);
+        background: radial-gradient(circle at 15% 0%, #dbeafe, var(--slate-50) 45%, #ffffff 100%);
+        line-height: 1.6;
+      }
+      ::selection { background: rgba(20, 184, 166, 0.25); }
+      a { color: inherit; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      .hero {
+        min-height: 92vh;
+        display: flex;
+        align-items: flex-end;
+        padding: 32px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        background:
+          linear-gradient(to right, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.62)),
+          url("https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2670&auto=format&fit=crop");
+        background-size: cover;
+        background-position: center;
+      }
+      @media (min-width: 900px) {
+        .hero { padding: 72px; }
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.25), transparent);
+        mix-blend-mode: multiply;
+      }
+      .hero-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 980px;
+      }
+      .badge {
+        display: inline-flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(20, 184, 166, 0.32);
+        background: rgba(20, 184, 166, 0.16);
+        color: rgba(240, 253, 250, 0.95);
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 12px;
+        box-shadow: 0 18px 40px rgba(20, 184, 166, 0.08);
+        margin-bottom: 18px;
+      }
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(15, 23, 42, 0.35);
+        color: rgba(226, 232, 240, 0.95);
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-size: 11px;
+      }
+      .hero h1 {
+        margin: 0 0 14px;
+        font-size: clamp(42px, 6vw, 78px);
+        line-height: 1.04;
+        letter-spacing: -0.03em;
+        font-weight: 800;
+      }
+      .hero p {
+        margin: 0 0 26px;
+        color: rgba(226, 232, 240, 0.92);
+        font-size: clamp(16px, 2.2vw, 22px);
+        max-width: 740px;
+        font-weight: 300;
+      }
+      .cover-meta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        padding: 18px;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(15, 23, 42, 0.78);
+        backdrop-filter: blur(24px);
+        box-shadow: 0 28px 70px rgba(15, 23, 42, 0.35);
+        max-width: 860px;
+      }
+      @media (min-width: 900px) {
+        .cover-meta { grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 24px; gap: 18px; }
+      }
+      .meta-k { color: rgba(148, 163, 184, 0.9); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 800; margin: 0 0 6px; }
+      .meta-v { color: white; font-weight: 600; font-size: 16px; margin: 0; }
+
+      .container {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 72px 18px 86px;
+      }
+      @media (min-width: 900px) { .container { padding: 92px 42px 110px; } }
+
+      .grid12 {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 18px 18px;
+        align-items: start;
+      }
+      @media (min-width: 900px) { .grid12 { gap: 28px 28px; } }
+
+      .span-12 { grid-column: span 12; }
+      .span-lg-4, .span-lg-8center { grid-column: span 12; }
+      @media (min-width: 900px) {
+        .span-lg-4 { grid-column: span 4; }
+        .span-lg-8center { grid-column: 3 / span 8; }
+      }
+
+      .block {
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        padding: 22px;
+        box-shadow: 0 16px 44px rgba(15, 23, 42, 0.08);
+        overflow: hidden;
+      }
+      @media (min-width: 900px) { .block { padding: 28px; } }
+
+      .h1-block {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+      .h1-block h2 {
+        margin: 0;
+        padding: 12px 0 10px 22px;
+        border-left: 6px solid var(--report-500);
+        color: var(--slate-900);
+        font-size: clamp(34px, 4.2vw, 56px);
+        letter-spacing: -0.02em;
+        font-weight: 800;
+      }
+
+      .h2-block {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+      .h2-block h3 {
+        margin: 0;
+        padding: 10px 0 8px 18px;
+        border-left: 4px solid rgba(15, 23, 42, 0.88);
+        color: var(--slate-900);
+        font-size: 22px;
+        letter-spacing: -0.01em;
+        font-weight: 800;
+      }
+
+      .card-block {
+        background: var(--card);
+        border-radius: 32px;
+        border: 1px solid rgba(241, 245, 249, 0.9);
+        box-shadow: 0 18px 44px rgba(15, 23, 42, 0.10);
+        transition: transform 200ms ease, box-shadow 200ms ease;
+        position: relative;
+      }
+      .card-block:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 28px 76px rgba(15, 23, 42, 0.16);
+      }
+      .card-block::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: linear-gradient(90deg, rgba(148, 163, 184, 0.35), rgba(20, 184, 166, 0.7));
+      }
+      .card-block h4 {
+        margin: 0 0 12px;
+        padding-top: 6px;
+        font-size: 18px;
+        color: var(--slate-900);
+        letter-spacing: -0.01em;
+        font-weight: 800;
+      }
+
+      .prose p { margin: 0 0 12px; color: rgba(51, 65, 85, 0.98); font-size: 16px; font-weight: 350; }
+      .prose ul, .prose ol { margin: 0 0 12px; padding-left: 18px; color: rgba(51, 65, 85, 0.98); }
+      .prose li { margin: 6px 0; }
+      .prose strong { font-weight: 700; color: var(--slate-900); }
+      .prose em { font-style: italic; }
+      .prose code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 12px;
+        background: #f1f5f9;
+        border: 1px solid #e2e8f0;
+        padding: 2px 6px;
+        border-radius: 10px;
+      }
+      .prose pre {
+        margin: 0 0 12px;
+        background: #0b1220;
+        color: #e2e8f0;
+        border-radius: 18px;
+        padding: 16px;
+        overflow: auto;
+        border: 1px solid rgba(226, 232, 240, 0.14);
+      }
+      .prose pre code { background: transparent; border: none; padding: 0; color: inherit; }
+      .prose blockquote {
+        margin: 0 0 12px;
+        padding: 18px 18px;
+        border-radius: 20px;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.86));
+        color: rgba(226, 232, 240, 0.92);
+        position: relative;
+        overflow: hidden;
+      }
+      .prose blockquote::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        width: 10px;
+        background: linear-gradient(180deg, rgba(45, 212, 191, 0.8), rgba(20, 184, 166, 0.95));
+      }
+      .prose blockquote p {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 18px;
+        font-weight: 300;
+        color: rgba(226, 232, 240, 0.95);
+      }
+
+      .table-wrap {
+        overflow: auto;
+        border-radius: 22px;
+        border: 1px solid rgba(226, 232, 240, 0.95);
+        background: var(--card);
+      }
+      table.tbl {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 760px;
+        font-size: 13px;
+      }
+      table.tbl th, table.tbl td {
+        padding: 10px 12px;
+        border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+        vertical-align: top;
+        text-align: left;
+      }
+      table.tbl th {
+        position: sticky;
+        top: 0;
+        background: linear-gradient(180deg, #ffffff, #f8fafc);
+        color: var(--slate-900);
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        font-size: 11px;
+        border-bottom: 1px solid rgba(226, 232, 240, 0.95);
+      }
+      table.tbl tr:hover td { background: rgba(241, 245, 249, 0.55); }
+
+      .footer {
+        padding-top: 52px;
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+      }
+      .muted { color: rgba(226, 232, 240, 0.82); }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="badge">
+          <span>Markdown → Grid Report</span>
+          {{{ content.preamble_html }}}
+        </div>
+        <h1>{{ document.title }}</h1>
+        <p>
+          Premium grid + card rendering of <span class="muted"><code>{{ content.source_path }}</code></span> with a 12-column layout,
+          narrative reading width, and card grids for H3 subsections.
+        </p>
+        <div class="cover-meta">
+          <div>
+            <p class="meta-k">Generated</p>
+            <p class="meta-v">{{ generated.at }}</p>
+          </div>
+          <div>
+            <p class="meta-k">Layout</p>
+            <p class="meta-v">12-Column Grid</p>
+          </div>
+          <div>
+            <p class="meta-k">Reading Width</p>
+            <p class="meta-v">8/12 Center</p>
+          </div>
+          <div>
+            <p class="meta-k">Cards</p>
+            <p class="meta-v">Up to 3 Col</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main class="container">
+      <section class="grid12">
+        {{{ content.html }}}
+      </section>
+      <footer class="footer">Rendered in a sample-inspired glass + card aesthetic.</footer>
+    </main>
+  </body>
+</html>
+
