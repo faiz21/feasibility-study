@@ -18,19 +18,21 @@ export async function GET(request: NextRequest) {
   const next = safeNextPath(searchParams.get("next"));
   const supabase = await createClient();
 
-  if (code) {
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+  // Prefer token-hash verification when available.
+  // This avoids PKCE code_verifier storage mismatches on some email clients/browsers.
+  if (token_hash && type) {
+    const { error } = await supabase.auth.verifyOtp({
+      type,
+      token_hash,
+    });
     if (error) {
       redirect(`/auth/error?error=${encodeURIComponent(error.message)}`);
     }
     redirect(next);
   }
 
-  if (token_hash && type) {
-    const { error } = await supabase.auth.verifyOtp({
-      type,
-      token_hash,
-    });
+  if (code) {
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (error) {
       redirect(`/auth/error?error=${encodeURIComponent(error.message)}`);
     }
