@@ -38,17 +38,57 @@ cp .env.example .env.local
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 - `NEXT_PUBLIC_ADMIN_LOGIN_EMAIL` (must match admin user email in Supabase Auth for admin password login)
+- `NEXT_PUBLIC_CLIENT_ASSET_BUCKET` (optional; default `client-assets`, must exist in Supabase Storage)
 
 4. Run dev server:
 ```bash
 npm run dev
 ```
 
+## Local Platform Stack (Docker)
+This project can run as a local multi-service stack with:
+- Next.js web app
+- n8n
+- Directus
+- PostgreSQL (shared by n8n + Directus)
+
+### Quick Start
+1. Create Docker env file:
+```bash
+cp docker/.env.docker.example docker/.env.docker
+```
+
+2. Ensure app env exists (for Supabase keys used by web app):
+```bash
+cp .env.example .env.local
+```
+
+3. Start all services:
+```bash
+npm run docker:up
+```
+
+4. Open services:
+- Web app: `http://localhost:3000`
+- n8n: `http://localhost:5678`
+- Directus: `http://localhost:8055`
+
+### Docker Commands
+```bash
+npm run docker:up
+npm run docker:logs
+npm run docker:down
+npm run docker:smoke
+```
+
+Full deployment-prep guide: `docs/docker-deployment.md`.
+
 ## Database
 Apply migration files in `supabase/migrations`, especially:
 - `supabase/migrations/20260227_multitenant_report_portal.sql`
 - `supabase/migrations/20260227_portal_schema_updates.sql`
 - `supabase/migrations/20260228_client_branding.sql`
+- `supabase/migrations/20260302_storage_admin_uploads.sql` (required for Admin image uploads; fixes Storage RLS insert errors)
 
 ## Auth Flow
 - Portal login sends magic link with callback to `/auth/confirm`.

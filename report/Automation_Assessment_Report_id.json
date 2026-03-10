@@ -1,0 +1,376 @@
+{
+  "theme": {
+    "primary": "#14b8a6",
+    "dark": "#0f172a"
+  },
+  "metadata": {
+    "title": "Automation Assessment Report",
+    "company": "PT Indonesia Asahan Alumunium",
+    "plant": "Green Plant",
+    "scope": "INA-PL-GRP",
+    "content": "Sections 1–9",
+    "date": "23 February 2026",
+    "status": "Executive Final"
+  },
+  "sections": {
+    "executiveSummary": {
+      "context": "PT Indonesia Asahan Aluminium (INALUM) mengoperasikan Green Plant sebagai tahap persiapan karbon front-end dan pembentukan green anode yang mendukung jalur reduksi smelter. Assessment ini mengevaluasi kematangan otomasi di seluruh lapisan L1–L3 saja (basic control, supervisory visibility, dan kesiapan structured reporting) untuk menentukan kelayakan digitalisasi bertahap.",
+      "maturitySnapshot": "Green Plant beroperasi dengan baseline otomasi yang campuran. Aset inti dikontrol oleh PLC, namun intervensi manual, relay island, masalah keandalan sensor, dan integrasi supervisory yang terfragmentasi membatasi kepercayaan terhadap data dan kesiapan optimasi.",
+      "realities": [
+        "Distributed multi-brand PLC estate (Rockwell, Siemens, Omron) dengan integrasi yang tidak merata.",
+        "Pengaturan RPM manual yang signifikan dan penyesuaian damper di penanganan solids.",
+        "Masalah akurasi instrumen (misalnya, dampak debu pada level silo, varians belt scale 12%).",
+        "Pencatatan alarm/event yang terbatas dan stop-cause capture yang terstruktur.",
+        "Proses quality dan sampling masih sebagian besar manual dan berbasis transkripsi."
+      ],
+      "takeaway": "Kematangan keseluruhan menunjukkan L1 sudah sebagian terbentuk, L2 terfragmentasi, dan kesiapan L3 terbatas tanpa perbaikan mendasar.",
+      "riskThemes": [
+        "Conveyor dan peristiwa aliran bulk solids (choking, bridging, overflow) belum diinstrumentasi secara sistematis.",
+        "Degradasi sensor di lingkungan berdebu mengurangi kepercayaan terhadap visibilitas stok dan material.",
+        "Historis alarm/event tidak dicatat secara konsisten, membatasi analisis akar masalah.",
+        "Protective sensing sebelumnya telah dinonaktifkan karena false alarm.",
+        "Traceability manual dan transkripsi QC menciptakan latensi feedback kualitas."
+      ],
+      "outlook": "Inisiatif stabilisasi L1 awal dapat dilakukan dengan peningkatan bertahap. Konsolidasi supervisory L2 dapat dicapai begitu akurasi instrumentasi dan pencatatan event meningkat. Analitik L3 dan structured reporting tidak layak tanpa alarm capture yang sistematis, pemulihan kepercayaan inventaris, dan perbaikan integrasi baseline.",
+      "classifications": [
+        {
+          "type": "Early Wins",
+          "text": "Conveyor integrity sensing, digital pressure transmitter, pemantauan ampere motor."
+        },
+        {
+          "type": "Foundational Upgrades",
+          "text": "Standardised alarm logging, trusted mass flow measurement."
+        },
+        {
+          "type": "Structural Gaps",
+          "text": "Arsitektur data terpadu dan condition monitoring yang sistematis."
+        }
+      ],
+      "roadmapDirection": "Roadmap bertahap (Phase 0–3) direkomendasikan. Pengurutan harus memprioritaskan perlindungan ketersediaan sebelum lapisan optimasi.",
+      "priorities": [
+        "Melaksanakan survei instrumentasi L1 dan integrasi PLC secara terperinci.",
+        "Memulihkan atau mengganti sensor kritis yang dinonaktifkan (belt tear, choking detection).",
+        "Mengimplementasikan alarm logging dan historian baseline di seluruh plant.",
+        "Memvalidasi akurasi pengukuran level silo dan mass flow.",
+        "Menstandarisasi sinkronisasi waktu di seluruh PLC/SCADA estate."
+      ]
+    },
+    "methodology": {
+      "purpose": "Menilai kesiapan otomasi L1–L3 Green Plant untuk mendukung perencanaan kelayakan terstruktur.",
+      "inScope": [
+        "GRP Green Scrap and Butt Receiving Control System",
+        "GRP Cooling Water Control System",
+        "GRP Coke Receiving Control System",
+        "GRP Coke Grinding Control System",
+        "GRP Blending and Kneading Control System",
+        "GRP Anode Forming Control System",
+        "GRP Tar Pitch Receiving and Heating Oil Control System",
+        "GRP Green Block Line Conveying Control System"
+      ],
+      "outOfScope": "Pemodelan business case, desain ulang operating model, integrasi ERP, dan penyelarasan arsitektur IT perusahaan.",
+      "sources": [
+        "Dokumentasi riset proses (persiapan karbon, forming, penanganan).",
+        "Catatan elicitation otomasi (kesenjangan sensor, PLC estate, kendala operasional).",
+        "Inventaris PLC, SCADA, HMI.",
+        "Daftar peralatan yang dipetakan ke kelompok proses.",
+        "Register temuan & masalah.",
+        "Catatan alur kerja elicitation proses."
+      ],
+      "dataQuality": [
+        "Plant boundary control: Hanya lapisan L1–L3 Green Plant yang dipertimbangkan.",
+        "Evidence hierarchy: Inventaris yang terdokumentasi dan tabel terstruktur > catatan observasi.",
+        "Tidak ada inferensi di mana secara eksplisit tidak pasti: Item \"To validate\" dan tidak diketahui dicatat sebagai kesenjangan."
+      ],
+      "outputs": [
+        "Skor kesiapan L1/L2/L3 (1–5) per kelompok proses + kepercayaan.",
+        "Bukti kunci dan tindakan prioritas (L1 → L3).",
+        "Temuan lintas plant.",
+        "Roadmap teknis bertahap."
+      ]
+    },
+    "baseline": {
+      "overview": "Ikhtisar lanskap otomasi mencakup distribusi supervisory, representasi merek PLC, dan metrik kepercayaan instrumentasi.",
+      "plcTotal": 7,
+      "plcData": [
+        { "brand": "Rockwell", "count": 3, "color": "#14b8a6", "percentage": 42.8 },
+        { "brand": "Siemens", "count": 2, "color": "#3b82f6", "percentage": 28.6 },
+        { "brand": "Omron", "count": 1, "color": "#f59e0b", "percentage": 14.3 },
+        { "brand": "TBD", "count": 1, "color": "#94a3b8", "percentage": 14.3 }
+      ],
+      "plcNote": "Families: Logix-5575/5583E, CompactLogix, S7-1500/1200, CJ1M.",
+      "supervisory": {
+        "systems": "SCADA estate mencakup Citect (Granulation), FactoryTalk View (Vibration), dan satu sistem yang sebagian terdefinisi.",
+        "protocols": "Protokol mencakup Modbus RTU/TCP dan MQTT.",
+        "note": "Kelengkapan integrasi memerlukan validasi di seluruh estate."
+      },
+      "instruments": {
+        "total": 580,
+        "plcReadable": 367,
+        "relayLocal": 213,
+        "inferred": 426,
+        "obtained": 154,
+        "note": "Distribusi instrumentasi per kelompok proses tidak tersegmentasi sepenuhnya. Pemetaan I/O terperinci memerlukan survei. Closed-loop module / partial integration: 0."
+      }
+    },
+    "framework": {
+      "levels": [
+        { "level": "L1 — Basic Control Layer:", "desc": "Instrumentasi lapangan, logika PLC, dan kontrol tingkat peralatan." },
+        { "level": "L2 — Supervisory Layer:", "desc": "Visibilitas SCADA/HMI, penanganan alarm, historical capture." },
+        { "level": "L3 — Structured Intelligence Layer:", "desc": "Pencatatan event, reporting, traceability, kesiapan analitik." }
+      ],
+      "scale": [
+        { "score": "Score 1 — Structured", "desc": "Cakupan PLC yang kuat, lapisan supervisory terintegrasi, data tepercaya." },
+        { "score": "Score 2 — Functional", "desc": "Otomasi stabil namun standarisasi parsial atau kesenjangan logging." },
+        { "score": "Score 3 — Partial", "desc": "Sistem PLC/relay/manual campuran, event capture terbatas." },
+        { "score": "Score 4 — Weak", "desc": "Ketergantungan manual, pengukuran hilang, integrasi terfragmentasi." },
+        { "score": "Score 5 — Minimal automation", "desc": "Sebagian besar kontrol manual atau terisolasi." }
+      ]
+    },
+    "processGroups": [
+      {
+        "title": "Green Scrap &<br>Butt Receiving",
+        "scores": { "L1": 4, "L2": 4, "L3": 5 },
+        "confidence": "Medium",
+        "strengths": [
+          "PLC mengakomodasi fungsi weighing scale modern.",
+          "Niat pembaruan sudah ditetapkan untuk jalur daur ulang."
+        ],
+        "gaps": [
+          "Konveyor/elevator tetap merupakan relay-controlled island.",
+          "Eksposur overflow event ada tanpa sensing deteksi.",
+          "Choking dan gangguan aliran ditangani melalui deteksi manual."
+        ],
+        "riskExposure": "Ketergantungan tinggi pada kewaspadaan operator. Bagian yang dikontrol relay mencegah stop-cause capture yang sistematis dan integrasi perlindungan overflow."
+      },
+      {
+        "title": "Cooling Water<br>Control System",
+        "scores": { "L1": 3, "L2": 3, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "Loop pendinginan secara efisien menangani operasi pompa dan menara.",
+          "Pembaruan direncanakan untuk kesiapan integrasi SCADA penuh."
+        ],
+        "gaps": [
+          "Pemantauan performa sistematis (tekanan/aliran) tidak dibuktikan.",
+          "Disiplin event-history dan eksposur status real-time yang hilang."
+        ],
+        "riskExposure": "Sedang. Ketidakstabilan utilitas yang tidak teramati dapat merambat ke variabilitas produksi tanpa riwayat performa terstruktur untuk analisis akar masalah."
+      },
+      {
+        "title": "Coke Receiving<br>Control",
+        "scores": { "L1": 3, "L2": 3, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "Lapisan kontrol routing dan distribusi sudah terbentuk dengan baik.",
+          "Belt scale terintegrasi langsung ke logika utama."
+        ],
+        "gaps": [
+          "Pengukuran level silo tidak tepercaya akibat dampak debu.",
+          "Pengaturan RPM manual secara signifikan melemahkan stabilitas closed-loop.",
+          "Pengukuran mass flow tidak tepercaya karena ketidaksesuaian yang diketahui."
+        ],
+        "riskExposure": "Risiko akurasi inventaris tinggi. Praktik manual menggantikan disiplin sistem karena umpan balik instrumentasi yang tidak tepercaya."
+      },
+      {
+        "title": "Coke Grinding<br>Control",
+        "scores": { "L1": 3, "L2": 4, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "Aset inti (crusher, trommel, pemisahan) berurutan menggunakan PLC."
+        ],
+        "gaps": [
+          "Kontrol Blaine sepenuhnya bergantung pada penyesuaian sampling manual.",
+          "Eksposur kerusakan peralatan terkait getaran tidak dipantau.",
+          "Alarm capture yang krusial hilang untuk parameter sistem kritis."
+        ],
+        "riskExposure": "Risiko stabilitas kualitas. Kontrol tetap bergantung pada penyesuaian manual dengan latensi tinggi dari feedback kualitas lab-ke-PLC."
+      },
+      {
+        "title": "Blending &amp;<br>Kneading Control",
+        "scores": { "L1": 3, "L2": 3, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "Feeder, pre-heating, dan pengurutan kneader sudah ada.",
+          "Kontrol PLC secara luas ada di seluruh aset mixing inti."
+        ],
+        "gaps": [
+          "Beberapa parameter sistem kneading belum dicapture dalam PLC.",
+          "Kendala throughput akibat kurangnya capture parameter penuh."
+        ],
+        "riskExposure": "Kendala throughput tinggi. Kerusakan kneader secara material membatasi output keseluruhan; kurangnya downtime coding membatasi tinjauan performa."
+      },
+      {
+        "title": "Anode Forming<br>Control",
+        "scores": { "L1": 3, "L2": 3, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "Mesin shaking beroperasi di bawah kontrol PLC penuh.",
+          "Otomasi dasar ada untuk aset compacting dan forming."
+        ],
+        "gaps": [
+          "Pelabelan, traceability, dan disiplin waktu aging tetap manual.",
+          "Pemantauan integritas siklus memerlukan penguatan yang signifikan."
+        ],
+        "riskExposure": "Disiplin genealogi lemah. Penomoran duplikat atau hilang mencegah kematangan traceability L3 dan feedback loop jangka panjang yang andal."
+      },
+      {
+        "title": "Tar Pitch &amp;<br>Heating Oil",
+        "scores": { "L1": 3, "L2": 4, "L3": 4 },
+        "confidence": "Low",
+        "strengths": [
+          "Kontrol penyimpanan pitch dan loop heating oil secara fundamental sudah ada."
+        ],
+        "gaps": [
+          "Proses kontrol pengisian tetap sebagian manual.",
+          "Viscosity sensing tidak terkonfirmasi di seluruh sistem.",
+          "Integrasi antara modul mandiri dan supervisory hilang."
+        ],
+        "riskExposure": "Kesenjangan jaminan kualitas. Kurangnya data viskositas dan performa pompa sangat membatasi visibilitas performa pemanasan pitch."
+      },
+      {
+        "title": "Green Block Line<br>Conveying",
+        "scores": { "L1": 3, "L2": 3, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "Conveying berbasis PLC dan pemantauan safety chain ada untuk pergerakan green block."
+        ],
+        "gaps": [
+          "Stop-cause capture dan riwayat alarm sepenuhnya hilang.",
+          "Integrity sensing terbatas (kesehatan belt, suhu) pada konveyor terbatas."
+        ],
+        "riskExposure": "Peningkatan kemungkinan degradasi yang tidak teramati. Kegagalan reaktif pada transfer konveyor terjadi tanpa structured downtime capture."
+      }
+    ],
+    "plantWideFindings": [
+      {
+        "title": "Penanganan bulk solids belum \"closed-loop\"",
+        "desc": "Routing dan stabilitas aliran bergantung pada pengaturan RPM manual dan damper. Tindakan pembersihan reaktif adalah hal yang umum.",
+        "impact": "Penyelesaian L1 diperlukan sebelum inisiatif lapisan yang lebih tinggi dapat mengandalkan data."
+      },
+      {
+        "title": "Kondisi debu secara aktif menurunkan kualitas data",
+        "desc": "Akumulasi debu menurunkan keandalan level sensing di silo, menyebabkan pemeriksaan sounding manual.",
+        "impact": "Dashboard terkait inventaris tetap dibatasi secara struktural sampai kepercayaan dipulihkan."
+      },
+      {
+        "title": "Kesenjangan pemantauan integritas konveyor",
+        "desc": "Konveyor kritis kekurangan sensing komprehensif (belt tear/slip), terutama di segmen akses terbatas.",
+        "impact": "L1 integrity sensing adalah prasyarat untuk meningkatkan ketersediaan secara keseluruhan."
+      },
+      {
+        "title": "Protective sensing dinonaktifkan karena false alarm",
+        "desc": "Deteksi choking dilaporkan dinonaktifkan setelah nuisance trip, mengurangi baseline kontrol protektif.",
+        "impact": "Alarm governance dan penyetelan harus dilembagakan lebih awal."
+      },
+      {
+        "title": "Choking dan bridging adalah mode kerugian berulang",
+        "desc": "Peristiwa ini menciptakan short downtime berulang tetapi saat ini tidak dicatat sebagai event terstruktur.",
+        "impact": "L3 reporting dibatasi oleh kemampuan untuk me-trend mode kerugian spesifik ini."
+      },
+      {
+        "title": "Condition monitoring belum sistematis",
+        "desc": "CBM untuk pompa dan kneader dirujuk sebagai kebutuhan tetapi tidak memiliki tata kelola pengukuran sistematis.",
+        "impact": "Pilot dapat dilakukan tetapi memerlukan linkage instrumentasi baseline."
+      },
+      {
+        "title": "Kesenjangan pencatatan riwayat alarm/event",
+        "desc": "Tidak adanya logging otomatis membatasi diagnostik. Troubleshooting bergantung pada ingatan operator.",
+        "impact": "Kemampuan L2/L3 memerlukan infrastruktur riwayat event yang konsisten."
+      },
+      {
+        "title": "Feedback loop kualitas dan proses lambat",
+        "desc": "QC bergantung pada transkripsi manual. Hasil lab dapat tiba setelah konsumsi material.",
+        "impact": "Kesiapan optimasi dibatasi sampai feedback terstruktur dan tepat waktu."
+      },
+      {
+        "title": "Visibilitas inventaris dibatasi oleh instrumen yang tidak tepercaya",
+        "desc": "Dilemahkan oleh ketidaksesuaian pengukuran (misalnya, mass flow tidak tepercaya) dan capture transaksi yard secara manual.",
+        "impact": "Digitalisasi harus dimulai dengan kepercayaan pengukuran dan disiplin transaksi."
+      },
+      {
+        "title": "Pemantauan performa utilitas adalah ketergantungan",
+        "desc": "Utilitas (pendinginan, compressed air) kekurangan visibilitas performa dan analitik distribusi.",
+        "impact": "Enabler awal untuk operasi yang stabil dan tata kelola data hilir."
+      },
+      {
+        "title": "Kesenjangan dokumentasi dan verifikasi meningkatkan risiko integrasi",
+        "desc": "Gambar bin yang hilang, inventaris sensor yang tidak lengkap, dan batas integrasi yang tidak pasti meningkatkan risiko teknis.",
+        "impact": "Survei kontrol Phase 0 diperlukan sebelum deployment yang dapat diskalakan."
+      }
+    ],
+    "feasibility": {
+      "early": [
+        {
+          "title": "Pemantauan Integritas Konveyor",
+          "desc": "Penambahan sensor belt tear dan arus motor. Infrastruktur kontrol dapat menyerap sinyal ini."
+        },
+        {
+          "title": "Baseline Alarm Logging",
+          "desc": "Implementasi log event otomatis untuk node kunci. Tidak memerlukan konsolidasi sistem penuh."
+        }
+      ],
+      "afterUpgrades": [
+        {
+          "title": "Tata Kelola Inventaris",
+          "desc": "Memerlukan pemulihan kepercayaan level silo dan resolusi ketidaksesuaian mass flow."
+        },
+        {
+          "title": "Akselerasi Loop Kualitas",
+          "desc": "Memerlukan digitalisasi capture QC di sumber untuk menghilangkan latensi transkripsi."
+        }
+      ],
+      "notFeasible": [
+        {
+          "title": "Tata Kelola Prediktif Lanjutan",
+          "desc": "Dibatasi oleh kurangnya riwayat alarm yang stabil, mass flow yang tepercaya, dan loop CBM yang terdefinisi."
+        }
+      ],
+      "implications": [
+        "Perlakukan pemulihan kepercayaan sensor sebagai workstream prasyarat.",
+        "Mulai event capture lebih awal untuk mempercepat pembelajaran akar masalah.",
+        "Prioritaskan aset bottleneck (kneader, konveyor) untuk integrity sensing.",
+        "Tutup kesenjangan dokumentasi/konektivitas sebelum keputusan konsolidasi platform."
+      ]
+    },
+    "roadmap": {
+      "principles": "Stabilkan integritas L1 dan kepercayaan pengukuran sebelum memperluas ruang lingkup supervisory. Perkenalkan kembali protective sensing dengan threshold yang disetel. Standardisasi event capture sebagai prasyarat.",
+      "phases": [
+        { "num": "Phase 0", "title": "Verifikasi & Baseline", "desc": "3–4 bulan. Survei, dokumentasi, kepercayaan sensor." },
+        { "num": "Phase 1", "title": "L1 Integrity Hardening", "desc": "6–9 bulan. Konveyor, bulk solids, bottleneck." },
+        { "num": "Phase 2", "title": "L2 Konsolidasi", "desc": "6–9 bulan. Alarm governance, visibilitas." },
+        { "num": "Phase 3", "title": "L3 Reporting", "desc": "9–12 bulan. Akuntansi kerugian, traceability." }
+      ],
+      "pilots": [
+        "Pilot conveyor integrity sensing pada segmen yang paling rentan gangguan.",
+        "Pilot alarm log terpusat pada satu PLC dengan kekritisan tinggi.",
+        "Pilot kneader CBM menggunakan beban motor dan stop-cause."
+      ],
+      "dependencies": [
+        "Lengkapi ekspor I/O dan tag per PLC.",
+        "Konfirmasi ruang lingkup integrasi SCADA.",
+        "Postur sinkronisasi waktu di seluruh node.",
+        "Disiplin pemeliharaan sensor untuk lingkungan berdebu."
+      ]
+    },
+    "risks": {
+      "explicitGaps": [
+        "Pemetaan instrumen-ke-proses tidak lengkap.",
+        "Standardisasi jaringan PLC tidak sepenuhnya terdokumentasi.",
+        "Cakupan integrasi SCADA per PLC tidak lengkap.",
+        "Postur alarm logging tidak dibuktikan konsisten di seluruh plant."
+      ],
+      "assumptions": [
+        "Kehadiran PLC menyiratkan kemampuan L1 baseline.",
+        "Tautan SCADA menyiratkan visibilitas L2 minimum, bukan kematangan alarm.",
+        "Transkripsi QC manual menyiratkan kesiapan L3 yang terbatas.",
+        "Detail integrasi yang tidak lengkap mengasumsikan upaya yang lebih tinggi untuk scaling."
+      ],
+      "technicalRisks": [
+        "Risiko kepercayaan data tetap ada jika masalah sensor terkait debu tidak diselesaikan.",
+        "Pengenalan kembali protective sensing dapat gagal tanpa alarm governance.",
+        "PLC multi-platform meningkatkan kompleksitas tata kelola integrasi.",
+        "Tidak adanya riwayat event membatasi peningkatan performa."
+      ]
+    }
+  }
+}

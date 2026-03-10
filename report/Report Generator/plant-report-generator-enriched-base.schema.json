@@ -1,0 +1,273 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mv-project.local/schemas/plant-report-generator/enriched-base-v1.schema.json",
+  "title": "Plant Report Generator Enriched Base Schema",
+  "description": "Base schema for all transformed, client-ready appendix outputs with analysis and visualization metadata.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "source_step",
+    "report_profile",
+    "metadata",
+    "analysis_360",
+    "visualization_pack",
+    "narrative_pack",
+    "traceability",
+    "quality_gate",
+    "step_payload"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "source_step": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 18
+    },
+    "report_profile": {
+      "type": "object",
+      "required": ["appendix_code", "title", "audience", "render_target"],
+      "properties": {
+        "appendix_code": { "type": "string" },
+        "title": { "type": "string" },
+        "audience": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": ["Executive", "Operations", "Engineering", "Automation", "Cybersecurity", "Audit"]
+          }
+        },
+        "render_target": {
+          "type": "string",
+          "enum": ["html", "ppt", "pdf", "markdown", "multi"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["document_id", "company", "plant", "report_date", "status"],
+      "properties": {
+        "document_id": { "type": "string" },
+        "company": { "type": "string" },
+        "plant": { "type": "string" },
+        "report_date": { "type": "string" },
+        "status": { "type": "string", "enum": ["Draft", "Review", "Final Baseline", "Final"] },
+        "prepared_by": { "type": "string" },
+        "confidentiality": { "type": "string", "enum": ["Internal", "Confidential", "Restricted"] }
+      },
+      "additionalProperties": false
+    },
+    "analysis_360": {
+      "type": "object",
+      "required": ["overall_score", "overall_level", "dimension_scores", "key_findings"],
+      "properties": {
+        "overall_score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "overall_level": {
+          "type": "string",
+          "enum": ["Initial", "Developing", "Defined", "Managed", "Optimized"]
+        },
+        "dimension_scores": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "required": ["dimension", "score", "level", "confidence", "justification"],
+            "properties": {
+              "dimension": { "type": "string" },
+              "score": { "type": "number", "minimum": 0, "maximum": 100 },
+              "level": {
+                "type": "string",
+                "enum": ["Initial", "Developing", "Defined", "Managed", "Optimized"]
+              },
+              "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+              "justification": { "type": "string" },
+              "evidence_refs": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "key_findings": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string" }
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["risk", "severity", "likelihood", "mitigation"],
+            "properties": {
+              "risk": { "type": "string" },
+              "severity": { "type": "string", "enum": ["Low", "Medium", "High", "Critical"] },
+              "likelihood": { "type": "string", "enum": ["Low", "Medium", "High"] },
+              "mitigation": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "visualization_pack": {
+      "type": "object",
+      "required": ["kpi_cards", "charts"],
+      "properties": {
+        "kpi_cards": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["label", "value", "status"],
+            "properties": {
+              "label": { "type": "string" },
+              "value": { "type": ["number", "string"] },
+              "status": { "type": "string", "enum": ["good", "watch", "critical", "unknown"] },
+              "note": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "charts": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "required": ["chart_id", "type", "title", "series"],
+            "properties": {
+              "chart_id": { "type": "string" },
+              "type": {
+                "type": "string",
+                "enum": ["bar", "stacked_bar", "line", "area", "pie", "donut", "radar", "heatmap", "table"]
+              },
+              "title": { "type": "string" },
+              "series": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "required": ["name", "data"],
+                  "properties": {
+                    "name": { "type": "string" },
+                    "data": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "oneOf": [
+                          { "type": "number" },
+                          {
+                            "type": "object",
+                            "required": ["x", "y"],
+                            "properties": {
+                              "x": { "type": ["string", "number"] },
+                              "y": { "type": ["number", "null"] }
+                            },
+                            "additionalProperties": true
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "insight": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "dashboard_layout": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["chart_id", "row", "col", "width", "height"],
+            "properties": {
+              "chart_id": { "type": "string" },
+              "row": { "type": "integer", "minimum": 1 },
+              "col": { "type": "integer", "minimum": 1 },
+              "width": { "type": "integer", "minimum": 1 },
+              "height": { "type": "integer", "minimum": 1 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "narrative_pack": {
+      "type": "object",
+      "required": ["executive_summary", "assessment_storyline", "recommended_actions"],
+      "properties": {
+        "executive_summary": { "type": "string", "minLength": 120 },
+        "assessment_storyline": {
+          "type": "array",
+          "minItems": 3,
+          "items": { "type": "string" }
+        },
+        "recommended_actions": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "object",
+            "required": ["action", "priority", "owner", "timeline_weeks"],
+            "properties": {
+              "action": { "type": "string" },
+              "priority": { "type": "string", "enum": ["P1", "P2", "P3"] },
+              "owner": { "type": "string" },
+              "timeline_weeks": { "type": "integer", "minimum": 1 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "traceability": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "rule", "target"],
+        "properties": {
+          "source": { "type": "string" },
+          "rule": { "type": "string" },
+          "target": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "quality_gate": {
+      "type": "object",
+      "required": ["status", "checks"],
+      "properties": {
+        "status": { "type": "string", "enum": ["pass", "warning", "fail"] },
+        "checks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "description", "result"],
+            "properties": {
+              "id": { "type": "string" },
+              "description": { "type": "string" },
+              "result": { "type": "string", "enum": ["pass", "warning", "fail"] },
+              "details": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "step_payload": {
+      "description": "Original step-specific transformed content.",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

@@ -18,6 +18,7 @@ export default async function AdminLayout({
         { href: "/admin/clients", label: t(locale, "clients") },
         { href: "/admin/report-types", label: t(locale, "reportTypes") },
         { href: "/admin/client-reports", label: "Client Reports" },
+        { href: "/admin/master-data", label: "Master Data" },
         { href: "/admin/reports", label: t(locale, "reports") },
       ]}
     >

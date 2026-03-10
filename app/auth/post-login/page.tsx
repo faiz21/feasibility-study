@@ -22,7 +22,7 @@ export default async function PostLoginPage() {
   const roleHint = user.user_metadata?.role_hint;
   const role = profile ? profile.role : (roleHint === "admin" ? "admin" : "client");
 
-  let clientId = profile?.client_id;
+  let clientId: string | null = profile?.client_id ?? null;
 
   if (role === "client") {
     const email = user.email ?? "";

@@ -20,6 +20,17 @@ import {
   DataGridTable,
 } from "@/components/ui/data-grid";
 
+type ReportTypeTemplateRow = {
+  id: string;
+  name: string;
+  description: string | null;
+  category: string | null;
+  granularity_id: string;
+  is_active: boolean;
+  created_at: string;
+  granularities: { name: string }[] | { name: string } | null;
+};
+
 async function createReportTypeAction(formData: FormData) {
   "use server";
   await requireRole("admin");
@@ -151,6 +162,7 @@ export default async function AdminReportTypesPage({
   if (activeFilter === "inactive") query = query.eq("is_active", false);
 
   const { data } = await query;
+  const templateRows = (data ?? []) as ReportTypeTemplateRow[];
 
   const pageCountMap = new Map<string, number>();
   (pagesCountRows ?? []).forEach((row) => {
@@ -168,15 +180,17 @@ export default async function AdminReportTypesPage({
     );
   });
 
-  const categories = Array.from(new Set((data ?? []).map((row) => row.category).filter(Boolean)));
+  const categories = Array.from(
+    new Set(templateRows.map((row) => row.category).filter((category): category is string => Boolean(category))),
+  );
   const groupedEntries = Array.from(
-    (data ?? []).reduce((map, row) => {
+    templateRows.reduce((map, row) => {
       const groupKey = row.category || "Uncategorized";
       const current = map.get(groupKey) ?? [];
       current.push(row);
       map.set(groupKey, current);
       return map;
-    }, new Map<string, (typeof data extends Array<infer U> ? U : never)[]>()),
+    }, new Map<string, ReportTypeTemplateRow[]>()),
   ).sort(([first], [second]) => first.localeCompare(second));
 
   return (
@@ -186,10 +200,10 @@ export default async function AdminReportTypesPage({
         description="Reusable report definitions mapped to business granularities."
       />
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <StatCard label="Total Templates" value={data?.length ?? 0} />
+        <StatCard label="Total Templates" value={templateRows.length} />
         <StatCard
           label="Active Templates"
-          value={(data ?? []).filter((row) => row.is_active).length}
+          value={templateRows.filter((row) => row.is_active).length}
         />
       </section>
       <div className="flex justify-end">
@@ -370,7 +384,7 @@ export default async function AdminReportTypesPage({
                                     </label>
                                     <label className="text-sm">
                                       Category
-                                      <Input className="mt-1" name="category" defaultValue={row.category} required />
+                                      <Input className="mt-1" name="category" defaultValue={row.category ?? ""} required />
                                     </label>
                                     <label className="text-sm">
                                       Granularity

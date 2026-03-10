@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased" data-theme="default">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{TITLE}}</title>
+
+    <!-- Design reference: public/automation_assessment_sample.html -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{REPORT_THEMES_CSS_URL}}" />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+            colors: {
+              report: {
+                primary: "var(--report-primary)",
+                "primary-hover": "var(--report-primary-hover)",
+                "primary-bg": "var(--report-primary-bg)",
+                "primary-border": "var(--report-primary-border)",
+                "primary-text": "var(--report-primary-text)",
+
+                bg: "var(--report-bg)",
+                surface: "var(--report-surface)",
+                text: "var(--report-text)",
+                "text-muted": "var(--report-text-muted)",
+                border: "var(--report-border)",
+
+                "accent-orange": "var(--report-accent-orange)",
+                "accent-red": "var(--report-accent-red)",
+                "accent-blue": "var(--report-accent-blue)",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      body {
+        background-color: var(--report-bg);
+        color: var(--report-text);
+      }
+
+      .glass-card {
+        background: var(--report-surface);
+        border: 1px solid var(--report-border);
+        box-shadow:
+          0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+
+      .hero-bg {
+        background-image: linear-gradient(
+            to right,
+            rgba(15, 23, 42, 0.95),
+            rgba(15, 23, 42, 0.6)
+          ),
+          url("{{COVER_IMAGE_URL}}");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .prose-sane p {
+        margin-top: 0.9rem;
+        margin-bottom: 0.9rem;
+        line-height: 1.85;
+      }
+      .prose-sane ul,
+      .prose-sane ol {
+        margin: 0.9rem 0;
+        padding-left: 1.35rem;
+      }
+      .prose-sane li {
+        margin: 0.35rem 0;
+      }
+      .prose-sane h4 {
+        margin-top: 1.25rem;
+        margin-bottom: 0.5rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+      }
+      .prose-sane a {
+        color: var(--report-primary);
+        text-decoration: underline;
+      }
+      .prose-sane code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 0.95em;
+        background: color-mix(in oklab, var(--report-surface), black 12%);
+        border: 1px solid var(--report-border);
+        padding: 0.12rem 0.35rem;
+        border-radius: 0.4rem;
+      }
+      .prose-sane pre {
+        padding: 1rem;
+        border-radius: 1rem;
+        overflow: auto;
+        background: color-mix(in oklab, var(--report-surface), black 10%);
+        border: 1px solid var(--report-border);
+      }
+      .prose-sane blockquote {
+        border-left: 4px solid var(--report-primary);
+        padding-left: 1rem;
+        margin: 1.2rem 0;
+        color: var(--report-text-muted);
+      }
+    </style>
+  </head>
+
+  <body
+    class="font-sans leading-relaxed selection:bg-report-primary selection:text-white"
+  >
+    <div class="fixed top-4 right-4 z-[100] flex gap-2">
+      <select
+        onchange="document.documentElement.setAttribute('data-theme', this.value)"
+        class="bg-white/80 backdrop-blur-md border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider shadow-lg outline-none cursor-pointer"
+      >
+        <option value="default">Default</option>
+        <option value="mv-corp">MV Corporate</option>
+        <option value="dark-obsidian">Dark Obsidian</option>
+      </select>
+    </div>
+
+    <div id="report-root">
+      <div class="h-screen flex items-center justify-center">
+        <div
+          class="animate-spin rounded-full h-12 w-12 border-b-2 border-report-primary"
+        ></div>
+      </div>
+    </div>
+
+    {{CHART_JS_TAG}}
+
+    <script>
+      const REPORT_MODE = "{{MODE}}"; // "sample" | "report"
+      const REPORT_DATA_URL = "{{DATA_URL}}";
+      const EMBEDDED_REPORT_DATA = {{DATA_JSON}};
+
+      function applyPalette(palette) {
+        if (!palette || typeof palette !== "object") return;
+        const vars = {
+          "--report-primary": palette.primary,
+          "--report-primary-hover": palette.primaryHover,
+          "--report-primary-bg": palette.primaryBg,
+          "--report-primary-border": palette.primaryBorder,
+          "--report-primary-text": palette.primaryText,
+          "--report-bg": palette.bg,
+          "--report-surface": palette.surface,
+          "--report-text": palette.text,
+          "--report-text-muted": palette.textMuted,
+          "--report-border": palette.border,
+          "--report-accent-orange": palette.accentOrange,
+          "--report-accent-red": palette.accentRed,
+          "--report-accent-blue": palette.accentBlue,
+        };
+        for (const [key, value] of Object.entries(vars)) {
+          if (typeof value === "string" && value.trim()) {
+            document.documentElement.style.setProperty(key, value.trim());
+          }
+        }
+      }
+
+      function el(tag, className, html) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (html !== undefined) node.innerHTML = html;
+        return node;
+      }
+
+      function renderCover(root, data) {
+        const scope = data?.metadata?.scope || "Report";
+        const title = data?.metadata?.title || "Untitled Report";
+        const client = data?.metadata?.client || "";
+        const date = data?.metadata?.date || "";
+
+        const cover = el(
+          "section",
+          "h-[90vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative",
+        );
+        const inner = el("div", "relative z-10 max-w-5xl");
+
+        inner.insertAdjacentHTML(
+          "beforeend",
+          `
+            <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-primary/30 bg-report-primary/20 text-white text-sm font-semibold tracking-wide uppercase shadow-lg">
+              ${scope}
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black tracking-tight mb-6">${title}</h1>
+            ${
+              client
+                ? `<h2 class="text-xl md:text-2xl font-light text-slate-200 mb-10 max-w-3xl leading-snug">${client}</h2>`
+                : ""
+            }
+            <div class="flex flex-wrap gap-10 border-t border-white/20 pt-8 mt-12 bg-black/40 backdrop-blur-xl p-8 rounded-3xl">
+              ${
+                date
+                  ? `<div>
+                      <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Issue Date</p>
+                      <p class="font-medium text-white text-lg">${date}</p>
+                    </div>`
+                  : ""
+              }
+              <div>
+                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Status</p>
+                <p class="font-medium text-report-primary flex items-center gap-2 text-lg">
+                  <span class="w-2.5 h-2.5 rounded-full bg-report-primary animate-pulse"></span>
+                  ${data?.metadata?.status || "Draft"}
+                </p>
+              </div>
+            </div>
+          `,
+        );
+
+        cover.appendChild(inner);
+        root.appendChild(cover);
+      }
+
+      function renderMarkdownBlock(main, comp) {
+        const wrap = el(
+          "div",
+          "col-span-1 md:col-span-8 md:col-start-3 space-y-4 mt-4",
+        );
+        if (comp?.title) {
+          wrap.appendChild(
+            el(
+              "h3",
+              "text-2xl md:text-3xl font-bold text-report-text tracking-tight",
+              comp.title,
+            ),
+          );
+        }
+        wrap.appendChild(
+          el(
+            "div",
+            "prose-sane text-lg font-light text-report-text-muted",
+            comp?.html || "",
+          ),
+        );
+        main.appendChild(wrap);
+      }
+
+      function renderChartBlock(main, comp, sectionIndex, chartIndex) {
+        const wrap = el(
+          "div",
+          "col-span-1 md:col-span-8 md:col-start-3 glass-card rounded-[2rem] p-8 my-8",
+        );
+        if (comp?.title) {
+          wrap.appendChild(
+            el("h3", "text-xl font-bold text-report-text mb-4", comp.title),
+          );
+        }
+
+        const canvasId = `chart-${sectionIndex}-${chartIndex}`;
+        wrap.insertAdjacentHTML(
+          "beforeend",
+          `<div class="relative"><canvas id="${canvasId}" height="120"></canvas></div>`,
+        );
+        main.appendChild(wrap);
+
+        if (typeof Chart === "undefined") return;
+        const ctx = document.getElementById(canvasId);
+        if (!ctx) return;
+
+        const labels = comp?.data?.labels || ["A", "B", "C"];
+        const values = comp?.data?.values || [10, 20, 15];
+        const type = comp?.chartType || "bar";
+
+        // eslint-disable-next-line no-new
+        new Chart(ctx, {
+          type,
+          data: {
+            labels,
+            datasets: [
+              {
+                label: comp?.data?.label || "Value",
+                data: values,
+                backgroundColor: "rgba(20, 184, 166, 0.45)",
+                borderColor: "rgba(20, 184, 166, 1)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { display: true } },
+            scales: type === "pie" ? {} : { y: { beginAtZero: true } },
+          },
+        });
+      }
+
+      function renderReport(data) {
+        const root = document.getElementById("report-root");
+        root.innerHTML = "";
+
+        applyPalette(data?.theme?.palette);
+        renderCover(root, data);
+
+        const main = el(
+          "main",
+          "max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-16 gap-x-8",
+        );
+        root.appendChild(main);
+
+        (data?.sections || []).forEach((section, index) => {
+          main.insertAdjacentHTML(
+            "beforeend",
+            `
+              <div class="col-span-1 md:col-span-12">
+                <div class="border-l-[6px] border-report-primary pl-8 py-2">
+                  <p class="text-report-primary font-bold tracking-widest uppercase text-sm mb-3">Section ${
+                    section?.id ?? index + 1
+                  }</p>
+                  <h2 class="text-4xl md:text-5xl font-extrabold text-report-text tracking-tight">${
+                    section?.title || "Untitled Section"
+                  }</h2>
+                </div>
+              </div>
+            `,
+          );
+
+          const comps = section?.components || [];
+          let chartIdx = 0;
+
+          comps.forEach((comp) => {
+            if (comp?.type === "ChartBlock") {
+              renderChartBlock(main, comp, index, chartIdx);
+              chartIdx += 1;
+              return;
+            }
+            renderMarkdownBlock(main, comp);
+          });
+        });
+      }
+
+      async function loadAndRender() {
+        try {
+          if (REPORT_MODE === "sample") {
+            renderReport(EMBEDDED_REPORT_DATA);
+            return;
+          }
+          const response = await fetch(REPORT_DATA_URL);
+          const data = await response.json();
+          renderReport(data);
+        } catch (err) {
+          console.error(err);
+          const root = document.getElementById("report-root");
+          root.innerHTML =
+            '<div class="p-16 text-center text-red-500 font-bold">Error: Failed to load report data.</div>';
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", loadAndRender);
+    </script>
+  </body>
+</html>
+

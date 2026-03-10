@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { ReportsUiTheme } from "@/lib/report-view-theme";
 
 type ReportPage = {
   id: string;
@@ -10,36 +11,58 @@ type ReportPage = {
   code?: string;
 };
 
+function isFullDocumentHtml(html: string): boolean {
+  const normalized = html.trim().toLowerCase();
+  return (
+    normalized.startsWith("<!doctype html") ||
+    normalized.includes("<html") ||
+    normalized.includes("<head") ||
+    normalized.includes("<body") ||
+    normalized.includes("<script") ||
+    normalized.includes("<style") ||
+    normalized.includes("</html>")
+  );
+}
+
 export function ReportViewer({
   reportId,
   locale,
   pages,
-  initialResume,
-  initialRating,
+  initialRatingsByPageId,
   previewMode,
+  reportTheme,
 }: {
   reportId: string;
   locale: "en" | "id" | "ja";
   pages: ReportPage[];
-  initialResume?: {
-    lastPageId: string | null;
-    lastScrollY: number | null;
-  };
-  initialRating?: {
-    rating: number;
-    comment: string;
-    hasExisting: boolean;
-  };
+  initialRatingsByPageId?: Record<
+    string,
+    {
+      rating: number;
+      comment: string;
+      hasExisting: boolean;
+    }
+  >;
   previewMode?: boolean;
+  reportTheme?: ReportsUiTheme;
 }) {
   const [activePageId, setActivePageId] = useState<string | null>(null);
-  const [rating, setRating] = useState(initialRating?.rating ?? 5);
-  const [comment, setComment] = useState(initialRating?.comment ?? "");
-  const [hasSubmittedRating, setHasSubmittedRating] = useState(Boolean(initialRating?.hasExisting));
+  const [showGoTop, setShowGoTop] = useState(false);
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
+  const [ratingsByPageId, setRatingsByPageId] = useState(initialRatingsByPageId ?? {});
+  const [hasSubmittedRating, setHasSubmittedRating] = useState(false);
   const [ratingSubmitting, setRatingSubmitting] = useState(false);
   const [ratingMessage, setRatingMessage] = useState<string | null>(null);
   const [lastSyncAt, setLastSyncAt] = useState<Date | null>(null);
-  const refs = useRef<Record<string, HTMLElement | null>>({});
+  const initializedFromProps = useRef(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowGoTop(window.scrollY > 360);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const sorted = useMemo(
     () => [...pages].sort((a, b) => a.page_order - b.page_order),
@@ -47,50 +70,35 @@ export function ReportViewer({
   );
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visible?.target?.id) {
-          setActivePageId(visible.target.id.replace("page-", ""));
-        }
-      },
-      { threshold: [0.2, 0.6, 0.9] },
-    );
-
-    sorted.forEach((page) => {
-      const node = refs.current[page.id];
-      if (node) observer.observe(node);
-    });
-
-    return () => observer.disconnect();
-  }, [sorted]);
+    if (!initializedFromProps.current) {
+      setRatingsByPageId(initialRatingsByPageId ?? {});
+      initializedFromProps.current = true;
+    }
+  }, [initialRatingsByPageId]);
 
   useEffect(() => {
-    if (!initialResume?.lastPageId) return;
-    const resumeId = initialResume.lastPageId;
-    const exists = sorted.some((page) => page.id === resumeId);
-    if (!exists) return;
-    setActivePageId(resumeId);
-    const timer = setTimeout(() => {
-      document.getElementById(`page-${resumeId}`)?.scrollIntoView({ behavior: "smooth" });
-      if (typeof initialResume.lastScrollY === "number" && initialResume.lastScrollY > 0) {
-        window.scrollTo({ top: initialResume.lastScrollY, behavior: "smooth" });
-      }
-    }, 200);
-    return () => clearTimeout(timer);
-  }, [initialResume?.lastPageId, initialResume?.lastScrollY, sorted]);
+    const currentActiveExists = activePageId && sorted.some((page) => page.id === activePageId);
+    if (currentActiveExists) return;
+    const firstPage = sorted[0];
+    if (firstPage) setActivePageId(firstPage.id);
+  }, [activePageId, sorted]);
+
+  useEffect(() => {
+    if (!activePageId) return;
+    const existing = ratingsByPageId[activePageId];
+    setRating(existing?.rating ?? 5);
+    setComment(existing?.comment ?? "");
+    setHasSubmittedRating(Boolean(existing?.hasExisting));
+    setRatingMessage(null);
+  }, [activePageId, ratingsByPageId]);
 
   useEffect(() => {
     if (previewMode) return;
     const timer = setInterval(async () => {
       if (!activePageId) return;
 
-      const node = refs.current[activePageId];
-      const scrollTop = node?.scrollTop ?? window.scrollY;
-      const scrollHeight = node?.scrollHeight ?? document.body.scrollHeight;
+      const scrollTop = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight;
       const viewport = window.innerHeight;
       const maxScrollPct = Math.min(100, ((scrollTop + viewport) / Math.max(scrollHeight, 1)) * 100);
 
@@ -129,38 +137,87 @@ export function ReportViewer({
     return () => clearInterval(timer);
   }, [activePageId, locale, previewMode, reportId]);
 
+  const activePage = sorted.find((page) => page.id === activePageId) ?? sorted[0] ?? null;
+  const reviewedPageIds = useMemo(
+    () => new Set(Object.entries(ratingsByPageId).filter(([, v]) => v?.hasExisting).map(([key]) => key)),
+    [ratingsByPageId],
+  );
+
+  const activatePage = (pageId: string) => {
+    setActivePageId(pageId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <>
-      {sorted.length > 1 && (
-        <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-5 group py-4 px-2">
+      {sorted.length > 0 && (
+        <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-4 py-4 px-2">
           {sorted.map((page) => {
             const isActive = activePageId === page.id;
+            const isReviewed = reviewedPageIds.has(page.id);
             return (
               <button
                 key={`nav-${page.id}`}
-                onClick={() => {
-                  document.getElementById(`page-${page.id}`)?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="flex items-center gap-3 justify-end focus:outline-none relative group/item"
+                onClick={() => activatePage(page.id)}
+                className="group/item flex items-center gap-3 justify-end focus:outline-none relative"
                 aria-label={`Scroll to ${page.title}`}
               >
-                <span className={`
-                      absolute right-8 opacity-0 translate-x-2 pointer-events-none whitespace-nowrap text-xs font-semibold bg-popover/95 border border-border/80 px-3 py-1.5 rounded-lg shadow-md backdrop-blur-md transition-all duration-300
-                      group-hover:opacity-100 group-hover:translate-x-0
-                      ${isActive ? "text-primary border-primary/20" : "text-muted-foreground"}
-                  `}>
+                <span
+                  className={`
+                    pointer-events-none absolute right-10 inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-semibold shadow-md backdrop-blur-md
+                    opacity-0 translate-x-2 scale-95 transition-all duration-300 ease-out
+                    group-hover/item:opacity-100 group-hover/item:translate-x-0 group-hover/item:scale-100
+                    ${isActive ? "border-primary/35 bg-popover/95 text-primary" : "border-border/80 bg-popover/95 text-muted-foreground"}
+                  `}
+                  style={{
+                    borderColor: reportTheme?.borderStrong,
+                    background: reportTheme?.surfaceElevated,
+                    color: isActive ? reportTheme?.accent : reportTheme?.textSecondary,
+                  }}
+                >
+                  <span
+                    className={`rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wide ${isActive ? "bg-primary/15 text-primary" : "bg-accent/40 text-foreground"}`}
+                    style={{
+                      background: isActive ? reportTheme?.accentSoft : reportTheme?.surfaceMuted,
+                      color: isActive ? reportTheme?.accent : reportTheme?.textPrimary,
+                    }}
+                  >
+                    {page.code ?? `P${page.page_order}`}
+                  </span>
                   {page.title}
                 </span>
 
                 <span
                   className={`
-                    inline-flex h-9 min-w-9 items-center justify-center rounded-full border px-2 text-[10px] font-bold tracking-wide transition-all duration-300
+                    inline-flex h-8 min-w-[3.25rem] items-center justify-center rounded-full border px-2 text-[10px] font-bold tracking-wide transition-all duration-300 ease-out relative
                     ${isActive
                       ? "border-primary bg-primary text-primary-foreground shadow-primary/40 ring-2 ring-primary/20"
-                      : "border-border bg-card text-muted-foreground hover:border-primary/50 hover:text-primary"}
+                      : "border-border bg-card text-muted-foreground group-hover/item:border-primary/50 group-hover/item:text-primary group-hover/item:-translate-y-0.5"}
                   `}
+                  style={
+                    isActive
+                      ? {
+                          borderColor: reportTheme?.accent,
+                          background: reportTheme?.accent,
+                          color: reportTheme?.accentContrast,
+                        }
+                      : {
+                          borderColor: reportTheme?.border,
+                          background: reportTheme?.surfaceElevated,
+                          color: reportTheme?.textSecondary,
+                        }
+                  }
                 >
                   {page.code ?? `P${page.page_order}`}
+                  {isReviewed ? (
+                    <span
+                      className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border"
+                      style={{
+                        background: reportTheme?.success ?? "#16A34A",
+                        borderColor: reportTheme?.surfaceElevated,
+                      }}
+                    />
+                  ) : null}
                 </span>
               </button>
             );
@@ -168,31 +225,72 @@ export function ReportViewer({
         </nav>
       )}
 
-      <div className="space-y-10 md:pr-16 relative">
-        {sorted.map((page) => (
-          <article
-            key={page.id}
-            id={`page-${page.id}`}
-            ref={(el) => {
-              refs.current[page.id] = el;
+      {sorted.length > 0 ? (
+        <div className="mb-4 md:hidden">
+          <label className="mb-1 block text-xs font-semibold uppercase tracking-wide" style={{ color: reportTheme?.textSecondary }}>
+            Page
+          </label>
+          <select
+            className="h-10 w-full rounded-lg border px-3 text-sm font-medium"
+            value={activePage?.id ?? ""}
+            onChange={(event) => activatePage(event.target.value)}
+            style={{
+              borderColor: reportTheme?.borderStrong,
+              background: reportTheme?.surfaceElevated,
+              color: reportTheme?.textPrimary,
             }}
-            className="rounded-2xl border border-border/60 bg-card p-6 md:p-10 shadow-panel transition-all duration-500 hover:shadow-glow scroll-mt-24 relative overflow-hidden group"
+            aria-label="Select report page"
           >
-            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="mb-6 flex items-center justify-between border-b border-border/50 pb-4">
-              <h2 className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">{page.title}</h2>
-              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider bg-accent/50 px-3 py-1 rounded-full">Page {page.page_order}</span>
-            </div>
-            <div className="text-base leading-relaxed prose prose-neutral dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary hover:prose-a:text-primary/80 transition-colors" dangerouslySetInnerHTML={{ __html: page.html }} />
-          </article>
-        ))}
+            {sorted.map((page) => (
+              <option key={`mobile-page-${page.id}`} value={page.id}>
+                {(page.code ?? `P${page.page_order}`) + " - " + page.title}
+              </option>
+            ))}
+          </select>
+        </div>
+      ) : null}
 
-        <section className="rounded-2xl border border-border/60 bg-gradient-to-br from-card to-card/50 p-6 md:p-8 shadow-panel relative overflow-hidden">
-          <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl" />
-          <h3 className="mb-2 text-xl font-bold tracking-tight">Rate this report</h3>
-          <p className="mb-6 text-sm text-muted-foreground">Your feedback helps us improve our reporting quality.</p>
+      <div className="space-y-8 md:pr-16 relative">
+        {activePage ? (
+          <section id={`page-${activePage.id}`} className="scroll-mt-24">
+            {isFullDocumentHtml(activePage.html) ? (
+              <iframe
+                title={`report-page-${activePage.id}`}
+                srcDoc={activePage.html}
+                className="h-[78vh] w-full bg-white"
+              />
+            ) : (
+              <div
+                className="text-base leading-relaxed prose prose-neutral dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-a:text-primary hover:prose-a:text-primary/80 transition-colors"
+                dangerouslySetInnerHTML={{ __html: activePage.html }}
+              />
+            )}
+          </section>
+        ) : null}
+
+        <section
+          className="relative overflow-hidden rounded-2xl border p-6 md:p-8"
+          style={{
+            borderColor: reportTheme?.borderStrong,
+            background: reportTheme?.surfaceElevated ?? "#FFFFFF",
+            boxShadow: "0 10px 35px -24px rgba(15, 23, 42, 0.35)",
+          }}
+        >
+          <h3 className="mb-2 text-3xl font-bold tracking-tight" style={{ color: reportTheme?.textPrimary }}>
+            Rate this report
+          </h3>
+          <p className="mb-6 text-lg" style={{ color: reportTheme?.textSecondary }}>
+            Your feedback helps us improve our reporting quality.
+          </p>
           {previewMode ? (
-            <p className="mb-3 rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 text-xs text-foreground">
+            <p
+              className="mb-4 rounded-xl border px-4 py-3 text-sm font-medium"
+              style={{
+                borderColor: reportTheme?.borderStrong,
+                background: reportTheme?.surfaceMuted,
+                color: reportTheme?.textSecondary,
+              }}
+            >
               Admin preview mode: interaction tracking and rating submission are disabled.
             </p>
           ) : null}
@@ -202,12 +300,28 @@ export function ReportViewer({
             </p>
           ) : null}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className="flex bg-accent/30 rounded-xl p-1 border border-border/50">
+            <div
+              className="flex rounded-xl border p-1"
+              style={{ background: reportTheme?.surfaceMuted, borderColor: reportTheme?.borderStrong }}
+            >
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
                   key={star}
                   onClick={() => setRating(star)}
-                  className={`w-12 h-10 rounded-lg text-sm font-semibold transition-all duration-200 ${rating >= star ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'}`}
+                  className={`h-10 w-12 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                    rating >= star
+                      ? "shadow-sm"
+                      : "hover:-translate-y-0.5"
+                  }`}
+                  style={
+                    rating >= star
+                      ? { background: reportTheme?.accent, color: reportTheme?.accentContrast }
+                      : {
+                          background: reportTheme?.surfaceElevated,
+                          color: reportTheme?.textSecondary,
+                          border: `1px solid ${reportTheme?.border ?? "#D9E5FA"}`,
+                        }
+                  }
                 >
                   {star}
                 </button>
@@ -217,27 +331,49 @@ export function ReportViewer({
               value={comment}
               onChange={(event) => setComment(event.target.value)}
               placeholder="Optional review note"
-              className="h-12 w-full max-w-sm rounded-xl border border-input bg-card px-3 text-sm"
+              className="h-12 w-full max-w-sm rounded-xl border px-4 text-sm outline-none transition-colors focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+              style={{
+                borderColor: reportTheme?.borderStrong,
+                background: reportTheme?.surfaceElevated,
+                color: reportTheme?.textPrimary,
+              }}
             />
             <button
               disabled={ratingSubmitting || previewMode}
-              className="h-12 rounded-xl bg-foreground px-8 text-sm font-bold tracking-wide text-background shadow-lg transition-transform hover:scale-[1.02] hover:bg-foreground/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
+              className="h-12 rounded-xl px-8 text-sm font-bold tracking-wide shadow-sm transition-colors hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-70"
+              style={{
+                background: reportTheme?.accent,
+                color: reportTheme?.accentContrast,
+              }}
               onClick={async () => {
                 if (previewMode) return;
+                if (!activePageId) {
+                  setRatingMessage("No page selected.");
+                  return;
+                }
                 setRatingSubmitting(true);
                 setRatingMessage(null);
                 try {
                   const response = await fetch(`/api/reports/${reportId}/rating`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ rating, comment: comment.trim() || null }),
+                    body: JSON.stringify({ rating, comment: comment.trim() || null, reportPageId: activePageId }),
                   });
                   if (!response.ok) {
                     const payload = (await response.json().catch(() => null)) as { error?: string } | null;
                     setRatingMessage(payload?.error ?? "Failed to submit rating.");
                     return;
                   }
-                  setRatingMessage(hasSubmittedRating ? "Rating updated." : "Thank you for your feedback.");
+                  setRatingsByPageId((prev) => ({
+                    ...prev,
+                    [activePageId]: {
+                      rating,
+                      comment: comment.trim(),
+                      hasExisting: true,
+                    },
+                  }));
+                  const pageCode = activePage?.code ?? `P${activePage?.page_order ?? ""}`;
+                  setRatingMessage(hasSubmittedRating ? `Feedback updated for ${pageCode}.` : `Feedback saved for ${pageCode}.`);
                   setHasSubmittedRating(true);
                 } finally {
                   setRatingSubmitting(false);
@@ -248,10 +384,26 @@ export function ReportViewer({
             </button>
           </div>
           {ratingMessage ? (
-            <p className="mt-3 text-sm text-muted-foreground">{ratingMessage}</p>
+            <p className="mt-3 text-sm text-muted-foreground" style={{ color: reportTheme?.textSecondary }}>{ratingMessage}</p>
           ) : null}
         </section>
       </div>
+
+      {showGoTop ? (
+        <button
+          type="button"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 z-50 rounded-full border border-border/70 bg-card/95 px-4 py-2 text-xs font-semibold shadow-md backdrop-blur-md transition hover:-translate-y-0.5 hover:border-primary/50 hover:text-primary md:right-24"
+          aria-label="Go to top"
+          style={{
+            borderColor: reportTheme?.borderStrong,
+            background: reportTheme?.surfaceElevated,
+            color: reportTheme?.textPrimary,
+          }}
+        >
+          Top
+        </button>
+      ) : null}
     </>
   );
 }

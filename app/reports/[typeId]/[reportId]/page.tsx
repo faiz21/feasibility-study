@@ -3,28 +3,23 @@ import { requireRole, resolveLocaleForUser } from "@/lib/portal/auth";
 import { logAccess } from "@/lib/portal/logging";
 import { renderTemplate } from "@/lib/portal/template";
 import { ReportViewer } from "@/components/portal/report-viewer";
-import { resolveClientTheme, type ClientThemeColors } from "@/lib/client-theme";
-
-function buildThemeTokens(colors: ClientThemeColors) {
-  const cssVars: Record<string, string> = {};
-  Object.entries(colors).forEach(([key, value]) => {
-    cssVars[`--client-${key}`] = value;
-  });
-  cssVars["--client-text"] = colors.foreground;
-  return cssVars;
-}
-
-function toCssVarBlock(tokens: Record<string, string>) {
-  return Object.entries(tokens)
-    .map(([key, value]) => `${key}: ${value};`)
-    .join(" ");
-}
+import { resolveReportsUiTheme } from "@/lib/report-view-theme";
 
 function attachBranding(content: unknown, branding: Record<string, unknown>) {
   if (content && typeof content === "object" && !Array.isArray(content)) {
     return { ...(content as Record<string, unknown>), ...branding };
   }
   return { content, ...branding };
+}
+
+function injectReportDataScript(template: string, sample: unknown): string {
+  const hasReportDataScript = /<script[^>]*id=["']report-data["'][^>]*>/i.test(template);
+  if (!hasReportDataScript) return template;
+  const payload = JSON.stringify(sample ?? {}, null, 2);
+  return template.replace(
+    /(<script[^>]*id=["']report-data["'][^>]*>)([\s\S]*?)(<\/script>)/i,
+    `$1\n${payload}\n$3`,
+  );
 }
 
 export default async function ReportDetailPage({
@@ -56,38 +51,31 @@ export default async function ReportDetailPage({
     supabase
       .from("report_pages")
       .select(
-        "id,page_order,en_content,id_content,ja_content,report_page_templates(page_key,html_template),report_page_translations(locale,title)",
+        "id,page_order,en_content,id_content,ja_content,report_page_templates(page_key,title,html_template),report_page_translations(locale,title)",
       )
       .eq("report_id", reportId)
       .order("page_order", { ascending: true }),
     supabase
       .from("clients")
       .select(
-        "id,name,code,domain,default_locale,logo_url,color_palette,theme_tokens",
+        "id,name,code,domain,default_locale,logo_url",
       )
       .eq("id", profile.client_id)
       .maybeSingle(),
   ]);
 
-  const [{ data: resumeRow }, { data: ratingRow }] = isAdminPreview
-    ? [{ data: null }, { data: null }]
+  const [{ data: ratingRows }] = isAdminPreview
+    ? [{ data: [] as Array<{ report_page_id: string | null; rating: number; comment: string | null }> }]
     : await Promise.all([
         supabase
-          .from("report_resume")
-          .select("last_page_id,last_scroll_y")
-          .eq("report_id", reportId)
-          .eq("user_id", user.id)
-          .maybeSingle(),
-        supabase
           .from("report_ratings")
-          .select("rating,comment")
+          .select("report_page_id,rating,comment")
           .eq("report_id", reportId)
           .eq("user_id", user.id)
-          .maybeSingle(),
+          .not("report_page_id", "is", null),
       ]);
 
-  const theme = resolveClientTheme(clientRow?.theme_tokens, clientRow?.color_palette);
-  const themeTokens = buildThemeTokens(theme.colors);
+  const reportsUiTheme = resolveReportsUiTheme();
   const brandingPayload = {
     client: {
       id: clientRow?.id ?? profile.client_id,
@@ -96,15 +84,31 @@ export default async function ReportDetailPage({
       domain: clientRow?.domain ?? "",
       default_locale: clientRow?.default_locale ?? locale,
       logo_url: clientRow?.logo_url ?? "",
-      color_palette: theme.palette,
-      theme_tokens: clientRow?.theme_tokens ?? null,
+      color_palette: {
+        primary: reportsUiTheme.accent,
+        secondary: reportsUiTheme.textSecondary,
+        accent: reportsUiTheme.info,
+        background: reportsUiTheme.surface,
+        text: reportsUiTheme.textPrimary,
+      },
+      theme_tokens: null,
     },
-    theme: theme.palette,
-    theme_tokens: clientRow?.theme_tokens ?? null,
-    theme_css_vars: toCssVarBlock(themeTokens),
+    theme: {
+      primary: reportsUiTheme.accent,
+      secondary: reportsUiTheme.textSecondary,
+      accent: reportsUiTheme.info,
+      background: reportsUiTheme.surface,
+      text: reportsUiTheme.textPrimary,
+    },
+    theme_tokens: null,
+    theme_css_vars: "",
     branding: {
       logo_url: clientRow?.logo_url ?? "",
-      ...theme.palette,
+      primary: reportsUiTheme.accent,
+      secondary: reportsUiTheme.textSecondary,
+      accent: reportsUiTheme.info,
+      background: reportsUiTheme.surface,
+      text: reportsUiTheme.textPrimary,
     },
   };
 
@@ -117,8 +121,8 @@ export default async function ReportDetailPage({
           : page.en_content;
 
     const templateRow = page.report_page_templates as
-      | { page_key?: string; html_template?: string }[]
-      | { page_key?: string; html_template?: string }
+      | { page_key?: string; title?: string; html_template?: string }[]
+      | { page_key?: string; title?: string; html_template?: string }
       | null;
     const htmlTemplate = Array.isArray(templateRow)
       ? templateRow[0]?.html_template
@@ -126,6 +130,9 @@ export default async function ReportDetailPage({
     const pageCode = Array.isArray(templateRow)
       ? templateRow[0]?.page_key
       : templateRow?.page_key;
+    const templateTitle = Array.isArray(templateRow)
+      ? templateRow[0]?.title
+      : templateRow?.title;
 
     const titleRow = (Array.isArray(page.report_page_translations)
       ? page.report_page_translations
@@ -136,15 +143,29 @@ export default async function ReportDetailPage({
         : undefined);
 
     const payload = attachBranding(content, brandingPayload);
+    const templateForRender = injectReportDataScript(htmlTemplate ?? "", payload);
 
     return {
       id: page.id,
       page_order: page.page_order,
-      title: titleRow?.title ?? `Page ${page.page_order}`,
+      title: titleRow?.title ?? templateTitle ?? pageCode ?? `Page ${page.page_order}`,
       code: pageCode ?? `P${page.page_order}`,
-      html: renderTemplate(htmlTemplate ?? "", payload),
+      html: renderTemplate(templateForRender, payload),
     };
   });
+
+  const initialRatingsByPageId = Object.fromEntries(
+    (ratingRows ?? [])
+      .filter((row) => Boolean(row.report_page_id))
+      .map((row) => [
+        row.report_page_id as string,
+        {
+          rating: row.rating ?? 5,
+          comment: row.comment ?? "",
+          hasExisting: true,
+        },
+      ]),
+  ) as Record<string, { rating: number; comment: string; hasExisting: boolean }>;
 
   if (!isAdminPreview) {
     await supabase.from("report_resume").upsert(
@@ -172,16 +193,9 @@ export default async function ReportDetailPage({
       reportId={reportId}
       locale={locale}
       pages={resolved}
-      initialResume={{
-        lastPageId: resumeRow?.last_page_id ?? null,
-        lastScrollY: resumeRow?.last_scroll_y ?? null,
-      }}
-      initialRating={{
-        rating: ratingRow?.rating ?? 5,
-        comment: ratingRow?.comment ?? "",
-        hasExisting: Boolean(ratingRow),
-      }}
+      initialRatingsByPageId={initialRatingsByPageId}
       previewMode={isAdminPreview}
+      reportTheme={reportsUiTheme}
     />
   );
 }

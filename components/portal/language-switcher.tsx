@@ -22,17 +22,23 @@ export function LanguageSwitcher({
   };
 
   return (
-    <select
-      className="rounded border px-2 py-1 text-sm"
-      value={value}
-      disabled={isPending}
-      onChange={(e) => updateLocale(e.target.value)}
+    <div
+      className={`flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-2 py-1 shadow-sm ${isPending ? "opacity-80" : ""}`}
     >
-      {LOCALES.map((locale) => (
-        <option key={locale} value={locale}>
-          {locale.toUpperCase()}
-        </option>
-      ))}
-    </select>
+      <select
+        className="h-10 min-w-20 rounded-lg border border-slate-300 bg-slate-50 px-3 text-sm font-semibold text-slate-700 outline-none transition-colors focus:border-blue-400 focus:bg-white disabled:cursor-wait"
+        value={value}
+        disabled={isPending}
+        onChange={(e) => updateLocale(e.target.value)}
+        aria-label="Select locale"
+      >
+        {LOCALES.map((locale) => (
+          <option key={locale} value={locale}>
+            {locale.toUpperCase()}
+          </option>
+        ))}
+      </select>
+      {isPending ? <span className="text-xs font-medium text-slate-500">Saving...</span> : null}
+    </div>
   );
 }

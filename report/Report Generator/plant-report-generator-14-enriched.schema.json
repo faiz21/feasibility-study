@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mv-project.local/schemas/plant-report-generator/plant-report-generator-14-enriched.schema.json",
+  "title": "Step 14 Enriched Report Data Schema",
+  "description": "Enriched transformed schema for step 14: Appendix M \u2014 Scoring Results: Plant Maturity Assessment Matrix",
+  "allOf": [
+    {
+      "$ref": "./plant-report-generator-enriched-base.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "source_step",
+        "report_profile",
+        "step_payload",
+        "quality_gate"
+      ],
+      "properties": {
+        "source_step": {
+          "type": "integer",
+          "const": 14
+        },
+        "report_profile": {
+          "type": "object",
+          "required": [
+            "appendix_code",
+            "title"
+          ],
+          "properties": {
+            "appendix_code": {
+              "type": "string",
+              "const": "M"
+            },
+            "title": {
+              "type": "string",
+              "const": "Appendix M \u2014 Scoring Results: Plant Maturity Assessment Matrix"
+            }
+          },
+          "additionalProperties": true
+        },
+        "step_payload": {
+          "type": "object",
+          "required": [
+            "document_id_pattern",
+            "prerequisite_steps",
+            "sections",
+            "outputs",
+            "quality_gate"
+          ],
+          "properties": {
+            "document_id_pattern": {
+              "type": "string"
+            },
+            "prerequisite_steps": {
+              "type": "array"
+            },
+            "sections": {
+              "type": "object"
+            },
+            "outputs": {
+              "type": "object"
+            },
+            "quality_gate": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "quality_gate": {
+          "type": "object",
+          "required": [
+            "status",
+            "checks"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "warning",
+                "fail"
+              ]
+            },
+            "checks": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "description",
+                  "result"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "enum": [
+                      "any-dimension-score-conflicts-with-appendix-l-criteria",
+                      "required-evidence-anchor-missing-per-matrix-row",
+                      "risk-level-does-not-match-appendix-l-mapping",
+                      "weighted-average-miscalculated-or-incorrectly-rounded",
+                      "solution-code-not-in-solution-table-referenced"
+                    ]
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "result": {
+                    "type": "string",
+                    "enum": [
+                      "pass",
+                      "warning",
+                      "fail"
+                    ]
+                  },
+                  "details": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

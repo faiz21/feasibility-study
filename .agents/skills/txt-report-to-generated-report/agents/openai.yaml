@@ -1,0 +1,4 @@
+version: "1.0"
+display_name: "TXT Report to Generated Report"
+short_description: "Convert plant-report .txt into enriched JSON + Markdown using Report Generator instructions."
+default_prompt: "Use $txt-report-to-generated-report to transform a plant report .txt into 18 enriched JSON outputs (steps 01-18) plus a combined Markdown report. Input: <path to .txt> (default report/Report Generator/INA-PL-GRP.txt). Output: report/Generated Report/<run-id>/. Mode: Draft by default."

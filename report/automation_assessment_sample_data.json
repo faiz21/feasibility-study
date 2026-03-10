@@ -1,0 +1,468 @@
+{
+  "theme": {
+    "primary": "#14b8a6",
+    "dark": "#0f172a"
+  },
+  "metadata": {
+    "title": "Automation Assessment Report",
+    "company": "PT Indonesia Asahan Alumunium",
+    "plant": "Green Plant",
+    "scope": "INA-PL-GRP",
+    "content": "Sections 1–9",
+    "date": "23 February 2026",
+    "status": "Executive Final"
+  },
+  "sections": {
+    "executiveSummary": {
+      "context": "PT Indonesia Asahan Aluminium (INALUM) operates the Green Plant as the front-end carbon preparation and green anode forming stage supporting the smelter’s reduction lines. This assessment evaluates automation maturity across L1–L3 layers only (basic control, supervisory visibility, and structured reporting readiness) to determine feasibility for phased digitalisation.",
+      "maturitySnapshot": "The Green Plant operates with a mixed automation baseline. Core assets are PLC-controlled, but manual intervention, relay islands, sensor reliability issues, and fragmented supervisory integration limit data trust and optimisation readiness.",
+      "realities": [
+        "Distributed multi-brand PLC estate (Rockwell, Siemens, Omron) with uneven integration.",
+        "Significant manual RPM settings and damper adjustments in solids handling.",
+        "Instrument accuracy issues (e.g., silo level dust impact, 12% belt scale variance).",
+        "Limited alarm/event logging and structured stop-cause capture.",
+        "Quality and sampling processes remain largely manual and transcription-based."
+      ],
+      "takeaway": "Overall maturity indicates L1 is partially established, L2 is fragmented, and L3 readiness is limited without foundational improvements.",
+      "riskThemes": [
+        "Conveyor and bulk solids flow events (choking, bridging, overflow) are not systematically instrumented.",
+        "Sensor degradation in dusty environments reduces stock and material visibility trust.",
+        "Alarm/event history is not consistently logged, limiting root cause analysis.",
+        "Protective sensing has previously been disabled due to false alarms.",
+        "Manual traceability and QC transcription create quality feedback latency."
+      ],
+      "outlook": "Early L1 stabilisation initiatives are feasible with incremental upgrades. L2 supervisory consolidation is achievable once instrumentation accuracy and event logging improve. L3 analytics and structured reporting are not feasible without systematic alarm capture, inventory trust restoration, and baseline integration improvements.",
+      "classifications": [
+        {
+          "type": "Early Wins",
+          "text": "Conveyor integrity sensing, digital pressure transmitters, motor ampere monitoring."
+        },
+        {
+          "type": "Foundational Upgrades",
+          "text": "Standardised alarm logging, trusted mass flow measurement."
+        },
+        {
+          "type": "Structural Gaps",
+          "text": "Unified data architecture and systematic condition monitoring."
+        }
+      ],
+      "roadmapDirection": "A phased roadmap (Phase 0–3) is recommended. Sequencing should prioritise availability protection before optimisation layers.",
+      "priorities": [
+        "Commission detailed L1 instrumentation and PLC integration survey.",
+        "Restore or replace critical disabled sensors (belt tear, choking detection).",
+        "Implement plant-wide alarm logging and historian baseline.",
+        "Validate silo level and mass flow measurement accuracy.",
+        "Standardise time synchronisation across PLC/SCADA estate."
+      ]
+    },
+    "methodology": {
+      "purpose": "Assess L1–L3 automation readiness of the Green Plant to support structured feasibility planning.",
+      "inScope": [
+        "GRP Green Scrap and Butt Receiving Control System",
+        "GRP Cooling Water Control System",
+        "GRP Coke Receiving Control System",
+        "GRP Coke Grinding Control System",
+        "GRP Blending and Kneading Control System",
+        "GRP Anode Forming Control System",
+        "GRP Tar Pitch Receiving and Heating Oil Control System",
+        "GRP Green Block Line Conveying Control System"
+      ],
+      "outOfScope": "Business case modelling, operating model redesign, ERP integration, and enterprise IT architecture alignment.",
+      "sources": [
+        "Process research documentation (carbon preparation, forming, handling).",
+        "Automation elicitation notes (sensor gaps, PLC estate, operational constraints).",
+        "PLC, SCADA, HMI inventories.",
+        "Equipment lists mapped to process groups.",
+        "Findings & issue registers.",
+        "Process elicitation workflow records."
+      ],
+      "dataQuality": [
+        "Plant boundary control: Only Green Plant L1–L3 layers considered.",
+        "Evidence hierarchy: Documented inventory and structured tables > observation notes.",
+        "No inference where explicitly uncertain: “To validate” and unknown items logged as gaps."
+      ],
+      "outputs": [
+        "L1/L2/L3 readiness scores (1–5) per process group + confidence.",
+        "Key evidence and priority actions (L1 → L3).",
+        "Cross-cutting plant-wide findings.",
+        "Phased technical roadmap."
+      ]
+    },
+    "baseline": {
+      "overview": "Automation landscape overview including supervisory distribution, PLC brand representation, and instrumentation confidence metrics.",
+      "plcTotal": 7,
+      "plcData": [
+        {
+          "brand": "Rockwell",
+          "count": 3,
+          "color": "#14b8a6",
+          "percentage": 42.8
+        },
+        {
+          "brand": "Siemens",
+          "count": 2,
+          "color": "#3b82f6",
+          "percentage": 28.6
+        },
+        {
+          "brand": "Omron",
+          "count": 1,
+          "color": "#f59e0b",
+          "percentage": 14.3
+        },
+        {
+          "brand": "TBD",
+          "count": 1,
+          "color": "#94a3b8",
+          "percentage": 14.3
+        }
+      ],
+      "plcNote": "Families: Logix-5575/5583E, CompactLogix, S7-1500/1200, CJ1M.",
+      "supervisory": {
+        "systems": "SCADA estate includes Citect (Granulation), FactoryTalk View (Vibration), and one partially defined system.",
+        "protocols": "Protocols include Modbus RTU/TCP and MQTT.",
+        "note": "Integration completeness requires validation across the estate."
+      },
+      "instruments": {
+        "total": 580,
+        "plcReadable": 367,
+        "relayLocal": 213,
+        "inferred": 426,
+        "obtained": 154,
+        "note": "Instrumentation distribution per process group is not fully segmented. Detailed I/O mapping requires survey. Closed-loop module / partial integration: 0."
+      }
+    },
+    "framework": {
+      "levels": [
+        {
+          "level": "L1 — Basic Control Layer:",
+          "desc": "Field instrumentation, PLC logic, and equipment-level control."
+        },
+        {
+          "level": "L2 — Supervisory Layer:",
+          "desc": "SCADA/HMI visibility, alarm handling, historical capture."
+        },
+        {
+          "level": "L3 — Structured Intelligence Layer:",
+          "desc": "Event logging, reporting, traceability, analytics readiness."
+        }
+      ],
+      "scale": [
+        {
+          "score": "Score 1 — Structured",
+          "desc": "Robust PLC coverage, integrated supervisory layer, trusted data."
+        },
+        {
+          "score": "Score 2 — Functional",
+          "desc": "Stable automation but partial standardisation or logging gaps."
+        },
+        {
+          "score": "Score 3 — Partial",
+          "desc": "Mixed PLC/relay/manual systems, limited event capture."
+        },
+        {
+          "score": "Score 4 — Weak",
+          "desc": "Manual dependency, missing measurement, fragmented integration."
+        },
+        {
+          "score": "Score 5 — Minimal automation",
+          "desc": "Predominantly manual or isolated controls."
+        }
+      ]
+    },
+    "processGroups": [
+      {
+        "title": "Green Scrap &<br>Butt Receiving",
+        "scores": {
+          "L1": 4,
+          "L2": 4,
+          "L3": 5
+        },
+        "confidence": "Medium",
+        "strengths": [
+          "PLC accommodates modern weighing scale functionality.",
+          "Renewal intent established for the recycling line."
+        ],
+        "gaps": [
+          "Conveyors/elevators remain relay-controlled islands.",
+          "Overflow event exposure exists without detection sensing.",
+          "Choking and flow disruptions handled via manual detection."
+        ],
+        "riskExposure": "High dependency on operator vigilance. Relay-controlled sections prevent systematic stop-cause capture and overflow protection integration."
+      },
+      {
+        "title": "Cooling Water<br>Control System",
+        "scores": {
+          "L1": 3,
+          "L2": 3,
+          "L3": 4
+        },
+        "confidence": "Medium",
+        "strengths": [
+          "Cooling loop efficiently handles pumps and tower operations.",
+          "Renewal planned for full SCADA integration readiness."
+        ],
+        "gaps": [
+          "Systematic performance monitoring (pressure/flow) not evidenced.",
+          "Missing event-history discipline and real-time status exposure."
+        ],
+        "riskExposure": "Moderate. Unobserved utility instability could propagate into production variability without structured performance history for root cause analysis."
+      },
+      {
+        "title": "Coke Receiving<br>Control",
+        "scores": {
+          "L1": 3,
+          "L2": 3,
+          "L3": 4
+        },
+        "confidence": "Medium",
+        "strengths": [
+          "Routing and distribution control layer well established.",
+          "Belt scales integrated directly into the primary logic."
+        ],
+        "gaps": [
+          "Untrusted silo level measurement due to dust impact.",
+          "Manual RPM settings significantly weaken closed-loop stability.",
+          "Mass flow measurements untrusted due to a known discrepancy."
+        ],
+        "riskExposure": "High inventory accuracy risk. Manual practice is substituted for system discipline due to untrusted instrumentation feedback."
+      },
+      {
+        "title": "Coke Grinding<br>Control",
+        "scores": {
+          "L1": 3,
+          "L2": 4,
+          "L3": 4
+        },
+        "confidence": "Medium",
+        "strengths": [
+          "Core assets (crusher, trommel, separation) are PLC-sequenced."
+        ],
+        "gaps": [
+          "Blaine control relies entirely on manual sampling adjustments.",
+          "Vibration-related equipment breakdown exposure is unmonitored.",
+          "Crucial alarm capture missing for critical system parameters."
+        ],
+        "riskExposure": "Quality stability risk. Control remains manual-adjustment dependent with high latency from lab-to-PLC quality feedback."
+      },
+      {
+        "title": "Blending &amp;<br>Kneading Control",
+        "scores": {
+          "L1": 3,
+          "L2": 3,
+          "L3": 4
+        },
+        "confidence": "Medium",
+        "strengths": [
+          "Feeders, pre-heating, and kneader sequencing exist.",
+          "PLC control is broadly present across core mixing assets."
+        ],
+        "gaps": [
+          "Some kneading system parameters not captured in the PLC.",
+          "Throughput constraints due to missing full parameter capture."
+        ],
+        "riskExposure": "High throughput constraint. Kneader breakdown materially constrains overall output; lack of downtime coding limits performance reviews."
+      },
+      {
+        "title": "Anode Forming<br>Control",
+        "scores": {
+          "L1": 3,
+          "L2": 3,
+          "L3": 4
+        },
+        "confidence": "Medium",
+        "strengths": [
+          "Shaking machine operates under full PLC control.",
+          "Basic automation present for compacting and forming assets."
+        ],
+        "gaps": [
+          "Labeling, traceability, and aging time discipline remain manual.",
+          "Cycle integrity monitoring needs significant strengthening."
+        ],
+        "riskExposure": "Genealogy discipline weak. Duplicate or missing numbering prevents L3 traceability maturity and reliable long-term feedback loops."
+      },
+      {
+        "title": "Tar Pitch &amp;<br>Heating Oil",
+        "scores": {
+          "L1": 3,
+          "L2": 4,
+          "L3": 4
+        },
+        "confidence": "Low",
+        "strengths": [
+          "Pitch storage and heating oil loop controls exist fundamentally."
+        ],
+        "gaps": [
+          "Charging control process remains partially manual.",
+          "Viscosity sensing is unconfirmed across the system.",
+          "Integration between standalone modules and supervisory is missing."
+        ],
+        "riskExposure": "Quality assurance gaps. Lack of viscosity and pump performance data severely limits pitch heating performance visibility."
+      },
+      {
+        "title": "Green Block Line<br>Conveying",
+        "scores": {
+          "L1": 3,
+          "L2": 3,
+          "L3": 4
+        },
+        "confidence": "Medium",
+        "strengths": [
+          "PLC-based conveying and safety chain monitoring exists for green block movement."
+        ],
+        "gaps": [
+          "Stop-cause capture and alarm history are entirely missing.",
+          "Limited integrity sensing (belt health, temp) on constrained conveyors."
+        ],
+        "riskExposure": "Increased likelihood of unobserved degradation. Reactive failures on transfer conveyors occur without structural downtime capture."
+      }
+    ],
+    "plantWideFindings": [
+      {
+        "title": "Bulk solids handling is not yet “closed-loop”",
+        "desc": "Routing and flow stability depend on manual RPM settings and dampers. Reactive clearing actions are common.",
+        "impact": "L1 completion is required before higher-layer initiatives can rely on data."
+      },
+      {
+        "title": "Dust conditions actively degrade data quality",
+        "desc": "Dust accumulation degrades level sensing reliability in silos, leading to manual sounding checks.",
+        "impact": "Inventory-related dashboards remain structurally constrained until trust is restored."
+      },
+      {
+        "title": "Conveyor integrity monitoring gaps",
+        "desc": "Critical conveyors lack comprehensive sensing (belt tear/slip), especially in constrained-access segments.",
+        "impact": "L1 integrity sensing is a prerequisite to improving overall availability."
+      },
+      {
+        "title": "Protective sensing disabled due to false alarms",
+        "desc": "Choking detection was reportedly disabled after nuisance trips, reducing the protective control baseline.",
+        "impact": "Alarm governance and tuning must be institutionalized early."
+      },
+      {
+        "title": "Choking and bridging are recurring loss modes",
+        "desc": "These events create repeated short downtime but are not currently logged as structured events.",
+        "impact": "L3 reporting is gated by the ability to trend these specific loss modes."
+      },
+      {
+        "title": "Condition monitoring is not yet systematic",
+        "desc": "CBM for pumps and kneaders is referenced as a need but lacks systematic measurement governance.",
+        "impact": "Pilots are feasible but require baseline instrumentation linkages."
+      },
+      {
+        "title": "Alarm/event history logging gaps",
+        "desc": "Absence of automatic logging limits diagnostics. Troubleshooting relies on operator memory.",
+        "impact": "L2/L3 capabilities require consistent event history infrastructure."
+      },
+      {
+        "title": "Quality and process feedback loops are slow",
+        "desc": "QC relies on manual transcription. Lab results can arrive after material consumption.",
+        "impact": "Optimisation readiness is constrained until feedback is structured and timely."
+      },
+      {
+        "title": "Inventory visibility constrained by untrusted instruments",
+        "desc": "Undermined by measurement discrepancies (e.g., untrusted mass flow) and manual yard transaction capture.",
+        "impact": "Digitalisation must start with measurement trust and transaction discipline."
+      },
+      {
+        "title": "Utility performance monitoring is a dependency",
+        "desc": "Utilities (cooling, compressed air) lack performance visibility and distribution analytics.",
+        "impact": "Early enabler for stable operation and downstream data governance."
+      },
+      {
+        "title": "Documentation and verification gaps increase integration risk",
+        "desc": "Missing bin drawings, incomplete sensor inventories, and uncertain integration boundaries increase technical risk.",
+        "impact": "Phase 0 controls survey is required before scalable deployment."
+      }
+    ],
+    "feasibility": {
+      "early": [
+        {
+          "title": "Conveyor Integrity Monitoring",
+          "desc": "Adding belt tear and motor current sensors. Control infrastructure can absorb these signals."
+        },
+        {
+          "title": "Alarm Logging Baseline",
+          "desc": "Implementing automatic event logs for key nodes. Does not require full system consolidation."
+        }
+      ],
+      "afterUpgrades": [
+        {
+          "title": "Inventory Governance",
+          "desc": "Requires restoration of silo level trust and resolution of mass flow discrepancies."
+        },
+        {
+          "title": "Quality Loop Acceleration",
+          "desc": "Requires digitising QC capture at source to remove transcription latency."
+        }
+      ],
+      "notFeasible": [
+        {
+          "title": "Advanced Predictive Governance",
+          "desc": "Gated by missing stable alarm history, trusted mass flow, and defined CBM loops."
+        }
+      ],
+      "implications": [
+        "Treat sensor trust restoration as a prerequisite workstream.",
+        "Start event capture early to accelerate root cause learning.",
+        "Prioritize bottleneck assets (kneader, conveyors) for integrity sensing.",
+        "Close documentation/connectivity gaps before platform consolidation decisions."
+      ]
+    },
+    "roadmap": {
+      "principles": "Stabilise L1 integrity and measurement trust before scaling supervisory scope. Reintroduce protective sensing with tuned thresholds. Standardise event capture as a prerequisite.",
+      "phases": [
+        {
+          "num": "Phase 0",
+          "title": "Verification & Baseline",
+          "desc": "3–4 months. Survey, documentation, sensor trust."
+        },
+        {
+          "num": "Phase 1",
+          "title": "L1 Integrity Hardening",
+          "desc": "6–9 months. Conveyors, bulk solids, bottlenecks."
+        },
+        {
+          "num": "Phase 2",
+          "title": "L2 Consolidation",
+          "desc": "6–9 months. Alarm governance, visibility."
+        },
+        {
+          "num": "Phase 3",
+          "title": "L3 Reporting",
+          "desc": "9–12 months. Loss accounting, traceability."
+        }
+      ],
+      "pilots": [
+        "Conveyor integrity sensing pilot on disruption-prone segments.",
+        "Centralized alarm log pilot on one high-criticality PLC.",
+        "Kneader CBM pilot using motor load and stop-cause."
+      ],
+      "dependencies": [
+        "Complete I/O and tag export per PLC.",
+        "SCADA integration scope confirmation.",
+        "Time synchronization posture across nodes.",
+        "Sensor maintenance discipline for dusty environments."
+      ]
+    },
+    "risks": {
+      "explicitGaps": [
+        "Instrument-to-process mapping incomplete.",
+        "PLC network standardization not fully documented.",
+        "SCADA integration coverage per PLC is incomplete.",
+        "Alarm logging posture not evidenced as consistent plant-wide."
+      ],
+      "assumptions": [
+        "PLC presence implies baseline L1 capability.",
+        "SCADA linkage implies minimum L2 visibility, not alarm maturity.",
+        "Manual QC transcription implies limited L3 readiness.",
+        "Incomplete integration details assume higher effort for scaling."
+      ],
+      "technicalRisks": [
+        "Data trust risk persists if dust-related sensor issues aren't resolved.",
+        "Reintroduction of protective sensing may fail without alarm governance.",
+        "Multi-platform PLC increases integration governance complexity.",
+        "Absence of event history limits performance improvement."
+      ]
+    }
+  }
+}

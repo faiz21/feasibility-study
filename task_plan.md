@@ -511,3 +511,30 @@ Standardize report component styling to the required full token contract, remove
 - Enforce strict internal token usage by resolving all component styles through `report-theme.ts`.
 - Phase 6 (**Docs/catalog sync**) is now complete.
 - Phase 7 (**Validation + closeout**) complete: `npm run lint` passed with warnings only (no errors).
+
+---
+
+# Task Plan — Markdown to HTML (automation-audit_template) (2026-03-02)
+
+## Goal
+Generate a styled HTML preview from `templates/report_template/generated/automation_audit_template/automation-audit_template.md` using `$markdown-report-to-html`, without overwriting the existing generated template artifacts in that folder.
+
+## Phases
+1. **Inspect source + outline** *(in progress)*
+   - Verify heading structure and content intent (this file is a template/mapping plan, not the final report narrative)
+2. **Confirm generation choices** *(pending)*
+   - Decide on: charts (none), output filenames (avoid collisions), theme CSS path, cover image behavior
+3. **Generate artifacts** *(pending)*
+   - Sample HTML (static)
+   - JSON (content + theme)
+   - Report HTML (JSON-driven)
+4. **Quick open/verify** *(pending)*
+   - Confirm cover page renders, tables render, CSS loads, and no missing assets
+
+## Output naming (proposed)
+- `automation-audit_template_md_sample.html`
+- `automation-audit_template_md.json`
+- `automation-audit_template_md_report.html`
+
+## Notes
+- Use `--themes ../../../../public/report_themes.css` so the HTML file under `templates/.../automation_audit_template/` resolves styling correctly when opened directly.

@@ -15,6 +15,15 @@ import {
   DataGridTable,
 } from "@/components/ui/data-grid";
 
+type AdminReportRow = {
+  id: string;
+  status: string;
+  published_at: string | null;
+  entity_id: string;
+  report_type_template_id: string;
+  created_at: string;
+};
+
 async function publishReportAction(formData: FormData) {
   "use server";
   await requireRole("admin");
@@ -78,7 +87,7 @@ export default async function AdminClientReportsPage({
         .from("reports")
         .select("id,status,published_at,entity_id,report_type_template_id,created_at")
         .order("created_at", { ascending: false }),
-      supabase.from("report_entities").select("id,name,client_id,granularity_id"),
+      supabase.from("report_entities").select("id,name,description,client_id,granularity_id"),
       supabase.from("report_type_templates").select("id,name").order("name", { ascending: true }),
       supabase.from("granularities").select("id,name,code").order("name", { ascending: true }),
       supabase
@@ -89,6 +98,7 @@ export default async function AdminClientReportsPage({
 
   const selectedClientId = params.client_id ?? clients?.[0]?.id ?? "";
   const granularityFilter = params.granularity_id ?? "all";
+  const reportRows = (reports ?? []) as AdminReportRow[];
 
   const entityById = new Map((entities ?? []).map((entity) => [entity.id, entity]));
   const reportTypeById = new Map((reportTypes ?? []).map((type) => [type.id, type.name]));
@@ -104,7 +114,7 @@ export default async function AdminClientReportsPage({
     pagesByReportId.set(page.report_id, existing);
   });
 
-  const filteredReports = (reports ?? []).filter((report) => {
+  const filteredReports = reportRows.filter((report) => {
     const entity = entityById.get(report.entity_id);
     if (!entity) return false;
     if (selectedClientId && entity.client_id !== selectedClientId) return false;
@@ -112,7 +122,7 @@ export default async function AdminClientReportsPage({
     return true;
   });
 
-  const groupedByEntity = new Map<string, Array<(typeof reports)[number]>>();
+  const groupedByEntity = new Map<string, AdminReportRow[]>();
   filteredReports.forEach((report) => {
     const existing = groupedByEntity.get(report.entity_id) ?? [];
     existing.push(report);
@@ -218,12 +228,16 @@ export default async function AdminClientReportsPage({
                       ({granularity?.name ?? "-"}{granularity?.code ? ` · ${granularity.code}` : ""})
                     </span>
                   </CardTitle>
+                  {entity?.description ? (
+                    <p className="text-sm text-muted-foreground">{entity.description}</p>
+                  ) : null}
                 </CardHeader>
                 <CardContent>
                   <DataGrid>
                     <DataGridTable>
                       <DataGridHead>
                         <DataGridRow className="border-t-0">
+                          <DataGridCell header>Entity Name</DataGridCell>
                           <DataGridCell header>Report Type</DataGridCell>
                           <DataGridCell header>Pages</DataGridCell>
                           <DataGridCell header>Status</DataGridCell>
@@ -234,6 +248,12 @@ export default async function AdminClientReportsPage({
                       <DataGridBody>
                         {rows.map((report) => (
                           <DataGridRow key={report.id}>
+                            <DataGridCell className="text-foreground">
+                              <div className="space-y-1">
+                                <p>{entity?.name ?? "-"}</p>
+                                <p className="text-xs text-muted-foreground">{entity?.description ?? "-"}</p>
+                              </div>
+                            </DataGridCell>
                             <DataGridCell className="text-muted-foreground">
                               {reportTypeById.get(report.report_type_template_id) ?? "-"}
                             </DataGridCell>
@@ -268,6 +288,12 @@ export default async function AdminClientReportsPage({
                                   className="inline-flex h-8 items-center rounded-md border border-border/70 px-3 text-xs font-medium hover:bg-accent/50"
                                 >
                                   Edit Content
+                                </Link>
+                                <Link
+                                  href={`/admin/client-reports/${report.id}/markdown-preview?client_id=${selectedClientId}&granularity_id=${granularityFilter}&locale=en`}
+                                  className="inline-flex h-8 items-center rounded-md border border-border/70 px-3 text-xs font-medium hover:bg-accent/50"
+                                >
+                                  Preview Markdown
                                 </Link>
                               </div>
                             </DataGridCell>

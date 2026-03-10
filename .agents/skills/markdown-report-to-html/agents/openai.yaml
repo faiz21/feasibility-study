@@ -1,0 +1,4 @@
+interface:
+  display_name: "Markdown Report to HTML"
+  short_description: "Convert Markdown reports into styled HTML with a sample and a JSON-driven final renderer."
+  default_prompt: "Use $markdown-report-to-html to convert this Markdown file into (1) a styled sample HTML, (1b) a Storybook preview under the `sample_report` folder, and (2) a JSON-driven final HTML report, using public/automation_assessment_sample.html as the design reference: <path/to/report.md>."

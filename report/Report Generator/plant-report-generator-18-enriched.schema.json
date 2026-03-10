@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mv-project.local/schemas/plant-report-generator/plant-report-generator-18-enriched.schema.json",
+  "title": "Step 18 Enriched Report Data Schema",
+  "description": "Enriched transformed schema for step 18: Assembly Index (and Optional Combined Master Index)",
+  "allOf": [
+    {
+      "$ref": "./plant-report-generator-enriched-base.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "source_step",
+        "report_profile",
+        "step_payload",
+        "quality_gate"
+      ],
+      "properties": {
+        "source_step": {
+          "type": "integer",
+          "const": 18
+        },
+        "report_profile": {
+          "type": "object",
+          "required": [
+            "appendix_code",
+            "title"
+          ],
+          "properties": {
+            "appendix_code": {
+              "type": "string",
+              "const": "INDEX"
+            },
+            "title": {
+              "type": "string",
+              "const": "Assembly Index (and Optional Combined Master Index)"
+            }
+          },
+          "additionalProperties": true
+        },
+        "step_payload": {
+          "type": "object",
+          "required": [
+            "document_id_pattern",
+            "prerequisite_steps",
+            "required_inputs",
+            "sections",
+            "outputs",
+            "quality_gate"
+          ],
+          "properties": {
+            "document_id_pattern": {
+              "type": "string"
+            },
+            "prerequisite_steps": {
+              "type": "array"
+            },
+            "required_inputs": {
+              "type": "array"
+            },
+            "sections": {
+              "type": "object"
+            },
+            "outputs": {
+              "type": "object"
+            },
+            "quality_gate": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "quality_gate": {
+          "type": "object",
+          "required": [
+            "status",
+            "checks"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "warning",
+                "fail"
+              ]
+            },
+            "checks": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "description",
+                  "result"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "enum": [
+                      "any-appendix-a-o-missing",
+                      "referenced-document-id-inconsistent-with-plantcode-app-letter-pa",
+                      "cross-reference-integrity-summary-indicates-unresolved-stop-cond"
+                    ]
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "result": {
+                    "type": "string",
+                    "enum": [
+                      "pass",
+                      "warning",
+                      "fail"
+                    ]
+                  },
+                  "details": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

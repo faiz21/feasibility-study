@@ -1,0 +1,7 @@
+node_modules
+.next
+storybook-static
+.git
+docs/plans
+*.log
+docker/.env.docker

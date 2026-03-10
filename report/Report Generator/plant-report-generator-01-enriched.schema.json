@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mv-project.local/schemas/plant-report-generator/plant-report-generator-01-enriched.schema.json",
+  "title": "Step 01 Enriched Report Data Schema",
+  "description": "Enriched transformed schema for step 1: Ingest & Normalize Data Pack",
+  "allOf": [
+    {
+      "$ref": "./plant-report-generator-enriched-base.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "source_step",
+        "report_profile",
+        "step_payload",
+        "quality_gate"
+      ],
+      "properties": {
+        "source_step": {
+          "type": "integer",
+          "const": 1
+        },
+        "report_profile": {
+          "type": "object",
+          "required": [
+            "appendix_code",
+            "title"
+          ],
+          "properties": {
+            "appendix_code": {
+              "type": "string",
+              "const": "CORE"
+            },
+            "title": {
+              "type": "string",
+              "const": "Ingest & Normalize Data Pack"
+            }
+          },
+          "additionalProperties": true
+        },
+        "step_payload": {
+          "type": "object",
+          "required": [
+            "document_id_pattern",
+            "outputs",
+            "required_inputs",
+            "cross_references",
+            "quality_gate"
+          ],
+          "properties": {
+            "document_id_pattern": {
+              "type": "string"
+            },
+            "outputs": {
+              "type": "object"
+            },
+            "required_inputs": {
+              "type": "object"
+            },
+            "cross_references": {
+              "type": "array"
+            },
+            "quality_gate": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "quality_gate": {
+          "type": "object",
+          "required": [
+            "status",
+            "checks"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "warning",
+                "fail"
+              ]
+            },
+            "checks": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "description",
+                  "result"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "enum": [
+                      "log-errors-continue-execution",
+                      "stop-on-missing-section-schema-error-duplicate-code-or-broken-re"
+                    ]
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "result": {
+                    "type": "string",
+                    "enum": [
+                      "pass",
+                      "warning",
+                      "fail"
+                    ]
+                  },
+                  "details": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

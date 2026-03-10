@@ -24,6 +24,66 @@ function parseTags(raw: string): string[] {
     .filter(Boolean);
 }
 
+const CLIENT_ASSET_BUCKET = process.env.NEXT_PUBLIC_CLIENT_ASSET_BUCKET ?? "client-assets";
+
+function sanitizePathSegment(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9-_]/g, "-");
+}
+
+function getExtension(filename: string, mimeType: string): string {
+  const directExt = filename.split(".").pop()?.toLowerCase();
+  if (directExt && /^[a-z0-9]{2,6}$/.test(directExt)) return directExt;
+  if (mimeType.includes("png")) return "png";
+  if (mimeType.includes("jpeg") || mimeType.includes("jpg")) return "jpg";
+  if (mimeType.includes("webp")) return "webp";
+  if (mimeType.includes("svg")) return "svg";
+  return "bin";
+}
+
+async function getClientCodeForAssets(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  clientId: string,
+): Promise<string> {
+  if (!clientId) return "client";
+  const { data } = await supabase.from("clients").select("code").eq("id", clientId).maybeSingle();
+  return String(data?.code ?? clientId).trim() || clientId;
+}
+
+async function uploadEntityImage(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  fileValue: FormDataEntryValue | null,
+  clientCode: string,
+  entityName: string,
+): Promise<string | null> {
+  if (!(fileValue instanceof File) || fileValue.size <= 0) return null;
+  if (!fileValue.type.startsWith("image/")) {
+    throw new Error("Photo file must be an image");
+  }
+
+  const assetBucket = CLIENT_ASSET_BUCKET;
+
+  const safeClientCode = sanitizePathSegment(clientCode || "client");
+  const safeEntityName = sanitizePathSegment(entityName || "entity");
+  const ext = getExtension(fileValue.name, fileValue.type);
+  const filePath = `clients/${safeClientCode}/entities/${safeEntityName}-${Date.now()}.${ext}`;
+
+  const { error } = await supabase.storage.from(assetBucket).upload(filePath, fileValue, {
+    upsert: true,
+    contentType: fileValue.type || undefined,
+  });
+  if (error) {
+    const message = error.message || "Upload failed";
+    if (message.toLowerCase().includes("bucket") && message.toLowerCase().includes("not found")) {
+      throw new Error(
+        `Storage bucket "${assetBucket}" not found. Double-check the bucket name in Supabase Storage and set NEXT_PUBLIC_CLIENT_ASSET_BUCKET (then restart dev).`,
+      );
+    }
+    throw new Error(message);
+  }
+
+  return `${assetBucket}/${filePath}`;
+}
+
 function parseCsvLine(line: string): string[] {
   const values: string[] = [];
   let current = "";
@@ -104,11 +164,21 @@ async function createEntityAction(formData: FormData) {
   const granularityId = String(formData.get("granularity_id") ?? "").trim();
   const name = String(formData.get("name") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
-  const photoUrl = String(formData.get("photo_url") ?? "").trim();
+  let photoUrl = String(formData.get("photo_url") ?? "").trim();
   const tags = parseTags(String(formData.get("tags_csv") ?? ""));
 
   if (!clientId || !granularityId || !name) {
     redirect(`/admin/client-entities?client_id=${clientId}&error=Missing+required+fields`);
+  }
+
+  try {
+    const clientCode = await getClientCodeForAssets(supabase, clientId);
+    const uploadedPhotoPath = await uploadEntityImage(supabase, formData.get("photo_file"), clientCode, name);
+    if (uploadedPhotoPath) photoUrl = uploadedPhotoPath;
+  } catch (error) {
+    redirect(
+      `/admin/client-entities?client_id=${clientId}&error=${encodeURIComponent((error as Error).message)}`,
+    );
   }
 
   const allowed = await ensureGranularityAllowed(clientId, granularityId);
@@ -145,11 +215,21 @@ async function updateEntityAction(formData: FormData) {
   const granularityId = String(formData.get("granularity_id") ?? "").trim();
   const name = String(formData.get("name") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
-  const photoUrl = String(formData.get("photo_url") ?? "").trim();
+  let photoUrl = String(formData.get("photo_url") ?? "").trim();
   const tags = parseTags(String(formData.get("tags_csv") ?? ""));
 
   if (!id || !clientId || !granularityId || !name) {
     redirect(`/admin/client-entities?client_id=${clientId}&error=Missing+required+fields`);
+  }
+
+  try {
+    const clientCode = await getClientCodeForAssets(supabase, clientId);
+    const uploadedPhotoPath = await uploadEntityImage(supabase, formData.get("photo_file"), clientCode, name);
+    if (uploadedPhotoPath) photoUrl = uploadedPhotoPath;
+  } catch (error) {
+    redirect(
+      `/admin/client-entities?client_id=${clientId}&error=${encodeURIComponent((error as Error).message)}`,
+    );
   }
 
   const allowed = await ensureGranularityAllowed(clientId, granularityId);
@@ -227,11 +307,26 @@ async function importEntitiesCsvAction(formData: FormData) {
     .select("granularity:granularity_id(id,name,code)")
     .eq("client_id", clientId);
 
-  const normalizedAllowed = (allowedGranularities ?? [])
-    .map((row) => row.granularity)
-    .filter((granularity): granularity is { id: string; code: string; name: string } =>
-      Boolean(granularity),
-    );
+  const normalizedAllowed = (allowedGranularities ?? []).flatMap((row) => {
+    const candidate = row.granularity as unknown;
+    const normalizeOne = (value: unknown): { id: string; code: string; name: string } | null => {
+      if (!value || typeof value !== "object") return null;
+      const v = value as Record<string, unknown>;
+      if (typeof v.id !== "string" || typeof v.code !== "string" || typeof v.name !== "string") {
+        return null;
+      }
+      return { id: v.id, code: v.code, name: v.name };
+    };
+
+    if (Array.isArray(candidate)) {
+      return candidate
+        .map((item) => normalizeOne(item))
+        .filter((item): item is { id: string; code: string; name: string } => Boolean(item));
+    }
+
+    const single = normalizeOne(candidate);
+    return single ? [single] : [];
+  });
 
   const granularityById = new Map(normalizedAllowed.map((granularity) => [granularity.id, granularity.id]));
   const granularityByCode = new Map(
@@ -448,7 +543,11 @@ export default async function AdminClientEntitiesPage({
               Configure client granularity first from Client Granularity page.
             </p>
           ) : (
-            <form action={createEntityAction} className="grid gap-3 md:grid-cols-2">
+            <form
+              action={createEntityAction}
+              className="grid gap-3 md:grid-cols-2"
+              encType="multipart/form-data"
+            >
               <input type="hidden" name="client_id" value={selectedClientId} />
               <label className="text-sm">
                 Name
@@ -473,13 +572,20 @@ export default async function AdminClientEntitiesPage({
                 <Input name="description" className="mt-1" />
               </label>
               <label className="text-sm">
+                Photo (upload)
+                <Input name="photo_file" type="file" accept="image/*" className="mt-1" />
+              </label>
+              <label className="text-sm">
                 Photo URL
-                <Input name="photo_url" className="mt-1" />
+                <Input name="photo_url" type="url" className="mt-1" placeholder="https://..." />
               </label>
               <label className="text-sm">
                 Tags (comma-separated)
                 <Input name="tags_csv" className="mt-1" placeholder="tag1, tag2" />
               </label>
+              <p className="text-xs text-muted-foreground md:col-span-2">
+                Upload a photo file or paste a URL. Upload overrides the URL field.
+              </p>
               <div className="md:col-span-2">
                 <Button type="submit">Save Entity</Button>
               </div>
@@ -538,7 +644,11 @@ export default async function AdminClientEntitiesPage({
                               description="Update entity information."
                               triggerLabel="Edit"
                             >
-                              <form action={updateEntityAction} className="grid gap-3 md:grid-cols-2">
+                              <form
+                                action={updateEntityAction}
+                                className="grid gap-3 md:grid-cols-2"
+                                encType="multipart/form-data"
+                              >
                                 <input type="hidden" name="id" value={entity.id} />
                                 <input type="hidden" name="client_id" value={selectedClientId} />
                                 <label className="text-sm">
@@ -569,6 +679,10 @@ export default async function AdminClientEntitiesPage({
                                   />
                                 </label>
                                 <label className="text-sm">
+                                  Photo (upload)
+                                  <Input name="photo_file" type="file" accept="image/*" className="mt-1" />
+                                </label>
+                                <label className="text-sm">
                                   Photo URL
                                   <Input
                                     name="photo_url"
@@ -584,6 +698,9 @@ export default async function AdminClientEntitiesPage({
                                     className="mt-1"
                                   />
                                 </label>
+                                <p className="text-xs text-muted-foreground md:col-span-2">
+                                  Upload overrides the URL field.
+                                </p>
                                 <div className="md:col-span-2">
                                   <Button type="submit">Save Changes</Button>
                                 </div>

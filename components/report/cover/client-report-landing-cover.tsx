@@ -116,7 +116,7 @@ export function ClientReportLandingCover({
             </div>
             <div
               className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border p-2"
-              style={{ borderColor: colors.border, background: colors["card-foreground"] }}
+              style={{ borderColor: colors.border, background: "#ffffff" }}
             >
               {showLogo ? (
                 <img
@@ -126,7 +126,7 @@ export function ClientReportLandingCover({
                   onError={() => setLogoBroken(true)}
                 />
               ) : (
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-white/80">No logo</span>
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">No logo</span>
               )}
             </div>
           </div>

@@ -1,11 +1,78 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import inalumTemplate from "@/templates/report_template/generated/automation_audit_template/sample.json";
 import { ReportTemplatePageRenderer } from "./report-template-page-renderer";
 
 type TemplateBlock = { id: string; type: string; data: Record<string, unknown> };
-type TemplatePage = { schemaVersion: 1; pageTitle: string; layout: TemplateBlock[] };
-const templatePages = (inalumTemplate.pages || []) as TemplatePage[];
+type TemplatePage = { pageTitle: string; layout: TemplateBlock[] };
+
+const templatePages: TemplatePage[] = [
+  {
+    pageTitle: "INALUM Automation Audit (Sample)",
+    layout: [
+      {
+        id: "hdr-001",
+        type: "report.layout.headerBar",
+        data: { headerLabel: "Automation Audit" },
+      },
+      {
+        id: "nar-001",
+        type: "report.text.narrativeBlock",
+        data: {
+          title: "Executive Snapshot",
+          content:
+            "This is a lightweight sample payload used for Storybook preview. Replace with generated templates when available.",
+          bullets: ["Baseline visibility", "Event logging readiness", "Instrumentation confidence"],
+        },
+      },
+      {
+        id: "chart-001",
+        type: "report.chart.charts",
+        data: {
+          title: "PLC Brand Mix (Example)",
+          series: [
+            { label: "Rockwell", value: 3 },
+            { label: "Siemens", value: 2 },
+            { label: "Omron", value: 1 },
+            { label: "TBD", value: 1 },
+          ],
+        },
+      },
+      {
+        id: "kpi-001",
+        type: "report.metric.resultMetricCard",
+        data: {
+          title: "Readiness",
+          metrics: [
+            { value: "2.3/5", label: "L2 Visibility" },
+            { value: "1.8/5", label: "L3 Reporting" },
+          ],
+        },
+      },
+      {
+        id: "list-001",
+        type: "report.list.squareNumberedList",
+        data: {
+          title: "Next Actions",
+          items: [
+            { title: "Survey I/O", description: "Confirm signal quality and coverage." },
+            { title: "Alarm Logging", description: "Standardize events and timestamps." },
+            { title: "Mass Flow", description: "Validate belt scales and silo levels." },
+          ],
+        },
+      },
+      {
+        id: "ftr-001",
+        type: "report.layout.footerStrip",
+        data: {
+          contacts: [
+            { kind: "Email", value: "ops@example.com" },
+            { kind: "Phone", value: "+62 000-0000-0000" },
+          ],
+        },
+      },
+    ],
+  },
+];
 
 const firstBlockByType: TemplateBlock[] = [];
 const seenTypes = new Set<string>();

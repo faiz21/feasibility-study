@@ -1,0 +1,54 @@
+/* report_themes.css */
+
+:root {
+  /* Default Theme (Teal/Slate - Modern Clean) */
+  --report-primary: #14b8a6;
+  --report-primary-hover: #0d9488;
+  --report-primary-bg: #f0fdfa;
+  --report-primary-border: #ccfbf1;
+  --report-primary-text: #115e59;
+  
+  --report-bg: #f8fafc;
+  --report-surface: #ffffff;
+  --report-text: #0f172a;
+  --report-text-muted: #64748b;
+  --report-border: #e2e8f0;
+  
+  --report-accent-orange: #f97316;
+  --report-accent-red: #ef4444;
+  --report-accent-blue: #3b82f6;
+}
+
+[data-theme="mv-corp"] {
+  /* MV Corporate Theme (Deep Blue/Gold - Premium) */
+  --report-primary: #1e3a8a;
+  --report-primary-hover: #1e40af;
+  --report-primary-bg: #eff6ff;
+  --report-primary-border: #dbeafe;
+  --report-primary-text: #1e3a8a;
+  
+  --report-bg: #f1f5f9;
+  --report-surface: #ffffff;
+  --report-text: #0f172a;
+  --report-text-muted: #475569;
+  --report-border: #cbd5e1;
+
+  --report-accent-orange: #d97706;
+  --report-accent-red: #dc2626;
+  --report-accent-blue: #2563eb;
+}
+
+[data-theme="dark-obsidian"] {
+  /* Dark Mode Theme */
+  --report-primary: #14b8a6;
+  --report-primary-hover: #0d9488;
+  --report-primary-bg: rgba(20, 184, 166, 0.1);
+  --report-primary-border: rgba(20, 184, 166, 0.2);
+  --report-primary-text: #14b8a6;
+  
+  --report-bg: #0f172a;
+  --report-surface: #1e293b;
+  --report-text: #f1f5f9;
+  --report-text-muted: #94a3b8;
+  --report-border: #334155;
+}

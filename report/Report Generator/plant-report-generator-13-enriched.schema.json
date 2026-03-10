@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mv-project.local/schemas/plant-report-generator/plant-report-generator-13-enriched.schema.json",
+  "title": "Step 13 Enriched Report Data Schema",
+  "description": "Enriched transformed schema for step 13: Appendix L \u2014 Audit Evaluation Framework: Parameter Dictionary & Scoring Logic",
+  "allOf": [
+    {
+      "$ref": "./plant-report-generator-enriched-base.schema.json"
+    },
+    {
+      "type": "object",
+      "required": [
+        "source_step",
+        "report_profile",
+        "step_payload",
+        "quality_gate"
+      ],
+      "properties": {
+        "source_step": {
+          "type": "integer",
+          "const": 13
+        },
+        "report_profile": {
+          "type": "object",
+          "required": [
+            "appendix_code",
+            "title"
+          ],
+          "properties": {
+            "appendix_code": {
+              "type": "string",
+              "const": "L"
+            },
+            "title": {
+              "type": "string",
+              "const": "Appendix L \u2014 Audit Evaluation Framework: Parameter Dictionary & Scoring Logic"
+            }
+          },
+          "additionalProperties": true
+        },
+        "step_payload": {
+          "type": "object",
+          "required": [
+            "document_id_pattern",
+            "prerequisite_steps",
+            "evidence_sources",
+            "immutable_elements",
+            "default_weights",
+            "sections",
+            "outputs",
+            "quality_gate"
+          ],
+          "properties": {
+            "document_id_pattern": {
+              "type": "string"
+            },
+            "prerequisite_steps": {
+              "type": "array"
+            },
+            "evidence_sources": {
+              "type": "array"
+            },
+            "immutable_elements": {
+              "type": "object"
+            },
+            "default_weights": {
+              "type": "object"
+            },
+            "sections": {
+              "type": "object"
+            },
+            "outputs": {
+              "type": "object"
+            },
+            "quality_gate": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "quality_gate": {
+          "type": "object",
+          "required": [
+            "status",
+            "checks"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "warning",
+                "fail"
+              ]
+            },
+            "checks": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "description",
+                  "result"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "enum": [
+                      "any-of-the-nine-dimensions-is-missing-renamed-or-reordered",
+                      "maturity-scale-section-3-1-is-altered",
+                      "any-plant-score-is-included-in-appendix-l",
+                      "weight-totals-do-not-equal-100-or-override-is-incomplete",
+                      "parameters-introduced-removed-or-renumbered"
+                    ]
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "result": {
+                    "type": "string",
+                    "enum": [
+                      "pass",
+                      "warning",
+                      "fail"
+                    ]
+                  },
+                  "details": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

@@ -7,6 +7,20 @@ import { ConfirmSubmitDialogButton } from "@/components/ui/confirm-submit-dialog
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+function resolveGranularityName(input: unknown): string | null {
+  if (Array.isArray(input)) {
+    const first = input[0];
+    if (first && typeof first === "object" && "name" in first && typeof first.name === "string") {
+      return first.name;
+    }
+    return null;
+  }
+  if (input && typeof input === "object" && "name" in input && typeof input.name === "string") {
+    return input.name;
+  }
+  return null;
+}
+
 async function addAccessAction(formData: FormData) {
   "use server";
   await requireRole("admin");
@@ -135,9 +149,7 @@ export default async function AdminClientAccessPage({
               <p className="text-sm text-muted-foreground">No available report types.</p>
             ) : null}
             {available.map((type) => {
-              const granularity = Array.isArray(type.granularities)
-                ? type.granularities[0]?.name
-                : type.granularities?.name;
+              const granularity = resolveGranularityName(type.granularities);
               return (
                 <div key={type.id} className="flex items-center justify-between rounded-lg border border-border/70 p-2">
                   <div>
@@ -168,9 +180,7 @@ export default async function AdminClientAccessPage({
               <p className="text-sm text-muted-foreground">No template access configured yet.</p>
             ) : null}
             {enabled.map((type) => {
-              const granularity = Array.isArray(type.granularities)
-                ? type.granularities[0]?.name
-                : type.granularities?.name;
+              const granularity = resolveGranularityName(type.granularities);
               return (
                 <div key={type.id} className="flex items-center justify-between rounded-lg border border-border/70 p-2">
                   <div>

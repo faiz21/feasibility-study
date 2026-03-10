@@ -1,40 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" class="antialiased" data-theme="default">
+<html lang="en" class="antialiased">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automation Assessment Report</title>
-
-    <!-- External Dependencies -->
+    <title>Automation Assessment Sample (Rendered)</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="report_themes.css">
-
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        // Bridge Tailwind colors to our CSS variables
                         report: {
-                            primary: 'var(--report-primary)',
-                            'primary-hover': 'var(--report-primary-hover)',
-                            'primary-bg': 'var(--report-primary-bg)',
-                            'primary-border': 'var(--report-primary-border)',
-                            'primary-text': 'var(--report-primary-text)',
-
-                            bg: 'var(--report-bg)',
-                            surface: 'var(--report-surface)',
-                            text: 'var(--report-text)',
-                            'text-muted': 'var(--report-text-muted)',
-                            border: 'var(--report-border)',
-
-                            'accent-orange': 'var(--report-accent-orange)',
-                            'accent-red': 'var(--report-accent-red)',
-                            'accent-blue': 'var(--report-accent-blue)',
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            500: '#14b8a6', // Core Primary (Teal)
+                            800: '#115e59',
+                            900: '#0f172a', // Core Dark (Slate)
                         }
                     }
                 }
@@ -42,18 +28,20 @@
         }
     </script>
     <style>
-        body {
-            background-color: var(--report-bg);
-            color: var(--report-text);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        .glass-card {
-            background: var(--report-surface);
-            border: 1px solid var(--report-border);
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        .dark-glass {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .hero-bg {
+            /* Using a high-quality industrial/tech unsplash image for the cover */
             background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.6)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2670&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
@@ -61,192 +49,274 @@
     </style>
 </head>
 
-<body class="font-sans leading-relaxed selection:bg-report-primary selection:text-white">
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-report-500 selection:text-white">
 
-    <!-- THEME SWITCHER (Internal Tooling) -->
-    <div class="fixed top-4 right-4 z-[100] flex gap-2">
-        <select onchange="document.documentElement.setAttribute('data-theme', this.value)"
-            class="bg-white/80 backdrop-blur-md border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-bold uppercase tracking-wider shadow-lg outline-none cursor-pointer">
-            <option value="default">Default (Teal)</option>
-            <option value="mv-corp">MV Corporate (Blue)</option>
-            <option value="dark-obsidian">Dark Obsidian</option>
-        </select>
-    </div>
-
-    <!-- REPORT ROOT CONTAINER -->
-    <div id="report-root">
-        <!-- Spinner while loading -->
-        <div class="h-screen flex items-center justify-center">
-            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-report-primary"></div>
+    <!-- 1. THE COVER COMPONENT (12 Column Full Bleed) -->
+    <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
+        <div
+            class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent mix-blend-multiply">
         </div>
+        <div class="relative z-10 max-w-5xl">
+            <div
+                class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-500/30 bg-report-500/20 text-report-100 text-sm font-semibold tracking-wide uppercase shadow-lg shadow-report-500/10">
+                L1–L3 Maturity Assessment
+            </div>
+            <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-6 text-white drop-shadow-sm">
+                Automation Assessment
+            </h1>
+            <h2 class="text-2xl md:text-4xl font-light text-slate-200 mb-12 max-w-3xl leading-snug">
+                PT Indonesia Asahan Alumunium <br />
+                <span class="text-report-500 font-medium">Green Plant</span>
+            </h2>
+
+            <!-- Cover Metadata Grid -->
+            <div
+                class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12 dark-glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl">
+                <div>
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Scope Limit</p>
+                    <p class="font-medium text-white text-lg">INA-PL-GRP</p>
+                </div>
+                <div>
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Content</p>
+                    <p class="font-medium text-white text-lg">Sections 1–9</p>
+                </div>
+                <div>
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Issue Date</p>
+                    <p class="font-medium text-white text-lg">23 Feb 2026</p>
+                </div>
+                <div>
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Status</p>
+                    <p class="font-medium text-report-500 flex items-center gap-2 text-lg">
+                        <span
+                            class="w-2.5 h-2.5 rounded-full bg-report-500 animate-pulse shadow-[0_0_8px_rgba(20,184,166,0.8)]"></span>
+                        Executive Final
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. THE MASTER 12-COLUMN HTML GRID -->
+    <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8">
+
+        <!-- NARRATIVE BLOCK (H1 Equivalent - 12 Columns) -->
+        <div class="col-span-1 md:col-span-12">
+            <div class="border-l-[6px] border-report-500 pl-8 py-2">
+                <p class="text-report-500 font-bold tracking-widest uppercase text-sm mb-3">Section 01</p>
+                <h2 class="text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight">Executive Summary</h2>
+            </div>
+        </div>
+
+        <!-- DEEP READING CONTAINER (8 Columns Centered - The Body/Paragraphs) -->
+        <div class="col-span-1 md:col-span-8 md:col-start-3 space-y-10 text-xl font-light">
+            <h3 class="text-3xl font-semibold text-slate-800 tracking-tight">Plant Context & Assessment Scope</h3>
+            <p class="text-slate-700 leading-relaxed">
+                PT Indonesia Asahan Aluminium (INALUM) operates the <strong class="font-semibold text-slate-900">Green
+                    Plant</strong> as the front-end carbon preparation and green anode forming stage supporting the
+                smelter’s reduction lines. This assessment evaluates automation maturity across L1–L3 layers only (basic
+                control, supervisory visibility, and structured reporting readiness) to determine feasibility for phased
+                digitalisation.
+            </p>
+
+            <!-- COMPOSITE CARD: Grouped List (Simulating Icon Bullet Intro) -->
+            <div
+                class="glass-card rounded-3xl p-10 shadow-sm my-16 relative overflow-hidden group hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <div
+                    class="absolute top-0 right-0 w-48 h-48 bg-report-500/10 rounded-bl-full -z-10 transition-transform group-hover:scale-110">
+                </div>
+
+                <h4 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-4">
+                    <span class="bg-report-100 text-report-500 p-2 rounded-xl">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </span>
+                    Structural Realities Observed
+                </h4>
+                <ul class="space-y-6 text-lg">
+                    <li class="flex items-start gap-5">
+                        <div
+                            class="flex-shrink-0 w-10 h-10 rounded-full bg-report-50 text-report-800 flex items-center justify-center font-bold shadow-sm border border-report-100">
+                            1</div>
+                        <p class="text-slate-700 mt-1.5"><strong class="font-medium text-slate-900">Distributed
+                                multi-brand PLC estate</strong> (Rockwell, Siemens, Omron) with uneven integration
+                            pipelines.</p>
+                    </li>
+                    <li class="flex items-start gap-5">
+                        <div
+                            class="flex-shrink-0 w-10 h-10 rounded-full bg-report-50 text-report-800 flex items-center justify-center font-bold shadow-sm border border-report-100">
+                            2</div>
+                        <p class="text-slate-700 mt-1.5">Significant <strong class="font-medium text-slate-900">manual
+                                RPM settings</strong> and damper adjustments in core solids handling routines.</p>
+                    </li>
+                    <li class="flex items-start gap-5">
+                        <div
+                            class="flex-shrink-0 w-10 h-10 rounded-full bg-report-50 text-report-800 flex items-center justify-center font-bold shadow-sm border border-report-100">
+                            3</div>
+                        <p class="text-slate-700 mt-1.5">Instrument accuracy issues, including silo level dust impact
+                            and <strong class="text-red-500 font-medium bg-red-50 px-2 py-0.5 rounded">12% belt scale
+                                variance</strong>.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- QUOTE COMPONENT (Simulating quote-blocks.tsx) -->
+            <blockquote
+                class="bg-slate-900 rounded-[2.5rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden transform md:scale-105 my-16">
+                <div class="absolute -right-16 -top-16 opacity-5 z-0">
+                    <svg class="w-64 h-64" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z" />
+                    </svg>
+                </div>
+                <!-- Premium Vertical Neon bar -->
+                <div class="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-teal-400 to-report-500"></div>
+                <p class="relative z-10 text-2xl md:text-3xl font-light leading-normal sm:leading-relaxed mb-8">
+                    Overall maturity indicates <strong class="font-medium text-white">L1 is partially
+                        established</strong>, L2 is fragmented, and L3 readiness is limited without foundational
+                    improvements.
+                </p>
+                <footer class="relative z-10 flex items-center gap-4 border-t border-slate-700 pt-6">
+                    <span class="w-8 h-8 rounded-full bg-report-500 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </span>
+                    <span class="text-slate-300 font-bold tracking-widest text-sm uppercase">Key Takeaway</span>
+                </footer>
+            </blockquote>
+        </div>
+
+        <!-- DIVIDER (H1 Section Break) -->
+        <div class="col-span-1 md:col-span-12 mt-12 mb-8">
+            <div class="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent w-full mb-16"></div>
+            <div class="border-l-[6px] border-slate-900 pl-8 py-2">
+                <p class="text-slate-500 font-bold tracking-widest uppercase text-sm mb-3">Section 05</p>
+                <h2 class="text-5xl font-extrabold text-slate-900 tracking-tight">Process Group Findings</h2>
+                <p class="text-xl text-slate-500 mt-4 max-w-3xl">This visual grid dynamically parses Section 5's
+                    recursive H3 tags into a unified dashboard experience.</p>
+            </div>
+        </div>
+
+        <!-- CARD GRID: H3 Groupings (3 Columns of 4 Spans) -->
+        <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-24">
+
+            <!-- CARD 1 (Simulating box-with-icon-card.tsx with nested logic) -->
+            <div
+                class="bg-white rounded-[2rem] p-10 shadow-lg shadow-slate-200/50 border border-slate-100/80 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-slate-100 group-hover:bg-orange-400 transition-colors">
+                </div>
+                <div
+                    class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center mb-8 group-hover:bg-orange-50 group-hover:border-orange-200 group-hover:text-orange-500 transition-all">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-4 tracking-tight">Green Scrap & Butt Receiving</h3>
+                <p class="text-slate-600 mb-8 flex-grow text-lg leading-relaxed font-light">Renewal of butt and green
+                    scrap receiving line; current PLC accommodates weighing scale while conveyors/elevators are relay
+                    controlled.</p>
+
+                <div class="pt-8 border-t border-slate-100 mt-auto">
+                    <p class="text-xs uppercase font-bold text-slate-400 mb-4 tracking-widest">Automation Score</p>
+                    <div class="flex items-center gap-3 mb-5">
+                        <span
+                            class="px-4 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100">L1:
+                            4</span>
+                        <span
+                            class="px-4 py-1.5 rounded-lg bg-orange-50 text-orange-700 text-sm font-bold border border-orange-100">L2:
+                            4</span>
+                        <span
+                            class="px-4 py-1.5 rounded-lg bg-red-50 text-red-700 text-sm font-bold ring-1 ring-red-200">L3:
+                            5</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div
+                class="bg-white rounded-[2rem] p-10 shadow-lg shadow-slate-200/50 border border-slate-100/80 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-slate-100 group-hover:bg-blue-400 transition-colors">
+                </div>
+                <div
+                    class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center mb-8 group-hover:bg-blue-50 group-hover:border-blue-200 group-hover:text-blue-500 transition-all">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-4 tracking-tight">Cooling Water Control</h3>
+                <p class="text-slate-600 mb-8 flex-grow text-lg leading-relaxed font-light">Cooling loop (pumps, cooling
+                    tower, instrumentation) supporting overall utility reliability and cooling stability.</p>
+
+                <div class="pt-8 border-t border-slate-100 mt-auto">
+                    <p class="text-xs uppercase font-bold text-slate-400 mb-4 tracking-widest">Automation Score</p>
+                    <div class="flex items-center gap-3 mb-5">
+                        <span
+                            class="px-4 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100">L1:
+                            3</span>
+                        <span
+                            class="px-4 py-1.5 rounded-lg bg-orange-50 text-orange-700 text-sm font-bold border border-orange-100">L2:
+                            3</span>
+                        <span
+                            class="px-4 py-1.5 rounded-lg bg-orange-50 text-orange-700 text-sm font-bold ring-1 ring-orange-200">L3:
+                            4</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div
+                class="bg-white rounded-[2rem] p-10 shadow-lg shadow-slate-200/50 border border-slate-100/80 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-slate-100 group-hover:bg-teal-400 transition-colors">
+                </div>
+                <div
+                    class="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-100 text-slate-400 flex items-center justify-center mb-8 group-hover:bg-teal-50 group-hover:border-teal-200 group-hover:text-teal-500 transition-all">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-4 tracking-tight">Anode Forming System</h3>
+                <p class="text-slate-600 mb-8 flex-grow text-lg leading-relaxed font-light">Compacting and forming
+                    assets with interlocks and permissives (shaking and forming line control). Control is present but
+                    decoupled.</p>
+
+                <div class="pt-8 border-t border-slate-100 mt-auto">
+                    <p class="text-xs uppercase font-bold text-slate-400 mb-4 tracking-widest">Automation Score</p>
+                    <div class="flex items-center gap-3 mb-5">
+                        <span
+                            class="px-4 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 text-sm font-bold border border-emerald-100">L1:
+                            3</span>
+                        <span
+                            class="px-4 py-1.5 rounded-lg bg-orange-50 text-orange-700 text-sm font-bold border border-orange-100">L2:
+                            3</span>
+                        <span
+                            class="px-4 py-1.5 rounded-lg bg-orange-50 text-orange-700 text-sm font-bold ring-1 ring-orange-200">L3:
+                            4</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- FLOATING ACTION BUTTON (To simulate UI interactivity) -->
+    <div class="fixed bottom-8 right-8 z-50">
+        <button
+            class="bg-report-900 text-white rounded-full p-4 shadow-xl shadow-slate-900/40 hover:scale-110 transition-transform">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+        </button>
     </div>
-
-    <!-- DYNAMIC RENDERER SCRIPT -->
-    <script>
-        async function loadReport() {
-            try {
-                const response = await fetch('automation_report_data_refined.json');
-                const data = await response.json();
-                renderReport(data);
-            } catch (err) {
-                console.error("Failed to load report data:", err);
-                document.getElementById('report-root').innerHTML = `<div class="p-20 text-center text-red-500 font-bold">Error: Failed to load report data. Please ensure automation_report_data_refined.json exists.</div>`;
-            }
-        }
-
-        function renderReport(data) {
-            const root = document.getElementById('report-root');
-            root.innerHTML = ''; // Clear spinner
-
-            // 1. Render Cover
-            const coverHtml = `
-                <section class="h-[90vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
-                    <div class="relative z-10 max-w-5xl">
-                        <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-primary/30 bg-report-primary/20 text-white text-sm font-semibold tracking-wide uppercase shadow-lg">
-                            ${data.metadata.scope} Maturity Assessment
-                        </div>
-                        <h1 class="text-6xl md:text-8xl font-black tracking-tight mb-6">
-                            ${data.metadata.title}
-                        </h1>
-                        <h2 class="text-2xl md:text-3xl font-light text-slate-200 mb-12 max-w-3xl leading-snug">
-                            ${data.metadata.client}
-                        </h2>
-                        <div class="flex gap-12 border-t border-white/20 pt-8 mt-12 bg-black/40 backdrop-blur-xl p-8 rounded-3xl">
-                            <div>
-                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Issue Date</p>
-                                <p class="font-medium text-white text-lg">${data.metadata.date}</p>
-                            </div>
-                            <div>
-                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Status</p>
-                                <p class="font-medium text-report-primary flex items-center gap-2 text-lg">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-report-primary animate-pulse"></span>
-                                    Final Executive
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            `;
-            root.insertAdjacentHTML('beforeend', coverHtml);
-
-            // 2. Render Main Body
-            const main = document.createElement('main');
-            main.className = 'max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8';
-            root.appendChild(main);
-
-            data.sections.forEach(section => {
-                // Render Section Heading (H1)
-                const sectionHeader = `
-                    <div class="col-span-1 md:col-span-12">
-                        <div class="border-l-[6px] border-report-primary pl-8 py-2">
-                            <p class="text-report-primary font-bold tracking-widest uppercase text-sm mb-3">Section ${section.id}</p>
-                            <h2 class="text-5xl md:text-6xl font-extrabold text-report-text tracking-tight">${section.title}</h2>
-                        </div>
-                    </div>
-                `;
-                main.insertAdjacentHTML('beforeend', sectionHeader);
-
-                // Render Components
-                section.components.forEach(comp => {
-                    let compHtml = '';
-                    switch (comp.type) {
-                        case 'NarrativeBlock':
-                            compHtml = `
-                                <div class="col-span-1 md:col-span-8 md:col-start-3 space-y-6 mt-4">
-                                    <h3 class="text-3xl font-bold text-report-text tracking-tight">${comp.title}</h3>
-                                    <p class="text-xl font-light text-report-text-muted leading-relaxed">${comp.content}</p>
-                                </div>
-                            `;
-                            break;
-                        case 'IconBulletIntro':
-                            const itemsHtml = comp.items.map(it => `
-                                <li class="flex items-start gap-5">
-                                    <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-report-primary-bg text-report-primary-text flex items-center justify-center font-bold border border-report-primary-border">${it.id}</div>
-                                    <p class="text-report-text text-lg mt-0.5">${it.text}</p>
-                                </li>
-                            `).join('');
-                            compHtml = `
-                                <div class="col-span-1 md:col-span-8 md:col-start-3 glass-card rounded-[2.5rem] p-10 my-10 relative overflow-hidden">
-                                    <div class="absolute top-0 right-0 w-32 h-32 bg-report-primary/5 rounded-bl-full -z-10"></div>
-                                    <h4 class="text-2xl font-bold text-report-text mb-8 flex items-center gap-4">
-                                        <svg class="w-7 h-7 text-report-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
-                                        ${comp.title}
-                                    </h4>
-                                    <ul class="space-y-6">${itemsHtml}</ul>
-                                </div>
-                            `;
-                            break;
-                        case 'QuoteBlock':
-                            compHtml = `
-                                <div class="col-span-1 md:col-span-8 md:col-start-3 my-16">
-                                    <blockquote class="bg-report-text rounded-[2.5rem] p-12 text-report-surface shadow-2xl relative overflow-hidden transform md:scale-105 border border-white/5">
-                                        <div class="absolute -right-12 -top-12 opacity-5">
-                                            <svg class="w-48 h-48" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h4v10h-10z"/></svg>
-                                        </div>
-                                        <div class="absolute left-0 top-0 bottom-0 w-2 bg-report-primary"></div>
-                                        <p class="relative z-10 text-2xl md:text-3xl font-light leading-relaxed mb-8">${comp.content}</p>
-                                        <div class="flex items-center gap-3 border-t border-white/10 pt-6">
-                                            <div class="w-1.5 h-1.5 rounded-full bg-report-primary"></div>
-                                            <span class="text-white/50 font-bold tracking-widest text-xs uppercase">Strategic Insight</span>
-                                        </div>
-                                    </blockquote>
-                                </div>
-                            `;
-                            break;
-                        case 'ProcessGroupDashboard':
-                            const cardsHtml = comp.cards.map(card => `
-                                <div class="glass-card rounded-[2rem] p-8 flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                                    <h3 class="text-xl font-bold text-report-text mb-3">${card.name}</h3>
-                                    <p class="text-sm text-report-text-muted mb-6 flex-grow font-light">${card.desc}</p>
-                                    <div class="pt-6 border-t border-report-border grid grid-cols-3 gap-2">
-                                        <div class="text-center"><p class="text-[10px] font-bold text-report-text-muted uppercase mb-1">L1</p><p class="text-lg font-bold text-report-primary">${card.l1}</p></div>
-                                        <div class="text-center"><p class="text-[10px] font-bold text-report-text-muted uppercase mb-1">L2</p><p class="text-lg font-bold text-report-accent-orange">${card.l2}</p></div>
-                                        <div class="text-center"><p class="text-[10px] font-bold text-report-text-muted uppercase mb-1">L3</p><p class="text-lg font-bold text-report-accent-red">${card.l3}</p></div>
-                                    </div>
-                                </div>
-                            `).join('');
-                            compHtml = `
-                                <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
-                                    ${cardsHtml}
-                                </div>
-                            `;
-                            break;
-                        case 'FindingsGrid':
-                            const findingsHtml = comp.items.map(f => `
-                                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-report-primary">
-                                    <h5 class="text-base font-bold text-report-text mb-2">${f.title}</h5>
-                                    <p class="text-sm text-report-text-muted font-light leading-snug"><span class="font-bold text-report-primary uppercase text-[10px] block mb-1">Outcome:</span> ${f.impact}</p>
-                                </div>
-                            `).join('');
-                            compHtml = `
-                                <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-10">
-                                    ${findingsHtml}
-                                </div>
-                            `;
-                            break;
-                        case 'Paragraph':
-                            compHtml = `<div class="col-span-1 md:col-span-8 md:col-start-3 text-lg text-report-text-muted leading-relaxed mb-4">${comp.content}</div>`;
-                            break;
-                        case 'HighlightList':
-                            const listItems = comp.items.map(it => `<li class="flex items-start gap-3"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-report-primary shrink-0"></span><span class="text-report-text-muted">${it}</span></li>`).join('');
-                            compHtml = `<div class="col-span-1 md:col-span-8 md:col-start-3 mb-8"><ul class="space-y-3 font-light text-lg">${listItems}</ul></div>`;
-                            break;
-                        case 'Subheading':
-                            compHtml = `<div class="col-span-1 md:col-span-8 md:col-start-3 mt-12 mb-4"><h4 class="text-2xl font-bold text-report-text">${comp.text}</h4></div>`;
-                            break;
-                    }
-                    main.insertAdjacentHTML('beforeend', compHtml);
-                });
-
-                // Add horizontal divider between sections
-                main.insertAdjacentHTML('beforeend', `<div class="col-span-12 h-px bg-report-border my-12 opacity-50"></div>`);
-            });
-        }
-
-        // Initialize
-        loadReport();
-    </script>
-
 </body>
 
 </html>

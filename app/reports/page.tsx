@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/dashboard";
 import { Badge } from "@/components/ui/badge";
 import { Building2, FileText, FolderOpen, Layers3 } from "lucide-react";
-import { resolveClientTheme, type ClientThemeColors } from "@/lib/client-theme";
+import { resolveReportsUiTheme, type ReportsUiTheme } from "@/lib/report-view-theme";
 import { ClientReportLandingCover } from "@/components/report/cover/client-report-landing-cover";
 
 type AccessTemplate = {
@@ -20,6 +20,21 @@ type EntityRow = {
   name: string;
   granularity_id: string;
   photo_url?: string | null;
+};
+
+type ReportPageRow = {
+  report_id: string;
+  page_order: number;
+  report_page_templates:
+    | {
+        page_key: string;
+        title: string;
+      }
+    | Array<{
+        page_key: string;
+        title: string;
+      }>
+    | null;
 };
 
 function formatMonthYear(input?: string | null): string {
@@ -75,36 +90,39 @@ function resolveClientAssetUrl(value: unknown): string | null {
   return encodeURI(`${supabaseBase.replace(/\/$/, "")}/storage/v1/object/public/${trimmed.replace(/^\/+/, "")}`);
 }
 
-function getCategoryBadgeStyle(
-  category: string | null,
-  colors: ClientThemeColors,
-) {
+function withAlpha(hex: string, alphaHex: string): string {
+  const clean = hex.trim().replace("#", "");
+  if (clean.length !== 6) return hex;
+  return `#${clean}${alphaHex}`;
+}
+
+function getCategoryBadgeStyle(category: string | null, theme: ReportsUiTheme) {
   switch (category) {
     case "Digital Solution":
-      return { borderColor: `${colors.info}50`, background: `${colors.info}18`, color: colors.info };
+      return { borderColor: withAlpha(theme.info, "66"), background: withAlpha(theme.info, "22"), color: theme.info };
     case "Automation":
-      return { borderColor: `${colors.success}55`, background: `${colors.success}18`, color: colors.success };
+      return { borderColor: withAlpha(theme.success, "66"), background: withAlpha(theme.success, "22"), color: theme.success };
     case "General":
-      return { borderColor: `${colors.secondary}35`, background: colors.muted, color: colors.foreground };
+      return { borderColor: withAlpha(theme.borderStrong, "AA"), background: theme.surfaceMuted, color: theme.textPrimary };
     case "Sales & Marketing":
-      return { borderColor: `${colors.warning}55`, background: `${colors.warning}22`, color: colors.warning };
+      return { borderColor: withAlpha(theme.warning, "66"), background: withAlpha(theme.warning, "22"), color: theme.warning };
     case "Tech":
       return {
-        borderColor: `${colors.accent}50`,
-        background: `linear-gradient(90deg, ${colors.primary}18, ${colors.accent}1A)`,
-        color: colors.foreground,
+        borderColor: withAlpha(theme.accent, "66"),
+        background: `linear-gradient(90deg, ${withAlpha(theme.accent, "22")}, ${withAlpha(theme.info, "22")})`,
+        color: theme.textPrimary,
       };
     case "Cybersecurity":
       return {
-        borderColor: `${colors.critical}60`,
-        background: `${colors.critical}18`,
-        color: colors.critical,
+        borderColor: withAlpha(theme.critical, "66"),
+        background: withAlpha(theme.critical, "22"),
+        color: theme.critical,
       };
     default:
       return {
-        borderColor: `${colors["tag-background"]}66`,
-        background: colors["tag-background"],
-        color: colors["tag-foreground"],
+        borderColor: withAlpha(theme.accent, "66"),
+        background: theme.accentSoft,
+        color: theme.accent,
       };
   }
 }
@@ -147,7 +165,7 @@ export default async function ReportsPage() {
     supabase
       .from("clients")
       .select(
-        "id,name,code,domain,logo_url,color_palette,theme_tokens,company_description,project_description,objective,scopes,project_start,project_end,cover_photo_url",
+        "id,name,code,domain,logo_url,company_description,project_description,objective,scopes,project_start,project_end,cover_photo_url",
       )
       .eq("id", profile.client_id)
       .maybeSingle(),
@@ -167,6 +185,14 @@ export default async function ReportsPage() {
           status: string;
         }>,
       };
+
+  const { data: reportPages } = assignedReportIds.length
+    ? await supabase
+        .from("report_pages")
+        .select("report_id,page_order,report_page_templates(page_key,title)")
+        .in("report_id", assignedReportIds)
+        .order("page_order", { ascending: true })
+    : { data: [] as ReportPageRow[] };
 
   const templatesById = new Map<string, AccessTemplate>();
   (accessData ?? []).forEach((access) => {
@@ -200,7 +226,7 @@ export default async function ReportsPage() {
         id: entity.id,
         name: entity.name,
         granularity_id: entity.granularity_id,
-        photo_url: entity.photo_url,
+        photo_url: resolveClientAssetUrl(entity.photo_url),
       });
       groupedByGranularity.set(entity.granularity_id, existing);
     });
@@ -216,6 +242,21 @@ export default async function ReportsPage() {
     });
   });
 
+  const pagesByReportId = new Map<string, Array<{ pageKey: string; title: string; pageOrder: number }>>();
+  (reportPages ?? []).forEach((row) => {
+    const template = Array.isArray(row.report_page_templates)
+      ? row.report_page_templates[0]
+      : row.report_page_templates;
+    if (!template?.page_key) return;
+    const existing = pagesByReportId.get(row.report_id) ?? [];
+    existing.push({
+      pageKey: template.page_key,
+      title: template.title,
+      pageOrder: row.page_order,
+    });
+    pagesByReportId.set(row.report_id, existing);
+  });
+
   const groupedEntries = Array.from(configuredGranularityIds)
     .sort((a, b) => {
       const labelA = granularityLabelById.get(a) ?? a;
@@ -227,9 +268,7 @@ export default async function ReportsPage() {
   const publishedReportsCount = (assignedReports ?? []).filter((report) => report.status === "published").length;
   const entitiesCount = (entities ?? []).filter((entity) => configuredGranularityIds.has(entity.granularity_id)).length;
   const scopes = normalizeScopes(clientRow?.scopes);
-  const theme = resolveClientTheme(clientRow?.theme_tokens, clientRow?.color_palette);
-  const clientPalette = theme.palette;
-  const clientColors = theme.colors;
+  const reportsTheme = resolveReportsUiTheme();
   const clientLogoUrl = resolveClientAssetUrl(clientRow?.logo_url);
   const clientCoverPhotoUrl = resolveClientAssetUrl(clientRow?.cover_photo_url);
 
@@ -237,7 +276,7 @@ export default async function ReportsPage() {
     <div
       className="space-y-6"
       style={{
-        color: clientPalette.text,
+        color: reportsTheme.textPrimary,
       }}
     >
       <ClientReportLandingCover
@@ -253,20 +292,20 @@ export default async function ReportsPage() {
         logoUrl={clientLogoUrl}
         coverPhotoUrl={clientCoverPhotoUrl}
         colors={{
-          primary: clientPalette.primary,
-          secondary: clientPalette.secondary,
-          accent: clientPalette.accent,
-          background: clientColors.background,
-          foreground: clientColors.foreground,
-          border: clientColors.border,
-          muted: clientColors.muted,
-          "card-foreground": clientColors["card-foreground"],
-          "muted-foreground": clientColors["muted-foreground"],
-          "cover-background": clientColors["cover-background"],
-          "cover-overlay": clientColors["cover-overlay"],
-          "cover-title": clientColors["cover-title"],
-          "cover-subtitle": clientColors["cover-subtitle"],
-          "section-body": clientColors["section-body"],
+          primary: reportsTheme.accent,
+          secondary: reportsTheme.textSecondary,
+          accent: reportsTheme.info,
+          background: reportsTheme.surface,
+          foreground: reportsTheme.textPrimary,
+          border: reportsTheme.borderStrong,
+          muted: reportsTheme.surfaceMuted,
+          "card-foreground": reportsTheme.surfaceElevated,
+          "muted-foreground": reportsTheme.textSecondary,
+          "cover-background": reportsTheme.accent,
+          "cover-overlay": withAlpha(reportsTheme.textPrimary, "AA"),
+          "cover-title": reportsTheme.accentContrast,
+          "cover-subtitle": reportsTheme.accentSoft,
+          "section-body": reportsTheme.textSecondary,
         }}
       />
 
@@ -275,8 +314,8 @@ export default async function ReportsPage() {
         description="Browse configured granularities, entities, and accessible report types."
         className="rounded-xl border p-4"
         style={{
-          borderColor: `${clientPalette.primary}28`,
-          background: `linear-gradient(180deg, ${clientPalette.primary}08, ${clientPalette.background})`,
+          borderColor: reportsTheme.borderStrong,
+          background: `linear-gradient(180deg, ${reportsTheme.surfaceMuted}, ${reportsTheme.surface})`,
         }}
       />
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -289,14 +328,14 @@ export default async function ReportsPage() {
             key={stat.label}
             className="rounded-xl border p-4 shadow-soft"
             style={{
-              borderColor: `${clientPalette.primary}33`,
-              background: `linear-gradient(180deg, ${clientPalette.primary}0D, ${clientPalette.background})`,
+              borderColor: reportsTheme.borderStrong,
+              background: `linear-gradient(180deg, ${reportsTheme.surfaceElevated}, ${reportsTheme.surface})`,
             }}
           >
-            <p className="text-xs font-medium uppercase tracking-wide" style={{ color: `${clientPalette.secondary}` }}>
+            <p className="text-xs font-medium uppercase tracking-wide" style={{ color: reportsTheme.textSecondary }}>
               {stat.label}
             </p>
-            <p className="mt-2 text-2xl font-semibold tracking-tight" style={{ color: clientColors["kpi-value"] }}>
+            <p className="mt-2 text-2xl font-semibold tracking-tight" style={{ color: reportsTheme.accent }}>
               {stat.value}
             </p>
           </div>
@@ -316,21 +355,29 @@ export default async function ReportsPage() {
             <Card
               key={granularityId}
               style={{
-                borderColor: `${clientPalette.primary}35`,
-                background: `linear-gradient(180deg, ${clientPalette.primary}0A, ${clientPalette.background})`,
+                borderColor: reportsTheme.borderStrong,
+                background: `linear-gradient(180deg, ${reportsTheme.surfaceElevated}, ${reportsTheme.surface})`,
               }}
             >
               <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-base">
-                  <Layers3 className="h-4 w-4" style={{ color: clientPalette.primary }} />
-                  {granularityLabelById.get(granularityId) ?? granularityId}
+                <CardTitle className="flex select-none items-center gap-2 text-base tracking-tight" style={{ color: reportsTheme.textPrimary }}>
+                  <span
+                    className="inline-flex h-7 w-7 items-center justify-center rounded-md border"
+                    style={{
+                      borderColor: reportsTheme.borderStrong,
+                      background: reportsTheme.surfaceMuted,
+                    }}
+                  >
+                    <Layers3 className="h-4 w-4" style={{ color: reportsTheme.accent }} />
+                  </span>
+                  <span className="font-semibold">{granularityLabelById.get(granularityId) ?? granularityId}</span>
                   <Badge
                     variant="secondary"
-                    className="border"
+                    className="ml-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold"
                     style={{
-                      borderColor: `${clientPalette.primary}33`,
-                      background: `${clientPalette.primary}1A`,
-                      color: clientPalette.primary,
+                      borderColor: reportsTheme.borderStrong,
+                      background: reportsTheme.surfaceMuted,
+                      color: reportsTheme.textSecondary,
                     }}
                   >
                     {entities.length} entities
@@ -349,15 +396,15 @@ export default async function ReportsPage() {
                         key={entity.id}
                         className="border"
                         style={{
-                          borderColor: `${clientPalette.primary}30`,
-                          background: `${clientPalette.background}`,
+                          borderColor: reportsTheme.border,
+                          background: reportsTheme.surfaceElevated,
                         }}
                       >
                         {isSafeAssetUrl(entity.photo_url) ? (
                           <div
                             className="h-28 w-full rounded-t-xl border-b bg-cover bg-center bg-no-repeat"
                             style={{
-                              borderColor: `${clientPalette.primary}20`,
+                              borderColor: reportsTheme.border,
                               backgroundImage: `url("${entity.photo_url}")`,
                             }}
                             aria-label={`${entity.name} thumbnail`}
@@ -365,8 +412,11 @@ export default async function ReportsPage() {
                           />
                         ) : null}
                         <CardHeader className="pb-3">
-                          <CardTitle className="flex items-center gap-2 text-base">
-                            <Building2 className="h-4 w-4" style={{ color: clientPalette.primary }} />
+                          <CardTitle
+                            className="flex items-center gap-2 text-base font-semibold tracking-tight"
+                            style={{ color: reportsTheme.textPrimary }}
+                          >
+                            <Building2 className="h-4 w-4" style={{ color: reportsTheme.accent }} />
                             {entity.name}
                           </CardTitle>
                         </CardHeader>
@@ -377,58 +427,96 @@ export default async function ReportsPage() {
                             accessibleTemplates.map((template) => {
                               const targetReport = reportByEntityAndType.get(`${entity.id}:${template.id}`);
                               const isPublished = targetReport?.status === "published";
+                              const reportPagesForRow = targetReport ? (pagesByReportId.get(targetReport.id) ?? []) : [];
                               return isPublished && targetReport ? (
                                 <Link
                                   key={`${entity.id}-${template.id}`}
                                   href={`/reports/${template.id}/${targetReport.id}`}
-                                  className="flex items-center justify-between rounded-md border px-3 py-2 text-sm transition-colors"
+                                  className="flex items-start justify-between rounded-md border px-3 py-2 text-sm transition-colors"
                                   style={{
-                                    borderColor: `${clientPalette.primary}33`,
-                                    background: `${clientPalette.primary}08`,
+                                    borderColor: reportsTheme.borderStrong,
+                                    background: reportsTheme.surfaceMuted,
+                                    color: reportsTheme.textPrimary,
                                   }}
                                 >
-                                  <span className="inline-flex items-center gap-2">
-                                    <FileText className="h-3.5 w-3.5" style={{ color: clientPalette.primary }} />
-                                    {template.category ? (
-                                      <Badge
-                                        className="border px-1.5 py-0 text-[10px] font-medium"
-                                        style={getCategoryBadgeStyle(template.category, clientColors)}
-                                      >
-                                        {template.category}
-                                      </Badge>
-                                    ) : null}
-                                    <span>{template.name}</span>
+                                  <span className="flex flex-col gap-2">
+                                    <span className="inline-flex items-center gap-2">
+                                      <FileText className="h-3.5 w-3.5" style={{ color: reportsTheme.accent }} />
+                                      {template.category ? (
+                                        <Badge
+                                          className="border px-1.5 py-0 text-[10px] font-medium"
+                                          style={getCategoryBadgeStyle(template.category, reportsTheme)}
+                                        >
+                                          {template.category}
+                                        </Badge>
+                                      ) : null}
+                                      <span className="font-medium" style={{ color: reportsTheme.textPrimary }}>
+                                        {template.name}
+                                      </span>
+                                    </span>
+                                    <span className="flex flex-wrap gap-1.5">
+                                      {reportPagesForRow.length > 0 ? (
+                                        reportPagesForRow.map((page) => (
+                                          <span
+                                            key={`${targetReport.id}-${page.pageOrder}-${page.pageKey}`}
+                                            className="rounded-full border px-2 py-0.5 text-[10px] font-semibold"
+                                            style={{
+                                              borderColor: reportsTheme.borderStrong,
+                                              background: reportsTheme.surfaceElevated,
+                                              color: reportsTheme.textSecondary,
+                                            }}
+                                            title={page.title}
+                                          >
+                                            {page.pageKey}
+                                          </span>
+                                        ))
+                                      ) : (
+                                        <span
+                                          className="text-[11px] font-medium"
+                                          style={{ color: reportsTheme.textSecondary }}
+                                        >
+                                          No report pages found
+                                        </span>
+                                      )}
+                                    </span>
                                   </span>
-                                  <Badge
-                                    className="border"
-                                    style={{
-                                      borderColor: `${clientPalette.primary}33`,
-                                      background: `${clientPalette.primary}1A`,
-                                      color: clientPalette.primary,
-                                    }}
-                                  >
-                                    Enabled
-                                  </Badge>
+                                  <span className="inline-flex flex-col items-end gap-1">
+                                    <Badge
+                                      className="border"
+                                      style={{
+                                        borderColor: reportsTheme.borderStrong,
+                                        background: reportsTheme.accentSoft,
+                                        color: reportsTheme.accent,
+                                      }}
+                                    >
+                                      Enabled
+                                    </Badge>
+                                    <span className="text-[10px] font-medium" style={{ color: reportsTheme.textSecondary }}>
+                                      {reportPagesForRow.length} pages
+                                    </span>
+                                  </span>
                                 </Link>
                               ) : (
                                 <div
                                   key={`${entity.id}-${template.id}`}
-                                  className="pointer-events-none flex items-center justify-between rounded-md border border-dashed border-border/60 px-3 py-2 text-sm text-muted-foreground opacity-60"
+                                  className="pointer-events-none flex items-center justify-between rounded-md border border-dashed border-border/60 px-3 py-2 text-sm"
                                   style={{
-                                    borderColor: `${clientPalette.primary}30`,
-                                    background: `${clientPalette.background}`,
+                                    borderColor: reportsTheme.border,
+                                    background: reportsTheme.surfaceElevated,
+                                    color: reportsTheme.textSecondary,
+                                    opacity: 0.9,
                                   }}
                                 >
                                   <span className="inline-flex items-center gap-2">
                                     {template.category ? (
                                       <Badge
                                         className="border px-1.5 py-0 text-[10px] font-medium"
-                                        style={getCategoryBadgeStyle(template.category, clientColors)}
+                                        style={getCategoryBadgeStyle(template.category, reportsTheme)}
                                       >
                                         {template.category}
                                       </Badge>
                                     ) : null}
-                                    <span>{template.name}</span>
+                                    <span className="font-medium">{template.name}</span>
                                   </span>
                                 </div>
                               );

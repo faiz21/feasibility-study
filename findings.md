@@ -58,6 +58,10 @@
 - Extended data-grid adoption to report types catalog:
   - `app/admin/report-types/page.tsx`
   - now uses the same table primitives and action pattern.
+
+## Skill development note (markdown-report-to-html)
+- Creating new folders under `.agents/skills` may require escalated sandbox permissions in this environment.
+- `skill-creator/scripts/quick_validate.py` requires Python `yaml` (PyYAML) installed; otherwise it fails with `ModuleNotFoundError: No module named 'yaml'`.
 - Report types catalog is now grouped by category for better scanability.
 
 ## Latest updates
@@ -445,3 +449,30 @@
 ### Optional deeper improvements
 - Add automated CI check to fail on semantic hard-coded colors under `components/report` (excluding `report-theme.ts`).
 - Add snapshot-based Storybook test matrix for token override combinations.
+
+---
+
+## Markdown to HTML conversion — `automation-audit_template.md` (2026-03-02)
+
+### Source
+- Input Markdown: `templates/report_template/generated/automation_audit_template/automation-audit_template.md`
+- Observation: this Markdown is itself a *template/mapping plan* (lots of tables, deterministic IDs, component mapping), not the narrative report content.
+
+### Outline (H1/H2)
+- `# Step 1 - Document Outline and Component Mapping Plan`
+  - `## Document Outline Table`
+  - `## Component Mapping Plan`
+  - `## Step 1 Reference Map`
+  - `## Source Document Summary`
+  - `## Deterministic Mapping Decisions`
+  - `## Section to Page/Layout Conversion`
+  - `## ID Generation Log`
+  - `## Draft Placeholder and Missing Data Notes`
+  - `## Re-run Instructions (Deterministic)`
+  - `## Compatibility Contract`
+
+### Visualization decision
+- Recommendation: no charts for this conversion (tables are already the primary structure).
+
+### Output collision risk
+- The target folder already contains `automation-audit_template.json` and `automation-audit_template_report.html`; the conversion should avoid overwriting those unless explicitly requested.

@@ -1,0 +1,376 @@
+{
+  "theme": {
+    "primary": "#14b8a6",
+    "dark": "#0f172a"
+  },
+  "metadata": {
+    "title": "Automation Assessment Report",
+    "company": "PT Indonesia Asahan Alumunium",
+    "plant": "Green Plant",
+    "scope": "INA-PL-GRP",
+    "content": "Sections 1–9",
+    "date": "23 February 2026",
+    "status": "Executive Final"
+  },
+  "sections": {
+    "executiveSummary": {
+      "context": "PT Indonesia Asahan Aluminium (INALUM) は、Green Plant をスメルターの還元ラインを支える炭素準備・green anode 成形工程（フロントエンド）として運用しています。本 assessment は、段階的デジタル化の実現可能性を判断するため、L1–L3 層（basic control、supervisory visibility、structured reporting readiness）のみを対象に自動化成熟度を評価します。",
+      "maturitySnapshot": "Green Plant の自動化ベースラインは混在した状態にあります。コアアセットは PLC 制御されていますが、手動介入、relay island、センサー信頼性の問題、および断片化した supervisory 統合により、データの信頼性と最適化の準備が制限されています。",
+      "realities": [
+        "統合度が不均一な分散型マルチブランド PLC estate（Rockwell、Siemens、Omron）。",
+        "ソリッド処理における手動 RPM 設定やダンパー調整が顕著。",
+        "計器精度の問題（例：サイロレベルへの粉塵影響、belt scale の 12% バリアンス）。",
+        "alarm/event logging の不足と structured stop-cause capture の欠如。",
+        "品質・サンプリングプロセスが大部分において手動かつトランスクリプションベースのまま。"
+      ],
+      "takeaway": "全体的な成熟度は、L1 が部分的に確立されており、L2 は断片化、L3 の準備は基盤改善なしには不十分であることを示しています。",
+      "riskThemes": [
+        "コンベヤーおよびバルクソリッド輸送イベント（choking、bridging、overflow）が体系的に計測されていない。",
+        "粉塵環境下でのセンサー劣化により、在庫・材料の可視性に対する信頼性が低下している。",
+        "alarm/event 履歴が一貫して記録されておらず、根本原因分析が制限されている。",
+        "Protective sensing が以前に false alarm により無効化されていた。",
+        "手動 traceability と QC トランスクリプションが、品質フィードバックの遅延を生んでいる。"
+      ],
+      "outlook": "初期の L1 安定化イニシアチブは段階的なアップグレードで実現可能です。L2 supervisory 統合は、計器精度と event logging が改善されれば達成可能です。L3 アナリティクスと structured reporting は、体系的な alarm capture、在庫信頼性の回復、および基盤統合の改善なしには実現不可能です。",
+      "classifications": [
+        {
+          "type": "Early Wins",
+          "text": "Conveyor integrity sensing、デジタル圧力トランスミッター、モーターアンペア監視。"
+        },
+        {
+          "type": "Foundational Upgrades",
+          "text": "Standardised alarm logging、trusted mass flow measurement。"
+        },
+        {
+          "type": "Structural Gaps",
+          "text": "統合されたデータアーキテクチャと体系的な condition monitoring。"
+        }
+      ],
+      "roadmapDirection": "段階的なロードマップ（Phase 0–3）を推奨します。シーケンスは最適化レイヤーより前に可用性保護を優先する必要があります。",
+      "priorities": [
+        "L1 計装および PLC 統合の詳細調査を実施する。",
+        "無効化された重要センサー（belt tear、choking detection）を復元または交換する。",
+        "plant 全域の alarm logging と historian baseline を実装する。",
+        "サイロレベルと mass flow 測定精度を検証する。",
+        "PLC/SCADA estate 全体で時刻同期を標準化する。"
+      ]
+    },
+    "methodology": {
+      "purpose": "Green Plant の L1–L3 自動化準備状況を評価し、構造化された実現可能性計画を支援する。",
+      "inScope": [
+        "GRP Green Scrap and Butt Receiving Control System",
+        "GRP Cooling Water Control System",
+        "GRP Coke Receiving Control System",
+        "GRP Coke Grinding Control System",
+        "GRP Blending and Kneading Control System",
+        "GRP Anode Forming Control System",
+        "GRP Tar Pitch Receiving and Heating Oil Control System",
+        "GRP Green Block Line Conveying Control System"
+      ],
+      "outOfScope": "ビジネスケースモデリング、オペレーティングモデルの再設計、ERP 統合、エンタープライズ IT アーキテクチャの整合。",
+      "sources": [
+        "プロセス調査文書（炭素準備、forming、ハンドリング）。",
+        "自動化 elicitation ノート（センサーギャップ、PLC estate、運用上の制約）。",
+        "PLC、SCADA、HMI インベントリ。",
+        "プロセスグループにマッピングされた機器リスト。",
+        "調査結果および問題レジスター。",
+        "プロセス elicitation ワークフロー記録。"
+      ],
+      "dataQuality": [
+        "Plant boundary control: Green Plant の L1–L3 層のみを対象とする。",
+        "Evidence hierarchy: 文書化されたインベントリおよび構造化テーブル > 観察ノート。",
+        "明示的に不確実な場合は推論なし: \"To validate\" および不明な項目はギャップとして記録。"
+      ],
+      "outputs": [
+        "プロセスグループごとの L1/L2/L3 準備スコア（1–5）＋信頼度。",
+        "主要な証拠と優先アクション（L1 → L3）。",
+        "plant 全体にわたる横断的な調査結果。",
+        "段階的な技術ロードマップ。"
+      ]
+    },
+    "baseline": {
+      "overview": "自動化ランドスケープの概要。supervisory 分散、PLC ブランド代表、計装信頼度メトリクスを含む。",
+      "plcTotal": 7,
+      "plcData": [
+        { "brand": "Rockwell", "count": 3, "color": "#14b8a6", "percentage": 42.8 },
+        { "brand": "Siemens", "count": 2, "color": "#3b82f6", "percentage": 28.6 },
+        { "brand": "Omron", "count": 1, "color": "#f59e0b", "percentage": 14.3 },
+        { "brand": "TBD", "count": 1, "color": "#94a3b8", "percentage": 14.3 }
+      ],
+      "plcNote": "Families: Logix-5575/5583E、CompactLogix、S7-1500/1200、CJ1M。",
+      "supervisory": {
+        "systems": "SCADA estate には Citect（Granulation）、FactoryTalk View（Vibration）、および部分的に定義された 1 つのシステムが含まれます。",
+        "protocols": "プロトコルには Modbus RTU/TCP と MQTT が含まれます。",
+        "note": "統合の完全性には estate 全体にわたる検証が必要です。"
+      },
+      "instruments": {
+        "total": 580,
+        "plcReadable": 367,
+        "relayLocal": 213,
+        "inferred": 426,
+        "obtained": 154,
+        "note": "プロセスグループごとの計装分布は完全には分類されていません。詳細な I/O マッピングには調査が必要です。Closed-loop module / partial integration: 0。"
+      }
+    },
+    "framework": {
+      "levels": [
+        { "level": "L1 — Basic Control Layer:", "desc": "フィールド計装、PLC ロジック、設備レベル制御。" },
+        { "level": "L2 — Supervisory Layer:", "desc": "SCADA/HMI 可視性、alarm 処理、historian capture。" },
+        { "level": "L3 — Structured Intelligence Layer:", "desc": "event logging、reporting、traceability、アナリティクス準備。" }
+      ],
+      "scale": [
+        { "score": "Score 1 — Structured", "desc": "強固な PLC カバレッジ、統合された supervisory 層、信頼できるデータ。" },
+        { "score": "Score 2 — Functional", "desc": "安定した自動化だが、部分的な標準化または logging ギャップがある。" },
+        { "score": "Score 3 — Partial", "desc": "PLC/relay/手動システムの混在、event capture が限定的。" },
+        { "score": "Score 4 — Weak", "desc": "手動依存、測定の欠如、断片化した統合。" },
+        { "score": "Score 5 — Minimal automation", "desc": "主に手動または孤立した制御。" }
+      ]
+    },
+    "processGroups": [
+      {
+        "title": "Green Scrap &<br>Butt Receiving",
+        "scores": { "L1": 4, "L2": 4, "L3": 5 },
+        "confidence": "Medium",
+        "strengths": [
+          "PLC は現代的な weighing scale 機能に対応している。",
+          "リサイクルラインのリニューアル意図が確立されている。"
+        ],
+        "gaps": [
+          "コンベヤー/エレベーターは relay-controlled island のまま。",
+          "オーバーフローイベントの暴露は検出センシングなしに存在する。",
+          "Choking と流量障害が手動検出で管理されている。"
+        ],
+        "riskExposure": "オペレーターの監視への高い依存性。relay 制御区間が体系的な stop-cause capture とオーバーフロー保護統合を妨げている。"
+      },
+      {
+        "title": "Cooling Water<br>Control System",
+        "scores": { "L1": 3, "L2": 3, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "冷却ループがポンプと冷却塔の運転を効率的に処理している。",
+          "完全な SCADA 統合対応に向けたリニューアルが計画されている。"
+        ],
+        "gaps": [
+          "体系的な性能監視（圧力/流量）が実証されていない。",
+          "event history の規律とリアルタイム状態公開が欠如している。"
+        ],
+        "riskExposure": "中程度。観察されないユーティリティの不安定性が、根本原因分析のための構造化された性能履歴なしに生産変動に波及する可能性がある。"
+      },
+      {
+        "title": "Coke Receiving<br>Control",
+        "scores": { "L1": 3, "L2": 3, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "ルーティングと配分の制御層が十分に確立されている。",
+          "Belt scale が主要ロジックに直接統合されている。"
+        ],
+        "gaps": [
+          "粉塵影響による信頼できないサイロレベル測定。",
+          "手動 RPM 設定が closed-loop 安定性を大幅に弱めている。",
+          "既知の不一致により mass flow 測定が信頼されていない。"
+        ],
+        "riskExposure": "高い在庫精度リスク。信頼できない計装フィードバックにより、手動の実践がシステム規律に取って代わっている。"
+      },
+      {
+        "title": "Coke Grinding<br>Control",
+        "scores": { "L1": 3, "L2": 4, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "コアアセット（クラッシャー、トロンメル、分離）が PLC シーケンス制御されている。"
+        ],
+        "gaps": [
+          "Blaine 制御が完全に手動サンプリング調整に依存している。",
+          "振動関連の機器故障暴露が監視されていない。",
+          "重要なシステムパラメーターの重要な alarm capture が欠如している。"
+        ],
+        "riskExposure": "品質安定性リスク。制御が手動調整依存のまま、lab-to-PLC 品質フィードバックのレイテンシーが高い。"
+      },
+      {
+        "title": "Blending &amp;<br>Kneading Control",
+        "scores": { "L1": 3, "L2": 3, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "フィーダー、予熱、kneader シーケンスが存在する。",
+          "PLC 制御がコアミキシングアセット全体に広く存在する。"
+        ],
+        "gaps": [
+          "一部の kneading システムパラメーターが PLC にキャプチャされていない。",
+          "完全なパラメーターキャプチャの欠如によるスループット制約。"
+        ],
+        "riskExposure": "高いスループット制約。kneader 故障が全体の出力を実質的に制約。ダウンタイムコーディングの欠如が性能レビューを制限している。"
+      },
+      {
+        "title": "Anode Forming<br>Control",
+        "scores": { "L1": 3, "L2": 3, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "シェイキングマシンが完全な PLC 制御下で動作している。",
+          "compacting と forming アセットに基本的な自動化が存在する。"
+        ],
+        "gaps": [
+          "ラベリング、traceability、エージング時間規律が手動のまま。",
+          "サイクルインテグリティ監視の大幅な強化が必要。"
+        ],
+        "riskExposure": "系譜規律が弱い。重複または欠落した番号付けが L3 traceability 成熟度と信頼性の高い長期フィードバックループを妨げている。"
+      },
+      {
+        "title": "Tar Pitch &amp;<br>Heating Oil",
+        "scores": { "L1": 3, "L2": 4, "L3": 4 },
+        "confidence": "Low",
+        "strengths": [
+          "ピッチ貯蔵と heating oil ループ制御が基本的に存在する。"
+        ],
+        "gaps": [
+          "投入制御プロセスが部分的に手動のまま。",
+          "システム全体で viscosity sensing が未確認。",
+          "独立したモジュールと supervisory 間の統合が欠如している。"
+        ],
+        "riskExposure": "品質保証のギャップ。粘度とポンプ性能データの欠如がピッチ加熱性能の可視性を著しく制限している。"
+      },
+      {
+        "title": "Green Block Line<br>Conveying",
+        "scores": { "L1": 3, "L2": 3, "L3": 4 },
+        "confidence": "Medium",
+        "strengths": [
+          "PLC ベースのコンベヤーと green block 移動のための safety chain 監視が存在する。"
+        ],
+        "gaps": [
+          "Stop-cause capture と alarm 履歴が完全に欠如している。",
+          "制約されたコンベヤーでの integrity sensing（ベルト健全性、温度）が限定的。"
+        ],
+        "riskExposure": "観察されない劣化の可能性が増大。構造的なダウンタイムキャプチャなしに移送コンベヤーで反応的な故障が発生している。"
+      }
+    ],
+    "plantWideFindings": [
+      {
+        "title": "バルクソリッド処理がまだ「closed-loop」でない",
+        "desc": "ルーティングと流量安定性が手動 RPM 設定とダンパーに依存している。反応的な清掃作業が一般的。",
+        "impact": "上位層のイニシアチブがデータに依存できるようになる前に L1 の完成が必要。"
+      },
+      {
+        "title": "粉塵条件がデータ品質を積極的に低下させている",
+        "desc": "粉塵の蓄積によりサイロのレベルセンシング信頼性が低下し、手動サウンディング確認につながっている。",
+        "impact": "信頼性が回復されるまで在庫関連ダッシュボードは構造的に制約されたまま。"
+      },
+      {
+        "title": "コンベヤー integrity monitoring のギャップ",
+        "desc": "重要なコンベヤーは包括的なセンシング（belt tear/slip）が不足。特に制約されたアクセスセグメントで顕著。",
+        "impact": "L1 integrity sensing は全体的な可用性向上の前提条件。"
+      },
+      {
+        "title": "Protective sensing が false alarm により無効化された",
+        "desc": "Choking 検出が nuisance trip 後に無効化されたと報告されており、protective control ベースラインを弱体化させている。",
+        "impact": "Alarm ガバナンスと調整を早期に組織化する必要がある。"
+      },
+      {
+        "title": "Choking と bridging が繰り返しの損失モード",
+        "desc": "これらのイベントが繰り返しの短いダウンタイムを引き起こしているが、現在は構造化されたイベントとして記録されていない。",
+        "impact": "L3 reporting はこれらの特定の損失モードをトレンド分析する能力によって制約されている。"
+      },
+      {
+        "title": "Condition monitoring がまだ体系的でない",
+        "desc": "ポンプと kneader への CBM が必要性として言及されているが、体系的な測定ガバナンスが欠如している。",
+        "impact": "パイロットは実現可能だがベースライン計装のリンクが必要。"
+      },
+      {
+        "title": "Alarm/event 履歴ロギングのギャップ",
+        "desc": "自動ロギングの欠如が診断を制限している。トラブルシューティングがオペレーターの記憶に依存。",
+        "impact": "L2/L3 の能力には一貫した event 履歴インフラが必要。"
+      },
+      {
+        "title": "品質とプロセスのフィードバックループが遅い",
+        "desc": "QC が手動トランスクリプションに依存している。ラボ結果が材料消費後に届くことがある。",
+        "impact": "フィードバックが構造化・適時・追跡可能になるまで最適化準備が制約される。"
+      },
+      {
+        "title": "在庫可視性が信頼できない計器により制約されている",
+        "desc": "測定の不一致（例: 信頼できない mass flow）と手動ヤードトランザクションキャプチャにより損なわれている。",
+        "impact": "デジタル化は測定信頼性とトランザクション規律から始める必要がある。"
+      },
+      {
+        "title": "ユーティリティ性能監視が基盤的な依存関係",
+        "desc": "ユーティリティ（冷却、compressed air）が性能可視性と配分分析を欠いている。",
+        "impact": "安定した運用と下流のデータガバナンスの早期イネーブラー。"
+      },
+      {
+        "title": "文書化と検証のギャップが統合リスクを増大させる",
+        "desc": "欠落したビン図面、不完全なセンサーインベントリ、不確かな統合境界が技術的リスクを高めている。",
+        "impact": "スケーラブルなデプロイメントの前に Phase 0 の制御調査が必要。"
+      }
+    ],
+    "feasibility": {
+      "early": [
+        {
+          "title": "コンベヤー Integrity 監視",
+          "desc": "Belt tear とモーター電流センサーの追加。制御インフラがこれらのシグナルを吸収できる。"
+        },
+        {
+          "title": "Alarm Logging ベースライン",
+          "desc": "主要ノードの自動イベントログの実装。完全なシステム統合を必要としない。"
+        }
+      ],
+      "afterUpgrades": [
+        {
+          "title": "在庫ガバナンス",
+          "desc": "サイロレベル信頼性の回復と mass flow 不一致の解決が必要。"
+        },
+        {
+          "title": "品質ループの加速",
+          "desc": "トランスクリプションレイテンシーを排除するためにソースでの QC キャプチャのデジタル化が必要。"
+        }
+      ],
+      "notFeasible": [
+        {
+          "title": "高度な予測ガバナンス",
+          "desc": "安定した alarm 履歴、信頼できる mass flow、定義された CBM ループの欠如により制約されている。"
+        }
+      ],
+      "implications": [
+        "センサー信頼性の回復を前提条件のワークストリームとして扱う。",
+        "根本原因学習を加速するために event capture を早期に開始する。",
+        "ボトルネックアセット（kneader、コンベヤー）を integrity sensing のために優先する。",
+        "プラットフォーム統合決定前に文書化/接続のギャップをクローズする。"
+      ]
+    },
+    "roadmap": {
+      "principles": "supervisory スコープを拡大する前に L1 インテグリティと測定信頼性を安定させる。調整されたしきい値と alarm 規律で protective sensing を再導入する。event capture を前提条件として標準化する。",
+      "phases": [
+        { "num": "Phase 0", "title": "検証 & ベースライン", "desc": "3–4 ヶ月。調査、文書化、センサー信頼性。" },
+        { "num": "Phase 1", "title": "L1 Integrity Hardening", "desc": "6–9 ヶ月。コンベヤー、bulk solids、ボトルネック。" },
+        { "num": "Phase 2", "title": "L2 統合", "desc": "6–9 ヶ月。Alarm ガバナンス、可視性。" },
+        { "num": "Phase 3", "title": "L3 Reporting", "desc": "9–12 ヶ月。損失会計、traceability。" }
+      ],
+      "pilots": [
+        "障害が最も多いセグメントでの conveyor integrity sensing パイロット。",
+        "重要度の高い 1 つの PLC での集中型 alarm ログパイロット。",
+        "モーター負荷と stop-cause を使用した kneader CBM パイロット。"
+      ],
+      "dependencies": [
+        "PLC ごとの完全な I/O およびタグエクスポート。",
+        "SCADA 統合スコープの確認。",
+        "ノード全体の時刻同期ポスチャー。",
+        "粉塵環境のためのセンサー保守規律。"
+      ]
+    },
+    "risks": {
+      "explicitGaps": [
+        "計器-プロセスマッピングが不完全。",
+        "PLC ネットワーク標準化が完全には文書化されていない。",
+        "PLC ごとの SCADA 統合カバレッジが不完全。",
+        "Alarm logging ポスチャーが plant 全体で一貫していることが実証されていない。"
+      ],
+      "assumptions": [
+        "PLC の存在がベースライン L1 能力を示唆する。",
+        "SCADA リンクが最小限の L2 可視性を示唆するが、alarm 成熟度ではない。",
+        "手動 QC トランスクリプションが限定的な L3 準備を示唆する。",
+        "不完全な統合詳細がスケーリングのためのより高い作業負荷を前提とする。"
+      ],
+      "technicalRisks": [
+        "粉塵関連のセンサー問題が解決されない場合、データ信頼リスクが残存する。",
+        "alarm ガバナンスなしに protective sensing の再導入が失敗する可能性がある。",
+        "マルチプラットフォーム PLC が統合ガバナンスの複雑さを増大させる。",
+        "event 履歴の欠如が性能向上を制限する。"
+      ]
+    }
+  }
+}

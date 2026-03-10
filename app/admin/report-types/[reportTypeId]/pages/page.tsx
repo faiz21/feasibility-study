@@ -9,7 +9,7 @@ import { FormDialog } from "@/components/ui/form-dialog";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { renderTemplate } from "@/lib/portal/template";
+import { hasReferenceContract } from "@/lib/report-json-contract";
 
 async function readUploadedText(formData: FormData, key: string): Promise<string | null> {
   const value = formData.get(key);
@@ -27,8 +27,6 @@ function parseJsonOrRedirect(jsonText: string, reportTypeId: string): unknown {
 }
 
 function normalizeTemplateForPreview(template: string): string {
-  const bodyMatch = template.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
-  if (bodyMatch?.[1]) return bodyMatch[1];
   return template;
 }
 
@@ -42,11 +40,12 @@ function coerceSampleData(sample: unknown): unknown {
 }
 
 function extractTokens(template: string): string[] {
-  const matches = template.match(/{{\s*([^}]+)\s*}}/g) ?? [];
+  const matches = template.match(/{{{\s*[^{}]+?\s*}}}|{{\s*[^{}]+?\s*}}/g) ?? [];
   return Array.from(
     new Set(
       matches
-        .map((match) => match.replace(/{{\s*|\s*}}/g, "").trim())
+        .map((match) => match.replace(/{{{\s*|\s*}}}|{{\s*|\s*}}/g, "").trim())
+        .map((token) => (token.startsWith("json:") ? token.slice("json:".length).trim() : token))
         .filter(Boolean),
     ),
   );
@@ -62,10 +61,6 @@ function hasValueByPath(input: unknown, token: string): boolean {
     current = (current as Record<string, unknown>)[segment];
   }
   return current !== undefined && current !== null && String(current).length > 0;
-}
-
-function visibleTextLength(html: string): number {
-  return html.replace(/<[^>]*>/g, "").replace(/\s+/g, "").length;
 }
 
 async function createPageTemplateAction(formData: FormData) {
@@ -117,29 +112,63 @@ async function updatePageTemplateAction(formData: FormData) {
   const pageOrder = Number(formData.get("page_order") ?? 0);
   const title = String(formData.get("title") ?? "").trim();
   const htmlTextFromFile = await readUploadedText(formData, "html_file");
-  const htmlTemplate = htmlTextFromFile ?? String(formData.get("html_template") ?? "").trim();
+  const htmlTextManual = String(formData.get("html_template") ?? "").trim();
+  const htmlTemplate = htmlTextFromFile ?? (htmlTextManual.length > 0 ? htmlTextManual : null);
   const readmeTextFromFile = await readUploadedText(formData, "readme_file");
+  const clearReadme = formData.get("clear_readme") === "on";
   const readmeMarkdownText = String(formData.get("readme_markdown") ?? "").trim();
-  const readmeMarkdown = readmeTextFromFile ?? (readmeMarkdownText.length > 0 ? readmeMarkdownText : null);
+  const readmeMarkdown = clearReadme
+    ? null
+    : readmeTextFromFile ?? (readmeMarkdownText.length > 0 ? readmeMarkdownText : undefined);
   const sampleDataTextFromFile = await readUploadedText(formData, "sample_data_file");
-  const sampleDataText = sampleDataTextFromFile ?? String(formData.get("sample_data_json") ?? "").trim();
-  const sampleData = sampleDataText ? parseJsonOrRedirect(sampleDataText, reportTypeId) : null;
+  const clearSampleData = formData.get("clear_sample_data") === "on";
+  const sampleDataTextManual = String(formData.get("sample_data_json") ?? "").trim();
+  const sampleDataText = sampleDataTextFromFile ?? (sampleDataTextManual.length > 0 ? sampleDataTextManual : null);
+  const sampleData = clearSampleData
+    ? null
+    : sampleDataText
+      ? parseJsonOrRedirect(sampleDataText, reportTypeId)
+      : undefined;
 
-  if (!id || !reportTypeId || !pageKey || !title || !htmlTemplate || !Number.isFinite(pageOrder)) {
-    redirect(`/admin/report-types/${reportTypeId}/pages?error=Missing+required+fields+(HTML+is+required)`);
+  if (!id || !reportTypeId || !pageKey || !title || !Number.isFinite(pageOrder)) {
+    redirect(`/admin/report-types/${reportTypeId}/pages?error=Missing+required+fields`);
+  }
+
+  if (htmlTemplate === null) {
+    const { data: existing } = await supabase
+      .from("report_page_templates")
+      .select("html_template")
+      .eq("id", id)
+      .eq("report_type_template_id", reportTypeId)
+      .maybeSingle();
+
+    if (!existing?.html_template) {
+      redirect(`/admin/report-types/${reportTypeId}/pages?error=Missing+HTML+template+(upload+or+paste+HTML)`);
+    }
+  }
+
+  const updates: Record<string, unknown> = {
+    page_key: pageKey,
+    page_order: pageOrder,
+    title,
+    updated_at: new Date().toISOString(),
+  };
+
+  if (htmlTemplate !== null) {
+    updates.html_template = htmlTemplate;
+  }
+
+  if (readmeMarkdown !== undefined) {
+    updates.readme_markdown = readmeMarkdown;
+  }
+
+  if (sampleData !== undefined) {
+    updates.sample_data = sampleData;
   }
 
   const { error } = await supabase
     .from("report_page_templates")
-    .update({
-      page_key: pageKey,
-      page_order: pageOrder,
-      title,
-      html_template: htmlTemplate,
-      readme_markdown: readmeMarkdown,
-      sample_data: sampleData,
-      updated_at: new Date().toISOString(),
-    })
+    .update(updates)
     .eq("id", id);
 
   if (error) redirect(`/admin/report-types/${reportTypeId}/pages?error=${encodeURIComponent(error.message)}`);
@@ -365,12 +394,12 @@ export default async function ReportTypePagesPage({
                 const canPreview = Boolean(page.html_template && page.sample_data);
                 const normalizedHtml = normalizeTemplateForPreview(page.html_template ?? "");
                 const sampleForPreview = coerceSampleData(page.sample_data);
+                const hasContract = hasReferenceContract(sampleForPreview);
                 const tokens = extractTokens(normalizedHtml);
                 const unresolvedTokens = tokens.filter((token) => !hasValueByPath(sampleForPreview, token));
-                const previewHtml = canPreview
-                  ? renderTemplate(normalizedHtml, sampleForPreview)
-                  : "";
-                const hasVisiblePreview = visibleTextLength(previewHtml) > 0;
+                const previewUrl = `/admin/report-types/${reportTypeId}/pages/${page.id}/preview`;
+                const templateUrl = `/admin/report-types/${reportTypeId}/pages/${page.id}/template`;
+                const sampleDataUrl = `/admin/report-types/${reportTypeId}/pages/${page.id}/sample-data`;
                 return (
                   <>
               <p className="text-sm font-medium">
@@ -379,18 +408,20 @@ export default async function ReportTypePagesPage({
               <p className="mt-1 text-xs text-muted-foreground">
                 Assets: HTML {page.html_template ? "✓" : "✗"} · README {page.readme_markdown ? "✓" : "✗"} · Sample JSON {page.sample_data ? "✓" : "✗"}
               </p>
+              <p className={`mt-1 text-xs ${hasContract ? "text-success" : "text-warning"}`}>
+                {hasContract
+                  ? "Reference contract: Ready for content upload"
+                  : "Reference contract: Missing template JSON object/array"}
+              </p>
               <div className="mt-2 flex flex-wrap gap-2">
                 {canPreview ? (
                   <FormDialog
                     title="Template Preview"
                     description="Preview is enabled when HTML template and sample JSON exist."
                     triggerLabel="Preview"
+                    fullScreen
+                    allowBrowserFullscreen
                   >
-                    {!hasVisiblePreview ? (
-                      <p className="mb-2 rounded-md border border-warning/30 bg-warning/10 px-3 py-2 text-xs text-warning">
-                        Preview rendered with little/no visible text. Check token mapping below.
-                      </p>
-                    ) : null}
                     {unresolvedTokens.length > 0 ? (
                       <p className="mb-2 rounded-md border border-critical/30 bg-critical/10 px-3 py-2 text-xs text-critical">
                         Unresolved tokens: {unresolvedTokens.join(", ")}
@@ -399,16 +430,10 @@ export default async function ReportTypePagesPage({
                     <div className="rounded-lg border border-border/70 p-2">
                       <iframe
                         title={`preview-${page.id}`}
-                        srcDoc={previewHtml}
-                        className="h-[560px] w-full rounded-md bg-white"
+                        src={previewUrl}
+                        className="h-[calc(100vh-15rem)] w-full rounded-md bg-white"
                       />
                     </div>
-                    <details className="mt-3 rounded-md border border-border/70 p-3">
-                      <summary className="cursor-pointer text-xs font-medium">Rendered HTML debug</summary>
-                      <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap text-[11px] text-muted-foreground">
-                        {previewHtml}
-                      </pre>
-                    </details>
                   </FormDialog>
                 ) : (
                   <Button type="button" size="sm" variant="secondary" disabled>
@@ -424,7 +449,7 @@ export default async function ReportTypePagesPage({
                       <Input name="page_order" type="number" defaultValue={page.page_order} min={1} required />
                       <Input name="title" defaultValue={page.title} required />
                     </div>
-                    <label className="block text-sm">
+                    <div className="block text-sm">
                       Upload HTML template (.html)
                       <input
                         type="file"
@@ -432,8 +457,14 @@ export default async function ReportTypePagesPage({
                         accept=".html,.hml,text/html,text/plain"
                         className="mt-1 block w-full rounded-lg border border-input bg-card p-2 text-xs shadow-soft"
                       />
-                    </label>
-                    <label className="block text-sm">
+                      <span className="mt-1 block text-xs text-muted-foreground">
+                        Want the current template?{" "}
+                        <Link href={templateUrl} target="_blank" className="text-primary underline">
+                          Open raw HTML
+                        </Link>
+                      </span>
+                    </div>
+                    <div className="block text-sm">
                       Upload README (.md)
                       <input
                         type="file"
@@ -441,8 +472,14 @@ export default async function ReportTypePagesPage({
                         accept=".md,.markdown,text/markdown,text/plain"
                         className="mt-1 block w-full rounded-lg border border-input bg-card p-2 text-xs shadow-soft"
                       />
-                    </label>
-                    <label className="block text-sm">
+                      <div className="mt-2">
+                        <label className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <input type="checkbox" name="clear_readme" />
+                          Clear README
+                        </label>
+                      </div>
+                    </div>
+                    <div className="block text-sm">
                       Upload sample data (.json)
                       <input
                         type="file"
@@ -450,7 +487,19 @@ export default async function ReportTypePagesPage({
                         accept=".json,application/json,text/json,text/plain"
                         className="mt-1 block w-full rounded-lg border border-input bg-card p-2 text-xs shadow-soft"
                       />
-                    </label>
+                      <span className="mt-1 block text-xs text-muted-foreground">
+                        Want the current sample data?{" "}
+                        <Link href={sampleDataUrl} target="_blank" className="text-primary underline">
+                          Open sample JSON
+                        </Link>
+                      </span>
+                      <div className="mt-2">
+                        <label className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <input type="checkbox" name="clear_sample_data" />
+                          Clear sample JSON
+                        </label>
+                      </div>
+                    </div>
                     <details className="rounded-lg border border-border/70 p-3">
                       <summary className="cursor-pointer text-sm font-medium">
                         Manual code editors (optional)
@@ -461,8 +510,8 @@ export default async function ReportTypePagesPage({
                           <textarea
                             name="html_template"
                             rows={8}
-                            defaultValue={page.html_template}
                             className="mt-1 block w-full rounded-lg border border-input bg-card p-3 font-mono text-xs shadow-soft"
+                            placeholder="Leave blank to keep existing. Paste new HTML here to replace."
                           />
                         </label>
                         <label className="block text-sm">
@@ -470,8 +519,8 @@ export default async function ReportTypePagesPage({
                           <textarea
                             name="readme_markdown"
                             rows={4}
-                            defaultValue={page.readme_markdown ?? ""}
                             className="mt-1 block w-full rounded-lg border border-input bg-card p-3 font-mono text-xs shadow-soft"
+                            placeholder="Leave blank to keep existing. Paste new README here to replace."
                           />
                         </label>
                         <label className="block text-sm">
@@ -479,8 +528,8 @@ export default async function ReportTypePagesPage({
                           <textarea
                             name="sample_data_json"
                             rows={4}
-                            defaultValue={page.sample_data ? JSON.stringify(page.sample_data, null, 2) : ""}
                             className="mt-1 block w-full rounded-lg border border-input bg-card p-3 font-mono text-xs shadow-soft"
+                            placeholder='Leave blank to keep existing. Paste new JSON here to replace. Example: {"title":"Example"}'
                           />
                         </label>
                       </div>

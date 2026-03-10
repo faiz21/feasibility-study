@@ -19,7 +19,7 @@ import {
   DataGridTable,
 } from "@/components/ui/data-grid";
 
-type SyncResult = { added: number; removed: number; generated: number };
+type SyncResult = { added: number; removed: number; generated: number; materialized: number };
 
 type ClientColorPalette = {
   primary: string;
@@ -136,17 +136,71 @@ async function uploadClientImage(
     throw new Error(`${kind} file must be an image`);
   }
 
+  const assetBucket = CLIENT_ASSET_BUCKET;
+
   const safeCode = sanitizePathSegment(clientCode || "client");
   const ext = getExtension(fileValue.name, fileValue.type);
   const filePath = `clients/${safeCode}/${kind}-${Date.now()}.${ext}`;
 
-  const { error } = await supabase.storage.from(CLIENT_ASSET_BUCKET).upload(filePath, fileValue, {
+  const { error } = await supabase.storage.from(assetBucket).upload(filePath, fileValue, {
     upsert: true,
     contentType: fileValue.type || undefined,
   });
-  if (error) throw new Error(error.message);
+  if (error) {
+    const message = error.message || "Upload failed";
+    if (message.toLowerCase().includes("bucket") && message.toLowerCase().includes("not found")) {
+      throw new Error(
+        `Storage bucket "${assetBucket}" not found. Double-check the bucket name in Supabase Storage and set NEXT_PUBLIC_CLIENT_ASSET_BUCKET (then restart dev).`,
+      );
+    }
+    throw new Error(message);
+  }
 
-  return `${CLIENT_ASSET_BUCKET}/${filePath}`;
+  return `${assetBucket}/${filePath}`;
+}
+
+async function getClientCodeForAssets(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  clientId: string,
+): Promise<string> {
+  if (!clientId) return "client";
+  const { data } = await supabase.from("clients").select("code").eq("id", clientId).maybeSingle();
+  return String(data?.code ?? clientId).trim() || clientId;
+}
+
+async function uploadClientEntityImage(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  fileValue: FormDataEntryValue | null,
+  clientCode: string,
+  entityName: string,
+): Promise<string | null> {
+  if (!(fileValue instanceof File) || fileValue.size <= 0) return null;
+  if (!fileValue.type.startsWith("image/")) {
+    throw new Error("Photo file must be an image");
+  }
+
+  const assetBucket = CLIENT_ASSET_BUCKET;
+
+  const safeCode = sanitizePathSegment(clientCode || "client");
+  const safeEntityName = sanitizePathSegment(entityName || "entity");
+  const ext = getExtension(fileValue.name, fileValue.type);
+  const filePath = `clients/${safeCode}/entities/${safeEntityName}-${Date.now()}.${ext}`;
+
+  const { error } = await supabase.storage.from(assetBucket).upload(filePath, fileValue, {
+    upsert: true,
+    contentType: fileValue.type || undefined,
+  });
+  if (error) {
+    const message = error.message || "Upload failed";
+    if (message.toLowerCase().includes("bucket") && message.toLowerCase().includes("not found")) {
+      throw new Error(
+        `Storage bucket "${assetBucket}" not found. Double-check the bucket name in Supabase Storage and set NEXT_PUBLIC_CLIENT_ASSET_BUCKET (then restart dev).`,
+      );
+    }
+    throw new Error(message);
+  }
+
+  return `${assetBucket}/${filePath}`;
 }
 
 function parseCsvLine(line: string): string[] {
@@ -412,10 +466,89 @@ async function syncClientReportAssignments(
     if (removeError) throw new Error(removeError.message);
   }
 
-  return { added: toAdd.length, removed: toRemove.length, generated: generatedReports };
+  const materialized = await materializeReportPagesForClient(supabase, clientId);
+  return { added: toAdd.length, removed: toRemove.length, generated: generatedReports, materialized };
 }
 
-export async function createClientAction(formData: FormData) {
+async function materializeReportPagesForClient(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  clientId: string,
+): Promise<number> {
+  const { data: entities, error: entitiesError } = await supabase
+    .from("report_entities")
+    .select("id")
+    .eq("client_id", clientId);
+  if (entitiesError) throw new Error(entitiesError.message);
+
+  const entityIds = (entities ?? []).map((entity) => entity.id);
+  if (entityIds.length === 0) return 0;
+
+  const { data: reports, error: reportsError } = await supabase
+    .from("reports")
+    .select("id,report_type_template_id")
+    .in("entity_id", entityIds);
+  if (reportsError) throw new Error(reportsError.message);
+
+  const reportRows = (reports ?? []) as Array<{ id: string; report_type_template_id: string }>;
+  if (reportRows.length === 0) return 0;
+
+  const reportTypeIds = Array.from(new Set(reportRows.map((report) => report.report_type_template_id)));
+  const reportIds = reportRows.map((report) => report.id);
+
+  const [{ data: templates, error: templatesError }, { data: existingPages, error: existingPagesError }] =
+    await Promise.all([
+      supabase
+        .from("report_page_templates")
+        .select("id,report_type_template_id,page_order")
+        .in("report_type_template_id", reportTypeIds),
+      supabase
+        .from("report_pages")
+        .select("report_id,report_page_template_id")
+        .in("report_id", reportIds),
+    ]);
+  if (templatesError) throw new Error(templatesError.message);
+  if (existingPagesError) throw new Error(existingPagesError.message);
+
+  const templateByType = new Map<string, Array<{ id: string; page_order: number }>>();
+  (templates ?? []).forEach((template) => {
+    const current = templateByType.get(template.report_type_template_id) ?? [];
+    current.push({ id: template.id, page_order: template.page_order });
+    templateByType.set(template.report_type_template_id, current);
+  });
+
+  const existingSet = new Set(
+    (existingPages ?? []).map((page) => `${page.report_id}:${page.report_page_template_id}`),
+  );
+
+  const missingPayload: Array<{ report_id: string; report_page_template_id: string; page_order: number }> = [];
+  reportRows.forEach((report) => {
+    const templatesForType = templateByType.get(report.report_type_template_id) ?? [];
+    templatesForType.forEach((template) => {
+      const key = `${report.id}:${template.id}`;
+      if (!existingSet.has(key)) {
+        missingPayload.push({
+          report_id: report.id,
+          report_page_template_id: template.id,
+          page_order: template.page_order,
+        });
+      }
+    });
+  });
+
+  if (missingPayload.length === 0) return 0;
+
+  for (let start = 0; start < missingPayload.length; start += 500) {
+    const chunk = missingPayload.slice(start, start + 500);
+    const { error } = await supabase.from("report_pages").upsert(chunk, {
+      onConflict: "report_id,report_page_template_id",
+    });
+    if (error) throw new Error(error.message);
+  }
+
+  return missingPayload.length;
+}
+
+async function createClientAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -424,10 +557,8 @@ export async function createClientAction(formData: FormData) {
   const code = String(formData.get("code") ?? "").trim();
   const domainRaw = String(formData.get("domain") ?? "").trim();
   const domain = domainRaw.length > 0 ? domainRaw.toLowerCase() : null;
-  const logoUrlRaw = String(formData.get("logo_url") ?? "").trim();
-  const coverPhotoUrlRaw = String(formData.get("cover_photo_url") ?? "").trim();
-  let logoUrl = logoUrlRaw.length > 0 ? logoUrlRaw : null;
-  let coverPhotoUrl = coverPhotoUrlRaw.length > 0 ? coverPhotoUrlRaw : null;
+  let logoUrl: string | null = null;
+  let coverPhotoUrl: string | null = null;
   const colorPalette = paletteFromFormData(formData);
   const defaultLocale = String(formData.get("default_locale") ?? "en");
 
@@ -462,7 +593,7 @@ export async function createClientAction(formData: FormData) {
   redirect("/admin/clients?success=Client+created");
 }
 
-export async function updateClientAction(formData: FormData) {
+async function updateClientAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -472,16 +603,21 @@ export async function updateClientAction(formData: FormData) {
   const code = String(formData.get("code") ?? "").trim();
   const domainRaw = String(formData.get("domain") ?? "").trim();
   const domain = domainRaw.length > 0 ? domainRaw.toLowerCase() : null;
-  const logoUrlRaw = String(formData.get("logo_url") ?? "").trim();
-  const coverPhotoUrlRaw = String(formData.get("cover_photo_url") ?? "").trim();
-  let logoUrl = logoUrlRaw.length > 0 ? logoUrlRaw : null;
-  let coverPhotoUrl = coverPhotoUrlRaw.length > 0 ? coverPhotoUrlRaw : null;
   const colorPalette = paletteFromFormData(formData);
   const defaultLocale = String(formData.get("default_locale") ?? "en");
 
   if (!id || !name || !code) {
     redirect("/admin/clients?error=Missing+required+fields");
   }
+
+  const { data: existingAssets } = await supabase
+    .from("clients")
+    .select("logo_url,cover_photo_url")
+    .eq("id", id)
+    .maybeSingle();
+
+  let logoUrl: string | null = existingAssets?.logo_url ?? null;
+  let coverPhotoUrl: string | null = existingAssets?.cover_photo_url ?? null;
 
   try {
     const uploadedLogoPath = await uploadClientImage(supabase, formData.get("logo_file"), code, "logo");
@@ -514,7 +650,7 @@ export async function updateClientAction(formData: FormData) {
   redirect("/admin/clients?success=Client+updated");
 }
 
-export async function deleteClientAction(formData: FormData) {
+async function deleteClientAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -542,7 +678,7 @@ export async function deleteClientAction(formData: FormData) {
   redirect("/admin/clients?success=Client+deleted");
 }
 
-export async function saveClientGranularityAction(formData: FormData) {
+async function saveClientGranularityAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -583,7 +719,7 @@ export async function saveClientGranularityAction(formData: FormData) {
     revalidatePath("/admin/client-reports");
     redirect(
       `/admin/clients?success=${encodeURIComponent(
-        `Client granularity updated. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed})`,
+        `Client granularity updated. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed}), pages materialized ${result.materialized}`,
       )}`,
     );
   } catch (error) {
@@ -591,7 +727,7 @@ export async function saveClientGranularityAction(formData: FormData) {
   }
 }
 
-export async function saveClientAccessAction(formData: FormData) {
+async function saveClientAccessAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -664,7 +800,7 @@ export async function saveClientAccessAction(formData: FormData) {
     revalidatePath("/admin/client-reports");
     redirect(
       `/admin/clients?success=${encodeURIComponent(
-        `Client access updated. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed})`,
+        `Client access updated. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed}), pages materialized ${result.materialized}`,
       )}`,
     );
   } catch (error) {
@@ -672,7 +808,7 @@ export async function saveClientAccessAction(formData: FormData) {
   }
 }
 
-export async function createClientEntityAction(formData: FormData) {
+async function createClientEntityAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -681,11 +817,19 @@ export async function createClientEntityAction(formData: FormData) {
   const granularityId = String(formData.get("granularity_id") ?? "").trim();
   const name = String(formData.get("name") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
-  const photoUrl = String(formData.get("photo_url") ?? "").trim();
+  let photoUrl = String(formData.get("photo_url") ?? "").trim();
   const tags = parseTags(String(formData.get("tags_csv") ?? ""));
 
   if (!clientId || !granularityId || !name) {
     redirect("/admin/clients?error=Missing+required+entity+fields");
+  }
+
+  try {
+    const clientCode = await getClientCodeForAssets(supabase, clientId);
+    const uploadedPhotoPath = await uploadClientEntityImage(supabase, formData.get("photo_file"), clientCode, name);
+    if (uploadedPhotoPath) photoUrl = uploadedPhotoPath;
+  } catch (error) {
+    redirect(`/admin/clients?error=${encodeURIComponent((error as Error).message)}`);
   }
 
   const { data: allowed } = await supabase
@@ -715,7 +859,7 @@ export async function createClientEntityAction(formData: FormData) {
     revalidatePath("/admin/client-reports");
     redirect(
       `/admin/clients?success=${encodeURIComponent(
-        `Entity created. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed})`,
+        `Entity created. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed}), pages materialized ${result.materialized}`,
       )}`,
     );
   } catch (syncError) {
@@ -723,7 +867,7 @@ export async function createClientEntityAction(formData: FormData) {
   }
 }
 
-export async function updateClientEntityAction(formData: FormData) {
+async function updateClientEntityAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -733,11 +877,19 @@ export async function updateClientEntityAction(formData: FormData) {
   const granularityId = String(formData.get("granularity_id") ?? "").trim();
   const name = String(formData.get("name") ?? "").trim();
   const description = String(formData.get("description") ?? "").trim();
-  const photoUrl = String(formData.get("photo_url") ?? "").trim();
+  let photoUrl = String(formData.get("photo_url") ?? "").trim();
   const tags = parseTags(String(formData.get("tags_csv") ?? ""));
 
   if (!id || !clientId || !granularityId || !name) {
     redirect("/admin/clients?error=Missing+required+entity+fields");
+  }
+
+  try {
+    const clientCode = await getClientCodeForAssets(supabase, clientId);
+    const uploadedPhotoPath = await uploadClientEntityImage(supabase, formData.get("photo_file"), clientCode, name);
+    if (uploadedPhotoPath) photoUrl = uploadedPhotoPath;
+  } catch (error) {
+    redirect(`/admin/clients?error=${encodeURIComponent((error as Error).message)}`);
   }
 
   const { data: allowed } = await supabase
@@ -771,7 +923,7 @@ export async function updateClientEntityAction(formData: FormData) {
     revalidatePath("/admin/client-reports");
     redirect(
       `/admin/clients?success=${encodeURIComponent(
-        `Entity updated. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed})`,
+        `Entity updated. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed}), pages materialized ${result.materialized}`,
       )}`,
     );
   } catch (syncError) {
@@ -779,7 +931,7 @@ export async function updateClientEntityAction(formData: FormData) {
   }
 }
 
-export async function deleteClientEntityAction(formData: FormData) {
+async function deleteClientEntityAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -798,7 +950,7 @@ export async function deleteClientEntityAction(formData: FormData) {
     revalidatePath("/admin/client-reports");
     redirect(
       `/admin/clients?success=${encodeURIComponent(
-        `Entity deleted. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed})`,
+        `Entity deleted. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed}), pages materialized ${result.materialized}`,
       )}`,
     );
   } catch (syncError) {
@@ -806,7 +958,7 @@ export async function deleteClientEntityAction(formData: FormData) {
   }
 }
 
-export async function importClientEntitiesCsvAction(formData: FormData) {
+async function importClientEntitiesCsvAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -824,9 +976,26 @@ export async function importClientEntitiesCsvAction(formData: FormData) {
     .eq("client_id", clientId);
   if (granularityError) redirect(`/admin/clients?error=${encodeURIComponent(granularityError.message)}`);
 
-  const allowedGranularities = (allowedGranularityRows ?? [])
-    .map((row) => row.granularity)
-    .filter((granularity): granularity is { id: string; name: string; code: string } => Boolean(granularity));
+  const allowedGranularities = (allowedGranularityRows ?? []).flatMap((row) => {
+    const candidate = row.granularity as unknown;
+    const normalizeOne = (value: unknown): { id: string; name: string; code: string } | null => {
+      if (!value || typeof value !== "object") return null;
+      const v = value as Record<string, unknown>;
+      if (typeof v.id !== "string" || typeof v.name !== "string" || typeof v.code !== "string") {
+        return null;
+      }
+      return { id: v.id, name: v.name, code: v.code };
+    };
+
+    if (Array.isArray(candidate)) {
+      return candidate
+        .map((item) => normalizeOne(item))
+        .filter((item): item is { id: string; name: string; code: string } => Boolean(item));
+    }
+
+    const single = normalizeOne(candidate);
+    return single ? [single] : [];
+  });
   if (allowedGranularities.length === 0) {
     redirect("/admin/clients?error=Enable+client+granularity+before+importing+entities");
   }
@@ -900,7 +1069,7 @@ export async function importClientEntitiesCsvAction(formData: FormData) {
     revalidatePath("/admin/client-reports");
     redirect(
       `/admin/clients?success=${encodeURIComponent(
-        `Imported ${payload.length} entities. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed})`,
+        `Imported ${payload.length} entities. Generated ${result.generated} reports, assignments (+${result.added}, -${result.removed}), pages materialized ${result.materialized}`,
       )}`,
     );
   } catch (syncError) {
@@ -908,7 +1077,7 @@ export async function importClientEntitiesCsvAction(formData: FormData) {
   }
 }
 
-export async function syncClientReportsAction(formData: FormData) {
+async function syncClientReportsAction(formData: FormData) {
   "use server";
   await requireRole("admin");
   const supabase = await createClient();
@@ -923,7 +1092,7 @@ export async function syncClientReportsAction(formData: FormData) {
     revalidatePath("/admin/client-reports");
     redirect(
       `/admin/clients?success=${encodeURIComponent(
-        `Reports synced. Generated ${result.generated}, assignments (+${result.added}, -${result.removed})`,
+        `Reports synced. Generated ${result.generated}, assignments (+${result.added}, -${result.removed}), pages materialized ${result.materialized}`,
       )}`,
     );
   } catch (error) {
@@ -1066,7 +1235,7 @@ export default async function AdminClientsPage({
           triggerLabel="Create Client"
           triggerVariant="default"
         >
-          <form action={createClientAction} className="grid gap-3 md:grid-cols-2">
+          <form action={createClientAction} className="grid gap-3 md:grid-cols-2" encType="multipart/form-data">
             <label className="text-sm">
               Name
               <Input className="mt-1" name="name" required placeholder="PT Machine Vision" />
@@ -1080,16 +1249,8 @@ export default async function AdminClientsPage({
               <Input className="mt-1" name="domain" placeholder="client.company.com" />
             </label>
             <label className="text-sm md:col-span-2">
-              Logo URL
-              <Input className="mt-1" name="logo_url" type="url" placeholder="https://cdn.example.com/client-logo.png" />
-            </label>
-            <label className="text-sm md:col-span-2">
               Upload Logo
               <Input className="mt-1" name="logo_file" type="file" accept="image/*" />
-            </label>
-            <label className="text-sm md:col-span-2">
-              Cover Photo URL
-              <Input className="mt-1" name="cover_photo_url" type="url" placeholder="https://cdn.example.com/client-cover.jpg" />
             </label>
             <label className="text-sm md:col-span-2">
               Upload Cover Photo
@@ -1262,39 +1423,91 @@ export default async function AdminClientsPage({
                           <span className="text-critical">-{syncPreview.removeLabels.length}</span>
                         </div>
                       </DataGridCell>
-                      <DataGridCell>
-                        <div className="flex flex-wrap justify-end gap-2">
-                          <FormDialog title="Edit Client" description="Update client details." triggerLabel="Edit">
-                            <form action={updateClientAction} className="grid gap-3 md:grid-cols-2">
-                              <input type="hidden" name="id" value={client.id} />
-                              <label className="text-sm">
-                                Name
-                                <Input className="mt-1" name="name" defaultValue={client.name} required />
-                              </label>
+	                      <DataGridCell>
+	                        <div className="flex flex-wrap justify-end gap-2">
+	                          <FormDialog title="Edit Client" description="Update client details." triggerLabel="Edit">
+	                            <form action={updateClientAction} className="grid gap-3 md:grid-cols-2" encType="multipart/form-data">
+	                              <input type="hidden" name="id" value={client.id} />
+	                              <div className="md:col-span-2 rounded-lg border border-border/70 bg-muted/20 p-3">
+	                                <p className="text-sm font-medium">Current uploads</p>
+	                                <div className="mt-2 grid gap-3 md:grid-cols-2">
+	                                  <div className="space-y-2">
+	                                    <p className="text-xs text-muted-foreground">Logo</p>
+	                                    {client.logo_url ? (
+	                                      <div className="flex items-center gap-3">
+	                                        <Image
+	                                          src={resolveAssetUrl(client.logo_url) ?? client.logo_url}
+	                                          alt={`${client.name} logo`}
+	                                          className="h-10 w-10 rounded border border-border/70 bg-white object-contain"
+	                                          width={40}
+	                                          height={40}
+	                                          unoptimized
+	                                        />
+	                                        <div className="min-w-0">
+	                                          <p className="truncate text-xs text-muted-foreground">{client.logo_url}</p>
+	                                          <a
+	                                            href={resolveAssetUrl(client.logo_url) ?? client.logo_url}
+	                                            target="_blank"
+	                                            rel="noreferrer"
+	                                            className="text-xs text-primary underline"
+	                                          >
+	                                            Open
+	                                          </a>
+	                                        </div>
+	                                      </div>
+	                                    ) : (
+	                                      <p className="text-xs text-muted-foreground">No logo uploaded.</p>
+	                                    )}
+	                                  </div>
+	                                  <div className="space-y-2">
+	                                    <p className="text-xs text-muted-foreground">Cover photo</p>
+	                                    {client.cover_photo_url ? (
+	                                      <div className="space-y-2">
+	                                        <div className="relative h-20 w-full overflow-hidden rounded border border-border/70 bg-white">
+	                                          <Image
+	                                            src={resolveAssetUrl(client.cover_photo_url) ?? client.cover_photo_url}
+	                                            alt={`${client.name} cover`}
+	                                            className="h-full w-full object-cover"
+	                                            fill
+	                                            unoptimized
+	                                          />
+	                                        </div>
+	                                        <p className="truncate text-xs text-muted-foreground">{client.cover_photo_url}</p>
+	                                        <a
+	                                          href={resolveAssetUrl(client.cover_photo_url) ?? client.cover_photo_url}
+	                                          target="_blank"
+	                                          rel="noreferrer"
+	                                          className="text-xs text-primary underline"
+	                                        >
+	                                          Open
+	                                        </a>
+	                                      </div>
+	                                    ) : (
+	                                      <p className="text-xs text-muted-foreground">No cover uploaded.</p>
+	                                    )}
+	                                  </div>
+	                                </div>
+	                              </div>
+	                              <label className="text-sm">
+	                                Name
+	                                <Input className="mt-1" name="name" defaultValue={client.name} required />
+	                              </label>
                               <label className="text-sm">
                                 Code
                                 <Input className="mt-1" name="code" defaultValue={client.code} required />
                               </label>
-                              <label className="text-sm">
-                                Domain
-                                <Input className="mt-1" name="domain" defaultValue={client.domain ?? ""} />
-                              </label>
-                              <label className="text-sm md:col-span-2">
-                                Logo URL
-                                <Input className="mt-1" name="logo_url" type="url" defaultValue={client.logo_url ?? ""} />
-                              </label>
-                              <label className="text-sm md:col-span-2">
-                                Upload Logo
-                                <Input className="mt-1" name="logo_file" type="file" accept="image/*" />
-                              </label>
-                              <label className="text-sm md:col-span-2">
-                                Cover Photo URL
-                                <Input className="mt-1" name="cover_photo_url" type="url" defaultValue={client.cover_photo_url ?? ""} />
-                              </label>
-                              <label className="text-sm md:col-span-2">
-                                Upload Cover Photo
-                                <Input className="mt-1" name="cover_photo_file" type="file" accept="image/*" />
-                              </label>
+	                              <label className="text-sm">
+	                                Domain
+	                                <Input className="mt-1" name="domain" defaultValue={client.domain ?? ""} />
+	                              </label>
+	                              <label className="text-sm md:col-span-2">
+	                                Upload Logo
+	                                <Input className="mt-1" name="logo_file" type="file" accept="image/*" />
+	                              </label>
+	                              <label className="text-sm md:col-span-2">
+	                                Upload Cover Photo
+	                                <Input className="mt-1" name="cover_photo_file" type="file" accept="image/*" />
+	                              </label>
                               <label className="text-sm">
                                 Default Locale
                                 <select
@@ -1462,7 +1675,7 @@ export default async function AdminClientsPage({
                                       <Button type="submit" variant="secondary">Import CSV</Button>
                                     </div>
                                   </form>
-                                  <div className="space-y-3">
+                                  <div className="max-h-[52vh] space-y-3 overflow-y-auto pr-1">
                                     {Array.from(allowedGranularityIds)
                                       .map((granularityId) => granularityById.get(granularityId))
                                       .filter((granularity): granularity is GranularityRow => Boolean(granularity))
@@ -1482,7 +1695,11 @@ export default async function AdminClientsPage({
                                                 description="Create an entity under this granularity."
                                                 triggerLabel="Add Entity"
                                               >
-                                                <form action={createClientEntityAction} className="grid gap-3 md:grid-cols-2">
+                                                <form
+                                                  action={createClientEntityAction}
+                                                  className="grid gap-3 md:grid-cols-2"
+                                                  encType="multipart/form-data"
+                                                >
                                                   <input type="hidden" name="client_id" value={client.id} />
                                                   <input type="hidden" name="granularity_id" value={granularity.id} />
                                                   <label className="text-sm md:col-span-2">
@@ -1494,13 +1711,20 @@ export default async function AdminClientsPage({
                                                     <Input name="description" className="mt-1" />
                                                   </label>
                                                   <label className="text-sm">
+                                                    Photo (upload)
+                                                    <Input name="photo_file" type="file" accept="image/*" className="mt-1" />
+                                                  </label>
+                                                  <label className="text-sm">
                                                     Photo URL
-                                                    <Input name="photo_url" className="mt-1" />
+                                                    <Input name="photo_url" type="url" className="mt-1" placeholder="https://..." />
                                                   </label>
                                                   <label className="text-sm">
                                                     Tags (comma-separated)
                                                     <Input name="tags_csv" className="mt-1" />
                                                   </label>
+                                                  <p className="text-xs text-muted-foreground md:col-span-2">
+                                                    Upload a photo file or paste a URL. Upload overrides the URL field.
+                                                  </p>
                                                   <div className="md:col-span-2">
                                                     <Button type="submit">Create Entity</Button>
                                                   </div>
@@ -1528,7 +1752,11 @@ export default async function AdminClientsPage({
                                                         description="Update entity details."
                                                         triggerLabel="Edit"
                                                       >
-                                                        <form action={updateClientEntityAction} className="grid gap-3 md:grid-cols-2">
+                                                        <form
+                                                          action={updateClientEntityAction}
+                                                          className="grid gap-3 md:grid-cols-2"
+                                                          encType="multipart/form-data"
+                                                        >
                                                           <input type="hidden" name="id" value={entity.id} />
                                                           <input type="hidden" name="client_id" value={client.id} />
                                                           <input type="hidden" name="granularity_id" value={granularity.id} />
@@ -1539,6 +1767,10 @@ export default async function AdminClientsPage({
                                                           <label className="text-sm md:col-span-2">
                                                             Description
                                                             <Input name="description" defaultValue={entity.description ?? ""} className="mt-1" />
+                                                          </label>
+                                                          <label className="text-sm">
+                                                            Photo (upload)
+                                                            <Input name="photo_file" type="file" accept="image/*" className="mt-1" />
                                                           </label>
                                                           <label className="text-sm">
                                                             Photo URL
@@ -1552,6 +1784,9 @@ export default async function AdminClientsPage({
                                                               className="mt-1"
                                                             />
                                                           </label>
+                                                          <p className="text-xs text-muted-foreground md:col-span-2">
+                                                            Upload overrides the URL field.
+                                                          </p>
                                                           <div className="md:col-span-2">
                                                             <Button type="submit">Save Entity</Button>
                                                           </div>

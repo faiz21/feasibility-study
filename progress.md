@@ -218,3 +218,18 @@
 - Updated `report_component_readme.md` and `report_components_catalog.csv` with standardized-token guidance.
 - Ran `npm run lint`: pass with 0 errors, 2 warnings (`@next/next/no-img-element` in `components/report/cover/client-report-landing-cover.tsx`).
 - Report token standardization task complete for requested scope.
+
+## Current Session (Skill: markdown-report-to-html)
+- Created new skill folder `.agents/skills/markdown-report-to-html` with SKILL.md, renderer template, and conversion script.
+- Smoke-tested script on a sample Markdown file: `outline`, `json`, `sample`, `report` commands ran successfully.
+- Added `storybook` command to publish the sample HTML into Storybook (`public/sample_report/*` + `components/sample_report/*.stories.tsx`) and updated Storybook config to serve `public`.
+- Skill validation script `quick_validate.py` failed locally due to missing Python dependency `yaml` (PyYAML).
+
+## Current Session (Markdown to HTML: automation-audit_template) — 2026-03-02
+- Ran outline generation on `templates/report_template/generated/automation_audit_template/automation-audit_template.md`.
+- Logged outline + generation decisions into `findings.md` and a task phase plan into `task_plan.md`.
+- Pending user confirmation before generating new HTML/JSON artifacts (to avoid overwriting existing files in the folder).
+- Generated (non-overwriting) artifacts:
+  - `templates/report_template/generated/automation_audit_template/automation-audit_template_md_sample.html`
+  - `templates/report_template/generated/automation_audit_template/automation-audit_template_md.json`
+  - `templates/report_template/generated/automation_audit_template/automation-audit_template_md_report.html`
