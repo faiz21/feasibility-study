@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { StatusBanner } from "@/components/ui/status-banner";
 
 export default function ReportsError({
   error,
@@ -10,10 +11,14 @@ export default function ReportsError({
   reset: () => void;
 }) {
   return (
-    <div className="rounded-xl border border-critical/30 bg-critical/10 p-5">
-      <p className="text-sm font-medium text-critical">Failed to load reports.</p>
-      <p className="mt-1 text-sm text-muted-foreground">{error.message || "Unexpected error occurred."}</p>
-      <Button className="mt-4" onClick={reset} variant="secondary">
+    <div className="space-y-4">
+      <StatusBanner tone="critical">
+        <div>
+          <p className="font-medium">Failed to load reports.</p>
+          <p className="mt-1 text-muted-foreground">{error.message || "Unexpected error occurred."}</p>
+        </div>
+      </StatusBanner>
+      <Button onClick={reset} variant="secondary">
         Try again
       </Button>
     </div>

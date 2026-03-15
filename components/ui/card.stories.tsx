@@ -23,11 +23,11 @@ export const Default: Story = {
     <Card className="max-w-sm">
       <CardHeader>
         <CardTitle>Executive Summary</CardTitle>
-        <CardDescription>Q1 strategy performance snapshot</CardDescription>
+        <CardDescription>Q1 strategy performance snapshot for the active client workspace</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-sm text-muted-foreground">
-          Revenue grew 12% quarter-over-quarter, led by enterprise expansion.
+        <p className="text-base text-muted-foreground">
+          Revenue grew 12% quarter-over-quarter, led by enterprise expansion and faster cross-functional adoption.
         </p>
       </CardContent>
       <CardFooter>
@@ -36,4 +36,3 @@ export const Default: Story = {
     </Card>
   ),
 };
-

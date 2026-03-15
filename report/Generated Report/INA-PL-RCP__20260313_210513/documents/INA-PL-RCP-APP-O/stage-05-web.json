@@ -1,0 +1,236 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "primary": "#1d4ed8"
+    },
+    "metadata": {
+      "date": "14 March 2026",
+      "plant": "Rodding Plant",
+      "scope": "single-plant package for Rodding Plant with company context as background evidence",
+      "title": "Appendix O - Automation Assessment",
+      "status": "Draft",
+      "company": "PT Indonesia Asahan Aluminium",
+      "content": "RODDING PLANT (INA-PL-RCP)"
+    },
+    "sections": {
+      "risks": {
+        "assumptions": [],
+        "explicitGaps": [],
+        "technicalRisks": []
+      },
+      "roadmap": {
+        "phases": [],
+        "pilots": [],
+        "principles": "",
+        "dependencies": []
+      },
+      "baseline": {
+        "plcData": [],
+        "plcNote": "",
+        "overview": "",
+        "plcTotal": 0,
+        "instruments": {
+          "note": "",
+          "total": 0,
+          "inferred": 0,
+          "obtained": 0,
+          "relayLocal": 0,
+          "plcReadable": 0
+        },
+        "supervisory": {
+          "note": "",
+          "systems": "",
+          "protocols": ""
+        }
+      },
+      "framework": {
+        "scale": [],
+        "levels": []
+      },
+      "feasibility": {
+        "early": [],
+        "notFeasible": [],
+        "implications": [],
+        "afterUpgrades": []
+      },
+      "methodology": {
+        "inScope": [],
+        "outputs": [],
+        "purpose": "",
+        "sources": [],
+        "outOfScope": "",
+        "dataQuality": []
+      },
+      "processGroups": [],
+      "executiveSummary": {
+        "context": "",
+        "outlook": "",
+        "takeaway": "",
+        "realities": [],
+        "priorities": [],
+        "riskThemes": [],
+        "classifications": [],
+        "maturitySnapshot": "",
+        "roadmapDirection": ""
+      },
+      "plantWideFindings": []
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "primary": "#1d4ed8"
+    },
+    "metadata": {
+      "date": "14 March 2026",
+      "plant": "Rodding Plant",
+      "scope": "single-plant package for Rodding Plant with company context as background evidence",
+      "title": "Appendix O - Automation Assessment",
+      "status": "Draft",
+      "company": "PT Indonesia Asahan Aluminium",
+      "content": "RODDING PLANT (INA-PL-RCP)"
+    },
+    "sections": {
+      "risks": {
+        "assumptions": [],
+        "explicitGaps": [],
+        "technicalRisks": []
+      },
+      "roadmap": {
+        "phases": [],
+        "pilots": [],
+        "principles": "",
+        "dependencies": []
+      },
+      "baseline": {
+        "plcData": [],
+        "plcNote": "",
+        "overview": "",
+        "plcTotal": 0,
+        "instruments": {
+          "note": "",
+          "total": 0,
+          "inferred": 0,
+          "obtained": 0,
+          "relayLocal": 0,
+          "plcReadable": 0
+        },
+        "supervisory": {
+          "note": "",
+          "systems": "",
+          "protocols": ""
+        }
+      },
+      "framework": {
+        "scale": [],
+        "levels": []
+      },
+      "feasibility": {
+        "early": [],
+        "notFeasible": [],
+        "implications": [],
+        "afterUpgrades": []
+      },
+      "methodology": {
+        "inScope": [],
+        "outputs": [],
+        "purpose": "",
+        "sources": [],
+        "outOfScope": "",
+        "dataQuality": []
+      },
+      "processGroups": [],
+      "executiveSummary": {
+        "context": "",
+        "outlook": "",
+        "takeaway": "",
+        "realities": [],
+        "priorities": [],
+        "riskThemes": [],
+        "classifications": [],
+        "maturitySnapshot": "",
+        "roadmapDirection": ""
+      },
+      "plantWideFindings": []
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "primary": "#1d4ed8"
+    },
+    "metadata": {
+      "date": "14 March 2026",
+      "plant": "Rodding Plant",
+      "scope": "single-plant package for Rodding Plant with company context as background evidence",
+      "title": "Appendix O - Automation Assessment",
+      "status": "Draft",
+      "company": "PT Indonesia Asahan Aluminium",
+      "content": "RODDING PLANT (INA-PL-RCP)"
+    },
+    "sections": {
+      "risks": {
+        "assumptions": [],
+        "explicitGaps": [],
+        "technicalRisks": []
+      },
+      "roadmap": {
+        "phases": [],
+        "pilots": [],
+        "principles": "",
+        "dependencies": []
+      },
+      "baseline": {
+        "plcData": [],
+        "plcNote": "",
+        "overview": "",
+        "plcTotal": 0,
+        "instruments": {
+          "note": "",
+          "total": 0,
+          "inferred": 0,
+          "obtained": 0,
+          "relayLocal": 0,
+          "plcReadable": 0
+        },
+        "supervisory": {
+          "note": "",
+          "systems": "",
+          "protocols": ""
+        }
+      },
+      "framework": {
+        "scale": [],
+        "levels": []
+      },
+      "feasibility": {
+        "early": [],
+        "notFeasible": [],
+        "implications": [],
+        "afterUpgrades": []
+      },
+      "methodology": {
+        "inScope": [],
+        "outputs": [],
+        "purpose": "",
+        "sources": [],
+        "outOfScope": "",
+        "dataQuality": []
+      },
+      "processGroups": [],
+      "executiveSummary": {
+        "context": "",
+        "outlook": "",
+        "takeaway": "",
+        "realities": [],
+        "priorities": [],
+        "riskThemes": [],
+        "classifications": [],
+        "maturitySnapshot": "",
+        "roadmapDirection": ""
+      },
+      "plantWideFindings": []
+    }
+  }
+}

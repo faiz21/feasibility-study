@@ -1,9 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { ShieldCheck, UserRound } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { useRouter } from "next/navigation";
 
 const LAST_LOGIN_KEY = "portal-last-login";
@@ -108,20 +110,28 @@ export function MagicLinkLoginForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-5">
-      <div className="space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight">Login</h1>
-        <p className="text-sm text-muted-foreground">Choose your role to continue.</p>
+    <form onSubmit={onSubmit} className="space-y-6">
+      <div className="space-y-3">
+        <Badge variant="secondary">Role-aware access</Badge>
+        <div className="space-y-2">
+          <h1 className="text-3xl font-semibold tracking-tight text-foreground">Continue into the portal</h1>
+          <p className="text-base leading-7 text-muted-foreground">
+            Start by choosing whether you are entering the admin workspace or a client report session.
+          </p>
+        </div>
       </div>
-      <div className="space-y-2">
-        <p className="text-sm font-medium">Role</p>
-        <div className="grid grid-cols-2 gap-2">
+      <div className="space-y-3">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-muted-foreground">Role</p>
+          {role ? <span className="text-sm text-muted-foreground">Selected: {role === "admin" ? "Admin" : "User"}</span> : null}
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
           <button
             type="button"
-            className={`rounded-md border px-3 py-2 text-sm transition ${
+            className={`rounded-[1.25rem] border px-4 py-4 text-left transition ${
               role === "admin"
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border bg-card text-foreground hover:bg-accent"
+                ? "border-primary bg-primary text-primary-foreground shadow-lift"
+                : "border-border/80 bg-card/85 text-foreground hover:-translate-y-0.5 hover:bg-surface-soft"
             }`}
             onClick={() => {
               setRole("admin");
@@ -130,14 +140,24 @@ export function MagicLinkLoginForm() {
               setSuccess(null);
             }}
           >
-            Admin
+            <div className="flex items-start gap-3">
+              <div className={`flex h-11 w-11 items-center justify-center rounded-2xl ${role === "admin" ? "bg-white/15" : "bg-primary-soft text-primary"}`}>
+                <ShieldCheck className="h-5 w-5" />
+              </div>
+              <div className="space-y-1">
+                <p className="font-semibold tracking-tight">Admin</p>
+                <p className={`text-sm leading-6 ${role === "admin" ? "text-primary-foreground/86" : "text-muted-foreground"}`}>
+                  Direct dashboard access for operations, setup, and report management.
+                </p>
+              </div>
+            </div>
           </button>
           <button
             type="button"
-            className={`rounded-md border px-3 py-2 text-sm transition ${
+            className={`rounded-[1.25rem] border px-4 py-4 text-left transition ${
               role === "client"
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border bg-card text-foreground hover:bg-accent"
+                ? "border-primary bg-primary text-primary-foreground shadow-lift"
+                : "border-border/80 bg-card/85 text-foreground hover:-translate-y-0.5 hover:bg-surface-soft"
             }`}
             onClick={() => {
               setRole("client");
@@ -146,18 +166,28 @@ export function MagicLinkLoginForm() {
               setSuccess(null);
             }}
           >
-            User
+            <div className="flex items-start gap-3">
+              <div className={`flex h-11 w-11 items-center justify-center rounded-2xl ${role === "client" ? "bg-white/15" : "bg-primary-soft text-primary"}`}>
+                <UserRound className="h-5 w-5" />
+              </div>
+              <div className="space-y-1">
+                <p className="font-semibold tracking-tight">User</p>
+                <p className={`text-sm leading-6 ${role === "client" ? "text-primary-foreground/86" : "text-muted-foreground"}`}>
+                  Receive a magic link and continue into the assigned client reports.
+                </p>
+              </div>
+            </div>
           </button>
         </div>
       </div>
       {role ? (
         <>
           {role === "admin" ? (
-            <div className="space-y-2 rounded-md border border-border bg-muted p-3">
-              <p className="text-xs text-muted-foreground">
+            <div className="space-y-3 rounded-[1.35rem] border border-border/80 bg-surface-soft/90 p-4">
+              <p className="text-sm leading-6 text-muted-foreground">
                 Enter admin password to login directly to the admin dashboard.
               </p>
-              <label htmlFor="admin-password" className="text-sm">
+              <label htmlFor="admin-password" className="text-sm font-medium">
                 Admin password
               </label>
               <Input
@@ -170,9 +200,12 @@ export function MagicLinkLoginForm() {
               />
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-4 rounded-[1.35rem] border border-border/80 bg-surface-soft/90 p-4">
+              <p className="text-sm leading-6 text-muted-foreground">
+                Use your work email so the magic link opens the correct client delivery context.
+              </p>
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm">
+                <label htmlFor="email" className="text-sm font-medium">
                   Work email
                 </label>
                 <Input
@@ -185,7 +218,7 @@ export function MagicLinkLoginForm() {
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="position" className="text-sm">
+                <label htmlFor="position" className="text-sm font-medium">
                   Position
                 </label>
                 <Input
@@ -202,13 +235,15 @@ export function MagicLinkLoginForm() {
         </>
       ) : null}
       {role ? null : (
-        <p className="rounded border border-warning/30 bg-warning/10 px-3 py-2 text-xs text-warning">
+        <p className="rounded-2xl border border-warning/30 bg-warning/10 px-4 py-3 text-sm text-warning">
           Select a role to continue.
         </p>
       )}
-      {error && <p className="text-sm text-critical">{error}</p>}
-      {success && role !== "admin" && <p className="text-sm text-success">{success}</p>}
-      <Button type="submit" disabled={loading || !role} className="h-10 w-full">
+      {error && <p className="rounded-2xl border border-critical/25 bg-critical/10 px-4 py-3 text-sm text-critical">{error}</p>}
+      {success && role !== "admin" && (
+        <p className="rounded-2xl border border-success/25 bg-success/10 px-4 py-3 text-sm text-success">{success}</p>
+      )}
+      <Button type="submit" disabled={loading || !role} className="w-full">
         {loading
           ? "Sending..."
           : role === "admin"

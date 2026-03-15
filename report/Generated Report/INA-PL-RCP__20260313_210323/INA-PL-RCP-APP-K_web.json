@@ -1,0 +1,248 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-K",
+      "reportType": "Appendix K - Risk Register",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix K - Risk Register",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "section_01": {
+        "title": "section 01",
+        "subtitle": "",
+        "sub_sections": {
+          "narrative": {
+            "text": "",
+            "takeaway": ""
+          }
+        }
+      },
+      "section_02": {
+        "title": "section 02",
+        "subtitle": "",
+        "sub_sections": {
+          "table_data": [],
+          "table_headers": {
+            "a": "",
+            "c": "",
+            "f": "",
+            "s": "",
+            "t": "",
+            "w": "",
+            "ow": "",
+            "cat": "",
+            "imp": "",
+            "obs": ""
+          }
+        }
+      },
+      "section_03": {
+        "title": "section 03",
+        "subtitle": "",
+        "sub_sections": {
+          "observation_cards": []
+        }
+      },
+      "section_04": {
+        "title": "section 04",
+        "subtitle": "",
+        "sub_sections": {
+          "metrics": [],
+          "traceability": {
+            "text": "",
+            "title": ""
+          }
+        }
+      },
+      "section_05": {
+        "title": "section 05",
+        "subtitle": "",
+        "sub_sections": {
+          "mapping_table": [],
+          "mapping_headers": {
+            "type": "",
+            "codes": "",
+            "notes": "",
+            "source": "",
+            "usedBy": ""
+          }
+        }
+      }
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-K",
+      "reportType": "Appendix K - Risk Register",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix K - Risk Register",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "section_01": {
+        "title": "section 01",
+        "subtitle": "",
+        "sub_sections": {
+          "narrative": {
+            "text": "",
+            "takeaway": ""
+          }
+        }
+      },
+      "section_02": {
+        "title": "section 02",
+        "subtitle": "",
+        "sub_sections": {
+          "table_data": [],
+          "table_headers": {
+            "a": "",
+            "c": "",
+            "f": "",
+            "s": "",
+            "t": "",
+            "w": "",
+            "ow": "",
+            "cat": "",
+            "imp": "",
+            "obs": ""
+          }
+        }
+      },
+      "section_03": {
+        "title": "section 03",
+        "subtitle": "",
+        "sub_sections": {
+          "observation_cards": []
+        }
+      },
+      "section_04": {
+        "title": "section 04",
+        "subtitle": "",
+        "sub_sections": {
+          "metrics": [],
+          "traceability": {
+            "text": "",
+            "title": ""
+          }
+        }
+      },
+      "section_05": {
+        "title": "section 05",
+        "subtitle": "",
+        "sub_sections": {
+          "mapping_table": [],
+          "mapping_headers": {
+            "type": "",
+            "codes": "",
+            "notes": "",
+            "source": "",
+            "usedBy": ""
+          }
+        }
+      }
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-K",
+      "reportType": "Appendix K - Risk Register",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix K - Risk Register",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "section_01": {
+        "title": "section 01",
+        "subtitle": "",
+        "sub_sections": {
+          "narrative": {
+            "text": "",
+            "takeaway": ""
+          }
+        }
+      },
+      "section_02": {
+        "title": "section 02",
+        "subtitle": "",
+        "sub_sections": {
+          "table_data": [],
+          "table_headers": {
+            "a": "",
+            "c": "",
+            "f": "",
+            "s": "",
+            "t": "",
+            "w": "",
+            "ow": "",
+            "cat": "",
+            "imp": "",
+            "obs": ""
+          }
+        }
+      },
+      "section_03": {
+        "title": "section 03",
+        "subtitle": "",
+        "sub_sections": {
+          "observation_cards": []
+        }
+      },
+      "section_04": {
+        "title": "section 04",
+        "subtitle": "",
+        "sub_sections": {
+          "metrics": [],
+          "traceability": {
+            "text": "",
+            "title": ""
+          }
+        }
+      },
+      "section_05": {
+        "title": "section 05",
+        "subtitle": "",
+        "sub_sections": {
+          "mapping_table": [],
+          "mapping_headers": {
+            "type": "",
+            "codes": "",
+            "notes": "",
+            "source": "",
+            "usedBy": ""
+          }
+        }
+      }
+    }
+  }
+}

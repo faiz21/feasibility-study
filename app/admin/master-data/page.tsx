@@ -13,6 +13,10 @@ import {
 
 type AnyRow = Record<string, unknown>;
 
+const GPT_JSON_SCHEMA_KEY = "gpt json schema";
+const REPORT_FORMAT_KEY = "Report_format";
+const SYSTEM_PROMPT_KEY = "system prompt";
+
 function isBlank(value: unknown): boolean {
   if (value === null || value === undefined) return true;
   if (typeof value === "string") return value.trim().length === 0;
@@ -57,15 +61,17 @@ export default async function AdminMasterDataPage() {
   const pages = (reportPageRows ?? []) as AnyRow[];
 
   const templateHasAnalysisLevel = hasColumn(templates, "analysis_level");
-  const templateHasGptSchema = hasColumn(templates, "gpt_json_schema");
-  const templateHasReportFormat = hasColumn(templates, "report_format");
+  const templateHasGptSchema = hasColumn(templates, GPT_JSON_SCHEMA_KEY);
+  const templateHasReportFormat = hasColumn(templates, REPORT_FORMAT_KEY);
+  const templateHasSystemPrompt = hasColumn(templates, SYSTEM_PROMPT_KEY);
   const templateHasReadme = hasColumn(templates, "readme_markdown");
 
   const templateAnalysisPct = templateHasAnalysisLevel ? filledPct(templates, "analysis_level") : 0;
-  const templateGptSchemaPct = templateHasGptSchema ? filledPct(templates, "gpt_json_schema") : 0;
+  const templateGptSchemaPct = templateHasGptSchema ? filledPct(templates, GPT_JSON_SCHEMA_KEY) : 0;
   const templateSampleDataPct = filledPct(templates, "sample_data");
   const templateHtmlPct = filledPct(templates, "html_template");
-  const templateReportFormatBlankPct = templateHasReportFormat ? blankPct(templates, "report_format") : 100;
+  const templateReportFormatBlankPct = templateHasReportFormat ? blankPct(templates, REPORT_FORMAT_KEY) : 100;
+  const templateSystemPromptBlankPct = templateHasSystemPrompt ? blankPct(templates, SYSTEM_PROMPT_KEY) : 100;
   const templateReadmeBlankPct = templateHasReadme ? blankPct(templates, "readme_markdown") : 100;
 
   const entityHasDataset = hasColumn(entities, "dataset");
@@ -98,12 +104,13 @@ export default async function AdminMasterDataPage() {
 
   const templateIssues = templates.filter((row) => {
     const missingAnalysis = templateHasAnalysisLevel && isBlank(row.analysis_level);
-    const missingSchema = templateHasGptSchema && isBlank(row.gpt_json_schema);
+    const missingSchema = templateHasGptSchema && isBlank(row[GPT_JSON_SCHEMA_KEY]);
     const missingSample = isBlank(row.sample_data);
     const missingHtml = isBlank(row.html_template);
-    const reportFormatBlank = templateHasReportFormat && isBlank(row.report_format);
+    const reportFormatBlank = templateHasReportFormat && isBlank(row[REPORT_FORMAT_KEY]);
+    const systemPromptBlank = templateHasSystemPrompt && isBlank(row[SYSTEM_PROMPT_KEY]);
     const readmeBlank = templateHasReadme && isBlank(row.readme_markdown);
-    return missingAnalysis || missingSchema || missingSample || missingHtml || reportFormatBlank || readmeBlank;
+    return missingAnalysis || missingSchema || missingSample || missingHtml || reportFormatBlank || systemPromptBlank || readmeBlank;
   });
 
   return (
@@ -127,14 +134,15 @@ export default async function AdminMasterDataPage() {
         <CardContent className="space-y-3">
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             <StatCard label="analysis_level Filled %" value={`${templateAnalysisPct}%`} />
-            <StatCard label="gpt_json_schema Filled %" value={`${templateGptSchemaPct}%`} />
+            <StatCard label="gpt json schema Filled %" value={`${templateGptSchemaPct}%`} />
             <StatCard label="sample_data Filled %" value={`${templateSampleDataPct}%`} />
             <StatCard label="html_template Filled %" value={`${templateHtmlPct}%`} />
-            <StatCard label="report_format Blank %" value={`${templateReportFormatBlankPct}%`} />
+            <StatCard label="Report_format Blank %" value={`${templateReportFormatBlankPct}%`} />
+            <StatCard label="system prompt Blank %" value={`${templateSystemPromptBlankPct}%`} />
             <StatCard label="readme_markdown Blank %" value={`${templateReadmeBlankPct}%`} />
           </div>
           <p className="text-xs text-muted-foreground">
-            Column availability: analysis_level {templateHasAnalysisLevel ? "present" : "missing"} · gpt_json_schema {templateHasGptSchema ? "present" : "missing"} · report_format {templateHasReportFormat ? "present" : "missing"} · readme_markdown {templateHasReadme ? "present" : "missing"}
+            Column availability: analysis_level {templateHasAnalysisLevel ? "present" : "missing"} · gpt json schema {templateHasGptSchema ? "present" : "missing"} · Report_format {templateHasReportFormat ? "present" : "missing"} · system prompt {templateHasSystemPrompt ? "present" : "missing"} · readme_markdown {templateHasReadme ? "present" : "missing"}
           </p>
           <p className="text-xs text-muted-foreground">
             Rows with any issue: {templateIssues.length}/{templates.length}

@@ -1,0 +1,527 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-MAIN",
+      "reportType": "Management Overview Report",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Management Overview Report",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s12_roadmap": {
+        "id": "s12_roadmap",
+        "title": "s12 roadmap",
+        "phases": [
+          {
+            "phase": "Phase 1",
+            "title": "Stabilize",
+            "bullets": [
+              "Stabilize instrumentation and control integrity."
+            ],
+            "colorClass": "bg-blue-600"
+          },
+          {
+            "phase": "Phase 2",
+            "title": "Integrate",
+            "bullets": [
+              "Integrate trusted runtime and event capture."
+            ],
+            "colorClass": "bg-sky-600"
+          },
+          {
+            "phase": "Phase 3",
+            "title": "Extend",
+            "bullets": [
+              "Extend analytics after data trust is established."
+            ],
+            "colorClass": "bg-cyan-600"
+          }
+        ]
+      },
+      "s4_s8_domains": {
+        "id": "s4_s8_domains",
+        "title": "s4 s8 domains",
+        "domains": [
+          {
+            "id": "d1",
+            "title": "Control Architecture",
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "bullets": [
+              "Lifecycle-exposed PLC estate"
+            ],
+            "subItems": [
+              {
+                "title": "Risk",
+                "text": "Manual and partial supervisory capture remain material."
+              }
+            ]
+          }
+        ]
+      },
+      "s13_conclusion_map": {
+        "id": "s13_conclusion_map",
+        "title": "s13 conclusion map",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)",
+          "Document Date: 14 March 2026"
+        ],
+        "referenceMap": {
+          "title": "Reference Map",
+          "headers": [
+            "Section",
+            "Evidence Source"
+          ],
+          "data": [
+            [
+              "Generated package",
+              "Local evidence pack and dependent appendices"
+            ]
+          ]
+        }
+      },
+      "s10_maturityProfile": {
+        "id": "s10_maturityProfile",
+        "title": "s10 maturityProfile",
+        "overall": "",
+        "tableData": [],
+        "tableHeaders": []
+      },
+      "s1_executiveSummary": {
+        "id": "s1_executiveSummary",
+        "title": "s1 executiveSummary",
+        "subsections": {
+          "purpose": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "purpose"
+          },
+          "maturity": {
+            "note": "",
+            "title": "maturity",
+            "tableData": [],
+            "tableHeaders": []
+          },
+          "conclusion": {
+            "title": "conclusion",
+            "points": []
+          }
+        }
+      },
+      "s2_operationalContext": {
+        "id": "s2_operationalContext",
+        "title": "s2 operationalContext",
+        "subsections": {
+          "scope": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "scope"
+          },
+          "capacity": {
+            "text": "Document Date: 14 March 2026",
+            "title": "capacity",
+            "drivers": [],
+            "metrics": [],
+            "driversTitle": ""
+          }
+        }
+      },
+      "s3_architectureAndRisks": {
+        "id": "s3_architectureAndRisks",
+        "title": "s3 architectureAndRisks",
+        "subsections": {
+          "stability": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "stability"
+          },
+          "riskSummary": {
+            "risks": [
+              {
+                "title": "Operational risk",
+                "theme": "Risk",
+                "desc": "Document Date: 14 March 2026"
+              }
+            ],
+            "title": "riskSummary"
+          }
+        }
+      },
+      "s11_strategicImplications": {
+        "id": "s11_strategicImplications",
+        "title": "s11 strategicImplications",
+        "scenarios": [
+          {
+            "type": "constraint",
+            "title": "Structural Constraints",
+            "bullets": [
+              "Manual execution and lifecycle exposure constrain maturity."
+            ]
+          },
+          {
+            "type": "enabler",
+            "title": "Transformation Enablers",
+            "bullets": [
+              "Clear asset and process registers exist for structured follow-on work."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-MAIN",
+      "reportType": "Management Overview Report",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Management Overview Report",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s12_roadmap": {
+        "id": "s12_roadmap",
+        "title": "s12 roadmap",
+        "phases": [
+          {
+            "phase": "Phase 1",
+            "title": "Stabilize",
+            "bullets": [
+              "Stabilize instrumentation and control integrity."
+            ],
+            "colorClass": "bg-blue-600"
+          },
+          {
+            "phase": "Phase 2",
+            "title": "Integrate",
+            "bullets": [
+              "Integrate trusted runtime and event capture."
+            ],
+            "colorClass": "bg-sky-600"
+          },
+          {
+            "phase": "Phase 3",
+            "title": "Extend",
+            "bullets": [
+              "Extend analytics after data trust is established."
+            ],
+            "colorClass": "bg-cyan-600"
+          }
+        ]
+      },
+      "s4_s8_domains": {
+        "id": "s4_s8_domains",
+        "title": "s4 s8 domains",
+        "domains": [
+          {
+            "id": "d1",
+            "title": "Control Architecture",
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "bullets": [
+              "Lifecycle-exposed PLC estate"
+            ],
+            "subItems": [
+              {
+                "title": "Risk",
+                "text": "Manual and partial supervisory capture remain material."
+              }
+            ]
+          }
+        ]
+      },
+      "s13_conclusion_map": {
+        "id": "s13_conclusion_map",
+        "title": "s13 conclusion map",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)",
+          "Document Date: 14 March 2026"
+        ],
+        "referenceMap": {
+          "title": "Reference Map",
+          "headers": [
+            "Section",
+            "Evidence Source"
+          ],
+          "data": [
+            [
+              "Generated package",
+              "Local evidence pack and dependent appendices"
+            ]
+          ]
+        }
+      },
+      "s10_maturityProfile": {
+        "id": "s10_maturityProfile",
+        "title": "s10 maturityProfile",
+        "overall": "",
+        "tableData": [],
+        "tableHeaders": []
+      },
+      "s1_executiveSummary": {
+        "id": "s1_executiveSummary",
+        "title": "s1 executiveSummary",
+        "subsections": {
+          "purpose": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "purpose"
+          },
+          "maturity": {
+            "note": "",
+            "title": "maturity",
+            "tableData": [],
+            "tableHeaders": []
+          },
+          "conclusion": {
+            "title": "conclusion",
+            "points": []
+          }
+        }
+      },
+      "s2_operationalContext": {
+        "id": "s2_operationalContext",
+        "title": "s2 operationalContext",
+        "subsections": {
+          "scope": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "scope"
+          },
+          "capacity": {
+            "text": "Document Date: 14 March 2026",
+            "title": "capacity",
+            "drivers": [],
+            "metrics": [],
+            "driversTitle": ""
+          }
+        }
+      },
+      "s3_architectureAndRisks": {
+        "id": "s3_architectureAndRisks",
+        "title": "s3 architectureAndRisks",
+        "subsections": {
+          "stability": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "stability"
+          },
+          "riskSummary": {
+            "risks": [
+              {
+                "title": "Operational risk",
+                "theme": "Risk",
+                "desc": "Document Date: 14 March 2026"
+              }
+            ],
+            "title": "riskSummary"
+          }
+        }
+      },
+      "s11_strategicImplications": {
+        "id": "s11_strategicImplications",
+        "title": "s11 strategicImplications",
+        "scenarios": [
+          {
+            "type": "constraint",
+            "title": "Structural Constraints",
+            "bullets": [
+              "Manual execution and lifecycle exposure constrain maturity."
+            ]
+          },
+          {
+            "type": "enabler",
+            "title": "Transformation Enablers",
+            "bullets": [
+              "Clear asset and process registers exist for structured follow-on work."
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-MAIN",
+      "reportType": "Management Overview Report",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Management Overview Report",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s12_roadmap": {
+        "id": "s12_roadmap",
+        "title": "s12 roadmap",
+        "phases": [
+          {
+            "phase": "Phase 1",
+            "title": "Stabilize",
+            "bullets": [
+              "Stabilize instrumentation and control integrity."
+            ],
+            "colorClass": "bg-blue-600"
+          },
+          {
+            "phase": "Phase 2",
+            "title": "Integrate",
+            "bullets": [
+              "Integrate trusted runtime and event capture."
+            ],
+            "colorClass": "bg-sky-600"
+          },
+          {
+            "phase": "Phase 3",
+            "title": "Extend",
+            "bullets": [
+              "Extend analytics after data trust is established."
+            ],
+            "colorClass": "bg-cyan-600"
+          }
+        ]
+      },
+      "s4_s8_domains": {
+        "id": "s4_s8_domains",
+        "title": "s4 s8 domains",
+        "domains": [
+          {
+            "id": "d1",
+            "title": "Control Architecture",
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "bullets": [
+              "Lifecycle-exposed PLC estate"
+            ],
+            "subItems": [
+              {
+                "title": "Risk",
+                "text": "Manual and partial supervisory capture remain material."
+              }
+            ]
+          }
+        ]
+      },
+      "s13_conclusion_map": {
+        "id": "s13_conclusion_map",
+        "title": "s13 conclusion map",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)",
+          "Document Date: 14 March 2026"
+        ],
+        "referenceMap": {
+          "title": "Reference Map",
+          "headers": [
+            "Section",
+            "Evidence Source"
+          ],
+          "data": [
+            [
+              "Generated package",
+              "Local evidence pack and dependent appendices"
+            ]
+          ]
+        }
+      },
+      "s10_maturityProfile": {
+        "id": "s10_maturityProfile",
+        "title": "s10 maturityProfile",
+        "overall": "",
+        "tableData": [],
+        "tableHeaders": []
+      },
+      "s1_executiveSummary": {
+        "id": "s1_executiveSummary",
+        "title": "s1 executiveSummary",
+        "subsections": {
+          "purpose": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "purpose"
+          },
+          "maturity": {
+            "note": "",
+            "title": "maturity",
+            "tableData": [],
+            "tableHeaders": []
+          },
+          "conclusion": {
+            "title": "conclusion",
+            "points": []
+          }
+        }
+      },
+      "s2_operationalContext": {
+        "id": "s2_operationalContext",
+        "title": "s2 operationalContext",
+        "subsections": {
+          "scope": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "scope"
+          },
+          "capacity": {
+            "text": "Document Date: 14 March 2026",
+            "title": "capacity",
+            "drivers": [],
+            "metrics": [],
+            "driversTitle": ""
+          }
+        }
+      },
+      "s3_architectureAndRisks": {
+        "id": "s3_architectureAndRisks",
+        "title": "s3 architectureAndRisks",
+        "subsections": {
+          "stability": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "stability"
+          },
+          "riskSummary": {
+            "risks": [
+              {
+                "title": "Operational risk",
+                "theme": "Risk",
+                "desc": "Document Date: 14 March 2026"
+              }
+            ],
+            "title": "riskSummary"
+          }
+        }
+      },
+      "s11_strategicImplications": {
+        "id": "s11_strategicImplications",
+        "title": "s11 strategicImplications",
+        "scenarios": [
+          {
+            "type": "constraint",
+            "title": "Structural Constraints",
+            "bullets": [
+              "Manual execution and lifecycle exposure constrain maturity."
+            ]
+          },
+          {
+            "type": "enabler",
+            "title": "Transformation Enablers",
+            "bullets": [
+              "Clear asset and process registers exist for structured follow-on work."
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

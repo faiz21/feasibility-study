@@ -36,15 +36,15 @@ function blockView(block: ReportTemplateBlock) {
   switch (block.type) {
     case "report.layout.watermark":
       return (
-        <section className="col-span-12 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-3 text-xs text-slate-500">
+        <section className="col-span-12 rounded-2xl border border-dashed border-border/80 bg-surface-soft/70 p-3 text-xs text-muted-foreground">
           Watermark: {String(data.patternKey ?? "pattern")} (opacity {String(data.opacity ?? "n/a")})
         </section>
       );
 
     case "report.layout.headerBar":
       return (
-        <section className="col-span-12 rounded-2xl border border-slate-200 bg-slate-900 px-5 py-4 text-white">
-          <p className="text-xs uppercase tracking-[0.16em] text-slate-300">Header</p>
+        <section className="col-span-12 rounded-2xl border border-brand/20 bg-brand px-5 py-4 text-white">
+          <p className="text-xs uppercase tracking-[0.16em] text-white/70">Header</p>
           <p className="mt-1 text-lg font-bold">{String(data.headerLabel ?? "Report Header")}</p>
         </section>
       );
@@ -52,7 +52,7 @@ function blockView(block: ReportTemplateBlock) {
     case "report.layout.footerStrip": {
       const contacts = Array.isArray(data.contacts) ? data.contacts : [];
       return (
-        <section className="col-span-12 rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3 text-sm text-slate-700">
+        <section className="col-span-12 rounded-2xl border border-border/80 bg-surface-soft/70 px-5 py-3 text-sm text-foreground">
           <div className="flex flex-wrap gap-x-5 gap-y-2">
             {contacts.map((c, i) => {
               if (!c || typeof c !== "object") return null;
@@ -195,7 +195,7 @@ function blockView(block: ReportTemplateBlock) {
 
     default:
       return (
-        <section className="col-span-12 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800">
+        <section className="col-span-12 rounded-2xl border border-warning/30 bg-warning/10 p-4 text-sm text-warning">
           Unsupported block type: <code>{block.type}</code>
         </section>
       );
@@ -217,10 +217,11 @@ export function ReportTemplatePageRenderer({ document }: ReportTemplatePageRende
   }
 
   return (
-    <main className="mx-auto w-full max-w-6xl space-y-5 p-4 md:p-8">
-      <header className="space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight">{document.pageTitle}</h1>
-        <p className="text-sm text-muted-foreground">Rendered with components from `components/report`.</p>
+    <main className="mx-auto w-full max-w-6xl space-y-6 p-4 md:p-8">
+      <header className="space-y-2">
+        <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-primary">Template preview</p>
+        <h1 className="text-4xl font-semibold tracking-tight" data-font="display">{document.pageTitle}</h1>
+        <p className="text-base leading-7 text-muted-foreground">Rendered with components from `components/report`.</p>
       </header>
       <section className="grid grid-cols-12 gap-4 md:gap-6">
         {document.layout.map((block) => (

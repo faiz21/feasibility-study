@@ -1,4 +1,10 @@
-import { mvDefaultBrandPalette } from "@/lib/design-system/tokens";
+import {
+  DEFAULT_PORTAL_THEME_TOKENS,
+  resolvePortalPalette,
+  resolvePortalThemeTokens,
+  type PortalPalette,
+  type PortalThemeTokens,
+} from "@/lib/portal-theme";
 
 type LegacyPalette = {
   primary?: unknown;
@@ -100,7 +106,7 @@ function parseLegacyPalette(input: unknown) {
     secondary: isSafeCssColor(palette.secondary) ? palette.secondary : undefined,
     accent: isSafeCssColor(palette.accent) ? palette.accent : undefined,
     background: isSafeCssColor(palette.background) ? palette.background : undefined,
-    foreground: isSafeCssColor(palette.text) ? palette.text : undefined,
+    text: isSafeCssColor(palette.text) ? palette.text : undefined,
   };
 }
 
@@ -134,43 +140,31 @@ function resolveTokenValue(
 }
 
 export function resolveClientTheme(themeTokens: unknown, legacyPalette?: unknown): ClientTheme {
-  const fallbackFromBrand = {
-    ...DEFAULT_THEME_COLORS,
-    primary: mvDefaultBrandPalette.primary,
-    secondary: mvDefaultBrandPalette.secondary,
-    accent: mvDefaultBrandPalette.accent,
-    background: mvDefaultBrandPalette.background,
-    foreground: mvDefaultBrandPalette.text,
-    ring: mvDefaultBrandPalette.primary,
-    "cover-background": mvDefaultBrandPalette.primary,
-    "kpi-value": mvDefaultBrandPalette.primary,
-    "chart-series-1": mvDefaultBrandPalette.primary,
-  };
-
-  const legacy = parseLegacyPalette(legacyPalette);
+  const legacy = parseLegacyPalette(legacyPalette) as Partial<PortalPalette>;
   const tokenMap = parseTokenMap(themeTokens);
-  const merged: Record<string, string | undefined> = { ...fallbackFromBrand, ...legacy };
-
-  (Object.keys(DEFAULT_THEME_COLORS) as ThemeColorKey[]).forEach((key) => {
-    const resolved = resolveTokenValue(key, tokenMap, new Set<string>());
-    if (resolved) merged[key] = resolved;
-  });
-
-  const colors = Object.fromEntries(
+  const resolvedKeys = Object.fromEntries(
     (Object.keys(DEFAULT_THEME_COLORS) as ThemeColorKey[]).map((key) => [
       key,
-      merged[key] ?? fallbackFromBrand[key],
+      resolveTokenValue(key, tokenMap, new Set<string>()),
     ]),
-  ) as ClientThemeColors;
+  ) as Partial<Record<ThemeColorKey, string>>;
+  const merged = resolvePortalThemeTokens(resolvedKeys as Partial<PortalThemeTokens>, legacy);
+
+  (Object.keys(DEFAULT_THEME_COLORS) as ThemeColorKey[]).forEach((key) => {
+    merged[key] = merged[key] ?? DEFAULT_PORTAL_THEME_TOKENS[key];
+  });
+
+  const colors = Object.fromEntries((Object.keys(DEFAULT_THEME_COLORS) as ThemeColorKey[]).map((key) => [key, merged[key]])) as ClientThemeColors;
+  const palette = resolvePortalPalette(legacy);
 
   return {
     colors,
     palette: {
-      primary: colors.primary,
-      secondary: colors.secondary,
-      accent: colors.accent,
-      background: colors.background,
-      text: colors.foreground,
+      primary: palette.primary,
+      secondary: palette.secondary,
+      accent: palette.accent,
+      background: palette.background,
+      text: palette.text,
     },
   };
 }

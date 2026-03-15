@@ -1,0 +1,311 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-MAIN",
+      "reportType": "Management Overview Report",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Management Overview Report",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s12_roadmap": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "phases": []
+      },
+      "s4_s8_domains": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "domains": []
+      },
+      "s13_conclusion_map": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "paragraphs": [],
+        "referenceMap": {
+          "data": [],
+          "title": "Management Overview Report",
+          "headers": []
+        }
+      },
+      "s10_maturityProfile": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "overall": "",
+        "tableData": [],
+        "tableHeaders": []
+      },
+      "s1_executiveSummary": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "subsections": {
+          "purpose": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report"
+          },
+          "maturity": {
+            "note": "",
+            "title": "Management Overview Report",
+            "tableData": [],
+            "tableHeaders": []
+          },
+          "conclusion": {
+            "title": "Management Overview Report",
+            "points": []
+          }
+        }
+      },
+      "s2_operationalContext": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "subsections": {
+          "scope": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report"
+          },
+          "capacity": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report",
+            "drivers": [],
+            "metrics": [],
+            "driversTitle": ""
+          }
+        }
+      },
+      "s3_architectureAndRisks": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "subsections": {
+          "stability": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report"
+          },
+          "riskSummary": {
+            "risks": [],
+            "title": "Management Overview Report"
+          }
+        }
+      },
+      "s11_strategicImplications": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "scenarios": []
+      }
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-MAIN",
+      "reportType": "Management Overview Report",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Management Overview Report",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s12_roadmap": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "phases": []
+      },
+      "s4_s8_domains": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "domains": []
+      },
+      "s13_conclusion_map": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "paragraphs": [],
+        "referenceMap": {
+          "data": [],
+          "title": "Management Overview Report",
+          "headers": []
+        }
+      },
+      "s10_maturityProfile": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "overall": "",
+        "tableData": [],
+        "tableHeaders": []
+      },
+      "s1_executiveSummary": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "subsections": {
+          "purpose": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report"
+          },
+          "maturity": {
+            "note": "",
+            "title": "Management Overview Report",
+            "tableData": [],
+            "tableHeaders": []
+          },
+          "conclusion": {
+            "title": "Management Overview Report",
+            "points": []
+          }
+        }
+      },
+      "s2_operationalContext": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "subsections": {
+          "scope": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report"
+          },
+          "capacity": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report",
+            "drivers": [],
+            "metrics": [],
+            "driversTitle": ""
+          }
+        }
+      },
+      "s3_architectureAndRisks": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "subsections": {
+          "stability": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report"
+          },
+          "riskSummary": {
+            "risks": [],
+            "title": "Management Overview Report"
+          }
+        }
+      },
+      "s11_strategicImplications": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "scenarios": []
+      }
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-MAIN",
+      "reportType": "Management Overview Report",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Management Overview Report",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s12_roadmap": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "phases": []
+      },
+      "s4_s8_domains": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "domains": []
+      },
+      "s13_conclusion_map": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "paragraphs": [],
+        "referenceMap": {
+          "data": [],
+          "title": "Management Overview Report",
+          "headers": []
+        }
+      },
+      "s10_maturityProfile": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "overall": "",
+        "tableData": [],
+        "tableHeaders": []
+      },
+      "s1_executiveSummary": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "subsections": {
+          "purpose": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report"
+          },
+          "maturity": {
+            "note": "",
+            "title": "Management Overview Report",
+            "tableData": [],
+            "tableHeaders": []
+          },
+          "conclusion": {
+            "title": "Management Overview Report",
+            "points": []
+          }
+        }
+      },
+      "s2_operationalContext": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "subsections": {
+          "scope": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report"
+          },
+          "capacity": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report",
+            "drivers": [],
+            "metrics": [],
+            "driversTitle": ""
+          }
+        }
+      },
+      "s3_architectureAndRisks": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "subsections": {
+          "stability": {
+            "text": "RODDING PLANT (INA-PL-RCP)",
+            "title": "Management Overview Report"
+          },
+          "riskSummary": {
+            "risks": [],
+            "title": "Management Overview Report"
+          }
+        }
+      },
+      "s11_strategicImplications": {
+        "id": "INA-PL-RCP-MAIN",
+        "title": "Management Overview Report",
+        "scenarios": []
+      }
+    }
+  }
+}

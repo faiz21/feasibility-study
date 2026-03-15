@@ -1,0 +1,383 @@
+Client Details
+
+CODE	Name	BizPro Research	Process Research
+INA	PT Indonesia Asahan Alumunium	Company Snapshot
+
+PT Indonesia Asahan Aluminium (INALUM) is Indonesia’s state-owned integrated aluminum producer operating in the Asahan region of North Sumatra. The company leverages hydropower from the Lake Toba system and proximity to the Malacca Strait for energy-intensive smelting and export logistics. INALUM operates multiple major facilities covering the full aluminum value chain from carbon production to casting, with current capacity around 260 kilotons per year and an announced expansion target of approximately 1,000 kilotons per year.
+
+Products & Customers
+
+INALUM’s primary products include aluminum ingots with purity ranges of approximately 99.7–99.92%, aluminum billets (5–8 inch), and foundry alloys such as A356.2. Customers typically include downstream aluminum processors, automotive and industrial manufacturers, and export buyers across Asia. Specific key customer names are to validate with client.
+
+Value Chain Position
+
+INALUM operates as a Tier 2 player in the aluminum value chain, supplying primary aluminum products to downstream rolling, extrusion, and component manufacturers rather than end consumers.
+
+End-to-End Value Stream (Inbound → Production → Outbound)
+
+Inbound activities include raw material sourcing such as alumina, petroleum coke, pitch, and consumables for carbon and smelting operations. Production spans carbon baking, rodding, electrolytic reduction (potlines), casting, and finishing. Outbound logistics involve bulk handling, storage, and shipment through nearby port infrastructure for domestic and export distribution.
+
+Quality & Compliance Landscape
+
+Operations are subject to industrial safety regulations, environmental standards, and quality specifications for primary aluminum products. Typical compliance areas include ISO-based quality management, environmental permits, and energy efficiency reporting. Specific certifications are to validate with client.
+
+Planning & Execution Approach
+
+Planning is typically capacity- and energy-constrained, with strong linkage between production planning, utility availability (hydropower and captive generation), and maintenance scheduling. Budgeting and long-term planning are influenced by energy costs, expansion programs, and commodity price cycles.
+
+Typical Systems Landscape
+
+The systems landscape commonly includes SCADA for process control, energy management systems, maintenance management (CMMS/EAM), laboratory and quality systems, and manufacturing execution systems supporting smelting and casting operations. Advanced analytics and digital twin initiatives are increasingly relevant given the scale and energy intensity of operations.
+
+Known Initiatives / Strategic Direction
+
+Key strategic themes include large-scale capacity expansion, energy optimization, decarbonization through hydropower utilization, increased automation, and digital transformation across production, maintenance, and utilities. Specific program names and timelines are to validate with client.
+
+Common Pain Points & Risks
+
+Typical challenges include energy efficiency and stability, potline performance variability, unplanned downtime, maintenance of aging assets, safety risks in high-temperature operations, and coordination across carbon, smelting, and casting facilities during ramp-up phases.
+
+Key Stakeholders & Decisions
+
+Key stakeholders generally include plant directors, production and maintenance heads, utilities and energy management leaders, safety leadership, and central planning and budgeting teams. Decision authority typically centers on production targets, capital investments, and energy allocation.
+
+Glossary (Company Terms)
+
+* Potline: Series of electrolytic cells used for aluminum reduction.
+* Rodding: Process of assembling and maintaining anode rods for smelting.
+* Carbon Baking: High-temperature process to produce anodes for electrolysis.
+
+Discovery Checklist (by Function Group)
+
+Production (Carbon / Smelting / Casting): throughput constraints, yield losses, potline stability, casting quality issues.
+Utilities: power generation mix, load management, energy efficiency KPIs.
+Maintenance: asset criticality, preventive vs condition-based maintenance coverage.
+Safety: incident tracking, permit-to-work, high-risk activity controls.
+Planning & Budgeting: capacity planning assumptions, expansion phasing, cost drivers.
+Vehicle Management & Material Handling: internal logistics efficiency, equipment utilization.
+
+Sources Appendix
+
+Table 19	Process Context
+
+PT Indonesia Asahan Aluminium (INALUM) operates an integrated primary aluminum manufacturing chain in North Sumatra, converting alumina into molten aluminum via electrolytic reduction (potlines) and solidifying it into primary products (ingot, billet, foundry alloy). The chain is supported by prebake carbon anode production (green → baking → rodding), gas cleaning, and cast house operations. The dominant manufacturing constraint is energy availability and stability, given the continuous, high-current nature of smelting. CompanyCode: To validate — CompanyCode.
+
+End-to-End Process Narrative
+
+Inbound alumina and process additives are received, stored, and fed to the reduction area. In parallel, petroleum coke and pitch are processed into green anode blocks, baked to form conductive prebake anodes, then rodded (steel rod + cast-iron connection) to create anode assemblies for potline consumption. In the reduction plant, alumina is dissolved in a molten cryolite-based electrolyte and reduced to molten aluminum metal using high-current DC power. Molten aluminum is periodically tapped, transported to holding furnaces, treated to control cleanliness (dross removal, filtration, degassing), and chemistry-adjusted where required to produce alloys. The metal is then cast into ingots or billets, cooled, cut/finished, packaged, and staged for shipment. Off-gases and particulates from smelting and carbon operations are treated in gas cleaning systems, and recyclable streams (e.g., spent anode butts) are routed back into the process where applicable (To validate — recycle loop boundaries and ratios).
+
+Major Manufacturing Stages (numbered 1…N; as detailed as possible)
+
+1. Inbound receiving & bulk storage (alumina, carbon raws, additives, consumables)
+Purpose: ensure continuous feed availability and controlled quality/segregation.
+Unit operations: unloading, sampling, silo/yard storage, reclaiming, conveying, lot/grade segregation.
+Transformation: none (material handling/conditioning).
+Key outputs: available feed lots for carbon plant and reduction; inspection status (To validate — QC release mechanism).
+2. Coke preparation & proportioning (carbon raw preparation)
+Purpose: create consistent coke fractions for predictable green anode properties.
+Unit operations: crushing, screening/classification, dust handling, fraction blending, return-carbon handling (butts/rejects).
+Transformation: physical size reduction/classification.
+Key outputs: proportioned coke recipe streams; fines/dust stream for controlled reuse/disposal.
+3. Paste mixing / kneading (green mix preparation)
+Purpose: bind coke recipe with pitch to form homogeneous anode paste.
+Unit operations: pitch heating, controlled addition, intensive mixing/kneading, temperature control, recycle dosing.
+Transformation: physical mixing + thermal softening of binder; wetting/dispersion.
+Key outputs: homogeneous green mix at target temperature/viscosity.
+4. Green anode forming & handling (Green Plant)
+Purpose: form green blocks with controlled density/geometry for baking.
+Unit operations: forming/compaction (press/vibrocompaction), demolding, cooling, trimming, green scrap segregation, transfer to baking.
+Transformation: physical densification/shape formation.
+Key outputs: green blocks; green scrap/returns stream.
+5. Anode baking (Baking Plant)
+Purpose: carbonize pitch binder and develop anode strength/conductivity for stable potline operation.
+Unit operations: furnace loading, packing coke management, controlled heat-up/soak/cool-down, fume collection interface, unloading/inspection.
+Transformation: thermal pyrolysis/carbonization; densification and property development.
+Key outputs: baked anodes meeting property specs; baked rejects/cracked blocks for recycle.
+6. Rodding & anode assembly (Rodding Plant)
+Purpose: create rodded anode assemblies with low electrical resistance and mechanical integrity.
+Unit operations: anode stub-hole prep, rod positioning, cast iron pouring, cooling, cleaning, inspection, staging for potroom; butt/stub recovery interface.
+Transformation: mechanical assembly + molten metal casting (cast iron connection).
+Key outputs: rodded anode assemblies; rodding rejects; recovered butts/stubs streams.
+7. Electrolytic reduction / potline operation (Reduction Plant)
+Purpose: reduce alumina to molten aluminum continuously with controlled bath chemistry and thermal balance.
+Unit operations: alumina feeding, bath chemistry control (AlF₃/cryolite balance), anode effect management, anode changes, tapping metal, metal/bath level control, crust management.
+Transformation: electrochemical reduction producing molten Al; consumption of carbon anodes.
+Key outputs: molten aluminum (tapped); spent anode butts; potline off-gas to gas cleaning.
+8. Molten metal tapping, transport, and holding
+Purpose: transfer molten safely and maintain metallurgical condition before casting.
+Unit operations: tapping into ladles/crucibles, temperature measurement, skimming/dross handling, transfer to holding furnaces, hold/temperature equalization.
+Transformation: none (thermal conditioning; oxidation/dross formation as side effect).
+Key outputs: conditioned molten metal for treatment/casting; dross stream.
+9. Melt treatment & metallurgy control (Cast house)
+Purpose: meet cleanliness and chemistry requirements for ingot/billet/alloy products.
+Unit operations: alloying additions, fluxing/degassing (gas injection/rotary), filtration, sampling for chemistry, inclusion control, furnace/holding management.
+Transformation: chemical composition adjustment; gas/inclusion removal.
+Key outputs: treated melt at target chemistry/cleanliness; spent flux; treatment dross.
+10. Casting (ingot, billet, foundry alloy) + cooling + finishing
+Purpose: solidify melt into saleable forms with controlled dimensions and properties.
+Unit operations: mold or DC casting, cooling, cut-to-length, stacking, marking/heat stamping, bundling/packaging.
+Transformation: phase change (liquid → solid) with controlled solidification conditions.
+Key outputs: finished ingots/billets/alloy products; runners/sprues/returns; casting scrap.
+11. Gas cleaning, dust handling, and recycle loops (Gas Cleaning Plant + interfaces)
+Purpose: capture particulates/fluorides and manage emissions and solids.
+Unit operations: ducting, filtration/scrubbing, fan/pressure control, dust collection, solids handling, recycle routing where applicable.
+Transformation: separation (gas/solid) and capture.
+Key outputs: treated exhaust; collected dust/solids (some recyclable To validate); compliant discharge streams.
+12. Quality assurance & release (Smelter QA + casting QA)
+Purpose: verify compliance to product and process specifications and authorize release/hold.
+Unit operations: sampling plans, lab analysis (chemistry), defect/nonconformance handling, certification data preparation.
+Transformation: none (measurement/decision support).
+Key outputs: test results, release status, certificates/COA support (To validate — certification standards).
+
+Utilities & Energy
+
+Utilities are core enablers for continuous smelting and downstream plants, with the largest consumption hotspot at potlines/rectifiers and major secondary loads in carbon baking and casting furnaces. Required utility domains include electricity generation & distribution, cooling water, compressed air, fuel/thermal utilities, water treatment & wastewater treatment, process gases, and material handling utilities.
+
+Key Inputs & Outputs
+
+Key Inputs
+* Primary raw materials: alumina (Al2O3); carbon raws (petroleum coke HS/LS, coal tar pitch); bath additives (e.g., AlF3, cryolite).
+* Alloying / melt treatment consumables: Si, Mg, Mn, Cu; flux/degassing media; grain refiner; filtration media (To validate — filtration media type).
+* Consumables & components: cathode blocks, refractory/castables, steel rods (rodding), cast iron (rodding), packing coke, marking/heat number stamps, bundling straps.
+* Utilities: electricity, cooling water, compressed air, fuel/thermal energy, process/degassing gases (To validate — complete list by plant).
+
+Key Outputs
+* Finished goods (FG): aluminum ingot (standard), aluminum billet, aluminum foundry alloy (e.g., A356.2 To validate).
+* Work-in-process (WIP): green blocks, baked anodes, rodded anodes, molten aluminum (in-process), aluminum in holding furnace.
+* By-products / waste / recycle streams: spent anode butts, dross, runner/sprue returns, recovered packing coke, coke fines/dust, spent flux, gas-cleaning dust (To validate — which streams are recycled vs disposed).
+* Emissions / effluents: treated off-gas discharge, wastewater streams per WWTP compliance requirements.
+
+Proceed to Step 2 (Plant List)? YES / NO
+
+Plant Detail
+
+Code	Name	Description	Total Instrument	PLC Readable	Relay	Closed Loop	Obtained	Inferred
+INA-PL-RCP	Rodding Plant	Anode rodding/assembly operations (rod preparation, cast-iron sealing, connection quality checks) producing rodded anodes for potline consumption.	670	544	28	0	488	182
+
+List Of Related Departments
+
+Code	Dept	Description
+INA-DPT-001	SCB – Divisi Karbon	Operasi dan pengelolaan proses karbon
+INA-DPT-003	SGM – Divisi Pemeliharaan	Pemeliharaan pabrik dan fasilitas
+INA-DPT-006	IPE – Divisi Rekayasa Proses	Engineering proses & mutu
+INA-DPT-019	IMT – Divisi Teknologi Informasi & MSI	IT & digital
+
+List Of Related Sections
+
+Code	Name	Description
+INA-SEC-002	SCO – Operasi Karbon	Operasi pabrik karbon
+INA-SEC-007	SMO – Pemeliharaan Karbon	Maintenance karbon
+INA-SEC-011	SPE – Rekayasa Proses	Engineering proses
+INA-SEC-027	SIT – Solusi & Digitalisasi TI	Digital
+INA-SEC-028	SIS – Infrastruktur & Keamanan TI	Infra & Security
+
+List Of Related Solution Proposed
+
+Code	Name	Description	Scopes
+INA-SOL-01	Dual SCADA Architecture	Standardized plant SCADA plus a Head Office monitoring layer to enable remote visibility, consistent alarms, and a single operational “source of truth.”	Scope: Plant SCADA standard (templates, alarm philosophy), HO SCADA view, historian replication, OT-DMZ connectivity, governed tag/naming standards, northbound integration API layer.Owner Depts: Plant Ops · IMT
+INA-SOL-04	MES Core Execution	Paperless execution with real-time WIP, cycle time, downtime capture.	Scope: Dispatch & operation confirmation; parameter capture; reason codes; Andon triggers; OEE (A/P/Q); genealogy; rework/hold flows.Owner Depts: Plant Ops · IMT
+INA-SOL-05	Anode Tracking	Full genealogy Green→Baking→Rodding; locate any anode in <30s.	Scope: Unique ID; status lifecycle; location & transfer events; quality attributes; exception/hold; audit trail.Owner Depts: Carbon Ops · SQA · ILG
+INA-SOL-07	DSS (Ops Playbooks)	Automated recommendations for stability/throughput based on KPIs.	Scope: Rules library; anomaly detection; recommended actions; target setpoints (advisory); cause-chain hints; ROI/impact tracking.Owner Depts: HO Ops · IMT(Data) · IPE
+INA-SOL-17	Equipment Runtime Capture	Standard runtime/utilization for OEE and maintenance planning.	Scope: Run/idle/stop states; time-in-state; counters; utilization trend; reason tree; OEE signals.Owner Depts: Plant Ops · IMT
+INA-SOL-18	CMMS/EAM + Andon	WO from alarms; PM/CM digital; MTBF/MTTR tracked.	Scope: WO lifecycle; PM templates; checklists & photos; spares & reservations; alarm→WO; mobile app; SAP PM/MM sync.Owner Depts: SMO · IMT · Plant Ops
+INA-SOL-19	CBM (Condition-Based)	Online rule alerts prioritized by criticality; fewer unplanned stops.	Scope: Sensor portfolio (vibration/temp/pressure); thresholds; rule engine; event-to-CMMS; condition dashboards.Owner Depts: SMO · IPE · IMT
+INA-SOL-20	Predictive Maintenance (ML)	Early failure warnings & RUL; spare readiness aligned.	Scope: Feature store; classification/regression models; RUL; alert thresholds; model retraining; MOC approvals.Owner Depts: SMO · IMT(Data) · IPE
+
+List Of Related Function Group / Value Strem
+
+Code	Name	Included Work Scope
+INA-FG-001	Production	Carbon production, smelting, potline operations, casting
+INA-FG-002	Utilities	Hydropower generation, transmission, energy supply
+INA-FG-003	Plant Maintenance	Mechanical, electrical, and plant maintenance
+INA-FG-007	Planning & Budgeting	Production, maintenance, and utility planning
+INA-FG-008	Quality	Quality (RM, WIP, FG), laboratory/testing, inspection, nonconformance & CAPA, CoA release
+
+List Of Related Procedures
+
+Code	Procedure Name	Concept Notes
+INA-PRC-049	Preventive Maintenance Execution (Plant)	PM execution, confirmations, and compliance reporting
+INA-PRC-051	Shutdown & Turnaround Maintenance Management	Major shutdown planning, execution control, and closeout
+INA-PRC-052	Condition-Based Maintenance Monitoring & Alerts	Condition monitoring thresholds and action triggers
+INA-PRC-053	Predictive Maintenance Analytics (ML/AI)	Model-based prediction, anomaly detection, and intervention planning
+INA-PRC-074	Process Optimization & Digital Twin Model Management	Maintain process models, calibrate vs reality, scenario testing
+INA-PRC-075	Decision Support Cockpit (Production/Energy/Reliability)	Management cockpit for integrated KPIs and decision workflows
+INA-PRC-076	OT Cybersecurity & Network Hardening (Asset/SCADA)	Asset inventory, segmentation, hardening, monitoring, incident handling
+INA-PRC-077	Dual SCADA Architecture Governance & Lifecycle	Architecture standards, redundancy testing, change control
+INA-PRC-085	Manufacturing Data Integration & MES–QMS/LIMS Orchestration	Orchestrate quality gates and ensure data lineage across systems
+INA-PRC-098	Lubrication Route Planning & Execution (Plant-wide)	Route-based lubrication with readings, exceptions, and compliance dashboards
+INA-PRC-099	Instrument/Analyzer Calibration Work Management	Calibration work orders, schedules, evidence capture, and expiry alerts for critical instruments
+INA-PRC-126	Anode Location Audit, Cycle Count & Exception Handling	Verify anode locations/status vs physical; resolve exceptions/holds and ensure traceability
+
+List Of Related KPIs
+
+Code	Name	Priorities	Granularity	Definition	Notes	Owner
+INA-KPI-005	Anode Genealogy Completion (%)	High	Daily	% anodes with complete ID+status+location history; high for traceability and loss control; daily to correct scanning/transfer gaps.		
+INA-KPI-012	OEE (Availability/Performance/Quality) — Critical Lines	High	Daily	Standard runtime-based OEE for key lines; high to expose bottlenecks; daily to steer shift focus and maintenance priorities.		
+INA-KPI-017	SCADA Critical Alarm Response Time (median minutes)	High	Shift	Median response time for critical alarms; high for safety/availability; shift-level to drive operator behavior.		
+INA-KPI-018	Historian Tag Data Completeness (%)	Med	Weekly	% key tags with valid data (no gaps/outliers); medium but foundational for analytics; weekly governance review.		
+INA-KPI-019	Preventive Maintenance Compliance (%)	High	Weekly	% PM tasks completed on schedule; high because PM prevents unplanned stops; weekly suits planning cycle.		
+INA-KPI-020	Maintenance Schedule Adherence (%)	High	Weekly	% planned work executed as scheduled; high to stabilize operations; weekly aligns to frozen schedule windows.		
+INA-KPI-022	MTBF — Critical Assets (hours)	High	Monthly	Reliability indicator for critical assets; high for availability; monthly to smooth noise and reveal trends.		
+INA-KPI-023	MTTR — Critical Assets (hours)	High	Monthly	Repair speed indicator; high for uptime; monthly to measure improvement initiatives and spares strategy.		
+INA-KPI-024	CBM Alert Closure Lead Time (hours)	High	Weekly	Time from condition alert to verified close; high to prevent failures; weekly to drive maintenance response discipline.		
+INA-KPI-038	Production Plan Adherence (%)	High	Weekly	% actual vs planned output by area; high for throughput & customer promise; weekly aligns to planning cycle.		
+INA-KPI-039	Schedule Stability (re-plans per week)	Med	Weekly	Count of schedule changes after freeze; medium (discipline indicator); weekly to reduce firefighting.		
+INA-KPI-041	Lab Turnaround Time (hours)	High	Daily	Sample receipt to approved result; high because it gates release; daily to keep production/shipping flowing.		
+INA-KPI-042	CoA Issuance Lead Time (hours)	High	Daily	Time from lot ready to CoA issued; high for customer shipment; daily to prevent dispatch delays.		
+INA-KPI-043	Nonconformance Rate (% lots with NCR)	High	Weekly	% lots triggering NCR; high for cost/quality risk; weekly to review patterns and containment effectiveness.		
+
+List Of Process Groups
+
+Code	Process Group	Category	Description	Existing PLC Model	HMI Availibility	Year Commissioned	Notes	Existing PLC referrece	Extended Description
+INA-PG-RCP-001	RCP Used Anode Receiving & Power-Free Conveyor (LO-401 / CR-401)	Main	Transfers used anodes from the transport car to the power-free conveyor and feeds the first processing stations.	Simatic S7-300,Siemens S7-300		2.025	Retrofit required (replace obsolete PLC)	INA-PLC-RCP-001,INA-PLC-RCP-003	Controls the unloading/loading sequence from the anode transport car onto the power-free conveyor, including conveyor permissives, indexing/accumulation logic, jam handling, and safety interlocks.
+INA-PG-RCP-002	RCP Butt & Timbel Crushing / Pressing (PR-401/402, CR-401/402)	Main	Operates butt crushers and timbel crushing/pressing stations.	Simatic S7-300		2.011	Retrofit required (replace obsolete PLC)	INA-PLC-RCP-004	Automates crushing cycles for used anode butts and pig-iron connection handling with hydraulic sequencing, guarding interlocks, overload and jam logic.
+INA-PG-RCP-003	RCP Crushed Butt & Return Crust Conveying to Bins	Main	Conveys crushed butt and return crust from crushers to the correct storage bins.	Siemens S7-300		2.016	Retrofit required (replace obsolete PLC)	INA-PLC-RCP-002	Controls conveyors, diverters, and interlocks that route crushed butt and return crust to designated bins.
+INA-PG-RCP-004	RCP Crust Removal & Shot Blasting / Cleaning (SH-401, SH-405 + Return Crust Removal Station)	Main	Removes residual crust and performs cleaning/shot blasting for targeted parts.	Simatic S7-300			Renewal required (PLC not confirmed for this scope)	INA-PLC-RCP-005	Controls cleaning stations, guard interlocks, blast permissives, extraction permissives, and fault handling.
+INA-PG-RCP-005	RCP Nipple Cleaning + Graphite Coating + Nipple Drying (SH-402, GC-401, DR-401)	Main	Performs surface preparation of nipples/connection area: cleaning, graphite coating, and drying.	Simatic S7-300		2.011	Renewal required (PLC not confirmed for this scope)	INA-PLC-RCP-006	Automates cleaning, coating, drying sequences and utility permissives.
+INA-PG-RCP-006	RCP Stub Heating & Drying	Main	Heats and dries rod stubs prior to pig-iron pouring for rod-to-anode joining.	Simatic S7-300		2.014	Retrofit required (replace obsolete PLC)	INA-PLC-RCP-007	Controls temperature regulation, soak timing, permissives, and alarms for stub heating and drying.
+INA-PG-RCP-007	RCP Aluminium Holding Furnace Control (HF-401)	Auxiliary	Maintains molten aluminium supply for coating operations.	Simatic S7-1200			Retrofit required (replace obsolete PLC)	INA-PLC-RCP-008	Controls holding furnace temperature, permissives, and safety trips.
+INA-PG-RCP-008	RCP Aluminium Spraying System & Compressed Air Interface (SP line + air permissives/alarms)	Auxiliary	Controls aluminium spraying operation and compressed air permissives supporting related equipment.	Simatic S7-1200			Retrofit required (replace obsolete PLC)	INA-PLC-RCP-009	Combines spraying enable logic with compressed air monitoring and abnormal-pressure inhibit logic.
+INA-PG-RCP-009	RCP Induction Furnaces – Pig Iron Melting (IF-401 A/B/C)	Main	Melts pig iron using three induction furnaces to support timbel casting.	Simatic S7-300		2.016	None (maintain) (PLC appears current)	INA-PLC-RCP-010	Controls furnace enable and critical monitoring for IF-401 A/B/C.
+INA-PG-RCP-010	RCP Casting Preparation, Charging & Pouring (CS-401 / HS-401/402 / AC-401 / CHP-401 + Crucible Hoist Interface)	Main	Manages cast iron charging and automated pouring, plus casting prep interfaces for safe, repeatable casting operations.				Renewal required (controls/PLC not confirmed for this combined scope)		Controls cast iron charging equipment, casting station permissives, automatic pouring, and crucible hoist interface signals.
+INA-PG-RCP-011	RCP Rod Straightening Machine (RSM)	Main	Straightens bent used rods using multi-cylinder hydraulic straightening.				None (maintain) (PLC appears current)		Controls hydraulic cylinder sequencing, operator modes, permissives, and protection logic.
+INA-PG-RCP-012	RCP Anode Slot Cutting Machine (ASCM)	Main	Cuts slots into new anodes using circular saws with conveyor indexing.				Retrofit required (replace obsolete PLC)		Automates saw operation and feed/indexing via chain conveyor.
+INA-PG-RCP-013	RCP New Anode & Baked Anode Block Transportation (Chain Conveyors / Transfers)	Main	Transports new/baked anodes through conveyors/transfers to machining/assembly/casting-prep areas.				Renewal required (PLC not confirmed for this transportation scope)		Consolidates new anode chain conveying with broader baked/new anode transportation equipment.
+INA-PG-RCP-014	RCP Rod Quality Control, Weighing & Rerouting to Repair	Main	Counts, weighs, and routes rods either forward for reuse or to the repair shop.				Renewal required (add PLC / implement PLC-based control)		Adds PLC-based control for rod counting and routing decisions driven by inspection outcomes.
+INA-PG-RCP-015	RCP Dust Collection / Bag Filter System (BF-402 …)	Support	Controls and monitors dust extraction supporting presses/cleaning/machining.				Renewal required (unless an existing controller/PLC is confirmed during survey)		Controls and monitors bag filter system permissives, pulse-jet cleaning, DP alarms, and extraction feedback to connected machines.
+INA-PG-RCP-016	RCP Cooling Water Circulation & Utilities (incl. CT-401 integration)	Support	Manages cooling water circulation and key utilities monitoring for RCP equipment.				Renewal required (PLC not listed/confirmed for utilities control)		Controls pumps, duty-standby changeover, flow/pressure monitoring, and CT-401 integration.
+INA-PG-RCP-017	RCP Overhead Traveling Crane Interface (OHC-401)	Support	Defines line-to-crane interface permissives and safe-zone interlocks.				Renewal required (interface not confirmed; implement integration as needed)		Tracks safe-zone permissives, ready-to-lift, inhibit conditions during pouring/casting, and handshake signals with the crane OEM controller.
+
+List Of Equipments
+
+Code	Client Code	Equipment Name	Process Group Code	Equipment Type
+INA-EQP-RCP-001	LO-401	Loader	INA-PG-RCP-001	INA-EQT-ALD
+INA-EQP-RCP-002	BC-401	Loading Station Conveyor	INA-PG-RCP-001	INA-EQT-CNV
+INA-EQP-RCP-003	CB-401	Crust Breaker	INA-PG-RCP-001	INA-EQT-CRB
+INA-EQP-RCP-004	BC-402	Ladle Cross Charging Conveyor	INA-PG-RCP-010	INA-EQT-CNV
+INA-EQP-RCP-005	SR-401	Return Crust Sorter	INA-PG-RCP-003	INA-EQT-SRT
+INA-EQP-RCP-006	SH-401	Shot Blaster	INA-PG-RCP-004	INA-EQT-RCL
+INA-EQP-RCP-007	IS-401	Used Anode Scale	INA-PG-RCP-001	INA-EQT-SMP
+INA-EQP-RCP-008	PR-401	Hydraulic Anode Press (<200 kG)	INA-PG-RCP-002	INA-EQT-HPR
+INA-EQP-RCP-009	PR-402	Hydraulic Anode Press (>200 kG)	INA-PG-RCP-002	INA-EQT-HPR
+INA-EQP-RCP-010	CR-401	Hydrocone Anode Crusher 1	INA-PG-RCP-002	INA-EQT-BOP
+INA-EQP-RCP-011	CR-402	Hydrocone Anode Crusher 1	INA-PG-RCP-002	INA-EQT-BOP
+INA-EQP-RCP-012	SR-402	Crushed Adode Sorter	INA-PG-RCP-003	INA-EQT-SRT
+INA-EQP-RCP-013	D-401	Butt Silo	INA-PG-RCP-003	INA-EQT-SIL
+INA-EQP-RCP-019	RSM-401-XX	Rod Straightening Machine	INA-PG-RCP-011	INA-EQT-RSM
+INA-EQP-RCP-020	IS-402	Rod Quality Control	INA-PG-RCP-014	INA-EQT-RQC
+INA-EQP-RCP-022	SH-402	Stub Shot Blasting	INA-PG-RCP-005	INA-EQT-RCL
+INA-EQP-RCP-023	GC-401	Graphite Coater	INA-PG-RCP-005	INA-EQT-GCS
+INA-EQP-RCP-024	DR-401	Stub Heater	INA-PG-RCP-005	INA-EQT-DRY
+INA-EQP-RCP-029	AC-401	Automatic Pouring Device	INA-PG-RCP-010	INA-EQT-APD
+INA-EQP-RCP-030	OHC-401	Overhead Travelling Crane	INA-PG-RCP-017	INA-EQT-OHC
+INA-EQP-RCP-031	SP-401	Alumunium Sprayer	INA-PG-RCP-008	INA-EQT-ASP
+INA-EQP-RCP-032	PF-401	Power Free Conveyor	INA-PG-RCP-001	INA-EQT-CNV
+INA-EQP-RCP-036	HF-401	Aluminium Holding Furnace	INA-PG-RCP-007	INA-EQT-FNC
+INA-EQP-RCP-050	BF-402	Bag Filter Equipment (BF-402)	INA-PG-RCP-015	INA-EQT-BAG
+INA-EQP-RCP-061	P-401A	Cooling Water Circulation Pump (A)	INA-PG-RCP-016	INA-EQT-CWB
+INA-EQP-RCP-062	P-401B	Cooling Water Circulation Pump (B)	INA-PG-RCP-016	INA-EQT-CWB
+INA-EQP-RCP-065	CT-401	Evaporative Cooling Tower (CT-401)	INA-PG-RCP-016	INA-EQT-CTW
+
+List Of SCADA
+
+Code	SCADA/DCS Plant Name	Brand	Model/Type	License	Year of Built	PC Specification	Level	Protocol
+INA-SC-RCP-001	Rodding Process SCADA	Siemens	SIMATIC IPC547E	Perpetual License	2.009	Windows 7 Ultimate; Siemens IPC547E; Intel Core i7-4770S @ 3.10GHz; RAM 2.00 GB	Process SCADA	
+INA-SC-RCP-002	Rodding No SCADA				To validate — Year of Built			
+
+List Of PLC
+
+Code	PLC Tag	Brand	Model/Type	Network/Protocol	Year	SCADA ID	Lifecycle Estimated	Notes	Connectivity	CPU Load Estimated	Scan Time	Backup & Restore	Redundancy	Alarm Hygiene	Cybersecurity	Score	Priority	Action Recommendation	AI Analog Input	AO Analog Output	DI (Digital Input)	DO (Digital Output)	Lokasi	Software	Subitems	Parent	List of HMI	Device Net	Process Group	Plant
+INA-PLC-RCP-001	Rodding Process Control System	Siemens	Simatic S7-300			INA-SC-RCP-001							None (1)	120 alarms/hr (2)	false	3	Medium	Add redundancy, rationalize alarms.					Switch Room & MCC Room Rodding						INA-PG-RCP-001	INA-PL-RCP
+INA-PLC-RCP-002	PLC Auxillary Butt & Crust	Siemens	Siemens S7-300		2.016	INA-SC-RCP-002	Obsolete			3: < 40%	20 ms	ada	false	false	false				8		540	135	Switch Room & MCC Room Rodding	TIA Portal					INA-PG-RCP-003	INA-PL-RCP
+INA-PLC-RCP-003	PLC P1-F1 P1-R1	Siemens	Siemens S7-300		2.025	INA-SC-RCP-001						ada	false	false	false						366	286	Control Panel P1-F1 P1-R1						INA-PG-RCP-001	INA-PL-RCP
+INA-PLC-RCP-004	PLC P2-F1 P2-F2 P2-R1 P2-R2	Siemens	Simatic S7-300		2.011	INA-SC-RCP-001						ada	false	false	false						371	331	Control Panel P2-F1 P2-F2 P2-R1 P2-R2						INA-PG-RCP-002	INA-PL-RCP
+INA-PLC-RCP-005	P3 Relay/ PLC tidak difungsikan	Siemens	Simatic S7-300			INA-SC-RCP-002							false	false	false														INA-PG-RCP-004	INA-PL-RCP
+INA-PLC-RCP-006	PLC P4-F2 P4-R1	Siemens	Simatic S7-300		2.011	INA-SC-RCP-001						ada	false	false	false						215	195	Control Panel P4-F2 P4-R1						INA-PG-RCP-005	INA-PL-RCP
+INA-PLC-RCP-007	PLC AC-401	Siemens	Simatic S7-300		2.014	INA-SC-RCP-001							false	false	false				3		53	15	Control Panel AC-401				HMI AC-401		INA-PG-RCP-006	INA-PL-RCP
+INA-PLC-RCP-008	PLC HF Rodding	Siemens	Simatic S7-1200			INA-SC-RCP-002							false	false	false								Panel Holding Furnace Rodding						INA-PG-RCP-007	INA-PL-RCP
+INA-PLC-RCP-009	PLC RSM	Siemens	Simatic S7-1200			INA-SC-RCP-002							false	false	false								Panel RSM				HMI RSM		INA-PG-RCP-008	INA-PL-RCP
+INA-PLC-RCP-010	PLC ASCM (Anode Shot Cutting Machine)	Siemens	Simatic S7-300		2.016	INA-SC-RCP-002							false	false	false						832	228	(Anode Shot Cutting Machine)				HMI ASCM		INA-PG-RCP-009	INA-PL-RCP
+
+List Of Vehicle
+
+Code	Vehicle/Mobile Asset	Name	Category	Typical Use	Energy/Fuel
+INA-VEH-RCP-001	INA-VHT-MTC		Transport	Site note mentions “MTC weigher” under Rodding Plant; To validate — confirm vehicle identity and whether this is molten MTC vs anode transport movement.	
+
+List Of Findings & Notes
+
+Tag	Area/Process	Note (what was said/seen)	Source (role/name)
+delay	MTC weigher	Frequent Minor Repair on MTC Weigher	To validate — source
+delay	Planning / scheduling	Production planning coming from reduction plant dalam bentuk draft schedule, WIP 78	To validate — source
+quality	Visual QC	Menggunakan manual QC untuk visual hasil baked green block	To validate — source
+delay	SPC / control	No SPC is implemented throughout the business and production process	To validate — source
+data	Data integration	Manual data input of event of time when a process starts and stop	To validate — source
+data	Data integration	Manually recorded data (especially time data) are unreliable, leading to inaccurate data analysis.	To validate — source
+quality	Quality sampling	in process QC pencatatan manual	To validate — source
+delay	Overhaul scheduling	Overhaul dihari selasa dan jumat setiap minggu, selasa 2 shinf jumat 1 shift	To validate — source
+delay	Overhaul scheduling	1 bulan sekali ada overhaul selama 5 shift	To validate — source
+delay	General	production bisa lag atau surplus	To validate — source
+delay	Stock visibility	need preview stock in redution untuk planning Overhaul	To validate — source
+delay	Planning / scheduling	planning untuk rodding berdasarkan kondisi stock di casting dan delivery stock ke reduction	To validate — source
+quality	Assembly QC	process qc manual , terutama untuk tahapan pemasangan anode pada rod dengan dituangkan molten iron/ butt	To validate — source
+manual	Labeling method	Green Block numbers are written/painted; Baked Block uses chalk; manual numbering can lead to double/missing numbers.	PIC — Bapak Sumahadi
+delay	Mis-shipment	Mis-shipment occurs (example: ~2 times/month) and is detected after receiving feedback from destination PIC.	PIC — Bapak Sumahadi
+manual	Time recording	Tapping/operation time is recorded by watch and later typed into Excel.	To validate — source
+data	Production rate	Design capacity is ~252 pcs/shift while actual average is ~180–200 pcs/shift.	PIC — Pak Panji A. Pratama
+manual	QC & tracking	Anode/rod tracking is input one-by-one; crack mapping is done manually using a form.	PIC — Pak Panji A. Pratama
+manual	Reporting method	Lab results are written on templates, transcribed to computer, approved in stages (operator → supervisor → manager/VP), and shared as PDF via email.	PIC — Pak Pandji (Head)
+delay	Bottleneck	For anode QA, 6 sample types exist while only ~4 QA instruments are available, creating a bottleneck and delayed delivery.	PIC — Pak Pandji (Head)
+data	Data management	Current operation is largely Excel/offline; absence of a database slows audit and root cause analysis.	PIC — Pak Pandji (Head)
+safety	PR401/PR402 crusher monitoring	PR401 sudah ada sensor vibration motor, temperature bearing, speed motor; PR402 belum (direncanakan). Thermo switch alarm di 70°C hanya buzzer/alarm (tanpa interlock) dan suhu belum ter-logging; pernah terjadi kebakaran karena anoda bekas masih panas; dibutuhkan sensor suhu tinggi dengan interlock otomatis.	To validate — source
+control	Rod Straight Machine (RSM)	RSM tidak terintegrasi ke PLC utama; hanya limit switch lift up/down; tidak ada feedback digital.	To validate — source
+data	Butt silo level	Butt silo sudah ada radar level sensor tetapi masih dilakukan sounding manual untuk verifikasi karena sensor sering tidak dipercaya akibat debu menempel.	To validate — source
+delay	Spare part lead time	Pengadaan sparepart sering datang setelah >4 tahun (ideal tahun ke-3).	To validate — source
+system	Pneumatic valves & air quality	Valve pneumatik sering macet karena udara berdebu dan mengandung air; tidak ada air dryer di jalur pneumatik.	To validate — source
+safety	Bag filter leaks	Ada kebocoran debu di beberapa area bag filter; perlu perbaikan sealing dan maintenance berkala.	To validate — source
+delay	LO401 ATC performance	Proses LO401 sering lambat karena performa ATC menurun; perlu perbaikan mekanik & optimasi kecepatan transport.	To validate — source
+safety	CB401 crust breaking	Pompa table lift lemah dan belum ada monitoring tekanan; crust breaking masih manual (bor/palu) menyebabkan getaran tinggi bagi operator; disarankan remote control/otomatisasi untuk kurangi risiko kerja manual.	To validate — source
+system	SH401 shot blasting	Limit switch sering kemasukan bola baja sehingga respon lambat/macet; pemeriksaan visual; butuh feedback digital.	To validate — source
+manual	IS401 inspection weighing	Pencatatan data masih manual, belum digital/log otomatis.	To validate — source
+control	PR401–PR404 timbel/yoke pressing	Pressure switch PR401 error; yoke sering tidak terpicu limit switch sehingga harus dibantu manual; PR403/PR404 sering bocor seal silinder; tidak ada pressure monitoring.	To validate — source
+system	GC401 graphite coating	Level sensor masih tipe 3 kabel; limit switch sering lengket/kotor akibat cipratan graphite; jika LS tidak terpicu, bak graphite bisa nyangkut pada rod.	To validate — source
+data	SP401/AC401 aluminium coating	Sensor level metal hanya alarm kosong dan tidak terkoneksi SCADA; suhu tinggi menyebabkan sensor sering rusak; pengukuran suhu masih RTD manual.	To validate — source
+data	Induction furnace & casting counters	Suhu induction furnace belum terintegrasi ke SCADA; counter area casting belum ada, pencatatan masih form manual; CE meter sampling molten tiap pergantian shift.	To validate — source
+
+List Of Issue
+
+Issue	Area/Process	Impact	Frequency	Current Workaround	Owner	Status
+Manual data input of event of time when a process starts and stop	Data integration	Manual work increases error risk and slows reporting/analysis	To validate — frequency	Manual execution/recording	To validate — owner	Open
+in process QC pencatatan manual	Quality sampling	Manual work increases error risk and slows reporting/analysis	To validate — frequency	Manual execution/recording	To validate — owner	Open
+Frequent Minor Repair on MTC Weigher	MTC weigher	Unplanned stops/downtime reducing throughput	Frequent		To validate — owner	Open
+Overhaul dihari selasa dan jumat setiap minggu, selasa 2 shinf jumat 1 shift	Overhaul scheduling	Unplanned stops/downtime reducing throughput	Weekly		To validate — owner	Open
+Manual recording of times/downtime reasons reduces data reliability.	Execution logging	Inaccurate analysis and late problem identification (often end-of-shift).	Daily	Manual entry in HMI/Excel; end-shift review.	Operations	Open
+Manual numbering/labeling causes duplicate/missing anode IDs.	GB/BB labeling & traceability	Reduced traceability, impacting abnormality analysis and corrective actions.	To validate — frequency	Re-write with chalk/paint; manual reconciliation.	SCP Transport	Open
+SQA reporting is slow due to manual transcription and staged approvals.	Lab reporting & approval	Longer lead time to deliver results; delays feedback to production teams.	Routine	PDF via email; prioritize urgent cases via direct message.	SQA	Open
+Lack of integrated database makes audit and root cause analysis time-consuming.	Data management	Searching historical evidence can take hours/half-day and slows CAPA.	Routine	Offline file storage and manual trend checks in Excel.	SQA	Open
+Instrument and manpower limits create QA bottlenecks (e.g., anode QA can slip beyond normal 3-day target).	QA capacity	Late delivery to internal users and potential production delays when QA blocks decisions.	To validate — frequency	Reprioritize workloads; send partial updates via WA/email.	SQA	Open
+Alarm suhu crusher hanya buzzer (tanpa interlock) dan pernah terjadi kebakaran	PR401/PR402	Risiko kejadian kebakaran berulang dan kerusakan equipment; alarm tidak cukup untuk mitigasi otomatis.	To validate — frequency	Buzzer/alarm; rencana upgrade sensor seperti PR401.	To validate — owner	Open
+RSM tidak terintegrasi PLC dan hanya limit switch	Rod Straight Machine	Kontrol/feedback digital minim; potensi kesulitan troubleshooting dan kualitas operasi.	To validate — frequency	Operasi berbasis limit switch.	To validate — owner	Open
+Spare part lead time sangat lama	Maintenance & procurement	Risiko downtime berkepanjangan karena part datang >4 tahun.	To validate — frequency	Gunakan stok terbatas / improvisasi (To validate).	To validate — owner	Open
+Pneumatic valve sering macet (tanpa air dryer)	Pneumatic system	Gangguan aktuasi menyebabkan downtime dan kebutuhan perbaikan berulang.	To validate — frequency	Maintenance reaktif; pembersihan (To validate).	To validate — owner	Open
+Crust breaking masih manual dan table lift lemah	CB401	Getaran tinggi ke operator dan risiko keselamatan; tekanan pompa tidak termonitor.	To validate — frequency	Manual bor/palu; inspeksi visual.	To validate — owner	Open
+Data pencatatan IS401 masih manual	Inspection weighing	Data tidak terdigitalisasi; sulit analisis & traceability.	To validate — frequency	Form manual.	To validate — owner	Open
+
+List Of Process Elicitation Result
+
+Process Name	Step #	Activity	Actor	System/Tool	Output	Input	Code
+SQA Lab Report & Approval	1	Receive sample requests (scheduled/unplanned), register sample, and route to instruments.	Admin + Lab	Email/WA + templates	Sample registered		INA-54
+SQA Lab Report & Approval	2	Perform testing/analysis, record on templates, then transcribe to computer for review.	Lab analyst	Templates + PC/Excel	Draft results		INA-55
+SQA Lab Report & Approval	3	Approve results through staged approvals (supervisor → manager/VP) and distribute to users as PDF.	SQA leadership	Email + PDF	Approved lab report		INA-56
+Rodding Anode Processing	1	Proses peremukan anoda (PR401/402) berjalan dengan alarm suhu (thermo switch) di switchroom; PR401 sudah ada sensor tambahan (vibration/temp/speed).	Operator rodding	Crusher system + alarm	Anode bekas diproses/crushed		INA-85
+Rodding Anode Processing	2	Jika temperatur tinggi (risiko kebakaran), alarm/buzzer aktif; saat ini tanpa interlock otomatis sehingga respons bergantung operator.	Operator	Alarm/buzzer	Risiko dikendalikan secara manual		INA-86
+Rodding Anode Processing	3	Proses shot blasting (SH401) dan graphite coating (GC401) mengandalkan limit switch; bila LS kotor/terganggu, diperlukan intervensi operator.	Operator	Limit switch; inspeksi visual	Komponen anode dibersihkan/dicoating		INA-87
+
+List Of File Used
+
+Name	File	Department	Doc Type
+Draft Production Schedule (Reduction → Rodding)	To validate — file/URL	To validate — dept	Planning
+Daily Work Instruction File (Reduction → Rodding)	To validate — file/URL	To validate — dept	Report
+SQA Report Template (instrument result forms)	Document template	SQA	Report
+Laporan Hasil Uji Harian (SQA)	Excel/PDF	SQA	Report
+Approval Package (SQA)	PDF	SQA	Report
+Macro-based SAP Upload Sheet	Excel (macro)	SQA	Logger
+Crack Mapping Form	Paper/Excel form	Rodding Ops	Logger

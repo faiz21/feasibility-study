@@ -1,0 +1,413 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "primary": "#1d4ed8",
+      "primaryDark": "#1e3a8a",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "title": "Appendix A - Material & Manufacturing Architecture",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "attributes": [],
+      "documentId": "INA-PL-RCP-APP-A"
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "paragraphs": [],
+        "ccps": [],
+        "rows": [],
+        "type": "narrative",
+        "cards": [],
+        "chart": {
+          "label": "Generated",
+          "value": 1
+        },
+        "risks": [],
+        "steps": [],
+        "alerts": [],
+        "footer": "",
+        "stages": [],
+        "headers": [],
+        "metrics": [],
+        "headline": "Appendix A - Material & Manufacturing Architecture",
+        "leftCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "bulletBox": {
+          "items": [],
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "flowTitle": "Appendix A - Material & Manufacturing Architecture",
+        "listTitle": "Appendix A - Material & Manufacturing Architecture",
+        "rightCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "conclusion": "RODDING PLANT (INA-PL-RCP)",
+        "description": "",
+        "subsections": [],
+        "summaryBoxes": []
+      },
+      {
+        "title": "Section 2",
+        "paragraphs": [],
+        "ccps": [],
+        "rows": [],
+        "type": "narrative",
+        "cards": [],
+        "chart": {
+          "label": "Generated",
+          "value": 1
+        },
+        "risks": [],
+        "steps": [],
+        "alerts": [],
+        "footer": "",
+        "stages": [],
+        "headers": [],
+        "metrics": [],
+        "headline": "Appendix A - Material & Manufacturing Architecture",
+        "leftCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "bulletBox": {
+          "items": [],
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "flowTitle": "Appendix A - Material & Manufacturing Architecture",
+        "listTitle": "Appendix A - Material & Manufacturing Architecture",
+        "rightCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "conclusion": "Document Date: 14 March 2026",
+        "description": "",
+        "subsections": [],
+        "summaryBoxes": []
+      },
+      {
+        "title": "Section 3",
+        "paragraphs": [],
+        "ccps": [],
+        "rows": [],
+        "type": "narrative",
+        "cards": [],
+        "chart": {
+          "label": "Generated",
+          "value": 1
+        },
+        "risks": [],
+        "steps": [],
+        "alerts": [],
+        "footer": "",
+        "stages": [],
+        "headers": [],
+        "metrics": [],
+        "headline": "Appendix A - Material & Manufacturing Architecture",
+        "leftCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "bulletBox": {
+          "items": [],
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "flowTitle": "Appendix A - Material & Manufacturing Architecture",
+        "listTitle": "Appendix A - Material & Manufacturing Architecture",
+        "rightCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "conclusion": "## 1. Purpose of Appendix A",
+        "description": "",
+        "subsections": [],
+        "summaryBoxes": []
+      }
+    ]
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "primary": "#1d4ed8",
+      "primaryDark": "#1e3a8a",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "title": "Appendix A - Material & Manufacturing Architecture",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "attributes": [],
+      "documentId": "INA-PL-RCP-APP-A"
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "paragraphs": [],
+        "ccps": [],
+        "rows": [],
+        "type": "narrative",
+        "cards": [],
+        "chart": {
+          "label": "Generated",
+          "value": 1
+        },
+        "risks": [],
+        "steps": [],
+        "alerts": [],
+        "footer": "",
+        "stages": [],
+        "headers": [],
+        "metrics": [],
+        "headline": "Appendix A - Material & Manufacturing Architecture",
+        "leftCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "bulletBox": {
+          "items": [],
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "flowTitle": "Appendix A - Material & Manufacturing Architecture",
+        "listTitle": "Appendix A - Material & Manufacturing Architecture",
+        "rightCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "conclusion": "RODDING PLANT (INA-PL-RCP)",
+        "description": "",
+        "subsections": [],
+        "summaryBoxes": []
+      },
+      {
+        "title": "Section 2",
+        "paragraphs": [],
+        "ccps": [],
+        "rows": [],
+        "type": "narrative",
+        "cards": [],
+        "chart": {
+          "label": "Generated",
+          "value": 1
+        },
+        "risks": [],
+        "steps": [],
+        "alerts": [],
+        "footer": "",
+        "stages": [],
+        "headers": [],
+        "metrics": [],
+        "headline": "Appendix A - Material & Manufacturing Architecture",
+        "leftCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "bulletBox": {
+          "items": [],
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "flowTitle": "Appendix A - Material & Manufacturing Architecture",
+        "listTitle": "Appendix A - Material & Manufacturing Architecture",
+        "rightCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "conclusion": "Document Date: 14 March 2026",
+        "description": "",
+        "subsections": [],
+        "summaryBoxes": []
+      },
+      {
+        "title": "Section 3",
+        "paragraphs": [],
+        "ccps": [],
+        "rows": [],
+        "type": "narrative",
+        "cards": [],
+        "chart": {
+          "label": "Generated",
+          "value": 1
+        },
+        "risks": [],
+        "steps": [],
+        "alerts": [],
+        "footer": "",
+        "stages": [],
+        "headers": [],
+        "metrics": [],
+        "headline": "Appendix A - Material & Manufacturing Architecture",
+        "leftCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "bulletBox": {
+          "items": [],
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "flowTitle": "Appendix A - Material & Manufacturing Architecture",
+        "listTitle": "Appendix A - Material & Manufacturing Architecture",
+        "rightCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "conclusion": "## 1. Purpose of Appendix A",
+        "description": "",
+        "subsections": [],
+        "summaryBoxes": []
+      }
+    ]
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "primary": "#1d4ed8",
+      "primaryDark": "#1e3a8a",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "title": "Appendix A - Material & Manufacturing Architecture",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "attributes": [],
+      "documentId": "INA-PL-RCP-APP-A"
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "paragraphs": [],
+        "ccps": [],
+        "rows": [],
+        "type": "narrative",
+        "cards": [],
+        "chart": {
+          "label": "Generated",
+          "value": 1
+        },
+        "risks": [],
+        "steps": [],
+        "alerts": [],
+        "footer": "",
+        "stages": [],
+        "headers": [],
+        "metrics": [],
+        "headline": "Appendix A - Material & Manufacturing Architecture",
+        "leftCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "bulletBox": {
+          "items": [],
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "flowTitle": "Appendix A - Material & Manufacturing Architecture",
+        "listTitle": "Appendix A - Material & Manufacturing Architecture",
+        "rightCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "conclusion": "RODDING PLANT (INA-PL-RCP)",
+        "description": "",
+        "subsections": [],
+        "summaryBoxes": []
+      },
+      {
+        "title": "Section 2",
+        "paragraphs": [],
+        "ccps": [],
+        "rows": [],
+        "type": "narrative",
+        "cards": [],
+        "chart": {
+          "label": "Generated",
+          "value": 1
+        },
+        "risks": [],
+        "steps": [],
+        "alerts": [],
+        "footer": "",
+        "stages": [],
+        "headers": [],
+        "metrics": [],
+        "headline": "Appendix A - Material & Manufacturing Architecture",
+        "leftCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "bulletBox": {
+          "items": [],
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "flowTitle": "Appendix A - Material & Manufacturing Architecture",
+        "listTitle": "Appendix A - Material & Manufacturing Architecture",
+        "rightCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "conclusion": "Document Date: 14 March 2026",
+        "description": "",
+        "subsections": [],
+        "summaryBoxes": []
+      },
+      {
+        "title": "Section 3",
+        "paragraphs": [],
+        "ccps": [],
+        "rows": [],
+        "type": "narrative",
+        "cards": [],
+        "chart": {
+          "label": "Generated",
+          "value": 1
+        },
+        "risks": [],
+        "steps": [],
+        "alerts": [],
+        "footer": "",
+        "stages": [],
+        "headers": [],
+        "metrics": [],
+        "headline": "Appendix A - Material & Manufacturing Architecture",
+        "leftCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "bulletBox": {
+          "items": [],
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "flowTitle": "Appendix A - Material & Manufacturing Architecture",
+        "listTitle": "Appendix A - Material & Manufacturing Architecture",
+        "rightCard": {
+          "items": [],
+          "theme": "neutral",
+          "title": "Appendix A - Material & Manufacturing Architecture"
+        },
+        "conclusion": "## 1. Purpose of Appendix A",
+        "description": "",
+        "subsections": [],
+        "summaryBoxes": []
+      }
+    ]
+  }
+}

@@ -1,14 +1,20 @@
 import Link from "next/link";
-import { marked } from "marked";
 import { createClient } from "@/lib/supabase/server";
 import { requireRole } from "@/lib/portal/auth";
 import { PageHeader } from "@/components/ui/dashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReportMarkdownChatRoom } from "@/components/admin/report-markdown-chat-room";
+import { RunnerActionButton } from "@/components/admin/runner-action-button";
+import { ReportMarkdownLocaleWorkbench } from "@/components/admin/report-markdown-locale-workbench";
+import { Badge } from "@/components/ui/badge";
 
 type AdminMarkdownPage = {
   id: string;
   page_order: number;
+  report_page_template_id: string | null;
+  en_content: unknown;
+  id_content: unknown;
+  ja_content: unknown;
   raw_report: string | null;
   raw_report_id: string | null;
   raw_report_jp: string | null;
@@ -30,6 +36,12 @@ type AdminMarkdownPage = {
     | null;
 };
 
+type ReportRow = {
+  id: string;
+  report_type_template_id: string | null;
+  entity_id: string | null;
+};
+
 function toPageTemplate(
   template: AdminMarkdownPage["report_page_templates"],
 ): { page_key?: string | null; title?: string | null } {
@@ -46,47 +58,27 @@ function hasLocaleMarkdown(page: AdminMarkdownPage, locale: string): boolean {
   return getLocaleMarkdown(page, locale).trim().length > 0;
 }
 
-function renderMarkdown(markdown: string): string {
-  const text = String(markdown ?? "").trim();
-  if (!text) return '<p class="text-sm text-muted-foreground">No markdown content for this locale/page.</p>';
-  return marked.parse(text, { gfm: true, breaks: true }) as string;
+function getLocaleJsonText(page: AdminMarkdownPage, locale: string): string {
+  const content =
+    locale === "id"
+      ? page.id_content
+      : locale === "ja"
+        ? page.ja_content
+        : page.en_content;
+
+  return JSON.stringify(content ?? {}, null, 2);
 }
 
-function buildMarkdownViewerHtml(markdownHtml: string): string {
-  return `<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Markdown Preview</title>
-  <style>
-    :root { color-scheme: light; }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 24px;
-      background: #ffffff;
-      color: #0f172a;
-      font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-    h1,h2,h3,h4,h5,h6 { line-height: 1.25; margin: 1.2em 0 .55em; }
-    p { margin: .6em 0 1em; }
-    ul,ol { margin: .6em 0 1em 1.2em; padding: 0; }
-    blockquote { margin: 1em 0; padding: .25em 1em; border-left: 4px solid #cbd5e1; color: #334155; }
-    pre { overflow: auto; padding: 12px; border-radius: 8px; background: #0b1220; color: #e2e8f0; }
-    code { font: 13px/1.45 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
-    table { width: 100%; border-collapse: collapse; margin: 1em 0; }
-    th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; vertical-align: top; }
-    th { background: #f8fafc; }
-    a { color: #1d4ed8; text-decoration: underline; }
-    hr { border: 0; border-top: 1px solid #e2e8f0; margin: 1.2em 0; }
-    img { max-width: 100%; height: auto; }
-  </style>
-</head>
-<body>
-${markdownHtml}
-</body>
-</html>`;
+function hasEnJsonContent(page: AdminMarkdownPage): boolean {
+  if (page.en_content === null || page.en_content === undefined) return false;
+  if (typeof page.en_content === "string") return page.en_content.trim().length > 0;
+  if (Array.isArray(page.en_content)) return page.en_content.length > 0;
+  if (typeof page.en_content === "object") return Object.keys(page.en_content).length > 0;
+  return true;
+}
+
+function hasRawReport(page: AdminMarkdownPage): boolean {
+  return typeof page.raw_report === "string" && page.raw_report.trim().length > 0;
 }
 
 function buildHref(params: {
@@ -98,6 +90,10 @@ function buildHref(params: {
 }) {
   const pagePart = params.pageId ? `&page_id=${params.pageId}` : "";
   return `/admin/client-reports/${params.reportId}/markdown-preview?client_id=${params.clientId}&granularity_id=${params.granularityId}&locale=${params.locale}${pagePart}`;
+}
+
+function getScoreLabel(score: number | null): string {
+  return typeof score === "number" && Number.isFinite(score) ? `${Math.max(0, Math.min(100, score))}` : "No score";
 }
 
 export default async function AdminClientReportMarkdownPreviewPage({
@@ -112,27 +108,29 @@ export default async function AdminClientReportMarkdownPreviewPage({
   const { reportId } = await params;
   const query = await searchParams;
 
-  const clientId = query.client_id ?? "";
+  const clientIdFromQuery = query.client_id ?? "";
   const granularityId = query.granularity_id ?? "all";
   const locale = ["en", "id", "ja"].includes(query.locale ?? "") ? String(query.locale) : "en";
   const requestedPageId = String(query.page_id ?? "").trim();
 
-  const [{ data: report }, { data: pages }] = await Promise.all([
-    supabase
-      .from("reports")
-      .select("id,report_type_template_id")
-      .eq("id", reportId)
-      .maybeSingle(),
-    supabase
-      .from("report_pages")
-      .select(
-        "id,page_order,raw_report,raw_report_id,raw_report_jp,overall,outline_alignment,writing_alignment,analysis_score,notes,page_summary,report_page_templates(page_key,title)",
-      )
-      .eq("report_id", reportId)
-      .order("page_order", { ascending: true }),
-  ]);
+  const { data: reportById } = await supabase
+    .from("reports")
+    .select("id,report_type_template_id,entity_id")
+    .eq("id", reportId)
+    .maybeSingle();
 
-  if (!report) {
+  let resolvedReport = reportById as ReportRow | null;
+  if (!resolvedReport) {
+    const { data: fallbackByEntity } = await supabase
+      .from("reports")
+      .select("id,report_type_template_id,entity_id")
+      .eq("entity_id", reportId)
+      .order("created_at", { ascending: false })
+      .limit(1);
+    resolvedReport = (fallbackByEntity?.[0] as ReportRow | undefined) ?? null;
+  }
+
+  if (!resolvedReport) {
     return (
       <div className="space-y-3">
         <p className="text-sm text-critical">Report not found.</p>
@@ -143,31 +141,53 @@ export default async function AdminClientReportMarkdownPreviewPage({
     );
   }
 
+  const reportRow = resolvedReport;
+  const resolvedReportId = reportRow.id;
+  const { data: pages } = await supabase
+    .from("report_pages")
+    .select(
+      "id,page_order,report_page_template_id,en_content,id_content,ja_content,raw_report,raw_report_id,raw_report_jp,overall,outline_alignment,writing_alignment,analysis_score,notes,page_summary,report_page_templates(page_key,title)",
+    )
+    .eq("report_id", resolvedReportId)
+    .order("page_order", { ascending: true });
+
+  let clientId = clientIdFromQuery;
+  if (!clientId && reportRow.entity_id) {
+    const { data: entityRow } = await supabase
+      .from("report_entities")
+      .select("client_id")
+      .eq("id", reportRow.entity_id)
+      .maybeSingle();
+    clientId = String(entityRow?.client_id ?? "");
+  }
   const rows = (pages ?? []) as AdminMarkdownPage[];
+  const enJsonCount = rows.filter(hasEnJsonContent).length;
+  const rawReportCount = rows.filter(hasRawReport).length;
   const firstAvailable = rows.find((row) => hasLocaleMarkdown(row, locale));
   const selected =
-    rows.find((row) => row.id === requestedPageId && hasLocaleMarkdown(row, locale)) ??
+    rows.find((row) => row.id === requestedPageId) ??
     firstAvailable ??
     rows[0] ??
     null;
 
   const selectedTemplate = selected ? toPageTemplate(selected.report_page_templates) : {};
   const selectedMarkdown = selected ? getLocaleMarkdown(selected, locale) : "";
-  const renderedMarkdown = renderMarkdown(selectedMarkdown);
-  const markdownViewerHtml = buildMarkdownViewerHtml(renderedMarkdown);
+  const selectedJsonText = selected ? getLocaleJsonText(selected, locale) : "{}";
 
   const { data: reportType } = await supabase
     .from("report_type_templates")
     .select("name")
-    .eq("id", report.report_type_template_id)
+    .eq("id", reportRow.report_type_template_id)
     .maybeSingle();
-  const reportTypeName = reportType?.name;
+  const reportTypeName = reportType?.name ?? null;
+
+  const reportRunnerDisabled = !reportRow.report_type_template_id || !reportRow.entity_id || !clientId;
 
   return (
-    <div className="space-y-6">
+    <div className="mx-auto w-full max-w-[2200px] space-y-6 px-1 sm:px-2 lg:px-3 2xl:px-4">
       <PageHeader
         title={`Markdown Preview — ${reportTypeName ?? "Report"}`}
-        description="Preview report page markdown content by locale."
+        description="Edit locale markdown and JSON content side by side while reviewing the live markdown preview."
       />
 
       <div className="flex flex-wrap items-center gap-3">
@@ -178,7 +198,7 @@ export default async function AdminClientReportMarkdownPreviewPage({
           Back to Client Reports
         </Link>
         <Link
-          href={`/admin/client-reports/${reportId}/edit?client_id=${clientId}&granularity_id=${granularityId}&locale=${locale}`}
+          href={`/admin/client-reports/${resolvedReportId}/edit?client_id=${clientId}&granularity_id=${granularityId}&locale=${locale}`}
           className="text-sm text-primary underline"
         >
           Open Edit Content
@@ -186,24 +206,82 @@ export default async function AdminClientReportMarkdownPreviewPage({
       </div>
 
       <Card>
+        <CardHeader className="pb-3">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="space-y-1">
+              <CardTitle className="text-base">Report Template</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                {reportTypeName ?? "Unknown template"}{" "}
+                <span className="text-xs">(ID: {reportRow.report_type_template_id ?? "-"})</span>
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Report ID: {resolvedReportId} | Entity ID: {reportRow.entity_id ?? "-"} | Client ID: {clientId || "-"}
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <RunnerActionButton
+                endpoint="/api/admin/report-runner"
+                label="Run Report Runner"
+                payload={{ reportId: resolvedReportId, clientId, pageId: selected?.id ?? "" }}
+                disabled={reportRunnerDisabled}
+                disabledReason="Missing report_type_template_id, entity_id, or client_id"
+                confirmMessage="Run Report Runner now? This will trigger AI processing and may rewrite report content."
+              />
+              <RunnerActionButton
+                endpoint="/api/admin/report-json-runner"
+                label="Run Report JSON"
+                payload={{ reportId: resolvedReportId }}
+                disabled={!resolvedReportId}
+                disabledReason="Missing report ID"
+                confirmMessage="Run Report JSON now? This will trigger AI translation/JSON generation."
+              />
+            </div>
+          </div>
+        </CardHeader>
+      </Card>
+
+      <Card>
         <CardHeader>
-          <CardTitle className="text-base">Language</CardTitle>
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <CardTitle className="text-base">Locale Workspace</CardTitle>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Coverage counters stay pinned to EN source readiness while the workspace below switches by locale.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge
+                className={enJsonCount === rows.length && rows.length > 0
+                  ? "border-transparent bg-success text-success-foreground hover:bg-success"
+                  : "border-transparent bg-warning text-warning-foreground hover:bg-warning"}
+              >
+                EN JSON {enJsonCount}/{rows.length || 0}
+              </Badge>
+              <Badge
+                className={rawReportCount === rows.length && rows.length > 0
+                  ? "border-transparent bg-success text-success-foreground hover:bg-success"
+                  : "border-transparent bg-warning text-warning-foreground hover:bg-warning"}
+              >
+                EN Markdown {rawReportCount}/{rows.length || 0}
+              </Badge>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-2">
           <Link
-            href={buildHref({ reportId, clientId, granularityId, locale: "en", pageId: selected?.id })}
+            href={buildHref({ reportId: resolvedReportId, clientId, granularityId, locale: "en", pageId: selected?.id })}
             className={`rounded px-3 py-1.5 text-xs ${locale === "en" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"}`}
           >
             EN
           </Link>
           <Link
-            href={buildHref({ reportId, clientId, granularityId, locale: "id", pageId: selected?.id })}
+            href={buildHref({ reportId: resolvedReportId, clientId, granularityId, locale: "id", pageId: selected?.id })}
             className={`rounded px-3 py-1.5 text-xs ${locale === "id" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"}`}
           >
             ID
           </Link>
           <Link
-            href={buildHref({ reportId, clientId, granularityId, locale: "ja", pageId: selected?.id })}
+            href={buildHref({ reportId: resolvedReportId, clientId, granularityId, locale: "ja", pageId: selected?.id })}
             className={`rounded px-3 py-1.5 text-xs ${locale === "ja" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"}`}
           >
             JA
@@ -211,21 +289,106 @@ export default async function AdminClientReportMarkdownPreviewPage({
         </CardContent>
       </Card>
 
-      <div className="grid gap-4 md:grid-cols-[1fr_260px]">
+      <div className="grid gap-4 xl:grid-cols-[300px_minmax(0,1fr)] 2xl:grid-cols-[320px_minmax(0,1fr)]">
+        <Card className="h-fit xl:sticky xl:top-20">
+          <CardHeader>
+            <CardTitle className="text-base">Pages</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            {rows.length === 0 ? <p className="text-sm text-muted-foreground">No pages found.</p> : null}
+            {rows.map((row) => {
+              const template = toPageTemplate(row.report_page_templates);
+              const hasContent = hasLocaleMarkdown(row, locale);
+              const isActive = selected?.id === row.id;
+              const pageRunnerDisabled = !reportRow.entity_id || !reportRow.report_type_template_id || !clientId || !row.report_page_template_id;
+              const score = getScoreLabel(row.overall);
+
+              return (
+                <div
+                  key={row.id}
+                  className={`rounded-xl border p-3 transition-colors ${isActive ? "border-primary bg-primary/5" : "border-border/70 bg-card"}`}
+                >
+                  <div className="mb-2 flex items-start justify-between gap-2">
+                    <Link
+                      href={buildHref({ reportId: resolvedReportId, clientId, granularityId, locale, pageId: row.id })}
+                      className={`block text-sm font-semibold tracking-tight ${isActive ? "text-primary" : "text-foreground hover:text-primary"}`}
+                    >
+                      {template?.page_key ?? `P${row.page_order}`}
+                    </Link>
+                    <span className="rounded bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+                      {score}
+                    </span>
+                  </div>
+
+                  <p className="mb-3 line-clamp-2 text-xs leading-5 text-muted-foreground">{template?.title ?? "Untitled"}</p>
+
+                  <div className="mb-3 flex flex-wrap items-center gap-2">
+                    <Badge
+                      className={hasEnJsonContent(row)
+                        ? "border-transparent bg-success text-success-foreground hover:bg-success"
+                        : "border-transparent bg-warning text-warning-foreground hover:bg-warning"}
+                    >
+                      EN JSON
+                    </Badge>
+                    <Badge
+                      className={hasRawReport(row)
+                        ? "border-transparent bg-success text-success-foreground hover:bg-success"
+                        : "border-transparent bg-warning text-warning-foreground hover:bg-warning"}
+                    >
+                      EN Markdown
+                    </Badge>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <RunnerActionButton
+                      endpoint="/api/admin/page-runner"
+                      label="Run Page Runner"
+                      variant="secondary"
+                      size="sm"
+                      className="h-7 px-2.5 text-[11px]"
+                      payload={{ reportId: resolvedReportId, pageId: row.id, clientId }}
+                      disabled={pageRunnerDisabled}
+                      disabledReason="Missing template/entity/client/page_template_id"
+                      confirmMessage="Run Page Runner for this page? This will trigger AI processing and may rewrite page content."
+                    />
+                    <RunnerActionButton
+                      endpoint="/api/admin/page-json-runner"
+                      label="Run Page JSON"
+                      variant="secondary"
+                      size="sm"
+                      className="h-7 px-2.5 text-[11px]"
+                      payload={{ reportId: resolvedReportId, pageId: row.id }}
+                      disabled={!resolvedReportId || !row.id}
+                      disabledReason="Missing report or page ID"
+                      confirmMessage="Run Page JSON for this page? This will trigger AI translation/JSON generation for this page."
+                    />
+                  </div>
+
+                  {!hasContent ? (
+                    <p className="mt-2 text-[11px] text-muted-foreground">No content for current locale.</p>
+                  ) : null}
+                </div>
+              );
+            })}
+          </CardContent>
+        </Card>
+
         <div className="space-y-4">
-          <Card>
+          <Card className="overflow-hidden">
             <CardHeader>
               <CardTitle className="text-base">
                 {selectedTemplate?.title ?? "Page"}{" "}
                 <span className="text-xs text-muted-foreground">({selectedTemplate?.page_key ?? "-"})</span>
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-4 pt-0 md:p-5 md:pt-0 2xl:p-6 2xl:pt-0">
               {selected ? (
-                <iframe
-                  title={`markdown-preview-${selected.id}-${locale}`}
-                  srcDoc={markdownViewerHtml}
-                  className="h-[75vh] w-full rounded-md border border-border/70 bg-white"
+                <ReportMarkdownLocaleWorkbench
+                  reportId={resolvedReportId}
+                  pageId={selected.id}
+                  locale={locale as "en" | "id" | "ja"}
+                  initialMarkdown={selectedMarkdown}
+                  initialJsonText={selectedJsonText}
                 />
               ) : (
                 <p className="text-sm text-muted-foreground">No page available for this locale.</p>
@@ -240,7 +403,8 @@ export default async function AdminClientReportMarkdownPreviewPage({
               </CardHeader>
               <CardContent>
                 <ReportMarkdownChatRoom
-                  reportId={reportId}
+                  key={selected.id}
+                  reportId={resolvedReportId}
                   userId={user.id}
                   pageId={selected.id}
                   initialEnMarkdown={String(selected.raw_report ?? "")}
@@ -250,7 +414,6 @@ export default async function AdminClientReportMarkdownPreviewPage({
                     writing_alignment: selected.writing_alignment,
                     analysis_score: selected.analysis_score,
                     notes: Array.isArray(selected.notes) ? selected.notes : [],
-                    page_summary: selected.page_summary,
                   }}
                 />
               </CardContent>
@@ -270,45 +433,6 @@ export default async function AdminClientReportMarkdownPreviewPage({
             </Card>
           ) : null}
         </div>
-
-        <Card className="h-fit md:sticky md:top-20">
-          <CardHeader>
-            <CardTitle className="text-base">Pages</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            {rows.length === 0 ? (
-              <p className="text-sm text-muted-foreground">No pages found.</p>
-            ) : null}
-            {rows.map((row) => {
-              const template = toPageTemplate(row.report_page_templates);
-              const hasContent = hasLocaleMarkdown(row, locale);
-              const isActive = selected?.id === row.id;
-              const commonClasses = "block rounded-md border px-3 py-2 text-xs font-medium";
-
-              if (!hasContent) {
-                return (
-                  <span
-                    key={row.id}
-                    className={`${commonClasses} cursor-not-allowed border-border/70 bg-muted text-muted-foreground opacity-80`}
-                    title="No content for this locale"
-                  >
-                    {template?.page_key ?? `P${row.page_order}`} · {template?.title ?? "Untitled"}
-                  </span>
-                );
-              }
-
-              return (
-                <Link
-                  key={row.id}
-                  href={buildHref({ reportId, clientId, granularityId, locale, pageId: row.id })}
-                  className={`${commonClasses} ${isActive ? "border-primary bg-primary text-primary-foreground" : "border-blue-300 bg-blue-50 text-blue-700 hover:bg-blue-100"}`}
-                >
-                  {template?.page_key ?? `P${row.page_order}`} · {template?.title ?? "Untitled"}
-                </Link>
-              );
-            })}
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

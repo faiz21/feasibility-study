@@ -49,10 +49,11 @@ export function CaseStudyPageRenderer({ document }: CaseStudyPageRendererProps) 
   };
 
   return (
-    <main className="mx-auto w-full max-w-6xl space-y-4 p-4 md:p-8">
-      <header className="space-y-1">
-        <h1 className="text-2xl font-semibold tracking-tight">{document.pageTitle}</h1>
-        <p className="text-sm text-muted-foreground">
+    <main className="mx-auto w-full max-w-6xl space-y-6 p-4 md:p-8">
+      <header className="space-y-2">
+        <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-primary">Case study renderer</p>
+        <h1 className="text-4xl font-semibold tracking-tight" data-font="display">{document.pageTitle}</h1>
+        <p className="max-w-3xl text-base leading-7 text-muted-foreground">
           JSON-driven renderer with registry-based block dispatch.
         </p>
       </header>
@@ -67,4 +68,3 @@ export function CaseStudyPageRenderer({ document }: CaseStudyPageRendererProps) 
     </main>
   );
 }
-

@@ -1,0 +1,269 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-N",
+      "reportType": "Appendix N - Vertical Integration",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix N - Vertical Integration",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "gapRegister": {
+        "gaps": [],
+        "labels": {
+          "governance": "",
+          "operational": ""
+        },
+        "sectionTitle": ""
+      },
+      "targetState": {
+        "subSections": {
+          "principles": {
+            "items": [],
+            "title": ""
+          },
+          "trajectory": {
+            "items": [],
+            "title": ""
+          }
+        },
+        "sectionTitle": ""
+      },
+      "referenceMap": {
+        "rows": [],
+        "headers": [],
+        "sectionTitle": "",
+        "sectionSubtitle": ""
+      },
+      "maturityAndRisk": {
+        "subSections": {
+          "layerScoring": {
+            "title": "",
+            "scores": [],
+            "maxScore": 0
+          },
+          "riskExposure": {
+            "risks": [],
+            "title": "",
+            "headers": [],
+            "subtitle": ""
+          }
+        },
+        "sectionTitle": ""
+      },
+      "executiveSummary": {
+        "subSections": {
+          "purpose": {
+            "content": ""
+          },
+          "interpretation": {
+            "content": "",
+            "maturityValue": "",
+            "bottleneckLabel": "",
+            "bottleneckContent": "",
+            "maturityBadgeLabel": ""
+          }
+        },
+        "sectionTitle": ""
+      },
+      "integrationMapping": {
+        "rows": [],
+        "headers": [],
+        "sectionTitle": ""
+      },
+      "currentArchitecture": {
+        "subSections": [],
+        "sectionTitle": "",
+        "sectionSubtitle": ""
+      }
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-N",
+      "reportType": "Appendix N - Vertical Integration",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix N - Vertical Integration",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "gapRegister": {
+        "gaps": [],
+        "labels": {
+          "governance": "",
+          "operational": ""
+        },
+        "sectionTitle": ""
+      },
+      "targetState": {
+        "subSections": {
+          "principles": {
+            "items": [],
+            "title": ""
+          },
+          "trajectory": {
+            "items": [],
+            "title": ""
+          }
+        },
+        "sectionTitle": ""
+      },
+      "referenceMap": {
+        "rows": [],
+        "headers": [],
+        "sectionTitle": "",
+        "sectionSubtitle": ""
+      },
+      "maturityAndRisk": {
+        "subSections": {
+          "layerScoring": {
+            "title": "",
+            "scores": [],
+            "maxScore": 0
+          },
+          "riskExposure": {
+            "risks": [],
+            "title": "",
+            "headers": [],
+            "subtitle": ""
+          }
+        },
+        "sectionTitle": ""
+      },
+      "executiveSummary": {
+        "subSections": {
+          "purpose": {
+            "content": ""
+          },
+          "interpretation": {
+            "content": "",
+            "maturityValue": "",
+            "bottleneckLabel": "",
+            "bottleneckContent": "",
+            "maturityBadgeLabel": ""
+          }
+        },
+        "sectionTitle": ""
+      },
+      "integrationMapping": {
+        "rows": [],
+        "headers": [],
+        "sectionTitle": ""
+      },
+      "currentArchitecture": {
+        "subSections": [],
+        "sectionTitle": "",
+        "sectionSubtitle": ""
+      }
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-N",
+      "reportType": "Appendix N - Vertical Integration",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix N - Vertical Integration",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "gapRegister": {
+        "gaps": [],
+        "labels": {
+          "governance": "",
+          "operational": ""
+        },
+        "sectionTitle": ""
+      },
+      "targetState": {
+        "subSections": {
+          "principles": {
+            "items": [],
+            "title": ""
+          },
+          "trajectory": {
+            "items": [],
+            "title": ""
+          }
+        },
+        "sectionTitle": ""
+      },
+      "referenceMap": {
+        "rows": [],
+        "headers": [],
+        "sectionTitle": "",
+        "sectionSubtitle": ""
+      },
+      "maturityAndRisk": {
+        "subSections": {
+          "layerScoring": {
+            "title": "",
+            "scores": [],
+            "maxScore": 0
+          },
+          "riskExposure": {
+            "risks": [],
+            "title": "",
+            "headers": [],
+            "subtitle": ""
+          }
+        },
+        "sectionTitle": ""
+      },
+      "executiveSummary": {
+        "subSections": {
+          "purpose": {
+            "content": ""
+          },
+          "interpretation": {
+            "content": "",
+            "maturityValue": "",
+            "bottleneckLabel": "",
+            "bottleneckContent": "",
+            "maturityBadgeLabel": ""
+          }
+        },
+        "sectionTitle": ""
+      },
+      "integrationMapping": {
+        "rows": [],
+        "headers": [],
+        "sectionTitle": ""
+      },
+      "currentArchitecture": {
+        "subSections": [],
+        "sectionTitle": "",
+        "sectionSubtitle": ""
+      }
+    }
+  }
+}

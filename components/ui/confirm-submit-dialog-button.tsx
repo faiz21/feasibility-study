@@ -32,10 +32,10 @@ export function ConfirmSubmitDialogButton({
         {children}
       </Button>
       {open ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-xl border border-border bg-card p-5 shadow-panel">
-            <h3 className="text-base font-semibold">{confirmTitle}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{confirmDescription}</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay/40 p-4 backdrop-blur-md">
+          <div className="glass-panel w-full max-w-md rounded-[1.4rem] border border-border/80 bg-card/95 p-6 shadow-panel">
+            <h3 className="text-xl font-semibold tracking-tight">{confirmTitle}</h3>
+            <p className="mt-3 text-sm leading-6 text-muted-foreground">{confirmDescription}</p>
             <div className="mt-4 flex justify-end gap-2">
               <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
                 {cancelText}

@@ -1,0 +1,248 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": ""
+    },
+    "metadata": {
+      "date": "14 March 2026",
+      "plant": "Rodding Plant",
+      "title": "Appendix H - Functional Scope",
+      "status": "Draft",
+      "company": "PT Indonesia Asahan Aluminium",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "documentId": "INA-PL-RCP-APP-H"
+    },
+    "sections": {
+      "purpose": {
+        "content": "RODDING PLANT (INA-PL-RCP)",
+        "takeaway": "",
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": ""
+      },
+      "maturity": {
+        "tableData": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "tableHeaders": []
+      },
+      "snapshot": {
+        "metrics": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": ""
+      },
+      "inventory": {
+        "tableData": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "tableHeaders": [],
+        "commentaryData": [],
+        "commentaryTitle": "",
+        "touchpointsLabel": "",
+        "digitalExposureLabel": ""
+      },
+      "gapExposure": {
+        "gapData": [],
+        "titleText": "",
+        "impactLabel": "",
+        "digitalLabel": "",
+        "sectionTitle": "",
+        "subtitleText": ""
+      },
+      "referenceMap": {
+        "tableData": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "tableHeaders": []
+      },
+      "valueStreams": {
+        "titleText": "",
+        "primaryData": [],
+        "primaryTitle": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "supportingData": [],
+        "supportingTitle": ""
+      },
+      "executiveFraming": {
+        "summary": "",
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "prioritiesData": [],
+        "prioritiesTitle": ""
+      }
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": ""
+    },
+    "metadata": {
+      "date": "14 March 2026",
+      "plant": "Rodding Plant",
+      "title": "Appendix H - Functional Scope",
+      "status": "Draft",
+      "company": "PT Indonesia Asahan Aluminium",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "documentId": "INA-PL-RCP-APP-H"
+    },
+    "sections": {
+      "purpose": {
+        "content": "RODDING PLANT (INA-PL-RCP)",
+        "takeaway": "",
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": ""
+      },
+      "maturity": {
+        "tableData": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "tableHeaders": []
+      },
+      "snapshot": {
+        "metrics": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": ""
+      },
+      "inventory": {
+        "tableData": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "tableHeaders": [],
+        "commentaryData": [],
+        "commentaryTitle": "",
+        "touchpointsLabel": "",
+        "digitalExposureLabel": ""
+      },
+      "gapExposure": {
+        "gapData": [],
+        "titleText": "",
+        "impactLabel": "",
+        "digitalLabel": "",
+        "sectionTitle": "",
+        "subtitleText": ""
+      },
+      "referenceMap": {
+        "tableData": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "tableHeaders": []
+      },
+      "valueStreams": {
+        "titleText": "",
+        "primaryData": [],
+        "primaryTitle": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "supportingData": [],
+        "supportingTitle": ""
+      },
+      "executiveFraming": {
+        "summary": "",
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "prioritiesData": [],
+        "prioritiesTitle": ""
+      }
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": ""
+    },
+    "metadata": {
+      "date": "14 March 2026",
+      "plant": "Rodding Plant",
+      "title": "Appendix H - Functional Scope",
+      "status": "Draft",
+      "company": "PT Indonesia Asahan Aluminium",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "documentId": "INA-PL-RCP-APP-H"
+    },
+    "sections": {
+      "purpose": {
+        "content": "RODDING PLANT (INA-PL-RCP)",
+        "takeaway": "",
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": ""
+      },
+      "maturity": {
+        "tableData": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "tableHeaders": []
+      },
+      "snapshot": {
+        "metrics": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": ""
+      },
+      "inventory": {
+        "tableData": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "tableHeaders": [],
+        "commentaryData": [],
+        "commentaryTitle": "",
+        "touchpointsLabel": "",
+        "digitalExposureLabel": ""
+      },
+      "gapExposure": {
+        "gapData": [],
+        "titleText": "",
+        "impactLabel": "",
+        "digitalLabel": "",
+        "sectionTitle": "",
+        "subtitleText": ""
+      },
+      "referenceMap": {
+        "tableData": [],
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "tableHeaders": []
+      },
+      "valueStreams": {
+        "titleText": "",
+        "primaryData": [],
+        "primaryTitle": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "supportingData": [],
+        "supportingTitle": ""
+      },
+      "executiveFraming": {
+        "summary": "",
+        "titleText": "",
+        "sectionTitle": "",
+        "subtitleText": "",
+        "prioritiesData": [],
+        "prioritiesTitle": ""
+      }
+    }
+  }
+}

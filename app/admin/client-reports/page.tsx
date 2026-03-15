@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { StatusBanner } from "@/components/ui/status-banner";
+import { Badge } from "@/components/ui/badge";
 import {
   DataGrid,
   DataGridBody,
@@ -23,6 +25,18 @@ type AdminReportRow = {
   report_type_template_id: string;
   created_at: string;
 };
+
+type ReportCoverageRow = {
+  report_id: string;
+  pct_has_md: number | string | null;
+  pct_has_json: number | string | null;
+};
+
+function formatPct(value: number | string | null | undefined): string {
+  const numeric = typeof value === "number" ? value : Number(value ?? NaN);
+  if (!Number.isFinite(numeric)) return "-";
+  return `${Math.max(0, Math.min(100, Math.round(numeric)))}%`;
+}
 
 async function publishReportAction(formData: FormData) {
   "use server";
@@ -80,6 +94,7 @@ export default async function AdminClientReportsPage({
     { data: reportTypes },
     { data: granularities },
     { data: reportPages },
+    { data: reportCoverage },
   ] =
     await Promise.all([
       supabase.from("clients").select("id,name").order("name", { ascending: true }),
@@ -94,6 +109,9 @@ export default async function AdminClientReportsPage({
         .from("report_pages")
         .select("report_id,page_order,report_page_templates(page_key,title)")
         .order("page_order", { ascending: true }),
+      supabase
+        .from("view_report_pages_coverage")
+        .select("report_id,pct_has_md,pct_has_json"),
     ]);
 
   const selectedClientId = params.client_id ?? clients?.[0]?.id ?? "";
@@ -103,6 +121,9 @@ export default async function AdminClientReportsPage({
   const entityById = new Map((entities ?? []).map((entity) => [entity.id, entity]));
   const reportTypeById = new Map((reportTypes ?? []).map((type) => [type.id, type.name]));
   const granularityById = new Map((granularities ?? []).map((granularity) => [granularity.id, granularity]));
+  const coverageByReportId = new Map(
+    ((reportCoverage ?? []) as ReportCoverageRow[]).map((row) => [row.report_id, row]),
+  );
   const pagesByReportId = new Map<string, string[]>();
   (reportPages ?? []).forEach((page) => {
     const template = Array.isArray(page.report_page_templates)
@@ -150,14 +171,10 @@ export default async function AdminClientReportsPage({
       </section>
 
       {params.success ? (
-        <p className="rounded-lg border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">
-          {params.success}
-        </p>
+        <StatusBanner tone="success">{params.success}</StatusBanner>
       ) : null}
       {params.error ? (
-        <p className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2 text-sm text-critical">
-          {params.error}
-        </p>
+        <StatusBanner tone="critical">{params.error}</StatusBanner>
       ) : null}
 
       <Card>
@@ -237,68 +254,86 @@ export default async function AdminClientReportsPage({
                     <DataGridTable>
                       <DataGridHead>
                         <DataGridRow className="border-t-0">
-                          <DataGridCell header>Entity Name</DataGridCell>
                           <DataGridCell header>Report Type</DataGridCell>
                           <DataGridCell header>Pages</DataGridCell>
+                          <DataGridCell header>Coverage</DataGridCell>
                           <DataGridCell header>Status</DataGridCell>
                           <DataGridCell header>Published At</DataGridCell>
                           <DataGridCell header className="text-right">Actions</DataGridCell>
                         </DataGridRow>
                       </DataGridHead>
                       <DataGridBody>
-                        {rows.map((report) => (
-                          <DataGridRow key={report.id}>
-                            <DataGridCell className="text-foreground">
-                              <div className="space-y-1">
-                                <p>{entity?.name ?? "-"}</p>
-                                <p className="text-xs text-muted-foreground">{entity?.description ?? "-"}</p>
-                              </div>
-                            </DataGridCell>
-                            <DataGridCell className="text-muted-foreground">
-                              {reportTypeById.get(report.report_type_template_id) ?? "-"}
-                            </DataGridCell>
-                            <DataGridCell className="text-muted-foreground">
-                              {(pagesByReportId.get(report.id) ?? []).slice(0, 3).join(", ") || "-"}
-                            </DataGridCell>
-                            <DataGridCell className="text-muted-foreground">{report.status}</DataGridCell>
-                            <DataGridCell className="text-muted-foreground">
-                              {report.published_at ? new Date(report.published_at).toLocaleString() : "-"}
-                            </DataGridCell>
-                            <DataGridCell>
-                              <div className="flex justify-end gap-2">
-                                <form action={publishReportAction}>
-                                  <input type="hidden" name="report_id" value={report.id} />
-                                  <input
-                                    type="hidden"
-                                    name="next_status"
-                                    value={report.status === "published" ? "draft" : "published"}
-                                  />
-                                  <input type="hidden" name="client_id" value={selectedClientId} />
-                                  <input type="hidden" name="granularity_id" value={granularityFilter} />
-                                  <Button
-                                    type="submit"
-                                    size="sm"
-                                    variant={report.status === "published" ? "secondary" : "default"}
+                        {rows.map((report) => {
+                          const coverage = coverageByReportId.get(report.id);
+                          const mdPct = formatPct(coverage?.pct_has_md);
+                          const jsonPct = formatPct(coverage?.pct_has_json);
+
+                          return (
+                            <DataGridRow key={report.id}>
+                              <DataGridCell className="text-muted-foreground">
+                                {reportTypeById.get(report.report_type_template_id) ?? "-"}
+                              </DataGridCell>
+                              <DataGridCell className="text-muted-foreground">
+                                {(pagesByReportId.get(report.id) ?? []).slice(0, 3).join(", ") || "-"}
+                              </DataGridCell>
+                              <DataGridCell>
+                                <div className="flex flex-wrap gap-2">
+                                  <Badge
+                                    className={mdPct === "100%"
+                                      ? "border-transparent bg-success text-success-foreground hover:bg-success"
+                                      : "border-transparent bg-warning text-warning-foreground hover:bg-warning"}
                                   >
-                                    {report.status === "published" ? "Set Draft" : "Publish"}
-                                  </Button>
-                                </form>
-                                <Link
-                                  href={`/admin/client-reports/${report.id}/edit?client_id=${selectedClientId}&granularity_id=${granularityFilter}`}
-                                  className="inline-flex h-8 items-center rounded-md border border-border/70 px-3 text-xs font-medium hover:bg-accent/50"
-                                >
-                                  Edit Content
-                                </Link>
-                                <Link
-                                  href={`/admin/client-reports/${report.id}/markdown-preview?client_id=${selectedClientId}&granularity_id=${granularityFilter}&locale=en`}
-                                  className="inline-flex h-8 items-center rounded-md border border-border/70 px-3 text-xs font-medium hover:bg-accent/50"
-                                >
-                                  Preview Markdown
-                                </Link>
-                              </div>
-                            </DataGridCell>
-                          </DataGridRow>
-                        ))}
+                                    MD {mdPct}
+                                  </Badge>
+                                  <Badge
+                                    className={jsonPct === "100%"
+                                      ? "border-transparent bg-success text-success-foreground hover:bg-success"
+                                      : "border-transparent bg-warning text-warning-foreground hover:bg-warning"}
+                                  >
+                                    JSON {jsonPct}
+                                  </Badge>
+                                </div>
+                              </DataGridCell>
+                              <DataGridCell className="text-muted-foreground">{report.status}</DataGridCell>
+                              <DataGridCell className="text-muted-foreground">
+                                {report.published_at ? new Date(report.published_at).toLocaleString() : "-"}
+                              </DataGridCell>
+                              <DataGridCell>
+                                <div className="flex justify-end gap-2">
+                                  <form action={publishReportAction}>
+                                    <input type="hidden" name="report_id" value={report.id} />
+                                    <input
+                                      type="hidden"
+                                      name="next_status"
+                                      value={report.status === "published" ? "draft" : "published"}
+                                    />
+                                    <input type="hidden" name="client_id" value={selectedClientId} />
+                                    <input type="hidden" name="granularity_id" value={granularityFilter} />
+                                    <Button
+                                      type="submit"
+                                      size="sm"
+                                      variant={report.status === "published" ? "secondary" : "default"}
+                                    >
+                                      {report.status === "published" ? "Set Draft" : "Publish"}
+                                    </Button>
+                                  </form>
+                                  <Link
+                                    href={`/admin/client-reports/${report.id}/edit?client_id=${selectedClientId}&granularity_id=${granularityFilter}`}
+                                    className="inline-flex h-8 items-center rounded-md border border-border/70 px-3 text-xs font-medium hover:bg-accent/50"
+                                  >
+                                    Edit Content
+                                  </Link>
+                                  <Link
+                                    href={`/admin/client-reports/${report.id}/markdown-preview?client_id=${selectedClientId}&granularity_id=${granularityFilter}&locale=en`}
+                                    className="inline-flex h-8 items-center rounded-md border border-border/70 px-3 text-xs font-medium hover:bg-accent/50"
+                                  >
+                                    Preview Markdown
+                                  </Link>
+                                </div>
+                              </DataGridCell>
+                            </DataGridRow>
+                          );
+                        })}
                       </DataGridBody>
                     </DataGridTable>
                   </DataGrid>

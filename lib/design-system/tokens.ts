@@ -138,9 +138,9 @@ export const neutralScaleTokens: ColorToken[] = [
 ];
 
 export const mvDefaultBrandPalette = {
-  primary: "#1E40AF",
-  secondary: "#64748B",
+  primary: "#1D4ED8",
+  secondary: "#314968",
   accent: "#0EA5E9",
-  background: "#F8FAFC",
-  text: "#0F172A",
+  background: "#F4F7FC",
+  text: "#0B1530",
 } as const;

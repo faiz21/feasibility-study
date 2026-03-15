@@ -1,0 +1,107 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": ""
+    },
+    "metadata": {
+      "title": "Appendix I - Procedures Covered",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "documentId": "INA-PL-RCP-APP-I",
+      "titleSuffix": "",
+      "coverDetails": []
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "subSections": [],
+        "isExecutiveFraming": false
+      },
+      {
+        "title": "Section 2",
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "subSections": [],
+        "isExecutiveFraming": false
+      },
+      {
+        "title": "Section 3",
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "subSections": [],
+        "isExecutiveFraming": false
+      }
+    ]
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": ""
+    },
+    "metadata": {
+      "title": "Appendix I - Procedures Covered",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "documentId": "INA-PL-RCP-APP-I",
+      "titleSuffix": "",
+      "coverDetails": []
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "subSections": [],
+        "isExecutiveFraming": false
+      },
+      {
+        "title": "Section 2",
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "subSections": [],
+        "isExecutiveFraming": false
+      },
+      {
+        "title": "Section 3",
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "subSections": [],
+        "isExecutiveFraming": false
+      }
+    ]
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": ""
+    },
+    "metadata": {
+      "title": "Appendix I - Procedures Covered",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "documentId": "INA-PL-RCP-APP-I",
+      "titleSuffix": "",
+      "coverDetails": []
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "subSections": [],
+        "isExecutiveFraming": false
+      },
+      {
+        "title": "Section 2",
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "subSections": [],
+        "isExecutiveFraming": false
+      },
+      {
+        "title": "Section 3",
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "subSections": [],
+        "isExecutiveFraming": false
+      }
+    ]
+  }
+}

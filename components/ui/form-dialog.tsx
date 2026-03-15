@@ -48,18 +48,31 @@ export function FormDialog({
 
   React.useEffect(() => {
     if (open) return;
-    if (document.fullscreenElement === containerRef.current) {
-      void document.exitFullscreen();
+    if (typeof document === "undefined") return;
+    if (!document.fullscreenElement || document.fullscreenElement !== containerRef.current) return;
+    if (!document.fullscreenEnabled || document.visibilityState !== "visible") return;
+    try {
+      void document.exitFullscreen().catch(() => undefined);
+    } catch {
+      // Ignore browser/fullscreen lifecycle races during dialog teardown.
     }
   }, [open]);
 
   const toggleBrowserFullscreen = async () => {
     if (!containerRef.current) return;
     if (document.fullscreenElement === containerRef.current) {
-      await document.exitFullscreen();
+      try {
+        await document.exitFullscreen();
+      } catch {
+        return;
+      }
       return;
     }
-    await containerRef.current.requestFullscreen();
+    try {
+      await containerRef.current.requestFullscreen();
+    } catch {
+      return;
+    }
   };
 
   return (
@@ -68,23 +81,23 @@ export function FormDialog({
         {triggerLabel}
       </Button>
       {open ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/70 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-overlay/40 p-4 backdrop-blur-md">
           <div
             ref={containerRef}
             className={
               fullScreen
-                ? "h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] rounded-xl border border-border bg-card p-5 shadow-panel"
-                : "w-full max-w-2xl rounded-xl border border-border bg-card p-5 shadow-panel"
+                ? "glass-panel h-[calc(100vh-2rem)] w-[calc(100vw-2rem)] rounded-[1.5rem] border border-border/80 bg-card/95 p-6 shadow-panel"
+                : "glass-panel w-full max-w-3xl rounded-[1.5rem] border border-border/80 bg-card/95 p-6 shadow-panel"
             }
           >
             <div className="mb-4 flex items-start justify-between gap-2">
               <div>
-                <h3 className="text-base font-semibold">{title}</h3>
-                {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
+                <h3 className="text-xl font-semibold tracking-tight">{title}</h3>
+                {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">{description}</p> : null}
               </div>
               <div className="flex items-center gap-2">
                 {allowBrowserFullscreen ? (
-                  <Button type="button" variant="ghost" size="sm" onClick={() => void toggleBrowserFullscreen()}>
+                  <Button type="button" variant="outline" size="sm" onClick={() => void toggleBrowserFullscreen()}>
                     {isBrowserFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
                   </Button>
                 ) : null}

@@ -10,6 +10,8 @@
     "docker:logs": "bash -lc '(docker compose version >/dev/null 2>&1 && docker compose --env-file docker/.env.docker logs -f --tail=200) || docker-compose --env-file docker/.env.docker logs -f --tail=200'",
     "docker:smoke": "bash scripts/smoke-docker-stack.sh",
     "render:md-grid": "node scripts/markdown-to-grid-html.mjs",
+    "report:extract-html-templates": "node scripts/generate-report-page-templates-html.mjs",
+    "report:generate-rodding-package": "node scripts/generate-plant-report-package.mjs --input 'report/Report Generator/INA-PL-RCP.txt'",
     "smoke:reports": "node scripts/smoke-reports-routes.mjs",
     "storybook": "NEXT_PRIVATE_LOCAL_WEBPACK=1 storybook dev -p 6006 --disable-telemetry",
     "build-storybook": "NEXT_PRIVATE_LOCAL_WEBPACK=1 storybook build --disable-telemetry"
@@ -17,6 +19,8 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@fontsource/ibm-plex-sans": "^5.2.8",
+    "@fontsource/source-serif-4": "^5.2.9",
     "@mui/icons-material": "^7.3.8",
     "@mui/material": "^7.3.8",
     "@nivo/bar": "^0.99.0",

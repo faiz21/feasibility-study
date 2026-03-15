@@ -1,0 +1,320 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "primary": "#1d4ed8",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-O",
+      "reportType": "Appendix O - Automation Assessment",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix O - Automation Assessment",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "risks": {
+        "assumptions": [],
+        "explicitGaps": [],
+        "technicalRisks": []
+      },
+      "roadmap": {
+        "phases": [
+          {
+            "phase": "Phase 1",
+            "title": "Stabilize",
+            "bullets": [
+              "Stabilize instrumentation and control integrity."
+            ],
+            "colorClass": "bg-blue-600"
+          },
+          {
+            "phase": "Phase 2",
+            "title": "Integrate",
+            "bullets": [
+              "Integrate trusted runtime and event capture."
+            ],
+            "colorClass": "bg-sky-600"
+          },
+          {
+            "phase": "Phase 3",
+            "title": "Extend",
+            "bullets": [
+              "Extend analytics after data trust is established."
+            ],
+            "colorClass": "bg-cyan-600"
+          }
+        ],
+        "pilots": [],
+        "principles": "",
+        "dependencies": []
+      },
+      "baseline": {
+        "plcData": [],
+        "plcNote": "",
+        "overview": "",
+        "plcTotal": 0,
+        "instruments": {
+          "note": "",
+          "total": 0,
+          "inferred": 0,
+          "obtained": 0,
+          "relayLocal": 0,
+          "plcReadable": 0
+        },
+        "supervisory": {
+          "note": "",
+          "systems": "",
+          "protocols": ""
+        }
+      },
+      "framework": {
+        "scale": [],
+        "levels": []
+      },
+      "feasibility": {
+        "early": [],
+        "notFeasible": [],
+        "implications": [],
+        "afterUpgrades": []
+      },
+      "methodology": {
+        "inScope": [],
+        "outputs": [],
+        "purpose": "",
+        "sources": [],
+        "outOfScope": "",
+        "dataQuality": []
+      },
+      "processGroups": [],
+      "executiveSummary": {
+        "context": "",
+        "outlook": "",
+        "takeaway": "",
+        "realities": [],
+        "priorities": [],
+        "riskThemes": [],
+        "classifications": [],
+        "maturitySnapshot": "",
+        "roadmapDirection": ""
+      },
+      "plantWideFindings": []
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "primary": "#1d4ed8",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-O",
+      "reportType": "Appendix O - Automation Assessment",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix O - Automation Assessment",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "risks": {
+        "assumptions": [],
+        "explicitGaps": [],
+        "technicalRisks": []
+      },
+      "roadmap": {
+        "phases": [
+          {
+            "phase": "Phase 1",
+            "title": "Stabilize",
+            "bullets": [
+              "Stabilize instrumentation and control integrity."
+            ],
+            "colorClass": "bg-blue-600"
+          },
+          {
+            "phase": "Phase 2",
+            "title": "Integrate",
+            "bullets": [
+              "Integrate trusted runtime and event capture."
+            ],
+            "colorClass": "bg-sky-600"
+          },
+          {
+            "phase": "Phase 3",
+            "title": "Extend",
+            "bullets": [
+              "Extend analytics after data trust is established."
+            ],
+            "colorClass": "bg-cyan-600"
+          }
+        ],
+        "pilots": [],
+        "principles": "",
+        "dependencies": []
+      },
+      "baseline": {
+        "plcData": [],
+        "plcNote": "",
+        "overview": "",
+        "plcTotal": 0,
+        "instruments": {
+          "note": "",
+          "total": 0,
+          "inferred": 0,
+          "obtained": 0,
+          "relayLocal": 0,
+          "plcReadable": 0
+        },
+        "supervisory": {
+          "note": "",
+          "systems": "",
+          "protocols": ""
+        }
+      },
+      "framework": {
+        "scale": [],
+        "levels": []
+      },
+      "feasibility": {
+        "early": [],
+        "notFeasible": [],
+        "implications": [],
+        "afterUpgrades": []
+      },
+      "methodology": {
+        "inScope": [],
+        "outputs": [],
+        "purpose": "",
+        "sources": [],
+        "outOfScope": "",
+        "dataQuality": []
+      },
+      "processGroups": [],
+      "executiveSummary": {
+        "context": "",
+        "outlook": "",
+        "takeaway": "",
+        "realities": [],
+        "priorities": [],
+        "riskThemes": [],
+        "classifications": [],
+        "maturitySnapshot": "",
+        "roadmapDirection": ""
+      },
+      "plantWideFindings": []
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "primary": "#1d4ed8",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-O",
+      "reportType": "Appendix O - Automation Assessment",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix O - Automation Assessment",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "risks": {
+        "assumptions": [],
+        "explicitGaps": [],
+        "technicalRisks": []
+      },
+      "roadmap": {
+        "phases": [
+          {
+            "phase": "Phase 1",
+            "title": "Stabilize",
+            "bullets": [
+              "Stabilize instrumentation and control integrity."
+            ],
+            "colorClass": "bg-blue-600"
+          },
+          {
+            "phase": "Phase 2",
+            "title": "Integrate",
+            "bullets": [
+              "Integrate trusted runtime and event capture."
+            ],
+            "colorClass": "bg-sky-600"
+          },
+          {
+            "phase": "Phase 3",
+            "title": "Extend",
+            "bullets": [
+              "Extend analytics after data trust is established."
+            ],
+            "colorClass": "bg-cyan-600"
+          }
+        ],
+        "pilots": [],
+        "principles": "",
+        "dependencies": []
+      },
+      "baseline": {
+        "plcData": [],
+        "plcNote": "",
+        "overview": "",
+        "plcTotal": 0,
+        "instruments": {
+          "note": "",
+          "total": 0,
+          "inferred": 0,
+          "obtained": 0,
+          "relayLocal": 0,
+          "plcReadable": 0
+        },
+        "supervisory": {
+          "note": "",
+          "systems": "",
+          "protocols": ""
+        }
+      },
+      "framework": {
+        "scale": [],
+        "levels": []
+      },
+      "feasibility": {
+        "early": [],
+        "notFeasible": [],
+        "implications": [],
+        "afterUpgrades": []
+      },
+      "methodology": {
+        "inScope": [],
+        "outputs": [],
+        "purpose": "",
+        "sources": [],
+        "outOfScope": "",
+        "dataQuality": []
+      },
+      "processGroups": [],
+      "executiveSummary": {
+        "context": "",
+        "outlook": "",
+        "takeaway": "",
+        "realities": [],
+        "priorities": [],
+        "riskThemes": [],
+        "classifications": [],
+        "maturitySnapshot": "",
+        "roadmapDirection": ""
+      },
+      "plantWideFindings": []
+    }
+  }
+}

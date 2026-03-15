@@ -1,0 +1,1115 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "primaryDark": "#1e3a8a",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "title": "Appendix F - Mobile Assets",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "attributes": [
+        {
+          "label": "Plant Code",
+          "value": "INA-PL-RCP",
+          "valueClass": "font-mono"
+        },
+        {
+          "label": "Plant Name",
+          "value": "Rodding Plant",
+          "valueClass": "text-slate-700"
+        },
+        {
+          "label": "Document Date",
+          "value": "14 March 2026",
+          "valueClass": "text-slate-700"
+        }
+      ],
+      "documentId": "INA-PL-RCP-APP-F"
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "type": "narrative",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 1
+        }
+      },
+      {
+        "title": "Section 2",
+        "type": "narrative",
+        "paragraphs": [
+          "Document Date: 14 March 2026"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 2
+        }
+      },
+      {
+        "title": "Section 3",
+        "type": "narrative",
+        "paragraphs": [
+          "## 1. Purpose of Appendix F"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 3
+        }
+      },
+      {
+        "title": "Section 4",
+        "type": "narrative",
+        "paragraphs": [
+          "This appendix captures mobile-asset evidence linked to Rodding Plant [INA-PL-RCP]."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 4
+        }
+      },
+      {
+        "title": "Section 5",
+        "type": "narrative",
+        "paragraphs": [
+          "## 2. Mobile Asset Inventory"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 5
+        }
+      },
+      {
+        "title": "Section 6",
+        "type": "narrative",
+        "paragraphs": [
+          "| Code | Vehicle/Mobile Asset | Category | Typical Use | Energy/Fuel |\n| --- | --- | --- | --- | --- |\n| INA-VEH-RCP-001 | INA-VHT-MTC | Transport | Site note mentions “MTC weigher” under Rodding Plant; To validate — confirm vehicle identity and whether this is molten MTC vs anode transport movement. | To validate |"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 6
+        }
+      },
+      {
+        "title": "Section 7",
+        "type": "narrative",
+        "paragraphs": [
+          "## 3. Operational Dependency"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 7
+        }
+      },
+      {
+        "title": "Section 8",
+        "type": "narrative",
+        "paragraphs": [
+          "The vehicle register is sparse, but the findings show that transport timing and receiving confirmation remain important for rodding and downstream reduction coordination. Where mobile assets are weakly identified, operational planning becomes dependent on personal follow-up rather than governed asset visibility."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 8
+        }
+      }
+    ]
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "primaryDark": "#1e3a8a",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "title": "Appendix F - Mobile Assets",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "attributes": [
+        {
+          "label": "Plant Code",
+          "value": "INA-PL-RCP",
+          "valueClass": "font-mono"
+        },
+        {
+          "label": "Plant Name",
+          "value": "Rodding Plant",
+          "valueClass": "text-slate-700"
+        },
+        {
+          "label": "Document Date",
+          "value": "14 March 2026",
+          "valueClass": "text-slate-700"
+        }
+      ],
+      "documentId": "INA-PL-RCP-APP-F"
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "type": "narrative",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 1
+        }
+      },
+      {
+        "title": "Section 2",
+        "type": "narrative",
+        "paragraphs": [
+          "Document Date: 14 March 2026"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 2
+        }
+      },
+      {
+        "title": "Section 3",
+        "type": "narrative",
+        "paragraphs": [
+          "## 1. Purpose of Appendix F"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 3
+        }
+      },
+      {
+        "title": "Section 4",
+        "type": "narrative",
+        "paragraphs": [
+          "This appendix captures mobile-asset evidence linked to Rodding Plant [INA-PL-RCP]."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 4
+        }
+      },
+      {
+        "title": "Section 5",
+        "type": "narrative",
+        "paragraphs": [
+          "## 2. Mobile Asset Inventory"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 5
+        }
+      },
+      {
+        "title": "Section 6",
+        "type": "narrative",
+        "paragraphs": [
+          "| Code | Vehicle/Mobile Asset | Category | Typical Use | Energy/Fuel |\n| --- | --- | --- | --- | --- |\n| INA-VEH-RCP-001 | INA-VHT-MTC | Transport | Site note mentions “MTC weigher” under Rodding Plant; To validate — confirm vehicle identity and whether this is molten MTC vs anode transport movement. | To validate |"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 6
+        }
+      },
+      {
+        "title": "Section 7",
+        "type": "narrative",
+        "paragraphs": [
+          "## 3. Operational Dependency"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 7
+        }
+      },
+      {
+        "title": "Section 8",
+        "type": "narrative",
+        "paragraphs": [
+          "The vehicle register is sparse, but the findings show that transport timing and receiving confirmation remain important for rodding and downstream reduction coordination. Where mobile assets are weakly identified, operational planning becomes dependent on personal follow-up rather than governed asset visibility."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 8
+        }
+      }
+    ]
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "primaryDark": "#1e3a8a",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "title": "Appendix F - Mobile Assets",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "attributes": [
+        {
+          "label": "Plant Code",
+          "value": "INA-PL-RCP",
+          "valueClass": "font-mono"
+        },
+        {
+          "label": "Plant Name",
+          "value": "Rodding Plant",
+          "valueClass": "text-slate-700"
+        },
+        {
+          "label": "Document Date",
+          "value": "14 March 2026",
+          "valueClass": "text-slate-700"
+        }
+      ],
+      "documentId": "INA-PL-RCP-APP-F"
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "type": "narrative",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 1
+        }
+      },
+      {
+        "title": "Section 2",
+        "type": "narrative",
+        "paragraphs": [
+          "Document Date: 14 March 2026"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 2
+        }
+      },
+      {
+        "title": "Section 3",
+        "type": "narrative",
+        "paragraphs": [
+          "## 1. Purpose of Appendix F"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 3
+        }
+      },
+      {
+        "title": "Section 4",
+        "type": "narrative",
+        "paragraphs": [
+          "This appendix captures mobile-asset evidence linked to Rodding Plant [INA-PL-RCP]."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 4
+        }
+      },
+      {
+        "title": "Section 5",
+        "type": "narrative",
+        "paragraphs": [
+          "## 2. Mobile Asset Inventory"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 5
+        }
+      },
+      {
+        "title": "Section 6",
+        "type": "narrative",
+        "paragraphs": [
+          "| Code | Vehicle/Mobile Asset | Category | Typical Use | Energy/Fuel |\n| --- | --- | --- | --- | --- |\n| INA-VEH-RCP-001 | INA-VHT-MTC | Transport | Site note mentions “MTC weigher” under Rodding Plant; To validate — confirm vehicle identity and whether this is molten MTC vs anode transport movement. | To validate |"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 6
+        }
+      },
+      {
+        "title": "Section 7",
+        "type": "narrative",
+        "paragraphs": [
+          "## 3. Operational Dependency"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 7
+        }
+      },
+      {
+        "title": "Section 8",
+        "type": "narrative",
+        "paragraphs": [
+          "The vehicle register is sparse, but the findings show that transport timing and receiving confirmation remain important for rodding and downstream reduction coordination. Where mobile assets are weakly identified, operational planning becomes dependent on personal follow-up rather than governed asset visibility."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 8
+        }
+      }
+    ]
+  }
+}

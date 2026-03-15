@@ -1,0 +1,212 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-E",
+      "reportType": "Appendix E - SCADA / DCS Inventory",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix E - SCADA / DCS Inventory",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "purpose": {
+        "text": "",
+        "title": "purpose",
+        "takeaway": "",
+        "authoritativeReferences": []
+      },
+      "referenceMap": {
+        "items": [],
+        "title": "referenceMap",
+        "footer": "",
+        "subtitle": ""
+      },
+      "executiveFraming": {
+        "items": [],
+        "title": "executiveFraming"
+      },
+      "inventoryRegister": {
+        "items": [],
+        "title": "inventoryRegister",
+        "subtitle": ""
+      },
+      "landscapeSnapshot": {
+        "title": "landscapeSnapshot",
+        "metrics": [],
+        "lifecycle": {
+          "chart": [],
+          "title": "",
+          "total": 0,
+          "implications": []
+        }
+      },
+      "maturityAssessment": {
+        "items": [],
+        "title": "maturityAssessment",
+        "subtitle": ""
+      },
+      "coverageVsProcessGroups": {
+        "note": "",
+        "items": [],
+        "title": "coverageVsProcessGroups"
+      },
+      "architecturalObservations": {
+        "items": [],
+        "title": "architecturalObservations",
+        "summary": {
+          "text": "",
+          "title": ""
+        }
+      }
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-E",
+      "reportType": "Appendix E - SCADA / DCS Inventory",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix E - SCADA / DCS Inventory",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "purpose": {
+        "text": "",
+        "title": "purpose",
+        "takeaway": "",
+        "authoritativeReferences": []
+      },
+      "referenceMap": {
+        "items": [],
+        "title": "referenceMap",
+        "footer": "",
+        "subtitle": ""
+      },
+      "executiveFraming": {
+        "items": [],
+        "title": "executiveFraming"
+      },
+      "inventoryRegister": {
+        "items": [],
+        "title": "inventoryRegister",
+        "subtitle": ""
+      },
+      "landscapeSnapshot": {
+        "title": "landscapeSnapshot",
+        "metrics": [],
+        "lifecycle": {
+          "chart": [],
+          "title": "",
+          "total": 0,
+          "implications": []
+        }
+      },
+      "maturityAssessment": {
+        "items": [],
+        "title": "maturityAssessment",
+        "subtitle": ""
+      },
+      "coverageVsProcessGroups": {
+        "note": "",
+        "items": [],
+        "title": "coverageVsProcessGroups"
+      },
+      "architecturalObservations": {
+        "items": [],
+        "title": "architecturalObservations",
+        "summary": {
+          "text": "",
+          "title": ""
+        }
+      }
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-E",
+      "reportType": "Appendix E - SCADA / DCS Inventory",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix E - SCADA / DCS Inventory",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "purpose": {
+        "text": "",
+        "title": "purpose",
+        "takeaway": "",
+        "authoritativeReferences": []
+      },
+      "referenceMap": {
+        "items": [],
+        "title": "referenceMap",
+        "footer": "",
+        "subtitle": ""
+      },
+      "executiveFraming": {
+        "items": [],
+        "title": "executiveFraming"
+      },
+      "inventoryRegister": {
+        "items": [],
+        "title": "inventoryRegister",
+        "subtitle": ""
+      },
+      "landscapeSnapshot": {
+        "title": "landscapeSnapshot",
+        "metrics": [],
+        "lifecycle": {
+          "chart": [],
+          "title": "",
+          "total": 0,
+          "implications": []
+        }
+      },
+      "maturityAssessment": {
+        "items": [],
+        "title": "maturityAssessment",
+        "subtitle": ""
+      },
+      "coverageVsProcessGroups": {
+        "note": "",
+        "items": [],
+        "title": "coverageVsProcessGroups"
+      },
+      "architecturalObservations": {
+        "items": [],
+        "title": "architecturalObservations",
+        "summary": {
+          "text": "",
+          "title": ""
+        }
+      }
+    }
+  }
+}

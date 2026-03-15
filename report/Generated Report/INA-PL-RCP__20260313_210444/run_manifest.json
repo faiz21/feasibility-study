@@ -1,0 +1,371 @@
+{
+  "run_root": "report/Generated Report/INA-PL-RCP__20260313_210444",
+  "created_at": "2026-03-13T21:04:44.371Z",
+  "identity": {
+    "plant_name": "Rodding Plant",
+    "plant_code": "INA-PL-RCP",
+    "company_name": "PT Indonesia Asahan Aluminium",
+    "company_code": "INA",
+    "document_date": "14 March 2026",
+    "scope": "single-plant package for Rodding Plant with company context as background evidence"
+  },
+  "dependencies": {
+    "group_1": [
+      "APP-A",
+      "APP-B",
+      "APP-C",
+      "APP-D",
+      "APP-E",
+      "APP-F",
+      "APP-G",
+      "APP-H",
+      "APP-I",
+      "APP-J"
+    ],
+    "group_2": [
+      "APP-K",
+      "APP-L"
+    ],
+    "sequential": [
+      "APP-M",
+      "APP-N"
+    ],
+    "group_3": [
+      "APP-O",
+      "MAIN"
+    ]
+  },
+  "preflight": {
+    "process_groups_present": true,
+    "elicitation_present": true,
+    "equipment_present": true,
+    "plc_present": true,
+    "scada_present": true,
+    "findings_present": true,
+    "issues_present": true,
+    "kpis_present": true,
+    "file_used_present": true,
+    "solution_present": true
+  },
+  "documents": [
+    {
+      "key": "APP-A",
+      "document_id": "INA-PL-RCP-APP-A",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-A_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-A_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-A_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-A_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-A_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-A_refmap.md"
+      }
+    },
+    {
+      "key": "APP-B",
+      "document_id": "INA-PL-RCP-APP-B",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-B_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-B_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-B_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-B_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-B_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-B_refmap.md"
+      }
+    },
+    {
+      "key": "APP-C",
+      "document_id": "INA-PL-RCP-APP-C",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-C_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-C_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-C_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-C_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-C_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-C_refmap.md"
+      }
+    },
+    {
+      "key": "APP-D",
+      "document_id": "INA-PL-RCP-APP-D",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-D_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-D_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-D_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-D_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-D_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-D_refmap.md"
+      }
+    },
+    {
+      "key": "APP-E",
+      "document_id": "INA-PL-RCP-APP-E",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-E_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-E_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-E_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-E_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-E_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-E_refmap.md"
+      }
+    },
+    {
+      "key": "APP-F",
+      "document_id": "INA-PL-RCP-APP-F",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-F_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-F_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-F_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-F_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-F_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-F_refmap.md"
+      }
+    },
+    {
+      "key": "APP-G",
+      "document_id": "INA-PL-RCP-APP-G",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-G_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-G_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-G_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-G_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-G_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-G_refmap.md"
+      }
+    },
+    {
+      "key": "APP-H",
+      "document_id": "INA-PL-RCP-APP-H",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-H_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-H_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-H_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-H_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-H_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-H_refmap.md"
+      }
+    },
+    {
+      "key": "APP-I",
+      "document_id": "INA-PL-RCP-APP-I",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-I_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-I_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-I_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-I_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-I_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-I_refmap.md"
+      }
+    },
+    {
+      "key": "APP-J",
+      "document_id": "INA-PL-RCP-APP-J",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-J_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-J_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-J_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-J_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-J_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-J_refmap.md"
+      }
+    },
+    {
+      "key": "APP-K",
+      "document_id": "INA-PL-RCP-APP-K",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-K_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-K_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-K_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-K_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-K_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-K_refmap.md"
+      }
+    },
+    {
+      "key": "APP-L",
+      "document_id": "INA-PL-RCP-APP-L",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-L_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-L_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-L_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-L_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-L_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-L_refmap.md"
+      }
+    },
+    {
+      "key": "APP-M",
+      "document_id": "INA-PL-RCP-APP-M",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-M_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-M_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-M_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-M_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-M_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-M_refmap.md"
+      }
+    },
+    {
+      "key": "APP-N",
+      "document_id": "INA-PL-RCP-APP-N",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-N_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-N_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-N_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-N_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-N_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-N_refmap.md"
+      }
+    },
+    {
+      "key": "APP-O",
+      "document_id": "INA-PL-RCP-APP-O",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-O_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-O_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-O_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-O_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-O_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-APP-O_refmap.md"
+      }
+    },
+    {
+      "key": "MAIN",
+      "document_id": "INA-PL-RCP-MAIN",
+      "outputs": {
+        "markdown": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-MAIN_EN.md",
+        "docx_en": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-MAIN_EN.docx",
+        "docx_id": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-MAIN_ID.docx",
+        "docx_ja": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-MAIN_JA.docx",
+        "web_json": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-MAIN_web.json",
+        "refmap": "report/Generated Report/INA-PL-RCP__20260313_210444/INA-PL-RCP-MAIN_refmap.md"
+      }
+    }
+  ],
+  "validations": [
+    {
+      "document_id": "INA-PL-RCP-APP-A",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-B",
+      "structure_status": "PASS",
+      "web_json_schema_status": "FAIL",
+      "web_json_schema_errors": [
+        "en_json.sections[0].paragraphs: additional property not allowed",
+        "en_json.sections[1].paragraphs: additional property not allowed",
+        "en_json.sections[2].paragraphs: additional property not allowed"
+      ]
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-C",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-D",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-E",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-F",
+      "structure_status": "PASS",
+      "web_json_schema_status": "FAIL",
+      "web_json_schema_errors": [
+        "en_json.sections[0].title: additional property not allowed",
+        "en_json.sections[0].paragraphs: additional property not allowed",
+        "en_json.sections[1].title: additional property not allowed",
+        "en_json.sections[1].paragraphs: additional property not allowed",
+        "en_json.sections[2].title: additional property not allowed",
+        "en_json.sections[2].paragraphs: additional property not allowed",
+        "id_json.sections[0].title: additional property not allowed",
+        "id_json.sections[1].title: additional property not allowed",
+        "id_json.sections[2].title: additional property not allowed",
+        "ja_json.sections[0].title: additional property not allowed",
+        "ja_json.sections[1].title: additional property not allowed",
+        "ja_json.sections[2].title: additional property not allowed"
+      ]
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-G",
+      "structure_status": "PASS",
+      "web_json_schema_status": "FAIL",
+      "web_json_schema_errors": [
+        "en_json.sections[0].paragraphs: additional property not allowed",
+        "en_json.sections[1].paragraphs: additional property not allowed",
+        "en_json.sections[2].paragraphs: additional property not allowed"
+      ]
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-H",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-I",
+      "structure_status": "PASS",
+      "web_json_schema_status": "FAIL",
+      "web_json_schema_errors": [
+        "en_json.sections[0].paragraphs: additional property not allowed",
+        "en_json.sections[1].paragraphs: additional property not allowed",
+        "en_json.sections[2].paragraphs: additional property not allowed"
+      ]
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-J",
+      "structure_status": "PASS",
+      "web_json_schema_status": "FAIL",
+      "web_json_schema_errors": [
+        "en_json.sections[0].paragraphs: additional property not allowed",
+        "en_json.sections[1].paragraphs: additional property not allowed",
+        "en_json.sections[2].paragraphs: additional property not allowed"
+      ]
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-K",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-L",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-M",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-N",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    },
+    {
+      "document_id": "INA-PL-RCP-APP-O",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    },
+    {
+      "document_id": "INA-PL-RCP-MAIN",
+      "structure_status": "PASS",
+      "web_json_schema_status": "PASS",
+      "web_json_schema_errors": []
+    }
+  ]
+}

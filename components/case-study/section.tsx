@@ -17,13 +17,12 @@ export function CaseStudySection({
   return (
     <Card className={cn("border-foreground/10", className)}>
       <CardHeader>
-        <CardTitle className="text-lg">{title}</CardTitle>
+        <CardTitle className="text-2xl">{title}</CardTitle>
         {description ? (
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-base leading-7 text-muted-foreground">{description}</p>
         ) : null}
       </CardHeader>
       <CardContent>{children}</CardContent>
     </Card>
   );
 }
-

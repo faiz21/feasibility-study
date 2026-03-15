@@ -1,0 +1,188 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-L",
+      "reportType": "Appendix L - Maturity Level Definitions",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix L - Maturity Level Definitions",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s1_purpose": {
+        "text": "",
+        "title": "s1 purpose",
+        "takeaway": ""
+      },
+      "s6_riskMapping": {
+        "title": "s6 riskMapping",
+        "ranges": [],
+        "subtitle": ""
+      },
+      "s3_scoringScale": {
+        "scale": [],
+        "title": "s3 scoringScale",
+        "subtitle": "",
+        "methodology": [],
+        "methodologyTitle": ""
+      },
+      "s8_referenceMap": {
+        "title": "s8 referenceMap",
+        "mappings": []
+      },
+      "s5_weightingLogic": {
+        "data": [],
+        "rules": "",
+        "title": "s5 weightingLogic",
+        "subtitle": ""
+      },
+      "s2_dimensionsOverview": {
+        "title": "s2 dimensionsOverview",
+        "subtitle": "",
+        "dimensions": []
+      },
+      "s4_parameterDictionary": {
+        "title": "s4 parameterDictionary",
+        "subtitle": "",
+        "dimensions": []
+      },
+      "s7_executiveInterpretation": {
+        "rules": [],
+        "title": "s7 executiveInterpretation"
+      }
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-L",
+      "reportType": "Appendix L - Maturity Level Definitions",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix L - Maturity Level Definitions",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s1_purpose": {
+        "text": "",
+        "title": "s1 purpose",
+        "takeaway": ""
+      },
+      "s6_riskMapping": {
+        "title": "s6 riskMapping",
+        "ranges": [],
+        "subtitle": ""
+      },
+      "s3_scoringScale": {
+        "scale": [],
+        "title": "s3 scoringScale",
+        "subtitle": "",
+        "methodology": [],
+        "methodologyTitle": ""
+      },
+      "s8_referenceMap": {
+        "title": "s8 referenceMap",
+        "mappings": []
+      },
+      "s5_weightingLogic": {
+        "data": [],
+        "rules": "",
+        "title": "s5 weightingLogic",
+        "subtitle": ""
+      },
+      "s2_dimensionsOverview": {
+        "title": "s2 dimensionsOverview",
+        "subtitle": "",
+        "dimensions": []
+      },
+      "s4_parameterDictionary": {
+        "title": "s4 parameterDictionary",
+        "subtitle": "",
+        "dimensions": []
+      },
+      "s7_executiveInterpretation": {
+        "rules": [],
+        "title": "s7 executiveInterpretation"
+      }
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-L",
+      "reportType": "Appendix L - Maturity Level Definitions",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix L - Maturity Level Definitions",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s1_purpose": {
+        "text": "",
+        "title": "s1 purpose",
+        "takeaway": ""
+      },
+      "s6_riskMapping": {
+        "title": "s6 riskMapping",
+        "ranges": [],
+        "subtitle": ""
+      },
+      "s3_scoringScale": {
+        "scale": [],
+        "title": "s3 scoringScale",
+        "subtitle": "",
+        "methodology": [],
+        "methodologyTitle": ""
+      },
+      "s8_referenceMap": {
+        "title": "s8 referenceMap",
+        "mappings": []
+      },
+      "s5_weightingLogic": {
+        "data": [],
+        "rules": "",
+        "title": "s5 weightingLogic",
+        "subtitle": ""
+      },
+      "s2_dimensionsOverview": {
+        "title": "s2 dimensionsOverview",
+        "subtitle": "",
+        "dimensions": []
+      },
+      "s4_parameterDictionary": {
+        "title": "s4 parameterDictionary",
+        "subtitle": "",
+        "dimensions": []
+      },
+      "s7_executiveInterpretation": {
+        "rules": [],
+        "title": "s7 executiveInterpretation"
+      }
+    }
+  }
+}

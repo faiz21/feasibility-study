@@ -15,6 +15,11 @@ type ChatRequest = {
   history?: ChatMessage[];
   raw_report?: string;
   full_en_report?: string;
+  selected_sections?: Array<{
+    name?: string;
+    content?: string;
+    remark?: string;
+  }>;
 };
 
 export async function POST(request: Request) {
@@ -44,6 +49,15 @@ export async function POST(request: Request) {
   const history = Array.isArray(body?.history) ? body?.history : [];
   const rawReport = typeof body?.raw_report === "string" ? body.raw_report : "";
   const fullEnReport = typeof body?.full_en_report === "string" ? body.full_en_report : "";
+  const selectedSections = Array.isArray(body?.selected_sections)
+    ? body.selected_sections
+        .map((section) => ({
+          name: String(section?.name ?? "").trim(),
+          content: String(section?.content ?? "").trim(),
+          remark: String(section?.remark ?? "").trim(),
+        }))
+        .filter((section) => section.name && section.content)
+    : [];
 
   if (!sessionId || !reportId || !message) {
     return NextResponse.json({ error: "session_id, report_id, and message are required" }, { status: 400 });
@@ -92,6 +106,7 @@ export async function POST(request: Request) {
     history,
     raw_report: rawReport,
     full_en_report: fullEnReport,
+    selected_sections: selectedSections,
   };
 
   const controller = new AbortController();

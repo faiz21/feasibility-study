@@ -5,6 +5,7 @@ import { PageHeader, StatCard } from "@/components/ui/dashboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { StatusBanner } from "@/components/ui/status-banner";
 import { clearAdminPreviewClientId, getAdminPreviewClientId, setAdminPreviewClientId } from "@/lib/portal/admin-preview";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -77,14 +78,10 @@ export default async function AdminReportsPage({
         <StatCard label="Unique Readers" value={uniqueReaders} />
       </section>
       {params.success ? (
-        <p className="rounded-lg border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">
-          {params.success}
-        </p>
+        <StatusBanner tone="success">{params.success}</StatusBanner>
       ) : null}
       {params.error ? (
-        <p className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2 text-sm text-critical">
-          {params.error}
-        </p>
+        <StatusBanner tone="critical">{params.error}</StatusBanner>
       ) : null}
       <Card>
         <CardHeader>

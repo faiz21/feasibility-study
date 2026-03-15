@@ -2,11 +2,12 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { requireRole } from "@/lib/portal/auth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { PageHeader } from "@/components/ui/dashboard";
+import { PageHeader, StatCard } from "@/components/ui/dashboard";
 import { Badge } from "@/components/ui/badge";
 import { Building2, FileText, FolderOpen, Layers3 } from "lucide-react";
 import { resolveReportsUiTheme, type ReportsUiTheme } from "@/lib/report-view-theme";
 import { ClientReportLandingCover } from "@/components/report/cover/client-report-landing-cover";
+import { withAlpha } from "@/lib/portal-theme";
 
 type AccessTemplate = {
   id: string;
@@ -88,12 +89,6 @@ function resolveClientAssetUrl(value: unknown): string | null {
   if (!trimmed.includes("/")) return null;
   if (!supabaseBase) return null;
   return encodeURI(`${supabaseBase.replace(/\/$/, "")}/storage/v1/object/public/${trimmed.replace(/^\/+/, "")}`);
-}
-
-function withAlpha(hex: string, alphaHex: string): string {
-  const clean = hex.trim().replace("#", "");
-  if (clean.length !== 6) return hex;
-  return `#${clean}${alphaHex}`;
 }
 
 function getCategoryBadgeStyle(category: string | null, theme: ReportsUiTheme) {
@@ -312,11 +307,7 @@ export default async function ReportsPage() {
       <PageHeader
         title="Feasibility Study Report"
         description="Browse configured granularities, entities, and accessible report types."
-        className="rounded-xl border p-4"
-        style={{
-          borderColor: reportsTheme.borderStrong,
-          background: `linear-gradient(180deg, ${reportsTheme.surfaceMuted}, ${reportsTheme.surface})`,
-        }}
+        className="rounded-[1.5rem] border border-border/80 bg-card/80 p-5"
       />
       <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {[
@@ -324,21 +315,7 @@ export default async function ReportsPage() {
           { label: "Entities", value: entitiesCount },
           { label: "Enabled Reports", value: publishedReportsCount },
         ].map((stat) => (
-          <div
-            key={stat.label}
-            className="rounded-xl border p-4 shadow-soft"
-            style={{
-              borderColor: reportsTheme.borderStrong,
-              background: `linear-gradient(180deg, ${reportsTheme.surfaceElevated}, ${reportsTheme.surface})`,
-            }}
-          >
-            <p className="text-xs font-medium uppercase tracking-wide" style={{ color: reportsTheme.textSecondary }}>
-              {stat.label}
-            </p>
-            <p className="mt-2 text-2xl font-semibold tracking-tight" style={{ color: reportsTheme.accent }}>
-              {stat.value}
-            </p>
-          </div>
+          <StatCard key={stat.label} label={stat.label} value={stat.value} className="border-border/80" />
         ))}
       </section>
 
@@ -360,9 +337,9 @@ export default async function ReportsPage() {
               }}
             >
               <CardHeader className="pb-3">
-                <CardTitle className="flex select-none items-center gap-2 text-base tracking-tight" style={{ color: reportsTheme.textPrimary }}>
+                <CardTitle className="flex select-none items-center gap-2 text-lg tracking-tight" style={{ color: reportsTheme.textPrimary }}>
                   <span
-                    className="inline-flex h-7 w-7 items-center justify-center rounded-md border"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border"
                     style={{
                       borderColor: reportsTheme.borderStrong,
                       background: reportsTheme.surfaceMuted,
@@ -373,7 +350,7 @@ export default async function ReportsPage() {
                   <span className="font-semibold">{granularityLabelById.get(granularityId) ?? granularityId}</span>
                   <Badge
                     variant="secondary"
-                    className="ml-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+                    className="ml-1"
                     style={{
                       borderColor: reportsTheme.borderStrong,
                       background: reportsTheme.surfaceMuted,
@@ -394,7 +371,7 @@ export default async function ReportsPage() {
                     return (
                       <Card
                         key={entity.id}
-                        className="border"
+                        className="border shadow-none"
                         style={{
                           borderColor: reportsTheme.border,
                           background: reportsTheme.surfaceElevated,
@@ -413,7 +390,7 @@ export default async function ReportsPage() {
                         ) : null}
                         <CardHeader className="pb-3">
                           <CardTitle
-                            className="flex items-center gap-2 text-base font-semibold tracking-tight"
+                            className="flex items-center gap-2 text-lg font-semibold tracking-tight"
                             style={{ color: reportsTheme.textPrimary }}
                           >
                             <Building2 className="h-4 w-4" style={{ color: reportsTheme.accent }} />
@@ -422,7 +399,7 @@ export default async function ReportsPage() {
                         </CardHeader>
                         <CardContent className="space-y-2">
                           {accessibleTemplates.length === 0 ? (
-                            <p className="text-xs text-muted-foreground">No report type access configured.</p>
+                            <p className="text-sm text-muted-foreground">No report type access configured.</p>
                           ) : (
                             accessibleTemplates.map((template) => {
                               const targetReport = reportByEntityAndType.get(`${entity.id}:${template.id}`);
@@ -432,7 +409,7 @@ export default async function ReportsPage() {
                                 <Link
                                   key={`${entity.id}-${template.id}`}
                                   href={`/reports/${template.id}/${targetReport.id}`}
-                                  className="flex items-start justify-between rounded-md border px-3 py-2 text-sm transition-colors"
+                                  className="flex items-start justify-between rounded-[1.1rem] border px-4 py-3 text-sm transition-all duration-200 hover:-translate-y-0.5"
                                   style={{
                                     borderColor: reportsTheme.borderStrong,
                                     background: reportsTheme.surfaceMuted,
@@ -444,7 +421,7 @@ export default async function ReportsPage() {
                                       <FileText className="h-3.5 w-3.5" style={{ color: reportsTheme.accent }} />
                                       {template.category ? (
                                         <Badge
-                                          className="border px-1.5 py-0 text-[10px] font-medium"
+                                          className="border"
                                           style={getCategoryBadgeStyle(template.category, reportsTheme)}
                                         >
                                           {template.category}
@@ -459,7 +436,7 @@ export default async function ReportsPage() {
                                         reportPagesForRow.map((page) => (
                                           <span
                                             key={`${targetReport.id}-${page.pageOrder}-${page.pageKey}`}
-                                            className="rounded-full border px-2 py-0.5 text-[10px] font-semibold"
+                                            className="rounded-full border px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.14em]"
                                             style={{
                                               borderColor: reportsTheme.borderStrong,
                                               background: reportsTheme.surfaceElevated,
@@ -472,7 +449,7 @@ export default async function ReportsPage() {
                                         ))
                                       ) : (
                                         <span
-                                          className="text-[11px] font-medium"
+                                          className="text-sm font-medium"
                                           style={{ color: reportsTheme.textSecondary }}
                                         >
                                           No report pages found
@@ -491,7 +468,7 @@ export default async function ReportsPage() {
                                     >
                                       Enabled
                                     </Badge>
-                                    <span className="text-[10px] font-medium" style={{ color: reportsTheme.textSecondary }}>
+                                    <span className="text-xs font-medium uppercase tracking-[0.14em]" style={{ color: reportsTheme.textSecondary }}>
                                       {reportPagesForRow.length} pages
                                     </span>
                                   </span>
@@ -499,7 +476,7 @@ export default async function ReportsPage() {
                               ) : (
                                 <div
                                   key={`${entity.id}-${template.id}`}
-                                  className="pointer-events-none flex items-center justify-between rounded-md border border-dashed border-border/60 px-3 py-2 text-sm"
+                                  className="pointer-events-none flex items-center justify-between rounded-[1.1rem] border border-dashed border-border/60 px-4 py-3 text-sm"
                                   style={{
                                     borderColor: reportsTheme.border,
                                     background: reportsTheme.surfaceElevated,
@@ -510,7 +487,7 @@ export default async function ReportsPage() {
                                   <span className="inline-flex items-center gap-2">
                                     {template.category ? (
                                       <Badge
-                                        className="border px-1.5 py-0 text-[10px] font-medium"
+                                        className="border"
                                         style={getCategoryBadgeStyle(template.category, reportsTheme)}
                                       >
                                         {template.category}

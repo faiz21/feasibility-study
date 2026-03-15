@@ -4,6 +4,7 @@ import { logAccess } from "@/lib/portal/logging";
 import { renderTemplate } from "@/lib/portal/template";
 import { ReportViewer } from "@/components/portal/report-viewer";
 import { resolveReportsUiTheme } from "@/lib/report-view-theme";
+import { StatusBanner } from "@/components/ui/status-banner";
 
 function attachBranding(content: unknown, branding: Record<string, unknown>) {
   if (content && typeof content === "object" && !Array.isArray(content)) {
@@ -41,9 +42,7 @@ export default async function ReportDetailPage({
 
   if (!assignment) {
     return (
-      <div className="rounded-xl border border-warning/30 bg-warning/10 p-4 text-sm text-warning">
-        No access to this report.
-      </div>
+      <StatusBanner tone="warning">No access to this report.</StatusBanner>
     );
   }
 

@@ -11,6 +11,7 @@ import { renderTemplate } from "@/lib/portal/template";
 import { resolveClientTheme, type ClientThemeColors } from "@/lib/client-theme";
 import { hasReferenceContract, validateJsonAgainstReference } from "@/lib/report-json-contract";
 import { marked } from "marked";
+import { StatusBanner } from "@/components/ui/status-banner";
 
 async function readUploadedText(formData: FormData, key: string): Promise<string | null> {
   const value = formData.get(key);
@@ -301,14 +302,10 @@ export default async function AdminClientReportEditPage({
       </Link>
 
       {query.success ? (
-        <p className="rounded-lg border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">
-          {query.success}
-        </p>
+        <StatusBanner tone="success">{query.success}</StatusBanner>
       ) : null}
       {query.error ? (
-        <p className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2 text-sm text-critical">
-          {query.error}
-        </p>
+        <StatusBanner tone="critical">{query.error}</StatusBanner>
       ) : null}
 
       <Card>

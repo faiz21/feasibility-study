@@ -10,6 +10,7 @@ import Image from "next/image";
 import { ConfirmSubmitDialogButton } from "@/components/ui/confirm-submit-dialog-button";
 import { FormDialog } from "@/components/ui/form-dialog";
 import { mvDefaultBrandPalette } from "@/lib/design-system/tokens";
+import { StatusBanner } from "@/components/ui/status-banner";
 import {
   DataGrid,
   DataGridBody,
@@ -503,7 +504,7 @@ async function materializeReportPagesForClient(
         .in("report_type_template_id", reportTypeIds),
       supabase
         .from("report_pages")
-        .select("report_id,report_page_template_id")
+        .select("id,report_id,report_page_template_id")
         .in("report_id", reportIds),
     ]);
   if (templatesError) throw new Error(templatesError.message);
@@ -516,15 +517,20 @@ async function materializeReportPagesForClient(
     templateByType.set(template.report_type_template_id, current);
   });
 
-  const existingSet = new Set(
-    (existingPages ?? []).map((page) => `${page.report_id}:${page.report_page_template_id}`),
-  );
+  const existingRows = (existingPages ?? []) as Array<{
+    id: string;
+    report_id: string;
+    report_page_template_id: string;
+  }>;
+  const existingSet = new Set(existingRows.map((page) => `${page.report_id}:${page.report_page_template_id}`));
+  const validSet = new Set<string>();
 
   const missingPayload: Array<{ report_id: string; report_page_template_id: string; page_order: number }> = [];
   reportRows.forEach((report) => {
     const templatesForType = templateByType.get(report.report_type_template_id) ?? [];
     templatesForType.forEach((template) => {
       const key = `${report.id}:${template.id}`;
+      validSet.add(key);
       if (!existingSet.has(key)) {
         missingPayload.push({
           report_id: report.id,
@@ -534,6 +540,18 @@ async function materializeReportPagesForClient(
       }
     });
   });
+
+  const orphanPageIds = existingRows
+    .filter((row) => !validSet.has(`${row.report_id}:${row.report_page_template_id}`))
+    .map((row) => row.id);
+
+  if (orphanPageIds.length > 0) {
+    for (let start = 0; start < orphanPageIds.length; start += 500) {
+      const chunk = orphanPageIds.slice(start, start + 500);
+      const { error } = await supabase.from("report_pages").delete().in("id", chunk);
+      if (error) throw new Error(error.message);
+    }
+  }
 
   if (missingPayload.length === 0) return 0;
 
@@ -1301,10 +1319,10 @@ export default async function AdminClientsPage({
       </div>
 
       {params.success ? (
-        <p className="rounded-lg border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">{params.success}</p>
+        <StatusBanner tone="success">{params.success}</StatusBanner>
       ) : null}
       {params.error ? (
-        <p className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2 text-sm text-critical">{params.error}</p>
+        <StatusBanner tone="critical">{params.error}</StatusBanner>
       ) : null}
 
       <Card>

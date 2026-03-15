@@ -1,0 +1,212 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "tableHeader": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-M",
+      "reportType": "Appendix M - Maturity Assessment / Scoring Results",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix M - Maturity Assessment / Scoring Results",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "section1": {
+        "title": "section1",
+        "anchors": "",
+        "content": ""
+      },
+      "section2": {
+        "title": "section2",
+        "subSection1": {
+          "data": [],
+          "title": ""
+        },
+        "subSection2": {
+          "data": [],
+          "title": ""
+        }
+      },
+      "section3": {
+        "items": [],
+        "title": "section3"
+      },
+      "section4": {
+        "note": "",
+        "title": "section4"
+      },
+      "section5": {
+        "items": [],
+        "title": "section5"
+      },
+      "section6": {
+        "rule": "",
+        "title": "section6",
+        "levels": []
+      },
+      "section7": {
+        "title": "section7",
+        "statement": "",
+        "solutionAlignments": [],
+        "constrainingFactors": ""
+      },
+      "section8": {
+        "text": "",
+        "title": "section8"
+      }
+    },
+    "customProperties": {
+      "referenceMap": {
+        "items": [],
+        "title": ""
+      }
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "tableHeader": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-M",
+      "reportType": "Appendix M - Maturity Assessment / Scoring Results",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix M - Maturity Assessment / Scoring Results",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "section1": {
+        "title": "section1",
+        "anchors": "",
+        "content": ""
+      },
+      "section2": {
+        "title": "section2",
+        "subSection1": {
+          "data": [],
+          "title": ""
+        },
+        "subSection2": {
+          "data": [],
+          "title": ""
+        }
+      },
+      "section3": {
+        "items": [],
+        "title": "section3"
+      },
+      "section4": {
+        "note": "",
+        "title": "section4"
+      },
+      "section5": {
+        "items": [],
+        "title": "section5"
+      },
+      "section6": {
+        "rule": "",
+        "title": "section6",
+        "levels": []
+      },
+      "section7": {
+        "title": "section7",
+        "statement": "",
+        "solutionAlignments": [],
+        "constrainingFactors": ""
+      },
+      "section8": {
+        "text": "",
+        "title": "section8"
+      }
+    },
+    "customProperties": {
+      "referenceMap": {
+        "items": [],
+        "title": ""
+      }
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "#0ea5e9",
+      "primary": "#1d4ed8",
+      "tableHeader": "",
+      "danger": "#b91c1c",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-M",
+      "reportType": "Appendix M - Maturity Assessment / Scoring Results",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix M - Maturity Assessment / Scoring Results",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "section1": {
+        "title": "section1",
+        "anchors": "",
+        "content": ""
+      },
+      "section2": {
+        "title": "section2",
+        "subSection1": {
+          "data": [],
+          "title": ""
+        },
+        "subSection2": {
+          "data": [],
+          "title": ""
+        }
+      },
+      "section3": {
+        "items": [],
+        "title": "section3"
+      },
+      "section4": {
+        "note": "",
+        "title": "section4"
+      },
+      "section5": {
+        "items": [],
+        "title": "section5"
+      },
+      "section6": {
+        "rule": "",
+        "title": "section6",
+        "levels": []
+      },
+      "section7": {
+        "title": "section7",
+        "statement": "",
+        "solutionAlignments": [],
+        "constrainingFactors": ""
+      },
+      "section8": {
+        "text": "",
+        "title": "section8"
+      }
+    },
+    "customProperties": {
+      "referenceMap": {
+        "items": [],
+        "title": ""
+      }
+    }
+  }
+}

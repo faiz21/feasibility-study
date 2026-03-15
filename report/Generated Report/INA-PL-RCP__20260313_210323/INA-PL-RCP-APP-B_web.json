@@ -1,0 +1,1115 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "primaryDark": "#1e3a8a",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "title": "Appendix B - Process Architecture / Process Groups Inventory",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "attributes": [
+        {
+          "label": "Plant Code",
+          "value": "INA-PL-RCP",
+          "valueClass": "font-mono"
+        },
+        {
+          "label": "Plant Name",
+          "value": "Rodding Plant",
+          "valueClass": "text-slate-700"
+        },
+        {
+          "label": "Document Date",
+          "value": "14 March 2026",
+          "valueClass": "text-slate-700"
+        }
+      ],
+      "documentId": "INA-PL-RCP-APP-B"
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "type": "narrative",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 1
+        }
+      },
+      {
+        "title": "Section 2",
+        "type": "narrative",
+        "paragraphs": [
+          "Document Date: 14 March 2026"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 2
+        }
+      },
+      {
+        "title": "Section 3",
+        "type": "narrative",
+        "paragraphs": [
+          "## 1. Purpose of Appendix B"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 3
+        }
+      },
+      {
+        "title": "Section 4",
+        "type": "narrative",
+        "paragraphs": [
+          "This appendix profiles the process architecture for Rodding Plant [INA-PL-RCP]. It links process group design, PLC presence, and supervisory posture to show where automation control is established, where relay or local operation remains material, and where renewal dependency is already visible in the source register."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 4
+        }
+      },
+      {
+        "title": "Section 5",
+        "type": "narrative",
+        "paragraphs": [
+          "## 2. PLC Environment Summary"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 5
+        }
+      },
+      {
+        "title": "Section 6",
+        "type": "narrative",
+        "paragraphs": [
+          "The PLC environment is Siemens-centric and heavily exposed to lifecycle risk. Multiple core process groups are explicitly marked for retrofit or renewal because their control foundation remains S7-300 based or otherwise unconfirmed. This creates a hybrid architecture in which control exists, but resilience and maintainability are uneven across the process chain."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 6
+        }
+      },
+      {
+        "title": "Section 7",
+        "type": "narrative",
+        "paragraphs": [
+          "## 3. Process Group Profiles"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 7
+        }
+      },
+      {
+        "title": "Section 8",
+        "type": "narrative",
+        "paragraphs": [
+          "### 3.1 RCP Used Anode Receiving & Power-Free Conveyor (LO-401 / CR-401) [INA-PG-RCP-001]"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 8
+        }
+      }
+    ]
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "primaryDark": "#1e3a8a",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "title": "Appendix B - Process Architecture / Process Groups Inventory",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "attributes": [
+        {
+          "label": "Plant Code",
+          "value": "INA-PL-RCP",
+          "valueClass": "font-mono"
+        },
+        {
+          "label": "Plant Name",
+          "value": "Rodding Plant",
+          "valueClass": "text-slate-700"
+        },
+        {
+          "label": "Document Date",
+          "value": "14 March 2026",
+          "valueClass": "text-slate-700"
+        }
+      ],
+      "documentId": "INA-PL-RCP-APP-B"
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "type": "narrative",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 1
+        }
+      },
+      {
+        "title": "Section 2",
+        "type": "narrative",
+        "paragraphs": [
+          "Document Date: 14 March 2026"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 2
+        }
+      },
+      {
+        "title": "Section 3",
+        "type": "narrative",
+        "paragraphs": [
+          "## 1. Purpose of Appendix B"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 3
+        }
+      },
+      {
+        "title": "Section 4",
+        "type": "narrative",
+        "paragraphs": [
+          "This appendix profiles the process architecture for Rodding Plant [INA-PL-RCP]. It links process group design, PLC presence, and supervisory posture to show where automation control is established, where relay or local operation remains material, and where renewal dependency is already visible in the source register."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 4
+        }
+      },
+      {
+        "title": "Section 5",
+        "type": "narrative",
+        "paragraphs": [
+          "## 2. PLC Environment Summary"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 5
+        }
+      },
+      {
+        "title": "Section 6",
+        "type": "narrative",
+        "paragraphs": [
+          "The PLC environment is Siemens-centric and heavily exposed to lifecycle risk. Multiple core process groups are explicitly marked for retrofit or renewal because their control foundation remains S7-300 based or otherwise unconfirmed. This creates a hybrid architecture in which control exists, but resilience and maintainability are uneven across the process chain."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 6
+        }
+      },
+      {
+        "title": "Section 7",
+        "type": "narrative",
+        "paragraphs": [
+          "## 3. Process Group Profiles"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 7
+        }
+      },
+      {
+        "title": "Section 8",
+        "type": "narrative",
+        "paragraphs": [
+          "### 3.1 RCP Used Anode Receiving & Power-Free Conveyor (LO-401 / CR-401) [INA-PG-RCP-001]"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 8
+        }
+      }
+    ]
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "accent": "",
+      "primary": "#1d4ed8",
+      "roadmapBg": "",
+      "primaryDark": "#1e3a8a",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "title": "Appendix B - Process Architecture / Process Groups Inventory",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "attributes": [
+        {
+          "label": "Plant Code",
+          "value": "INA-PL-RCP",
+          "valueClass": "font-mono"
+        },
+        {
+          "label": "Plant Name",
+          "value": "Rodding Plant",
+          "valueClass": "text-slate-700"
+        },
+        {
+          "label": "Document Date",
+          "value": "14 March 2026",
+          "valueClass": "text-slate-700"
+        }
+      ],
+      "documentId": "INA-PL-RCP-APP-B"
+    },
+    "sections": [
+      {
+        "title": "Section 1",
+        "type": "narrative",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 1
+        }
+      },
+      {
+        "title": "Section 2",
+        "type": "narrative",
+        "paragraphs": [
+          "Document Date: 14 March 2026"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 2
+        }
+      },
+      {
+        "title": "Section 3",
+        "type": "narrative",
+        "paragraphs": [
+          "## 1. Purpose of Appendix B"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 3
+        }
+      },
+      {
+        "title": "Section 4",
+        "type": "narrative",
+        "paragraphs": [
+          "This appendix profiles the process architecture for Rodding Plant [INA-PL-RCP]. It links process group design, PLC presence, and supervisory posture to show where automation control is established, where relay or local operation remains material, and where renewal dependency is already visible in the source register."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 4
+        }
+      },
+      {
+        "title": "Section 5",
+        "type": "narrative",
+        "paragraphs": [
+          "## 2. PLC Environment Summary"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 5
+        }
+      },
+      {
+        "title": "Section 6",
+        "type": "narrative",
+        "paragraphs": [
+          "The PLC environment is Siemens-centric and heavily exposed to lifecycle risk. Multiple core process groups are explicitly marked for retrofit or renewal because their control foundation remains S7-300 based or otherwise unconfirmed. This creates a hybrid architecture in which control exists, but resilience and maintainability are uneven across the process chain."
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 6
+        }
+      },
+      {
+        "title": "Section 7",
+        "type": "narrative",
+        "paragraphs": [
+          "## 3. Process Group Profiles"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 7
+        }
+      },
+      {
+        "title": "Section 8",
+        "type": "narrative",
+        "paragraphs": [
+          "### 3.1 RCP Used Anode Receiving & Power-Free Conveyor (LO-401 / CR-401) [INA-PG-RCP-001]"
+        ],
+        "metrics": [],
+        "headers": [],
+        "rows": [],
+        "steps": [],
+        "alerts": [],
+        "cards": [],
+        "risks": [],
+        "stages": [],
+        "summaryBoxes": [],
+        "subsections": [],
+        "ccps": [],
+        "description": "",
+        "headline": "",
+        "conclusion": "",
+        "footer": "",
+        "flowTitle": "",
+        "listTitle": "",
+        "bulletBox": {
+          "title": "",
+          "items": []
+        },
+        "leftCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "rightCard": {
+          "items": [],
+          "theme": "",
+          "title": ""
+        },
+        "chart": {
+          "label": "Score",
+          "value": 8
+        }
+      }
+    ]
+  }
+}

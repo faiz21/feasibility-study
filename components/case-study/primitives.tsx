@@ -11,11 +11,11 @@ type BlockShellProps = {
 
 export function BlockShell({ title, subtitle, className, children }: BlockShellProps) {
   return (
-    <Card className={cn("border-foreground/10", className)}>
+    <Card className={cn("border-foreground/10 shadow-none", className)}>
       {title || subtitle ? (
         <CardHeader className="space-y-1">
-          {title ? <CardTitle className="text-base">{title}</CardTitle> : null}
-          {subtitle ? <p className="text-sm text-muted-foreground">{subtitle}</p> : null}
+          {title ? <CardTitle className="text-xl">{title}</CardTitle> : null}
+          {subtitle ? <p className="text-base leading-7 text-muted-foreground">{subtitle}</p> : null}
         </CardHeader>
       ) : null}
       <CardContent className={cn(!title && !subtitle ? "pt-6" : undefined)}>{children}</CardContent>
@@ -54,9 +54,9 @@ export function RichTextRenderer({ value }: { value: RichText | undefined }) {
 
 export function StatCell({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border p-3">
-      <div className="text-xl font-semibold tracking-tight">{value}</div>
-      <div className="text-xs text-muted-foreground">{label}</div>
+    <div className="rounded-[1.15rem] border bg-surface-soft/60 p-4 shadow-soft">
+      <div className="text-2xl font-semibold tracking-tight">{value}</div>
+      <div className="mt-1 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">{label}</div>
     </div>
   );
 }

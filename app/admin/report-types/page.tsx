@@ -11,6 +11,7 @@ import Link from "next/link";
 import { ConfirmSubmitDialogButton } from "@/components/ui/confirm-submit-dialog-button";
 import { FormDialog } from "@/components/ui/form-dialog";
 import { RowActions, DropdownMenuItem } from "@/components/ui/row-actions";
+import { StatusBanner } from "@/components/ui/status-banner";
 import {
   DataGrid,
   DataGridBody,
@@ -252,14 +253,10 @@ export default async function AdminReportTypesPage({
         </FormDialog>
       </div>
       {params.success ? (
-        <p className="rounded-lg border border-success/30 bg-success/10 px-3 py-2 text-sm text-success">
-          {params.success}
-        </p>
+        <StatusBanner tone="success">{params.success}</StatusBanner>
       ) : null}
       {params.error ? (
-        <p className="rounded-lg border border-critical/30 bg-critical/10 px-3 py-2 text-sm text-critical">
-          {params.error}
-        </p>
+        <StatusBanner tone="critical">{params.error}</StatusBanner>
       ) : null}
       <Card>
         <CardHeader>

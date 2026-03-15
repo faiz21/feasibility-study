@@ -1,0 +1,296 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "info": "",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "success": "",
+      "accentLight": "",
+      "primaryLight": "",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-C",
+      "reportType": "Appendix C - Asset Scope: Equipment Inventory",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix C - Asset Scope: Equipment Inventory",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s1_purpose": {
+        "rule": "",
+        "title": "s1 purpose",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)",
+          "Document Date: 14 March 2026"
+        ]
+      },
+      "s2_snapshot": {
+        "title": "s2 snapshot",
+        "metrics": {
+          "items": [],
+          "title": "",
+          "categories": {
+            "list": [],
+            "label": ""
+          }
+        },
+        "subtitle": "",
+        "dominance": {
+          "title": "",
+          "keywords": [],
+          "conclusion": "",
+          "description": "",
+          "targetPercentage": 0
+        },
+        "utilities": {
+          "list": [],
+          "title": "",
+          "conclusion": ""
+        },
+        "bottleneckLinkage": {
+          "list": [],
+          "title": "",
+          "conclusion": "",
+          "description": ""
+        }
+      },
+      "s3_inventory": {
+        "note": "",
+        "rows": [],
+        "title": "s3 inventory",
+        "columns": [],
+        "subtitle": ""
+      },
+      "s5_governance": {
+        "items": [],
+        "title": "s5 governance"
+      },
+      "s4_observations": {
+        "title": "s4 observations",
+        "density": {
+          "title": "",
+          "points": [],
+          "conclusion": ""
+        },
+        "subtitle": "",
+        "automation": {
+          "title": "",
+          "pattern": "",
+          "subtitle": "",
+          "categories": []
+        },
+        "bottlenecks": {
+          "items": [],
+          "title": ""
+        }
+      },
+      "s6_referenceMap": {
+        "rows": [],
+        "title": "s6 referenceMap",
+        "columns": [],
+        "subtitle": ""
+      }
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "info": "",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "success": "",
+      "accentLight": "",
+      "primaryLight": "",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-C",
+      "reportType": "Appendix C - Asset Scope: Equipment Inventory",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix C - Asset Scope: Equipment Inventory",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s1_purpose": {
+        "rule": "",
+        "title": "s1 purpose",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)",
+          "Document Date: 14 March 2026"
+        ]
+      },
+      "s2_snapshot": {
+        "title": "s2 snapshot",
+        "metrics": {
+          "items": [],
+          "title": "",
+          "categories": {
+            "list": [],
+            "label": ""
+          }
+        },
+        "subtitle": "",
+        "dominance": {
+          "title": "",
+          "keywords": [],
+          "conclusion": "",
+          "description": "",
+          "targetPercentage": 0
+        },
+        "utilities": {
+          "list": [],
+          "title": "",
+          "conclusion": ""
+        },
+        "bottleneckLinkage": {
+          "list": [],
+          "title": "",
+          "conclusion": "",
+          "description": ""
+        }
+      },
+      "s3_inventory": {
+        "note": "",
+        "rows": [],
+        "title": "s3 inventory",
+        "columns": [],
+        "subtitle": ""
+      },
+      "s5_governance": {
+        "items": [],
+        "title": "s5 governance"
+      },
+      "s4_observations": {
+        "title": "s4 observations",
+        "density": {
+          "title": "",
+          "points": [],
+          "conclusion": ""
+        },
+        "subtitle": "",
+        "automation": {
+          "title": "",
+          "pattern": "",
+          "subtitle": "",
+          "categories": []
+        },
+        "bottlenecks": {
+          "items": [],
+          "title": ""
+        }
+      },
+      "s6_referenceMap": {
+        "rows": [],
+        "title": "s6 referenceMap",
+        "columns": [],
+        "subtitle": ""
+      }
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "info": "",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "success": "",
+      "accentLight": "",
+      "primaryLight": "",
+      "warning": "#d97706"
+    },
+    "metadata": {
+      "status": "Draft",
+      "reference": "INA-PL-RCP-APP-C",
+      "reportType": "Appendix C - Asset Scope: Equipment Inventory",
+      "titleLine1": "RODDING PLANT",
+      "titleLine2": "Appendix C - Asset Scope: Equipment Inventory",
+      "facilityCode": "INA-PL-RCP",
+      "facilityName": "Rodding Plant"
+    },
+    "sections": {
+      "s1_purpose": {
+        "rule": "",
+        "title": "s1 purpose",
+        "paragraphs": [
+          "RODDING PLANT (INA-PL-RCP)",
+          "Document Date: 14 March 2026"
+        ]
+      },
+      "s2_snapshot": {
+        "title": "s2 snapshot",
+        "metrics": {
+          "items": [],
+          "title": "",
+          "categories": {
+            "list": [],
+            "label": ""
+          }
+        },
+        "subtitle": "",
+        "dominance": {
+          "title": "",
+          "keywords": [],
+          "conclusion": "",
+          "description": "",
+          "targetPercentage": 0
+        },
+        "utilities": {
+          "list": [],
+          "title": "",
+          "conclusion": ""
+        },
+        "bottleneckLinkage": {
+          "list": [],
+          "title": "",
+          "conclusion": "",
+          "description": ""
+        }
+      },
+      "s3_inventory": {
+        "note": "",
+        "rows": [],
+        "title": "s3 inventory",
+        "columns": [],
+        "subtitle": ""
+      },
+      "s5_governance": {
+        "items": [],
+        "title": "s5 governance"
+      },
+      "s4_observations": {
+        "title": "s4 observations",
+        "density": {
+          "title": "",
+          "points": [],
+          "conclusion": ""
+        },
+        "subtitle": "",
+        "automation": {
+          "title": "",
+          "pattern": "",
+          "subtitle": "",
+          "categories": []
+        },
+        "bottlenecks": {
+          "items": [],
+          "title": ""
+        }
+      },
+      "s6_referenceMap": {
+        "rows": [],
+        "title": "s6 referenceMap",
+        "columns": [],
+        "subtitle": ""
+      }
+    }
+  }
+}

@@ -7,6 +7,8 @@ import type { CSSProperties } from "react";
 export function NavLink({
   href,
   label,
+  variant = "sidebar",
+  className,
   activeColor,
   activeBackground,
   inactiveColor,
@@ -15,6 +17,8 @@ export function NavLink({
 }: {
   href: string;
   label: string;
+  variant?: "sidebar" | "topbar";
+  className?: string;
   activeColor?: string;
   activeBackground?: string;
   inactiveColor?: string;
@@ -29,8 +33,10 @@ export function NavLink({
       href={href}
       className={
         isActive
-          ? "rounded-md px-2.5 py-1.5"
-          : "rounded-md px-2.5 py-1.5 transition-colors hover:bg-[var(--nav-hover-bg)] hover:text-[var(--nav-hover-color)]"
+          ? `${variant === "sidebar" ? "rounded-2xl px-4 py-3 text-sm font-medium shadow-sm" : "rounded-xl px-3.5 py-2 text-sm font-medium"} ${className ?? ""}`
+          : `${variant === "sidebar"
+              ? "rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--nav-hover-bg)] hover:text-[var(--nav-hover-color)]"
+              : "rounded-xl px-3.5 py-2 text-sm font-medium transition-colors hover:bg-[var(--nav-hover-bg)] hover:text-[var(--nav-hover-color)]"} ${className ?? ""}`
       }
       style={
         {

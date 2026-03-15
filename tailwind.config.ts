@@ -17,6 +17,20 @@ export default {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        surface: {
+          DEFAULT: "hsl(var(--surface))",
+          foreground: "hsl(var(--surface-foreground))",
+          strong: "hsl(var(--surface-strong))",
+          soft: "hsl(var(--surface-soft))",
+        },
+        nav: {
+          DEFAULT: "hsl(var(--nav-surface))",
+          foreground: "hsl(var(--nav-foreground))",
+          active: "hsl(var(--nav-active))",
+          activeForeground: "hsl(var(--nav-active-foreground))",
+          hover: "hsl(var(--nav-hover))",
+          border: "hsl(var(--nav-border))",
+        },
         neutral: {
           50: "hsl(var(--neutral-50))",
           100: "hsl(var(--neutral-100))",
@@ -90,6 +104,7 @@ export default {
           DEFAULT: "hsl(var(--info))",
           foreground: "hsl(var(--info-foreground))",
         },
+        overlay: "hsl(var(--overlay))",
         system: {
           success: "hsl(var(--system-success))",
           successForeground: "hsl(var(--system-success-foreground))",
@@ -125,8 +140,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        soft: "0 6px 18px hsl(var(--foreground) / 0.08)",
-        panel: "0 10px 28px hsl(var(--foreground) / 0.1)",
+        soft: "0 18px 38px hsl(var(--foreground) / 0.08)",
+        panel: "0 24px 60px hsl(var(--foreground) / 0.12)",
+        shell: "0 22px 55px hsl(var(--overlay) / 0.18)",
+        lift: "0 14px 30px hsl(var(--foreground) / 0.12)",
       },
     },
   },

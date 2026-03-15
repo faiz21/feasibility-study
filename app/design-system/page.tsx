@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { StatusBanner } from "@/components/ui/status-banner";
 import {
   neutralScaleTokens,
   semanticColorTokens,
@@ -42,13 +43,13 @@ export default function DesignSystemPage() {
           <div className="sticky top-0 h-screen px-3 py-5">
             <div className="mb-5 flex items-center justify-between px-3">
               <Link href={"/"} className="text-sm font-semibold tracking-tight">
-                Strategy Workspace
+                Machine Vision UI
               </Link>
             </div>
             <DesignSystemSidebarNav sections={sections} />
             <div className="mt-6 px-3">
               <div className="rounded-lg border bg-card p-3 text-xs text-muted-foreground">
-                Minimal color. High contrast. Content-first.
+                Editorial hierarchy, operational clarity, and dark-mode parity.
               </div>
             </div>
           </div>
@@ -74,13 +75,13 @@ export default function DesignSystemPage() {
           <div className="ds-print-page mx-auto w-full max-w-5xl px-5 py-10">
             <DesignSystemSection
               id="overview"
-              title="Vuexy-inspired tokenized UI"
-              description="Modern dashboard aesthetics with semantic tokens, clear hierarchy, and dark-mode parity."
+              title="Machine Vision Unified UI"
+              description="One token system for admin operations, client delivery, and editorial report surfaces."
             >
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg tracking-tight">
-                    Executive narrative ready
+                    Design direction
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 text-sm">
@@ -90,10 +91,10 @@ export default function DesignSystemPage() {
                         PRINCIPLES
                       </div>
                       <ul className="mt-2 space-y-1 text-muted-foreground">
-                        <li>Token-first color application</li>
-                        <li>Card-based modular dashboard blocks</li>
-                        <li>Subtle elevation and rounded surfaces</li>
-                        <li>Consistent interaction and focus states</li>
+                        <li>Token-first color application across every surface</li>
+                        <li>Adaptive workspace navigation for dense admin flows</li>
+                        <li>Editorial display typography only where narrative matters</li>
+                        <li>Consistent focus, motion, and state messaging</li>
                       </ul>
                     </div>
                     <div className="rounded-lg border bg-neutral-50 p-4">
@@ -182,7 +183,7 @@ export default function DesignSystemPage() {
             <DesignSystemSection
               id="typography"
               title="Typography"
-              description="Modern sans-serif system stack with clear hierarchy and generous whitespace."
+              description="IBM Plex Sans for interface clarity, Source Serif 4 for editorial emphasis."
             >
               <Card>
                 <CardHeader>
@@ -192,10 +193,10 @@ export default function DesignSystemPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <div className="text-3xl font-semibold tracking-tight">
+                    <div className="text-4xl font-semibold tracking-tight" data-font="display">
                       H1 — Section headline
                     </div>
-                    <div className="text-xl font-semibold tracking-tight">
+                    <div className="text-2xl font-semibold tracking-tight" data-font="display">
                       H2 — Insight header
                     </div>
                     <div className="text-base font-semibold tracking-tight">
@@ -204,13 +205,10 @@ export default function DesignSystemPage() {
                   </div>
                   <div className="rounded-lg border bg-card p-4">
                     <p className="text-sm leading-6 text-foreground">
-                      Analytical body copy prioritizes clarity. Use short,
-                      specific sentences. Prefer numbers, ranges, and explicit
-                      assumptions.
+                      Analytical body copy prioritizes clarity. Use short, specific sentences. Prefer numbers, ranges, and explicit assumptions.
                     </p>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                      Secondary detail stays muted and aligned. Avoid decorative
-                      language and visual noise.
+                      Display typography is reserved for report covers, case-study intros, and section headlines that need narrative lift.
                     </p>
                   </div>
                 </CardContent>
@@ -229,11 +227,24 @@ export default function DesignSystemPage() {
                   </CardHeader>
                   <CardContent className="flex flex-wrap gap-3">
                     <Button>Primary</Button>
+                    <Button variant="soft">Soft</Button>
                     <Button variant="secondary">Secondary</Button>
                     <Button variant="outline">Outline</Button>
                     <Button variant="ghost">Ghost</Button>
                     <Button variant="link">Link</Button>
                     <Button variant="destructive">Error</Button>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-base tracking-tight">
+                      Status
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    <StatusBanner tone="success">Report successfully published for client delivery.</StatusBanner>
+                    <StatusBanner tone="warning">Preview mode is active and analytics are paused.</StatusBanner>
                   </CardContent>
                 </Card>
 

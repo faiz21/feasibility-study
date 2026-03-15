@@ -8,7 +8,7 @@ export function DataGrid({
   children: React.ReactNode;
 }) {
   return (
-    <div className={cn("overflow-x-auto rounded-xl border border-border/70", className)}>
+    <div className={cn("overflow-x-auto rounded-[1.15rem] border border-border/80 bg-card/85 shadow-soft", className)}>
       {children}
     </div>
   );
@@ -27,7 +27,11 @@ export function DataGridHead({
 }: {
   children: React.ReactNode;
 }) {
-  return <thead className="bg-muted/50 text-xs text-muted-foreground">{children}</thead>;
+  return (
+    <thead className="bg-surface-strong/70 text-[0.72rem] uppercase tracking-[0.16em] text-muted-foreground">
+      {children}
+    </thead>
+  );
 }
 
 export function DataGridBody({
@@ -45,7 +49,7 @@ export function DataGridRow({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <tr className={cn("border-t border-border/70", className)}>{children}</tr>;
+  return <tr className={cn("border-t border-border/70 transition-colors hover:bg-surface-soft/60", className)}>{children}</tr>;
 }
 
 export function DataGridCell({
@@ -58,7 +62,7 @@ export function DataGridCell({
   header?: boolean;
 }) {
   if (header) {
-    return <th className={cn("px-3 py-2 text-left font-medium", className)}>{children}</th>;
+    return <th className={cn("px-4 py-3 text-left font-semibold", className)}>{children}</th>;
   }
-  return <td className={cn("px-3 py-3 align-middle", className)}>{children}</td>;
+  return <td className={cn("px-4 py-4 align-middle", className)}>{children}</td>;
 }

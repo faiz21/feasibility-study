@@ -23,10 +23,10 @@ export function LanguageSwitcher({
 
   return (
     <div
-      className={`flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-2 py-1 shadow-sm ${isPending ? "opacity-80" : ""}`}
+      className={`flex items-center gap-2 rounded-2xl border border-border/80 bg-card/85 px-2 py-1 shadow-soft ${isPending ? "opacity-80" : ""}`}
     >
       <select
-        className="h-10 min-w-20 rounded-lg border border-slate-300 bg-slate-50 px-3 text-sm font-semibold text-slate-700 outline-none transition-colors focus:border-blue-400 focus:bg-white disabled:cursor-wait"
+        className="h-11 min-w-24 rounded-xl border border-input bg-card/90 px-3 text-sm font-semibold text-foreground outline-none transition-colors focus:border-primary-border focus:bg-card disabled:cursor-wait"
         value={value}
         disabled={isPending}
         onChange={(e) => updateLocale(e.target.value)}
@@ -38,7 +38,7 @@ export function LanguageSwitcher({
           </option>
         ))}
       </select>
-      {isPending ? <span className="text-xs font-medium text-slate-500">Saving...</span> : null}
+      {isPending ? <span className="text-xs font-medium text-muted-foreground">Saving...</span> : null}
     </div>
   );
 }

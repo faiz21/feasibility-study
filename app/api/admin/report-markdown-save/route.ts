@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { hasReferenceContract, validateJsonAgainstReference } from "@/lib/report-json-contract";
 
 function getLocaleColumn(locale: string): "raw_report" | "raw_report_id" | "raw_report_jp" {
   if (locale === "id") return "raw_report_id";
   if (locale === "ja") return "raw_report_jp";
   return "raw_report";
+}
+
+function getLocaleJsonColumn(locale: string): "en_content" | "id_content" | "ja_content" {
+  if (locale === "id") return "id_content";
+  if (locale === "ja") return "ja_content";
+  return "en_content";
 }
 
 export async function POST(request: Request) {
@@ -31,6 +38,7 @@ export async function POST(request: Request) {
         pageId?: string;
         locale?: string;
         markdown?: string;
+        jsonContent?: string;
         overall?: number | null;
         outline_alignment?: number | null;
         writing_alignment?: number | null;
@@ -43,7 +51,9 @@ export async function POST(request: Request) {
   const reportId = String(body?.reportId ?? "").trim();
   const pageId = String(body?.pageId ?? "").trim();
   const locale = ["en", "id", "ja"].includes(String(body?.locale ?? "")) ? String(body?.locale) : "en";
-  const markdown = String(body?.markdown ?? "");
+  const hasMarkdown = typeof body?.markdown === "string";
+  const markdown = hasMarkdown ? String(body?.markdown ?? "") : "";
+  const hasJsonContent = typeof body?.jsonContent === "string";
   const hasOverall = typeof body?.overall === "number";
   const hasOutline = typeof body?.outline_alignment === "number";
   const hasWriting = typeof body?.writing_alignment === "number";
@@ -55,11 +65,59 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "reportId and pageId are required" }, { status: 400 });
   }
 
-  const localeColumn = getLocaleColumn(locale);
+  if (!hasMarkdown && !hasJsonContent && !hasOverall && !hasOutline && !hasWriting && !hasAnalysis && !hasNotes && !hasSummary) {
+    return NextResponse.json({ error: "No changes submitted" }, { status: 400 });
+  }
+
   const updatePayload: Record<string, unknown> = {
-    [localeColumn]: markdown,
     updated_at: new Date().toISOString(),
   };
+
+  if (hasMarkdown) {
+    const localeColumn = getLocaleColumn(locale);
+    updatePayload[localeColumn] = markdown;
+  }
+
+  if (hasJsonContent) {
+    let parsedJson: unknown;
+
+    try {
+      parsedJson = JSON.parse(String(body?.jsonContent ?? ""));
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON format for selected locale content" }, { status: 400 });
+    }
+
+    const { data: pageRow, error: pageError } = await supabase
+      .from("report_pages")
+      .select("report_page_templates(sample_data)")
+      .eq("id", pageId)
+      .eq("report_id", reportId)
+      .maybeSingle();
+
+    if (pageError) {
+      return NextResponse.json({ error: pageError.message }, { status: 400 });
+    }
+
+    const templateRow = pageRow?.report_page_templates as
+      | { sample_data?: unknown }[]
+      | { sample_data?: unknown }
+      | null;
+    const template = Array.isArray(templateRow) ? templateRow[0] : templateRow;
+    const reference = template?.sample_data;
+
+    if (hasReferenceContract(reference)) {
+      const validation = validateJsonAgainstReference(reference, parsedJson);
+      if (!validation.ok) {
+        return NextResponse.json(
+          { error: `JSON does not match template reference: ${validation.error}` },
+          { status: 400 },
+        );
+      }
+    }
+
+    updatePayload[getLocaleJsonColumn(locale)] = parsedJson;
+  }
+
   if (hasOverall) updatePayload.overall = body?.overall;
   if (hasOutline) updatePayload.outline_alignment = body?.outline_alignment;
   if (hasWriting) updatePayload.writing_alignment = body?.writing_alignment;

@@ -22,3 +22,8 @@ export const Disabled: Story = {
   },
 };
 
+export const Filled: Story = {
+  args: {
+    value: "operations@client.com",
+  },
+};

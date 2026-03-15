@@ -61,7 +61,7 @@ export function ClientReportLandingCover({
 
   return (
     <section
-      className="overflow-hidden rounded-2xl border shadow-panel"
+      className="glass-panel overflow-hidden rounded-[1.8rem] border shadow-panel"
       style={{
         borderColor: colors.border,
         background: colors.background,
@@ -69,7 +69,7 @@ export function ClientReportLandingCover({
     >
       <div className="grid gap-0 md:grid-cols-2">
         <div
-          className="relative min-h-[280px] border-b md:min-h-[360px] md:border-b-0 md:border-r"
+          className="relative min-h-[320px] border-b md:min-h-[420px] md:border-b-0 md:border-r"
           style={{ borderColor: colors.border }}
         >
           {showCover ? (
@@ -93,30 +93,30 @@ export function ClientReportLandingCover({
               background: `linear-gradient(180deg, transparent 35%, ${colors["cover-overlay"]} 100%)`,
             }}
           />
-          <div className="absolute bottom-4 left-4 right-4">
+          <div className="absolute bottom-5 left-5 right-5 md:bottom-6 md:left-6 md:right-6">
             <p
-              className="text-xs font-semibold uppercase tracking-wider"
+              className="text-[0.74rem] font-semibold uppercase tracking-[0.18em]"
               style={{ color: colors["cover-subtitle"] }}
             >
               Feasibility Study Report
             </p>
-            <h1 className="mt-1 text-2xl font-bold leading-tight md:text-3xl" style={{ color: colors["cover-title"] }}>
+            <h1 className="mt-2 text-3xl font-bold leading-tight md:text-4xl" style={{ color: colors["cover-title"] }} data-font="display">
               {clientName}
             </h1>
           </div>
         </div>
 
-        <div className="space-y-4 p-5 md:p-7" style={{ color: colors.foreground }}>
+        <div className="space-y-5 p-5 md:p-7 lg:p-8" style={{ color: colors.foreground }}>
           <div className="flex items-start justify-between gap-3">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wider" style={{ color: colors.secondary }}>
+              <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em]" style={{ color: colors.secondary }}>
                 Client
               </p>
-              <h2 className="text-xl font-bold">{clientName}</h2>
+              <h2 className="mt-2 text-2xl font-bold" data-font="display">{clientName}</h2>
             </div>
             <div
-              className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border p-2"
-              style={{ borderColor: colors.border, background: "#ffffff" }}
+              className="flex h-20 w-20 shrink-0 items-center justify-center rounded-[1.4rem] border p-2 shadow-soft"
+              style={{ borderColor: colors.border, background: colors.muted }}
             >
               {showLogo ? (
                 <img
@@ -126,27 +126,29 @@ export function ClientReportLandingCover({
                   onError={() => setLogoBroken(true)}
                 />
               ) : (
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">No logo</span>
+                <span className="text-xs font-semibold uppercase tracking-[0.16em]" style={{ color: colors["muted-foreground"] }}>
+                  No logo
+                </span>
               )}
             </div>
           </div>
 
-          <p className="text-sm" style={{ color: colors["section-body"] }}>
+          <p className="text-base leading-7" style={{ color: colors["section-body"] }}>
             {companyDescription ?? "Machine Vision partner in industrial analytics."}
           </p>
-          <div className="space-y-2 text-sm">
+          <div className="space-y-3 text-sm">
             <p>
-              <span className="font-semibold">Project description:</span>{" "}
+              <span className="font-semibold uppercase tracking-[0.14em]" style={{ color: colors.secondary }}>Project description:</span>{" "}
               {projectDescription ?? "Feasibility study analysis and reporting package."}
             </p>
             <p>
-              <span className="font-semibold">Objective:</span>{" "}
+              <span className="font-semibold uppercase tracking-[0.14em]" style={{ color: colors.secondary }}>Objective:</span>{" "}
               {objective ?? "Deliver actionable insights and implementation recommendations."}
             </p>
             <div>
-              <p className="font-semibold">Scopes:</p>
+              <p className="font-semibold uppercase tracking-[0.14em]" style={{ color: colors.secondary }}>Scopes:</p>
               {scopes.length > 0 ? (
-                <ul className="mt-1 list-disc space-y-1 pl-5" style={{ color: colors["muted-foreground"] }}>
+                <ul className="mt-2 list-disc space-y-2 pl-5" style={{ color: colors["muted-foreground"] }}>
                   {scopes.map((scope) => (
                     <li key={scope}>{scope}</li>
                   ))}
@@ -156,9 +158,9 @@ export function ClientReportLandingCover({
               )}
             </div>
           </div>
-          <div className="rounded-lg border p-3 text-xs" style={{ borderColor: colors.border, background: colors.muted }}>
-            <p>This report is created by Machine Vision Global.</p>
-            <p className="mt-1">{projectPeriodLabel}</p>
+          <div className="rounded-[1.25rem] border p-4 text-sm shadow-soft" style={{ borderColor: colors.border, background: colors.muted }}>
+            <p className="font-semibold tracking-tight">Created by Machine Vision Global.</p>
+            <p className="mt-2" style={{ color: colors["muted-foreground"] }}>{projectPeriodLabel}</p>
           </div>
         </div>
       </div>

@@ -1,0 +1,290 @@
+{
+  "en_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "info": "",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "success": "",
+      "accentLight": "",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "date": "14 March 2026",
+      "limit": "",
+      "title": "Appendix C - Asset Scope: Equipment Inventory",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "documentId": "INA-PL-RCP-APP-C",
+      "outputMode": "",
+      "description": "",
+      "totalAssets": ""
+    },
+    "sections": {
+      "s1_purpose": {
+        "rule": "",
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "paragraphs": []
+      },
+      "s2_snapshot": {
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "metrics": {
+          "items": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "categories": {
+            "list": [],
+            "label": "Generated"
+          }
+        },
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "dominance": {
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "keywords": [],
+          "conclusion": "RODDING PLANT (INA-PL-RCP)",
+          "description": "",
+          "targetPercentage": 0
+        },
+        "utilities": {
+          "list": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "conclusion": "RODDING PLANT (INA-PL-RCP)"
+        },
+        "bottleneckLinkage": {
+          "list": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "conclusion": "RODDING PLANT (INA-PL-RCP)",
+          "description": ""
+        }
+      },
+      "s3_inventory": {
+        "note": "",
+        "rows": [],
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "columns": [],
+        "subtitle": "Rodding Plant (INA-PL-RCP)"
+      },
+      "s5_governance": {
+        "items": [],
+        "title": "Appendix C - Asset Scope: Equipment Inventory"
+      },
+      "s4_observations": {
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "density": {
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "points": [],
+          "conclusion": "RODDING PLANT (INA-PL-RCP)"
+        },
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "automation": {
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "pattern": "",
+          "subtitle": "Rodding Plant (INA-PL-RCP)",
+          "categories": []
+        },
+        "bottlenecks": {
+          "items": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory"
+        }
+      },
+      "s6_referenceMap": {
+        "rows": [],
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "columns": [],
+        "subtitle": "Rodding Plant (INA-PL-RCP)"
+      }
+    }
+  },
+  "id_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "info": "",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "success": "",
+      "accentLight": "",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "date": "14 March 2026",
+      "limit": "",
+      "title": "Appendix C - Asset Scope: Equipment Inventory",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "documentId": "INA-PL-RCP-APP-C",
+      "outputMode": "",
+      "description": "",
+      "totalAssets": ""
+    },
+    "sections": {
+      "s1_purpose": {
+        "rule": "",
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "paragraphs": []
+      },
+      "s2_snapshot": {
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "metrics": {
+          "items": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "categories": {
+            "list": [],
+            "label": "Generated"
+          }
+        },
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "dominance": {
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "keywords": [],
+          "conclusion": "RODDING PLANT (INA-PL-RCP)",
+          "description": "",
+          "targetPercentage": 0
+        },
+        "utilities": {
+          "list": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "conclusion": "RODDING PLANT (INA-PL-RCP)"
+        },
+        "bottleneckLinkage": {
+          "list": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "conclusion": "RODDING PLANT (INA-PL-RCP)",
+          "description": ""
+        }
+      },
+      "s3_inventory": {
+        "note": "",
+        "rows": [],
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "columns": [],
+        "subtitle": "Rodding Plant (INA-PL-RCP)"
+      },
+      "s5_governance": {
+        "items": [],
+        "title": "Appendix C - Asset Scope: Equipment Inventory"
+      },
+      "s4_observations": {
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "density": {
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "points": [],
+          "conclusion": "RODDING PLANT (INA-PL-RCP)"
+        },
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "automation": {
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "pattern": "",
+          "subtitle": "Rodding Plant (INA-PL-RCP)",
+          "categories": []
+        },
+        "bottlenecks": {
+          "items": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory"
+        }
+      },
+      "s6_referenceMap": {
+        "rows": [],
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "columns": [],
+        "subtitle": "Rodding Plant (INA-PL-RCP)"
+      }
+    }
+  },
+  "ja_json": {
+    "theme": {
+      "dark": "#0f172a",
+      "info": "",
+      "accent": "#0ea5e9",
+      "danger": "#b91c1c",
+      "primary": "#1d4ed8",
+      "success": "",
+      "accentLight": "",
+      "primaryLight": "#bfdbfe"
+    },
+    "metadata": {
+      "date": "14 March 2026",
+      "limit": "",
+      "title": "Appendix C - Asset Scope: Equipment Inventory",
+      "status": "Draft",
+      "subtitle": "Rodding Plant (INA-PL-RCP)",
+      "documentId": "INA-PL-RCP-APP-C",
+      "outputMode": "",
+      "description": "",
+      "totalAssets": ""
+    },
+    "sections": {
+      "s1_purpose": {
+        "rule": "",
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "paragraphs": []
+      },
+      "s2_snapshot": {
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "metrics": {
+          "items": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "categories": {
+            "list": [],
+            "label": "Generated"
+          }
+        },
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "dominance": {
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "keywords": [],
+          "conclusion": "RODDING PLANT (INA-PL-RCP)",
+          "description": "",
+          "targetPercentage": 0
+        },
+        "utilities": {
+          "list": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "conclusion": "RODDING PLANT (INA-PL-RCP)"
+        },
+        "bottleneckLinkage": {
+          "list": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "conclusion": "RODDING PLANT (INA-PL-RCP)",
+          "description": ""
+        }
+      },
+      "s3_inventory": {
+        "note": "",
+        "rows": [],
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "columns": [],
+        "subtitle": "Rodding Plant (INA-PL-RCP)"
+      },
+      "s5_governance": {
+        "items": [],
+        "title": "Appendix C - Asset Scope: Equipment Inventory"
+      },
+      "s4_observations": {
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "density": {
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "points": [],
+          "conclusion": "RODDING PLANT (INA-PL-RCP)"
+        },
+        "subtitle": "Rodding Plant (INA-PL-RCP)",
+        "automation": {
+          "title": "Appendix C - Asset Scope: Equipment Inventory",
+          "pattern": "",
+          "subtitle": "Rodding Plant (INA-PL-RCP)",
+          "categories": []
+        },
+        "bottlenecks": {
+          "items": [],
+          "title": "Appendix C - Asset Scope: Equipment Inventory"
+        }
+      },
+      "s6_referenceMap": {
+        "rows": [],
+        "title": "Appendix C - Asset Scope: Equipment Inventory",
+        "columns": [],
+        "subtitle": "Rodding Plant (INA-PL-RCP)"
+      }
+    }
+  }
+}
