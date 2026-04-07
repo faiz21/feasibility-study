@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Asset & Assessment Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- GENERIC JSON DATA EMBED: Sections -> Sub-sections Structure -->
+    <script id="report-data" type="application/json">
+    {
+      "theme": { 
+        "primary": "#6366f1", 
+        "accent": "#4f46e5", 
+        "dark": "#0f172a", 
+        "roadmapBg": "#1e293b" 
+      },
+      "metadata": {
+        "title": "Appendix F - Mobile Assets",
+        "subtitle": "Vehicle and Mobile Asset Inventory",
+        "documentId": "INA-PL-GRP-APP-F",
+        "company": "PT Indonesia Asahan Aluminium",
+        "plant": "Green Plant (INA-PL-GRP)",
+        "date": "March 2026",
+        "status": "Final Baseline"
+      },
+      "sections": [
+        {
+          "section_number": "Section 01",
+          "section_title": "Purpose of Appendix F",
+          "template_type": "text_block",
+          "custom_properties": {
+            "text": "Appendix F establishes the authoritative mobile asset baseline for Green Plant (INA-PL-GRP). Mobile assets in this scope include in-plant logistics and production-transfer vehicles used to move materials and work-in-process within the plant boundary.",
+            "takeaway": "This appendix supports maintenance governance evaluation, KPI enforcement posture, vertical integration review, and overall maturity scoring by clarifying the fleet inventory, operational dependency, and evidence-bounded governance exposure."
+          }
+        },
+        {
+          "section_number": "Section 02",
+          "section_title": "Mobile Asset Snapshot",
+          "template_type": "metrics_with_chart",
+          "custom_properties": {
+            "metrics": [
+              { "label": "Total Assets", "value": "5", "subtext": "Identified Mobile Assets" },
+              { "label": "Asset Types", "value": "2", "subtext": "FLT (3) and BHC (2)" },
+              { "label": "Criticality", "value": "40%", "subtext": "High-Criticality Assets (2 of 5)" },
+              { "label": "Energy Profile", "value": "Unknown", "subtext": "Fueling reliability gap" },
+              { "label": "Telematics", "value": "None", "subtext": "No runtime visibility" },
+              { "label": "CMMS", "value": "None", "subtext": "No documented integration" }
+            ],
+            "chart": {
+              "type": "pie",
+              "total": 5,
+              "data": [
+                { "label": "Forklifts (FLT)", "value": 3, "color": "#6366f1", "desc": "Material Handling" },
+                { "label": "BH Cars (BHC)", "value": 2, "color": "#06b6d4", "desc": "Production-Transfer" }
+              ]
+            }
+          }
+        },
+        {
+          "section_number": "Section 03",
+          "section_title": "Mobile Asset Inventory Register",
+          "template_type": "data_table",
+          "custom_properties": {
+            "headers": ["Asset Code", "Asset Type", "Name", "Typical Use", "Criticality"],
+            "rows": [
+              ["INA-VEH-GRP-001", "INA-VHT-FLT", "Forklift 001", "Handle pallets/bundles; support loading/unloading", "Medium"],
+              ["INA-VEH-GRP-002", "INA-VHT-FLT", "Forklift 002", "Handle pallets/bundles; support loading/unloading", "Medium"],
+              ["INA-VEH-GRP-003", "INA-VHT-FLT", "Forklift 003", "Handle pallets/bundles; support loading/unloading", "Medium"],
+              ["INA-VEH-GRP-004", "INA-VHT-BHC", "BH Car 1", "Move Green/Baked Block between storage, staging, process areas", "High"],
+              ["INA-VEH-GRP-005", "INA-VHT-BHC", "BH Car 2", "Move Green/Baked Block between storage, staging, process areas", "High"]
+            ]
+          }
+        },
+        {
+          "section_number": "Section 04",
+          "section_title": "Operational Role & Exposure",
+          "template_type": "exposure_cards",
+          "sub_sections": [
+            {
+              "sub_title": "INA-VHT-FLT (Forklifts)",
+              "custom_properties": {
+                "dependency": "Medium",
+                "functional_role": "Material handling for pallets/bundles and support for loading/unloading within plant logistics.",
+                "operational_exposures": [
+                  "Energy/Fuel is unknown, creating a fueling reliability visibility gap.",
+                  "No telematics indicated, creating runtime opacity for utilization governance.",
+                  "No CMMS integration indicated, creating a maintenance governance gap."
+                ]
+              }
+            },
+            {
+              "sub_title": "INA-VHT-BHC (BH Cars)",
+              "custom_properties": {
+                "dependency": "High",
+                "functional_role": "Production-transfer movement for Green Block/Baked Block between storage, staging, and process areas.",
+                "operational_exposures": [
+                  "Energy/Fuel unknown: Fueling reliability gap for a high-dependency transfer fleet.",
+                  "No telematics: Limits ability to measure runtime and constraint patterns.",
+                  "No CMMS integration: Limits evidence of disciplined PM execution for high-criticality vehicles."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "section_number": "Sections 05 & 06",
+          "section_title": "Governance Metrics & Risk Observations",
+          "template_type": "split_governance_risks",
+          "custom_properties": {
+            "kpis": [
+              { "code": "INA-KPI-030", "name": "Vehicle Zone/Proximity Violations", "relevance": "Safety governance exposure for vehicle movement discipline and zone compliance" },
+              { "code": "INA-KPI-053", "name": "Vehicle PM Compliance (%)", "relevance": "Maintenance governance KPI for fleet PM discipline" }
+            ],
+            "procedures": [
+              "INA-PRC-062 Vehicle Maintenance Planning & Work Orders",
+              "INA-PRC-063 Vehicle PM Inspection & Compliance"
+            ],
+            "risks": [
+              { "title": "Runtime Opacity Risk", "observation": "No telematics (telemetry/VHMS/GPS) is indicated for any mobile asset.", "impact": "Fleet utilization and availability constraints cannot be measured deterministically.", "implication": "KPI enforcement cannot be supported by auditable runtime evidence." },
+              { "title": "Refueling Governance Exposure", "observation": "Energy/Fuel fields are blank for all assets; profile is Unknown.", "impact": "Fueling reliability and energy dependency cannot be governed through inventory visibility.", "implication": "Operational interruptions due to refueling constraints cannot be investigated." },
+              { "title": "Availability Blind Spot", "observation": "BH Car assets are High-criticality, but no vehicle utilization/availability KPI is explicitly defined.", "impact": "Production-transfer capacity constraints may be visible only after delays occur.", "implication": "Performance governance is limited to compliance and safety events rather than capacity control." },
+              { "title": "Reactive Maintenance Risk", "observation": "Vehicle maintenance procedures exist, but explicit CMMS linkage is missing.", "impact": "Maintenance traceability and closure evidence may remain manual or fragmented.", "implication": "PM compliance measurement may not be supported by auditable work order history." },
+              { "title": "Throughput Dependency Risk", "observation": "Findings describe strong Green/Baked Block movement dependency.", "impact": "Material transfer interruptions can propagate into staging and production constraints.", "implication": "Without runtime and transaction visibility, transfer losses remain difficult to govern." }
+            ]
+          }
+        },
+        {
+          "section_number": "Section 07",
+          "section_title": "Maturity Assessment",
+          "section_subtitle": "Evaluation of Data & Governance Capabilities",
+          "template_type": "data_table",
+          "custom_properties": {
+            "headers": ["Dimension", "Current Posture", "Exposure Level", "Evidence Anchor"],
+            "rows": [
+              ["Asset Register Formalization", "Defined (inventory exists) but attribute completeness limited", "Medium", "Vehicle table"],
+              ["Telematics", "Not indicated", "High", "No telemetry/VHMS evidence"],
+              ["CMMS Integration", "Not indicated", "High", "No explicit CMMS linkage"],
+              ["Digital Inspection", "Not evidenced", "High", "No digital workflow evidenced"],
+              ["Utilization Analytics", "Not evidenced", "High", "No runtime measurement evidence"],
+              ["Fleet Optimization", "Not evidenced", "High", "No orchestration evidence"]
+            ]
+          }
+        },
+        {
+          "section_number": "Section 08",
+          "section_title": "Strategic Alignment",
+          "template_type": "strategic_alignment",
+          "custom_properties": {
+            "recommendations": [
+              "Vehicle maintenance governance is structurally aligned to work-order discipline based on existing procedures (INA-PRC-062, 063).",
+              "Safety governance visibility is directionally supported by explicit vehicle safety KPIs (INA-KPI-030).",
+              "Maintenance digitalization alignment may be evaluated against INA-SOL-18 (CMMS/EAM + Andon).",
+              "Production-transfer dependency is concentrated in BH Car assets; improving evidence capture is coupled to broader plant data governance (Appendix N)."
+            ]
+          }
+        },
+        {
+          "section_number": "Section 07",
+          "section_title": "Reference Map",
+          "section_subtitle": "Output 7B",
+          "template_type": "reference_map",
+          "custom_properties": {
+            "headers": ["Appendix F Section", "Evidence Source"],
+            "rows": [
+              ["Asset counts, type distribution, category and fuel completeness", "List Of Vehicle"],
+              ["Criticality assignment", "List Of Vehicle (Typical Use)"],
+              ["KPI governance linkage", "List Of Related KPIs (INA-KPI-030, INA-KPI-053)"],
+              ["Procedure governance linkage", "List Of Related Procedures (INA-PRC-062, INA-PRC-063)"],
+              ["Operational dependency narrative", "List Of Findings & Notes (transport and movement references)"],
+              ["Solution alignment references (codes only)", "List Of Related Solution Proposed (INA-SOL-18)"]
+            ]
+          }
+        }
+      ]
+    }
+    </script>
+
+    <script>
+        const rawData = JSON.parse(document.getElementById('report-data').textContent);
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        report: {
+                            50: '#eef2ff', 100: '#e0e7ff', 500: rawData.theme.primary, 800: '#3730a3', 900: rawData.theme.dark, 
+                            accent: rawData.theme.accent, roadmapBg: rawData.theme.roadmapBg
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.5); }
+        .dark-glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.6)), url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=2670&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .table-container { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-report-500 selection:text-white">
+
+    <!-- STATIC COVER (Driven by Metadata) -->
+    <div id="cover-container"></div>
+    
+    <!-- DYNAMIC MAIN SECTIONS CONTAINER -->
+    <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8" id="dynamic-sections"></main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = JSON.parse(document.getElementById('report-data').textContent);
+            
+            // --- RENDER COVER ---
+            const coverHtml = `
+                <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-report-roadmapBg/95 via-report-roadmapBg/60 to-transparent mix-blend-multiply"></div>
+                    <div class="relative z-10 max-w-5xl">
+                        <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-500/50 bg-report-500/20 text-indigo-100 text-sm font-semibold tracking-wide uppercase shadow-lg">
+                            ${data.metadata.documentId}
+                        </div>
+                        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-4 text-white drop-shadow-sm leading-none">
+                            ${data.metadata.title.split('-')[0]} <br/> <span class="text-report-500">${data.metadata.title.split('-')[1] || ''}</span>
+                        </h1>
+                        <h2 class="text-2xl md:text-3xl font-light text-slate-300 mb-12 max-w-3xl leading-snug">
+                            ${data.metadata.subtitle}
+                        </h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12 dark-glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl items-center">
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Facility</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.plant}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Company</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.company}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Issue Date</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.date}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Status</p>
+                                <p class="font-medium text-report-500 flex items-center gap-2 text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-report-500 animate-pulse shadow-[0_0_8px_rgba(99,102,241,0.8)]"></span>
+                                    ${data.metadata.status}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `;
+            document.getElementById('cover-container').innerHTML = coverHtml;
+
+            // --- HELPER FUNCTIONS ---
+            const renderSectionHeader = (number, title, subtitle = '', customStyles = '') => `
+                <div class="col-span-1 md:col-span-12 ${customStyles}">
+                    <div class="flex items-stretch gap-4 mb-8">
+                        <div class="w-1.5 bg-indigo-600 rounded-full"></div>
+                        <div class="py-1">
+                            <p class="text-indigo-600 font-bold tracking-widest uppercase text-[10px] mb-1">${number}</p>
+                            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">${title}</h2>
+                            ${subtitle ? `<p class="text-sm text-slate-500 mt-2">${subtitle}</p>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const getCriticalityBadge = (level) => {
+                const map = {
+                    'high': '<span class="px-3 py-1 bg-red-50 text-red-700 border border-red-200 rounded-full text-xs font-bold">High</span>',
+                    'medium': '<span class="px-3 py-1 bg-amber-50 text-amber-700 border border-amber-200 rounded-full text-xs font-bold">Medium</span>',
+                    'low': '<span class="px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full text-xs font-bold">Low</span>'
+                };
+                return map[String(level).toLowerCase()] || `<span class="px-3 py-1 bg-slate-100 text-slate-600 border border-slate-200 rounded-full text-xs font-bold">${level}</span>`;
+            };
+
+            const renderPieChart = (chart) => {
+                let currentPct = 0;
+                const gradientString = chart.data.map(item => {
+                    const pct = (item.value / chart.total) * 100;
+                    const str = `${item.color} ${currentPct}% ${currentPct + pct}%`;
+                    currentPct += pct;
+                    return str;
+                }).join(', ');
+
+                return `
+                    <div class="flex flex-col xl:flex-row items-center justify-center gap-8 w-full p-6">
+                        <div class="w-40 h-40 rounded-full shadow-inner border border-slate-100 flex-shrink-0 relative" style="background: conic-gradient(${gradientString})">
+                            <div class="absolute inset-0 m-auto w-24 h-24 bg-white rounded-full flex items-center justify-center flex-col shadow-sm">
+                                <span class="text-2xl font-black text-slate-800">${chart.total}</span>
+                                <span class="text-[10px] uppercase font-bold text-slate-400">Total</span>
+                            </div>
+                        </div>
+                        <div class="space-y-4 w-full max-w-sm">
+                            ${chart.data.map(item => `
+                                <div class="flex items-start gap-3">
+                                    <div class="w-4 h-4 rounded-full mt-0.5 shadow-sm shrink-0" style="background-color: ${item.color}"></div>
+                                    <div>
+                                        <p class="font-bold text-slate-800 leading-none">${item.label} <span class="text-slate-500 font-medium ml-1">(${item.value})</span></p>
+                                        <p class="text-xs text-slate-500 mt-1">${item.desc || ''}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            };
+
+            // --- DYNAMIC RENDERER ---
+            let sectionsHtml = '';
+            
+            data.sections.forEach((section, index) => {
+                const isFirst = index === 0;
+                const headerStyle = isFirst ? '' : 'mt-12 border-t border-slate-200 pt-16';
+                const cp = section.custom_properties || {};
+                
+                // Add header for standard sections
+                if (!['strategic_alignment', 'reference_map'].includes(section.template_type)) {
+                    sectionsHtml += renderSectionHeader(section.section_number, section.section_title, section.section_subtitle, headerStyle);
+                }
+
+                // Render specific template UI
+                switch(section.template_type) {
+                    
+                    case 'text_block':
+                        sectionsHtml += `
+                            <div class="col-span-1 md:col-span-8 md:col-start-3 space-y-10 text-xl font-light">
+                                <p class="text-slate-700 leading-relaxed">${cp.text}</p>
+                                ${cp.takeaway ? `
+                                <blockquote class="bg-report-roadmapBg rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden transform md:scale-105 my-12">
+                                    <div class="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-indigo-400 to-report-500"></div>
+                                    <p class="relative z-10 text-2xl font-light leading-relaxed">${cp.takeaway}</p>
+                                </blockquote>` : ''}
+                            </div>
+                        `;
+                        break;
+
+                    case 'metrics_with_chart':
+                        sectionsHtml += `
+                            <div class="col-span-1 md:col-span-12">
+                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12 items-stretch">
+                                    ${cp.chart ? `
+                                    <div class="col-span-1 bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col justify-center items-center">
+                                        ${renderPieChart(cp.chart)}
+                                    </div>` : ''}
+                                    <div class="col-span-1 lg:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-6">
+                                        ${cp.metrics.map(m => `
+                                            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex flex-col justify-center text-left hover:shadow-md transition-shadow">
+                                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">${m.label}</p>
+                                                <p class="text-3xl font-black text-slate-800 mb-2">${m.value}</p>
+                                                <p class="text-xs text-slate-500 font-medium leading-snug">${m.subtext || ''}</p>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'data_table':
+                        const hasExposures = String(cp.headers[2] || '').toLowerCase().includes('exposure');
+                        sectionsHtml += `
+                            <div class="col-span-1 md:col-span-12">
+                                <div class="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+                                    <table class="w-full text-left min-w-[800px] border-collapse">
+                                        <thead>
+                                            <tr class="${hasExposures ? 'bg-slate-50 text-slate-500' : 'bg-report-roadmapBg text-white'} uppercase text-xs tracking-wider border-b border-slate-200">
+                                                ${cp.headers.map((h, i) => `<th class="p-5 font-semibold ${i===0?'rounded-tl-3xl':''}">${h}</th>`).join('')}
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">
+                                            ${cp.rows.map(row => `
+                                                <tr class="hover:bg-slate-50 transition-colors">
+                                                    ${row.map((cell, i) => {
+                                                        const lowerCell = String(cell).toLowerCase();
+                                                        // Auto formatting rules based on generic content
+                                                        if (['high', 'medium', 'low'].includes(lowerCell)) {
+                                                            return `<td class="p-5 text-center">${getCriticalityBadge(cell)}</td>`;
+                                                        } else if (String(cp.headers[i]).toLowerCase().includes('code')) {
+                                                            return `<td class="p-5 font-mono font-medium text-slate-900">${cell}</td>`;
+                                                        } else if (i === 0) {
+                                                            return `<td class="p-5 font-bold text-slate-800">${cell}</td>`;
+                                                        }
+                                                        return `<td class="p-5 text-slate-600 leading-relaxed">${cell}</td>`;
+                                                    }).join('')}
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'exposure_cards':
+                        sectionsHtml += `
+                            <div class="col-span-1 md:col-span-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                ${section.sub_sections.map(sub => `
+                                    <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-lg shadow-slate-200/50 border border-slate-100/80 hover:-translate-y-1 transition-transform relative overflow-hidden group">
+                                        <div class="absolute top-0 left-0 w-full h-2 ${sub.custom_properties.dependency === 'High' ? 'bg-amber-500' : 'bg-report-500'}"></div>
+                                        <div class="flex justify-between items-start mb-6">
+                                            <h3 class="text-2xl font-black text-slate-800 tracking-tight">${sub.sub_title}</h3>
+                                            ${sub.custom_properties.dependency ? `
+                                            <span class="px-3 py-1 rounded-full text-xs font-bold border ${sub.custom_properties.dependency === 'High' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-slate-100 text-slate-600'}">
+                                                Dependency: ${sub.custom_properties.dependency}
+                                            </span>` : ''}
+                                        </div>
+                                        <div class="mb-8">
+                                            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-2">Functional Role</p>
+                                            <p class="text-slate-700 text-lg font-light leading-relaxed">${sub.custom_properties.functional_role || ''}</p>
+                                        </div>
+                                        <div class="pt-6 border-t border-slate-100">
+                                            <p class="text-[10px] uppercase font-bold text-red-500 tracking-widest mb-4">Operational Exposures</p>
+                                            <ul class="space-y-3">
+                                                ${(sub.custom_properties.operational_exposures || []).map(exp => `
+                                                    <li class="flex items-start gap-3">
+                                                        <svg class="w-5 h-5 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                                        <p class="text-sm text-slate-600 leading-relaxed">${exp}</p>
+                                                    </li>
+                                                `).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                        break;
+
+                    case 'split_governance_risks':
+                        sectionsHtml += `
+                            <div class="col-span-1 md:col-span-12 grid grid-cols-1 xl:grid-cols-12 gap-12">
+                                <!-- Left Col: KPIs -->
+                                <div class="xl:col-span-4 space-y-8">
+                                    <div class="bg-slate-900 rounded-[2rem] p-8 text-white shadow-xl relative overflow-hidden">
+                                        <h4 class="text-xl font-bold mb-6 flex items-center gap-3">
+                                            <svg class="w-6 h-6 text-report-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                            Linked Elements
+                                        </h4>
+                                        <div class="space-y-6">
+                                            ${(cp.kpis || []).map(kpi => `
+                                                <div class="border-l-2 border-report-500 pl-4">
+                                                    <p class="font-mono text-xs text-report-400 mb-1">${kpi.code}</p>
+                                                    <p class="font-bold text-white mb-1">${kpi.name}</p>
+                                                    <p class="text-sm text-slate-400 leading-snug">${kpi.relevance}</p>
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                        ${(cp.procedures && cp.procedures.length > 0) ? `
+                                        <div class="mt-8 pt-6 border-t border-slate-700">
+                                            <p class="text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-3">Governing Procedures</p>
+                                            <ul class="text-sm text-slate-300 space-y-2 list-disc pl-4">
+                                                ${cp.procedures.map(p => `<li>${p}</li>`).join('')}
+                                            </ul>
+                                        </div>` : ''}
+                                    </div>
+                                </div>
+                                <!-- Right Col: Risk Cards -->
+                                <div class="xl:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    ${(cp.risks || []).map((risk, i) => `
+                                        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:border-red-200 transition-colors">
+                                            <div class="flex items-center gap-3 mb-4">
+                                                <div class="w-8 h-8 rounded-full bg-red-50 text-red-600 flex items-center justify-center font-black text-sm shrink-0">${i+1}</div>
+                                                <h4 class="font-bold text-slate-800 leading-tight">${risk.title}</h4>
+                                            </div>
+                                            <div class="space-y-4 text-sm">
+                                                <div>
+                                                    <span class="font-bold text-slate-900 text-xs uppercase tracking-wider block mb-1">Observation</span>
+                                                    <span class="text-slate-600">${risk.observation}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="font-bold text-amber-700 text-xs uppercase tracking-wider block mb-1">Operational Impact</span>
+                                                    <span class="text-slate-600">${risk.impact}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="font-bold text-report-800 text-xs uppercase tracking-wider block mb-1">Governance Implication</span>
+                                                    <span class="text-slate-600">${risk.implication}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'strategic_alignment':
+                        sectionsHtml += `
+                            <div class="col-span-1 md:col-span-12 ${headerStyle}">
+                                <div class="w-full">
+                                    <div class="bg-[#17183B] rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-14 shadow-2xl text-white relative overflow-hidden">
+                                        <p class="text-indigo-400 font-bold tracking-widest uppercase text-[10px] mb-2">${section.section_number}</p>
+                                        <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-8">${section.section_title}</h2>
+                                        
+                                        <h3 class="text-sm font-bold text-white mb-6 border-b border-white/10 pb-4 inline-block">Strategic Recommendations</h3>
+                                        <ul class="space-y-6">
+                                            ${(cp.recommendations || []).map((align, i) => `
+                                                <li class="flex items-start gap-5">
+                                                    <div class="w-7 h-7 rounded-full border border-indigo-400/40 text-indigo-200 flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold">
+                                                        ${i + 1}
+                                                    </div>
+                                                    <p class="text-sm md:text-base text-slate-300 leading-relaxed font-light">${align}</p>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        break;
+
+                    case 'reference_map':
+                        sectionsHtml += `
+                            <div class="col-span-1 md:col-span-12 ${headerStyle}">
+                                <div class="w-full">
+                                    <div class="flex items-stretch gap-4 mb-6">
+                                        <div class="w-1.5 bg-indigo-600 rounded-full"></div>
+                                        <div class="py-1">
+                                            <p class="text-indigo-600 font-bold tracking-widest uppercase text-[10px] mb-1">${section.section_number}</p>
+                                            <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">${section.section_title}</h2>
+                                            <p class="text-xs text-slate-500 mt-1">${section.section_subtitle || ''}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-white rounded-[1.5rem] overflow-hidden border border-slate-200">
+                                        <table class="w-full text-left">
+                                            <thead>
+                                                <tr class="bg-white text-slate-400 uppercase text-[10px] tracking-widest border-b border-slate-200">
+                                                    ${cp.headers.map(h => `<th class="p-5 font-bold w-1/2">${h}</th>`).join('')}
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-slate-700 text-sm divide-y divide-slate-100">
+                                                ${cp.rows.map(row => `
+                                                    <tr class="hover:bg-slate-50 transition-colors">
+                                                        <td class="p-5 font-bold text-slate-800">${row[0]}</td>
+                                                        <td class="p-5 font-mono text-xs text-indigo-500 font-medium">${row[1]}</td>
+                                                    </tr>
+                                                `).join('')}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        break;
+                }
+            });
+
+            document.getElementById('dynamic-sections').innerHTML = sectionsHtml;
+        });
+    </script>
+</body>
+</html>

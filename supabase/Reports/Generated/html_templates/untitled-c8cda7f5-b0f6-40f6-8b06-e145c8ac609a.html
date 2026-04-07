@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Cybersecurity Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- COMPLETELY PARSED JSON DATA -->
+    <script id="report-data" type="application/json">
+    {
+      "theme": { "primary": "#ef4444", "accent": "#14b8a6", "dark": "#0f172a", "roadmapBg": "#111827" },
+      "metadata": {
+        "title": "Cybersecurity Assessment Report",
+        "company": "PT Indonesia Asahan Aluminium (INALUM)",
+        "scope": "Operational Technology (OT) Environment",
+        "finalScore": 34.29,
+        "date": "March 2026",
+        "status": "Executive Final"
+      },
+      "sections": {
+        "s1_executiveSummary": {
+          "maturity": "Low-to-Moderate maturity level",
+          "environment": [
+            "Operational control systems functioning with basic protections",
+            "Partial access controls and physical security",
+            "Informal governance practices",
+            "Significant structural gaps in OT cybersecurity architecture",
+            "Very limited vulnerability management and secure configuration practices"
+          ],
+          "primaryRisks": [
+            "Lack of formal OT governance structure",
+            "Absence of OT-DMZ and strong network segmentation",
+            "No structured OT vulnerability management",
+            "No secure configuration baselines",
+            "Limited monitoring and incident response capability",
+            "Weak SIS governance controls"
+          ],
+          "takeaway": "This maturity level places INALUM at elevated risk of production disruption, quality impact, and potential safety exposure in the event of a cyber incident."
+        },
+        "s2_scoreInterpretation": {
+          "table": [
+            { "category": "0–25%", "level": "Critical Risk", "impact": "High likelihood of severe impact" },
+            { "category": "26–40%", "level": "High Risk", "impact": "Structural gaps present" },
+            { "category": "41–60%", "level": "Moderate Risk", "impact": "Foundational controls exist" },
+            { "category": "61–80%", "level": "Managed", "impact": "Formal governance in place" },
+            { "category": "81–100%", "level": "Mature", "impact": "Optimized & monitored" }
+          ],
+          "indicators": [
+            "Controls are mostly reactive or informal",
+            "Architecture not aligned to IEC 62443 best practices",
+            "Governance not yet structured at enterprise OT level"
+          ]
+        },
+        "s3_domainAnalysis": [
+          { "title": "Safety Instrumented Systems (SIS)", "score": 30.0, "strengths": ["Safety interlocks exist at equipment level", "SIS events likely stored in PLC/SCADA logs"], "gaps": ["No documented SIS network segregation", "No bypass logging or structured review", "No independent safety logic review process", "No SIS-specific MOC"], "risk": "High (especially for smelter and furnace environments). Safety bypass could occur without detection. Undocumented safety logic changes." },
+          { "title": "OT Governance & Risk Management", "score": 28.0, "strengths": ["IT and OT functions exist", "Corporate IT policies likely in place"], "gaps": ["No OT-specific cybersecurity governance charter", "No OT risk register covering safety/production impacts", "No OT KPIs or dashboard", "No role-based OT cybersecurity training"], "risk": "No accountability framework. No visibility of OT cyber exposure at executive level." },
+          { "title": "OT Asset Inventory & Visibility", "score": 45.0, "strengths": ["PLC and SCADA inventories exist", "Lifecycle estimates recorded", "Model/type information available"], "gaps": ["No centralized firmware tracking", "No IT/OT data flow documentation", "No formal asset criticality model"], "risk": "Obsolete assets unmanaged. Hidden integration pathways." },
+          { "title": "Architecture & Network Segmentation", "score": 17.78, "critical": true, "strengths": ["Partial segregation via dual-SCADA architecture", "No known direct PLC internet exposure"], "gaps": ["No OT-DMZ", "No jump server architecture", "No firewall rule governance", "No zone/conduit model documentation", "No wireless/IIoT segmentation evidence"], "risk": "Highest structural risk. Malware spread from IT to OT possible. No formal barrier between enterprise and control layers." },
+          { "title": "Identity & Access Management", "score": 40.0, "strengths": ["Engineering access present", "SCADA logs capture user activity", "Default credentials likely removed"], "gaps": ["No Privileged Access Management (PAM)", "No break-glass governance", "No periodic access review", "No service account lifecycle management"], "risk": "Shared or unmanaged accounts. Privilege creep over time." },
+          { "title": "Remote Access & Third-Party", "score": 28.8, "strengths": ["VPN likely used", "No rogue remote modems observed", "Antivirus scanning likely present"], "gaps": ["No MFA enforcement", "No session recording", "No zone-based restriction", "No vendor account expiration", "No remote log correlation with MOC"], "risk": "Vendor compromise path. Remote access abuse undetected." },
+          { "title": "Secure Configuration & Hardening", "score": 10.91, "critical": true, "strengths": [], "gaps": ["No defined OT secure baseline", "No application allowlisting", "No configuration drift detection", "No structured hardening review"], "risk": "Workstations may contain unnecessary services. Increased ransomware exposure. Uncontrolled system drift." },
+          { "title": "Vulnerability & Patch Management", "score": 9.23, "critical": true, "strengths": [], "gaps": ["No OT-safe vulnerability scanning", "No compensating control framework", "No risk-based remediation tracking", "No EOL mitigation strategy"], "risk": "Lowest maturity domain. Legacy PLC/DCS unmonitored. Unpatched vulnerabilities accumulate." },
+          { "title": "Monitoring, Logging & Detection", "score": 27.0, "strengths": ["SCADA logs exist", "Equipment alarms present"], "gaps": ["No centralized SOC integration", "No ICS anomaly detection", "No protocol-level monitoring", "No time synchronization governance", "No OT-DMZ monitoring"], "risk": "Attacks may remain undetected. No behavioral anomaly detection." },
+          { "title": "Incident Response", "score": 31.58, "strengths": ["Corporate IR likely exists", "Operational hierarchy defined"], "gaps": ["No OT-specific playbook", "No tabletop exercises", "No safe containment runbook", "No OT forensic procedures"], "risk": "Incorrect containment could disrupt production. No coordinated cross-plant response." },
+          { "title": "Backup & Recovery", "score": 21.43, "strengths": ["PLC backups exist"], "gaps": ["No immutable backups", "No tested OT DR exercises", "No defined RTO/RPO", "No tamper protection"], "risk": "Ransomware could encrypt backups. Recovery timeline unknown. Extended downtime risk." },
+          { "title": "Physical Security", "score": 60.0, "strengths": ["Industrial site access control", "Cabinets physically enclosed", "Visitor control present"], "gaps": ["No formal OT log review process"], "risk": "Relative Strength Area." },
+          { "title": "Supplier & OEM Management", "score": 32.73, "strengths": ["Contracts likely include clauses", "Vendor tools exist"], "gaps": ["No periodic third-party review", "No update integrity verification"], "risk": "Supply chain compromise." },
+          { "title": "Quality / GxP-Impact Systems", "score": 60.0, "strengths": ["Audit trails exist", "Data retained"], "gaps": ["No regulatory-grade validation control", "Manual data entry reduces integrity assurance"], "risk": "Data integrity deviations." }
+        ],
+        "s4_topRisks": [
+          "Vulnerability & Patch Management (9.23%)",
+          "Secure Configuration & Hardening (10.91%)",
+          "Architecture & Network Segmentation (17.78%)",
+          "Backup & Recovery (21.43%)",
+          "OT Governance & Risk Management (28%)"
+        ],
+        "s5_maturity": {
+          "layers": [
+            { "layer": "Governance", "status": "Informal" },
+            { "layer": "Architecture", "status": "Partially segregated" },
+            { "layer": "Identity", "status": "Partially controlled" },
+            { "layer": "Monitoring", "status": "Reactive" },
+            { "layer": "Vulnerability Mgmt", "status": "Absent" },
+            { "layer": "Hardening", "status": "Absent" },
+            { "layer": "Incident Response", "status": "IT-centric, not OT-specialized" }
+          ],
+          "overall": "Level 2 – Basic Operational Security (Below IEC 62443 SL2 readiness)"
+        },
+        "s6_businessImplications": [
+          "Potline instability",
+          "Furnace trip / metal solidification risk",
+          "Quality deviation (Fe, chemistry, temperature control)",
+          "Environmental compliance exposure",
+          "Production downtime > 24–72 hours in worst-case ransomware scenario",
+          "Supply chain delay"
+        ],
+        "s7_roadmap": {
+          "principles": "Secure the structural foundation and identity perimeter before scaling advanced monitoring. Establish governance as a prerequisite for technical control enforcement and visibility.",
+          "phases": [
+            { "phase": "Phase 1", "title": "Structural Foundation", "duration": "0–6 Months", "focus": "Governance, OT-DMZ, Segmentation, Hardening." },
+            { "phase": "Phase 2", "title": "Control Stabilization", "duration": "6–12 Months", "focus": "Vulnerability scans, Patching, Backups, NTP." },
+            { "phase": "Phase 3", "title": "Advanced Monitoring", "duration": "12–24 Months", "focus": "IDS Anomaly, SOC integration, PAM, IR Playbooks." }
+          ],
+          "pilots": [
+            "OT-DMZ prototype implementation on primary smelting subnet.",
+            "Centralized alarm log pilot for critical furnace PLC cluster.",
+            "MFA enforcement pilot for high-risk third-party vendor remote access."
+          ],
+          "dependencies": [
+            "Complete OT Asset Inventory with firmware/CVE mapping.",
+            "Firewall and Jump Server hardware procurement approval.",
+            "Formalized IT-OT Security Responsibility Matrix (RACI)."
+          ]
+        },
+        "s8_conclusion": {
+          "status": "operational but structurally fragile",
+          "lacks": ["Formal OT governance", "Structured segmentation architecture", "Vulnerability management", "Secure configuration discipline", "Advanced monitoring capability"],
+          "riskContext": "The current 34.29% maturity score places INALUM in a High Risk category, particularly given the criticality of smelting and power generation operations.",
+          "requirements": ["Reduce ransomware exposure", "Protect production continuity", "Safeguard safety systems", "Enable digital transformation initiatives safely"]
+        }
+      }
+    }
+    </script>
+
+    <script>
+        const rawData = JSON.parse(document.getElementById('report-data').textContent);
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        report: {
+                            50: '#fef2f2', 100: '#fee2e2', 500: rawData.theme.primary, 800: '#991b1b', 900: rawData.theme.dark, 
+                            accent: rawData.theme.accent,
+                            roadmapBg: rawData.theme.roadmapBg
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .dark-glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.6)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        /* SVG Circle Animation */
+        .circle-bg { fill: none; stroke: rgba(255,255,255,0.1); stroke-width: 3.8; }
+        .circle { fill: none; stroke: #ef4444; stroke-width: 3.8; stroke-linecap: round; transition: stroke-dasharray 1.5s ease-out; }
+        
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 12px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-report-500 selection:text-white">
+
+    <div id="app"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = JSON.parse(document.getElementById('report-data').textContent);
+            const app = document.getElementById('app');
+
+            const getScoreColor = (score) => {
+                if(score < 25) return 'text-red-600 bg-red-50 border-red-200';
+                if(score < 50) return 'text-orange-600 bg-orange-50 border-orange-200';
+                return 'text-emerald-600 bg-emerald-50 border-emerald-200';
+            };
+
+            const html = `
+                <!-- COVER COMPONENT -->
+                <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent mix-blend-multiply"></div>
+                    <div class="relative z-10 max-w-5xl">
+                        <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-500/30 bg-report-500/20 text-red-100 text-sm font-semibold tracking-wide uppercase shadow-lg shadow-report-500/10">
+                            ${data.metadata.scope}
+                        </div>
+                        <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-6 text-white drop-shadow-sm">
+                            ${data.metadata.title.replace('Report', '<br/>Report')}
+                        </h1>
+                        <h2 class="text-2xl md:text-4xl font-light text-slate-200 mb-12 max-w-3xl leading-snug">
+                            ${data.metadata.company}
+                        </h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12 dark-glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl items-center">
+                            <div class="col-span-1 flex items-center gap-4">
+                                <svg viewBox="0 0 36 36" class="w-16 h-16 drop-shadow-lg">
+                                  <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                  <path class="circle" stroke-dasharray="${data.metadata.finalScore}, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                </svg>
+                                <div>
+                                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Final Score</p>
+                                    <p class="font-bold text-white text-2xl">${data.metadata.finalScore}%</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Issue Date</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.date}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Status</p>
+                                <p class="font-medium text-report-500 flex items-center gap-2 text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-report-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+                                    ${data.metadata.status}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8">
+
+                    <!-- SECTION 1: EXECUTIVE SUMMARY -->
+                    <div class="col-span-1 md:col-span-12">
+                        <div class="border-l-[6px] border-report-500 pl-8 py-2">
+                            <p class="text-report-500 font-bold tracking-widest uppercase text-sm mb-3">Section 01</p>
+                            <h2 class="text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight">Executive Summary</h2>
+                        </div>
+                    </div>
+
+                    <div class="col-span-1 md:col-span-8 md:col-start-3 space-y-10 text-xl font-light">
+                        <p class="text-slate-700 leading-relaxed">
+                            The OT Cybersecurity maturity of INALUM is assessed at <strong class="font-semibold text-slate-900">${data.metadata.finalScore}%</strong>, indicating a <strong class="font-semibold text-slate-900">${data.sections.s1_executiveSummary.maturity}</strong>.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                            <div class="glass-card rounded-3xl p-8 shadow-sm">
+                                <h4 class="text-xl font-bold text-slate-800 mb-6">Environment Shows</h4>
+                                <ul class="space-y-3 text-base text-slate-600 list-disc pl-5">
+                                    ${data.sections.s1_executiveSummary.environment.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 border border-red-100 rounded-3xl p-8 shadow-sm">
+                                <h4 class="text-xl font-bold text-red-900 mb-6">Primary Risk Exposures</h4>
+                                <ul class="space-y-3 text-base text-red-800 list-disc pl-5">
+                                    ${data.sections.s1_executiveSummary.primaryRisks.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <blockquote class="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden transform md:scale-105 my-12">
+                            <div class="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-red-400 to-report-500"></div>
+                            <p class="relative z-10 text-2xl font-light leading-relaxed">
+                                ${data.sections.s1_executiveSummary.takeaway}
+                            </p>
+                        </blockquote>
+                    </div>
+
+                    <!-- SECTION 2: OVERALL SCORE INTERPRETATION -->
+                    <div class="col-span-1 md:col-span-12 mt-8 border-t border-slate-200 pt-16">
+                        <div class="border-l-[6px] border-slate-900 pl-8 py-2 mb-10">
+                            <p class="text-slate-500 font-bold tracking-widest uppercase text-sm mb-3">Section 02</p>
+                            <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">Overall Score Interpretation</h2>
+                        </div>
+                        <div class="max-w-4xl mx-auto space-y-10">
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-50 border-b border-slate-200 text-slate-500 uppercase text-xs tracking-wider">
+                                            <th class="p-4 font-bold">Category</th>
+                                            <th class="p-4 font-bold">Risk Level</th>
+                                            <th class="p-4 font-bold">Interpretation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-slate-700 text-lg">
+                                        ${data.sections.s2_scoreInterpretation.table.map(row => `
+                                            <tr class="border-b border-slate-100 last:border-none ${row.category === '26–40%' ? 'bg-red-50 font-medium' : ''}">
+                                                <td class="p-4">${row.category}</td>
+                                                <td class="p-4 flex items-center gap-2">
+                                                    ${row.category === '26–40%' ? '<span class="w-2 h-2 rounded-full bg-red-500"></span>' : ''}
+                                                    ${row.level}
+                                                </td>
+                                                <td class="p-4">${row.impact}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                                <div class="p-4 bg-slate-900 text-white text-center">
+                                    <span class="font-light">INALUM Score:</span> <strong class="font-bold text-report-500 text-xl tracking-wide ml-2">34.29% → High Risk Tier</strong>
+                                </div>
+                            </div>
+
+                            <!-- Qualitative Indicators -->
+                            <div class="bg-white rounded-3xl p-10 border border-slate-100 shadow-xl shadow-slate-200/40 relative overflow-hidden group">
+                                <div class="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
+                                <h4 class="text-2xl font-bold text-slate-800 mb-8 relative z-10 flex items-center gap-4">
+                                    This Maturity Level Indicates:
+                                </h4>
+                                <ul class="space-y-6 relative z-10">
+                                    ${data.sections.s2_scoreInterpretation.indicators.map(indicator => `
+                                        <li class="flex items-start gap-4">
+                                            <div class="flex-shrink-0 w-6 h-6 rounded-md bg-red-500 text-white flex items-center justify-center font-bold text-xs mt-1.5">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                            </div>
+                                            <p class="text-xl text-slate-700 font-light">${indicator}</p>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: DOMAIN ANALYSIS (ALL 14) -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        <div class="border-l-[6px] border-slate-900 pl-8 py-2 mb-10">
+                            <p class="text-slate-500 font-bold tracking-widest uppercase text-sm mb-3">Section 03</p>
+                            <h2 class="text-5xl font-extrabold text-slate-900 tracking-tight">Domain-by-Domain Analysis</h2>
+                        </div>
+                    </div>
+
+                    <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12">
+                        ${data.sections.s3_domainAnalysis.map(domain => `
+                            <div class="bg-white rounded-[2rem] p-8 shadow-lg shadow-slate-200/50 border border-slate-100/80 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group relative overflow-hidden">
+                                ${domain.critical ? '<div class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold px-3 py-1 rounded-bl-xl z-10">CRITICAL WEAKNESS</div>' : ''}
+                                <div class="absolute top-0 left-0 w-full h-2 bg-slate-100 transition-colors"></div>
+                                <div class="flex justify-between items-start mb-6 pt-2">
+                                    <h3 class="text-xl font-bold text-slate-800 tracking-tight leading-snug pr-4">${domain.title}</h3>
+                                    <span class="px-3 py-1 rounded-xl text-base font-bold border ${getScoreColor(domain.score)}">${domain.score}%</span>
+                                </div>
+                                
+                                <div class="space-y-5 mb-8 flex-grow">
+                                    ${domain.strengths.length > 0 ? `
+                                    <div>
+                                        <p class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-2">Strengths</p>
+                                        <ul class="text-slate-600 text-sm space-y-1.5 list-disc pl-4">
+                                            ${domain.strengths.map(s => `<li>${s}</li>`).join('')}
+                                        </ul>
+                                    </div>` : ''}
+                                    ${domain.gaps.length > 0 ? `
+                                    <div>
+                                        <p class="text-[10px] font-bold text-red-500 uppercase tracking-widest mb-2">Gaps</p>
+                                        <ul class="text-slate-600 text-sm space-y-1.5 list-disc pl-4">
+                                            ${domain.gaps.map(g => `<li>${g}</li>`).join('')}
+                                        </ul>
+                                    </div>` : ''}
+                                </div>
+
+                                <div class="pt-5 border-t border-slate-100 mt-auto bg-slate-50 -mx-8 -mb-8 p-8 rounded-b-[2rem]">
+                                    <p class="text-[10px] uppercase font-bold text-slate-400 mb-1 tracking-widest">Risk Exposure</p>
+                                    <p class="text-sm font-medium text-slate-800 leading-snug">${domain.risk}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- SECTIONS 4 & 6: RISK PRIORITIZATION & BUSINESS IMPLICATIONS -->
+                    <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-12 mt-12 border-t border-slate-200 pt-16">
+                        <div>
+                            <div class="border-l-[6px] border-slate-900 pl-8 py-2 mb-8">
+                                <p class="text-slate-500 font-bold tracking-widest uppercase text-sm mb-2">Section 04</p>
+                                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Risk Prioritization</h2>
+                                <p class="text-sm text-slate-500 mt-1">Top 5 Critical Weaknesses</p>
+                            </div>
+                            <ol class="space-y-4 list-decimal pl-14 text-lg text-slate-700 font-medium">
+                                ${data.sections.s4_topRisks.map(risk => `<li class="pl-2 marker:text-report-500 marker:font-bold">${risk}</li>`).join('')}
+                            </ol>
+                        </div>
+                        <div>
+                            <div class="border-l-[6px] border-slate-900 pl-8 py-2 mb-8">
+                                <p class="text-slate-500 font-bold tracking-widest uppercase text-sm mb-2">Section 06</p>
+                                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Business Implications</h2>
+                                <p class="text-sm text-slate-500 mt-1">Given Smelting, Power, Casting profile</p>
+                            </div>
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                ${data.sections.s6_businessImplications.map(imp => `
+                                    <li class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm text-sm text-slate-700 flex items-start gap-3">
+                                        <svg class="w-5 h-5 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                        ${imp}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 5: MATURITY CLASSIFICATION -->
+                    <div class="col-span-1 md:col-span-10 md:col-start-2 mt-12 border-t border-slate-200 pt-16">
+                        <div class="border-l-[6px] border-slate-900 pl-8 py-2 mb-10">
+                            <p class="text-slate-500 font-bold tracking-widest uppercase text-sm mb-3">Section 05</p>
+                            <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">Maturity Classification</h2>
+                        </div>
+                        <div class="glass-card rounded-3xl overflow-hidden mb-8">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-600 uppercase text-xs tracking-wider">
+                                        <th class="p-5 font-bold border-b border-slate-200">Layer</th>
+                                        <th class="p-5 font-bold border-b border-slate-200">Current Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-800 text-lg divide-y divide-slate-100 bg-white">
+                                    ${data.sections.s5_maturity.layers.map(layer => `
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="p-5 font-medium">${layer.layer}</td>
+                                            <td class="p-5 text-slate-600">${layer.status}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="bg-slate-900 text-white rounded-2xl p-6 text-center text-xl shadow-lg border border-slate-800">
+                            <span class="text-slate-400 text-sm block uppercase tracking-widest mb-2 font-bold">Overall Classification</span>
+                            ${data.sections.s5_maturity.overall}
+                        </div>
+                    </div>
+
+                    <!-- NEW SECTION 7 DESIGN (Dark Mode Technical Roadmap) -->
+                    <div class="col-span-1 md:col-span-12 mt-24">
+                        <div class="bg-report-roadmapBg rounded-[3rem] p-12 md:p-20 text-white shadow-2xl relative overflow-hidden">
+                            <!-- Section Header -->
+                            <div class="mb-12">
+                                <p class="text-report-accent font-bold tracking-widest uppercase text-xs mb-4">Section 07</p>
+                                <h2 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-8">Recommended Technical Roadmap</h2>
+                                <p class="text-slate-400 text-lg md:text-xl font-light max-w-4xl leading-relaxed">
+                                    <strong class="text-white font-medium">Roadmap Principles:</strong> ${data.sections.s7_roadmap.principles}
+                                </p>
+                            </div>
+
+                            <!-- Horizontal Timeline -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative mt-16 timeline-container pt-8">
+                                ${data.sections.s7_roadmap.phases.map(p => `
+                                    <div class="relative z-10">
+                                        <!-- Timeline marker -->
+                                        <div class="w-6 h-6 rounded-full border-4 border-report-roadmapBg bg-report-accent shadow-[0_0_15px_rgba(20,184,166,0.6)] mb-8 -mt-11"></div>
+                                        
+                                        <div class="space-y-4">
+                                            <h4 class="text-3xl font-bold text-white">${p.phase}</h4>
+                                            <p class="text-xl font-bold text-slate-100">${p.title}</p>
+                                            <p class="text-slate-400 text-sm font-medium tracking-wide">${p.duration}. ${p.focus}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div class="h-px bg-white/10 w-full my-16"></div>
+
+                            <!-- Bottom Grid: Pilots & Dependencies -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                                <div>
+                                    <h5 class="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-8">Early-Value Pilots</h5>
+                                    <ol class="space-y-6 text-lg font-light text-slate-200">
+                                        ${data.sections.s7_roadmap.pilots.map((pilot, i) => `
+                                            <li class="flex gap-4">
+                                                <span class="text-slate-500 font-bold">${i+1}.</span>
+                                                <p>${pilot}</p>
+                                            </li>
+                                        `).join('')}
+                                    </ol>
+                                </div>
+                                <div>
+                                    <h5 class="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-8">Key Dependencies</h5>
+                                    <ul class="space-y-6 text-lg font-light text-slate-200">
+                                        ${data.sections.s7_roadmap.dependencies.map(dep => `
+                                            <li class="flex items-start gap-4">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-report-accent mt-2.5 shrink-0"></span>
+                                                <p>${dep}</p>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 8: CONCLUSION -->
+                    <div class="col-span-1 md:col-span-12 mt-24 border-t border-slate-200 pt-16 mb-24">
+                         <div class="border-l-[6px] border-report-500 pl-8 py-2 mb-12">
+                            <p class="text-report-500 font-bold tracking-widest uppercase text-sm mb-3">Section 08</p>
+                            <h2 class="text-5xl font-extrabold text-slate-900 tracking-tight">Conclusion</h2>
+                        </div>
+                        
+                        <div class="bg-white border border-slate-200 py-12 px-6 md:px-12 text-center text-xl font-light leading-relaxed max-w-5xl mx-auto rounded-[2.5rem] shadow-sm">
+                            <p class="mb-8">INALUM’s OT cybersecurity posture is currently <strong class="font-semibold text-slate-900 underline decoration-red-400 decoration-4 underline-offset-4">${data.sections.s8_conclusion.status}</strong>.</p>
+                            
+                            <p class="text-slate-600 mb-6 text-lg">While basic protections and physical controls exist, the organization lacks:</p>
+                            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                                ${data.sections.s8_conclusion.lacks.map(lack => `<span class="bg-slate-100 border border-slate-200 text-slate-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm">${lack}</span>`).join('')}
+                            </div>
+                            
+                            <p class="bg-red-50 text-red-900 p-8 rounded-3xl mb-10 font-medium border border-red-100">
+                                ${data.sections.s8_conclusion.riskContext}
+                            </p>
+
+                            <p class="text-slate-600 mb-6 text-lg font-medium">Immediate architectural and governance improvements are required to:</p>
+                            <ul class="text-left inline-block space-y-4">
+                                ${data.sections.s8_conclusion.requirements.map(req => `
+                                    <li class="flex items-center gap-4 text-slate-800 bg-slate-50 border border-slate-100 px-6 py-3 rounded-xl shadow-sm">
+                                        <svg class="w-6 h-6 text-report-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                        <span class="font-medium">${req}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </main>
+            `;
+            
+            app.innerHTML = html;
+        });
+    </script>
+</body>
+</html>

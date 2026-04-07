@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Maturity Assessment Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GENERIC JSON DATA EMBED: Sections -> Sub-sections Structure -->
+    <script id="report-data" type="application/json">
+    {
+      "theme": { 
+        "primary": "#4f46e5", 
+        "accent": "#06b6d4", 
+        "dark": "#0f172a", 
+        "tableHeader": "#1e293b" 
+      },
+      "metadata": {
+        "documentId": "INA-PL-GRP-APP-M",
+        "title": "Appendix M",
+        "subtitle": "Scoring Results",
+        "description": "Plant Maturity Assessment Matrix",
+        "plant": "INA-PL-GRP - Green Plant",
+        "mode": "Draft",
+        "date": "March 2026"
+      },
+      "sections": {
+        "section1": {
+          "title": "Purpose of Appendix M",
+          "content": "Appendix M consolidates audit evaluation outputs into a structured plant maturity matrix. The matrix provides (i) a cross-domain maturity baseline, (ii) visibility of structural constraints, and (iii) evidence-aligned decision support for prioritization.",
+          "anchors": "All scores are derived using INA-PL-GRP-APP-L and anchored to the plant evidence base across INA-PL-GRP-APP-D, INA-PL-GRP-APP-E, INA-PL-GRP-APP-H, INA-PL-GRP-APP-I, INA-PL-GRP-APP-J, INA-PL-GRP-APP-K, and INA-PL-GRP-APP-N (Draft Mode: APP-N not yet available for L-D9 anchoring)."
+        },
+        "section2": {
+          "title": "Scoring Model Summary",
+          "subSection1": {
+            "title": "Maturity Scale Definition",
+            "data": [
+              { "score": "1", "level": "Fragmented", "definition": "Manual, isolated, reactive, undocumented" },
+              { "score": "2", "level": "Basic", "definition": "PLC present but limited integration; reactive practices" },
+              { "score": "3", "level": "Structured", "definition": "Standardized controls; partial integration; some KPIs" },
+              { "score": "4", "level": "Integrated", "definition": "Cross-system integration; governed processes" },
+              { "score": "5", "level": "Optimized", "definition": "Real-time orchestration; predictive; data-driven governance" }
+            ]
+          },
+          "subSection2": {
+            "title": "Risk Matrix Mapping",
+            "data": [
+              { "range": "1.0-2.0", "level": "High Risk" },
+              { "range": "2.1-3.0", "level": "Moderate Risk" },
+              { "range": "3.1-4.0", "level": "Controlled" },
+              { "range": "4.1-5.0", "level": "Optimized" }
+            ]
+          }
+        },
+        "section3": {
+          "title": "Domain Maturity Assessment Matrix",
+          "items": [
+            { "domain": "Process Control Layer (L-D1)", "sources": "INA-PL-GRP-APP-D; INA-PL-GRP-APP-K", "observation": "PLC control exists across several process areas, but control completion is constrained by manual/relay segments and incomplete sensing governance. Backup discipline and standardization are not consistently evidenced.", "score": "2", "risk": "High Risk", "notes": "PLC examples: INA-PLC-GRP-001, INA-PLC-GRP-002, INA-PLC-GRP-010. Control gap evidence: K-97, K-98, K-103, K-117." },
+            { "domain": "Supervisory Control (L-D2)", "sources": "INA-PL-GRP-APP-E; INA-PL-GRP-APP-D; INA-PL-GRP-APP-K", "observation": "SCADA footprint is multi-system and PLC-to-SCADA linkage is mixed, leaving significant PLC-local visibility and monitoring gaps.", "score": "2", "risk": "High Risk", "notes": "SCADA examples: INA-SC-GRP-001/002/003. PLC linkage gaps noted. Visibility gaps: K-17, K-95." },
+            { "domain": "Data Availability and Analytics (L-D3)", "sources": "INA-PL-GRP-APP-E; INA-PL-GRP-APP-J; INA-PL-GRP-APP-K", "observation": "Historian presence and unified time-series consolidation are not evidenced, while multiple monitoring trust gaps and document-centric reporting constrain KPI automation feasibility.", "score": "1-2", "risk": "High Risk", "notes": "Data fragmentation: K-15, K-76. KPI governance limited: INA-KPI-018. Trust gap: K-91 (~12% mass flow difference not used)." },
+            { "domain": "Alarm Governance (L-D4)", "sources": "INA-PL-GRP-APP-E; INA-PL-GRP-APP-K; INA-PL-GRP-APP-J; INA-PL-GRP-APP-I", "observation": "Alarm/event logging governance is not evidenced as systematic; event history is not reliably captured for diagnostics and loss accounting. Response governance exists as procedure/KPI intent but operational logging is incomplete.", "score": "1-2", "risk": "High Risk", "notes": "Alarm/event gaps: K-112, K-114. KPI intent: INA-KPI-017. Procedure anchor: INA-PRC-059." },
+            { "domain": "Maintenance Automation (L-D5)", "sources": "INA-PL-GRP-APP-I; INA-PL-GRP-APP-J; INA-PL-GRP-APP-K", "observation": "Maintenance governance is defined via procedures and KPIs, but evidence indicates breakdown-driven interruptions and recurring downtime patterns that constrain consistent enforcement.", "score": "2-3", "risk": "High Risk", "notes": "Downtime drivers: K-04, K-07. KPI intent: INA-KPI-019/020/022/023. Procedure anchors: INA-PRC-048/049/050/052." },
+            { "domain": "Quality Automation (L-D6)", "sources": "INA-PL-GRP-APP-I; INA-PL-GRP-APP-J; INA-PL-GRP-APP-K", "observation": "Quality governance is heavily document-driven, with manual QC recording and lab-result latency evidenced, weakening timely release decisions and traceability discipline.", "score": "2-3", "risk": "High Risk", "notes": "Manual/latency evidence: K-05, K-14, K-10, K-75. KPI anchors: INA-KPI-041/042/005/045. Procedure anchors: INA-PRC-033/034/101/138." },
+            { "domain": "Planning and Inventory Governance (L-D7)", "sources": "INA-PL-GRP-APP-H; INA-PL-GRP-APP-J; INA-PL-GRP-APP-K", "observation": "Inventory continuity is exposed to shipment delays, stockouts, and measurement trust gaps, while scheduling discipline is evidenced as operator-driven and coordination-heavy.", "score": "2", "risk": "High Risk", "notes": "Inventory/logistics evidence: K-03, K-06, K-19/K-95, K-45. KPI anchors: INA-KPI-038/039/047." },
+            { "domain": "OT Cybersecurity Posture (L-D8)", "sources": "INA-PL-GRP-APP-D; INA-PL-GRP-APP-E; INA-PL-GRP-APP-I", "observation": "Cybersecurity governance is present at procedure level, while legacy exposure risk is implied by mixed lifecycle posture; implementation evidence is limited in the evidence register.", "score": "2", "risk": "High Risk", "notes": "Procedure anchor: INA-PRC-076. Legacy SCADA elements dating to 2003. Evidence register lacks explicit implementation entries." },
+            { "domain": "Integration OT-IT (L-D9)", "sources": "INA-PL-GRP-APP-N; INA-PL-GRP-APP-K; INA-PL-GRP-APP-I; INA-PL-GRP-APP-J", "observation": "Vertical integration posture cannot be deterministically scored because APP-N is not yet available; evidence indicates document-centric workflows and fragmented integration intent.", "score": "To val", "risk": "To val", "notes": "Evidence of fragmentation: K-15, K-72, K-76. Solution intent exists, but APP-N required for anchors." },
+            { "domain": "Operational Stability (Supplemental)", "sources": "INA-PL-GRP-APP-J; INA-PL-GRP-APP-K", "observation": "Stability KPIs exist (throughput/OEE/plan adherence), but recurring downtime, bottlenecks, and manual governance patterns are evidenced without system enforcement.", "score": "2", "risk": "High Risk", "notes": "KPI anchors: INA-KPI-012, INA-KPI-038. Evidence anchors: K-04, K-26, K-37." }
+          ]
+        },
+        "section4": {
+          "title": "Consolidated Maturity Heatmap",
+          "note": "Weighted Average Maturity Score: To validate - incomplete scoring due to L-D9 pending APP-N."
+        },
+        "section5": {
+          "title": "Structural Observations",
+          "items": [
+            { "title": "Structural fragmentation constraint", "constraint": "Multiple dimensions are at or below Basic, indicating governance dependency on manual controls and incomplete instrumentation.", "effect": "Operational effect is recurring variability and slow recovery behavior.", "risk": "Business risk is persistent instability in throughput and decision timing.", "implication": "Digital implication is that visibility and enforcement cannot be consistently centralized.", "anchors": "INA-PL-GRP-APP-K K-112, K-15 | INA-PL-GRP-APP-J INA-KPI-012" },
+            { "title": "Data visibility & consolidation constraint", "constraint": "Historian and event logging are not evidenced as governed layers; monitoring trust gaps persist.", "effect": "Operational effect is slow troubleshooting and weak loss accounting.", "risk": "Business risk is recurring disruptions without structured learning loops.", "implication": "Governance implication is that KPI enforcement remains document-centric.", "anchors": "INA-PL-GRP-APP-K K-112, K-91 | INA-PL-GRP-APP-J INA-KPI-018" },
+            { "title": "Reactive maintenance constraint", "constraint": "Evidence shows breakdown-driven downtime patterns alongside planned cadence, implying governance exists but enforcement is inconsistent.", "effect": "Operational effect is unstable availability for critical lines (e.g., kneader).", "risk": "Business risk is continued throughput loss and recovery burden.", "implication": "Digital implication is limited event-to-workflow closure discipline.", "anchors": "INA-PL-GRP-APP-K K-04, K-07 | INA-PL-GRP-APP-J INA-KPI-019, KPI-022" },
+            { "title": "Quality latency & enforcement constraint", "constraint": "Manual QC recording and staged approvals create slow feedback loops and late segregation.", "effect": "Operational effect is delayed corrective action and traceability weakness.", "risk": "Business risk is prolonged nonconformance containment cycles.", "implication": "Digital implication is that sampling-to-release remains non-orchestrated.", "anchors": "INA-PL-GRP-APP-K K-14, K-10 | INA-PL-GRP-APP-J INA-KPI-041, KPI-005" },
+            { "title": "Material continuity & scheduling constraint", "constraint": "Stockouts, shipment delays, and inventory measurement trust gaps are evidenced, while yard transactions are not recorded.", "effect": "Operational effect is schedule shock and operator-driven rescheduling.", "risk": "Business risk is recurring continuity risk and expediting dependency.", "implication": "Governance implication is weak closed-loop planning and inventory control.", "anchors": "INA-PL-GRP-APP-K K-03, K-45 | INA-PL-GRP-APP-J INA-KPI-047, KPI-039" }
+          ]
+        },
+        "section6": {
+          "title": "Maturity Positioning",
+          "rule": "To validate - maturity positioning (Weighted average is To validate pending APP-N and Draft score disambiguation.)",
+          "levels": [
+            { "level": "1", "description": "Fragmented", "position": "" },
+            { "level": "2", "description": "Basic", "position": "To validate - likely baseline" },
+            { "level": "3", "description": "Structured", "position": "" },
+            { "level": "4", "description": "Integrated", "position": "" },
+            { "level": "5", "description": "Optimized", "position": "" }
+          ]
+        },
+        "section7": {
+          "title": "Executive Summary - Maturity Statement",
+          "statement": "Overall maturity positioning for INA-PL-GRP is To validate, with the likely baseline at Basic pending APP-N (vertical integration evidence) and disambiguation of Draft ranges in data/alarms and governance enforcement domains. The current matrix indicates that the control and supervisory layers exist, but governance and enforcement remain constrained by incomplete event logging, monitoring trust gaps, and document-centric workflows.",
+          "constrainingFactors": "The most constraining domains are Data Availability and Analytics (L-D3) and Alarm Governance (L-D4), evidenced by lack of automated alarm logging and fragmented data handling, followed by Maintenance (L-D5) and Quality (L-D6).",
+          "solutionAlignments": [
+            "L-D2 / L-D4 alignment: INA-SOL-01",
+            "L-D9 / L-D7 alignment: INA-SOL-02, INA-SOL-04",
+            "L-D6 alignment: INA-SOL-08, INA-SOL-09",
+            "L-D5 alignment: INA-SOL-18, INA-SOL-19, INA-SOL-20",
+            "L-D1 / Operational Stability alignment: INA-SOL-17"
+          ]
+        },
+        "section8": {
+          "title": "Appendix M Conclusion",
+          "text": "Appendix M provides the quantified maturity baseline for INA-PL-GRP under the Appendix L framework, showing an overall posture that is To validate with a likely Basic baseline due to incomplete anchoring for L-D9 and Draft ranges in several domains. Maturity is uneven across domains, with governance and data layers constraining stability and enforceability. This appendix is the quantified baseline for Step 17 narrative and prioritization."
+        },
+        "customProperties": {
+          "referenceMap": {
+            "title": "Output 14B - Reference Map",
+            "items": [
+              { "object": "Appendix Document ID", "code": "INA-PL-GRP-APP-M", "source": "Step 14", "usedBy": "Step 17, Step 18", "notes": "Scoring results document" },
+              { "object": "Dimension Scores", "code": "L-D1…L-D9", "source": "Appendix M", "usedBy": "Step 17", "notes": "Must align to Appendix L; Draft ranges used where evidence incomplete" },
+              { "object": "Weighted Average", "code": "Overall score", "source": "Appendix M", "usedBy": "Step 17", "notes": "To validate - incomplete scoring due to L-D9 and score ranges" },
+              { "object": "Risk Levels", "code": "Per-dimension risk", "source": "Appendix M", "usedBy": "Step 17", "notes": "Uses Appendix L mapping" }
+            ]
+          }
+        }
+      }
+    }
+    </script>
+
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .dark-glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.6)), url('https://images.unsplash.com/photo-1580982331584-3c588cf4ecfb?q=80&w=2670&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .score-bar { transition: height 1.2s ease-out, width 1s ease-in-out; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-brand-500 selection:text-white">
+
+    <!-- The root element where the dynamic UI will be injected -->
+    <div id="app"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = JSON.parse(document.getElementById('report-data').textContent);
+            const app = document.getElementById('app');
+
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: { sans: ['Inter', 'sans-serif'] },
+                        colors: {
+                            brand: {
+                                50: '#eef2ff', 100: '#e0e7ff', 400: '#818cf8', 500: data.theme.primary, 600: '#4338ca', 800: '#3730a3', 900: '#312e81', 
+                                dark: data.theme.dark, accent: data.theme.accent
+                            }
+                        }
+                    }
+                }
+            };
+
+            const renderSectionTitle = (titleText, subtitleText = '') => `
+                <div class="flex items-stretch gap-4 mb-10">
+                    <div class="w-1.5 bg-brand-dark rounded-full"></div>
+                    <div class="py-1">
+                        <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">${titleText}</h2>
+                        ${subtitleText ? `<p class="text-sm text-slate-500 mt-2">${subtitleText}</p>` : ''}
+                    </div>
+                </div>
+            `;
+
+            const getRiskColor = (risk) => {
+                const lowerRisk = risk.toLowerCase();
+                if(lowerRisk.includes('high')) return 'bg-red-50 text-red-700 border-red-200';
+                if(lowerRisk.includes('moderate')) return 'bg-orange-50 text-orange-700 border-orange-200';
+                if(lowerRisk.includes('controlled')) return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                return 'bg-slate-100 text-slate-600 border-slate-300';
+            };
+
+            const calculateWidth = (scoreStr) => {
+                if(scoreStr.toLowerCase().includes('val')) return '10%'; 
+                const num = parseFloat(scoreStr.split('-')[0]); 
+                return `${(num / 5) * 100}%`;
+            };
+
+            const html = `
+                <!-- HERO SECTION (Metadata) -->
+                <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent mix-blend-multiply"></div>
+                    <div class="relative z-10 max-w-5xl">
+                        <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-brand-accent/50 bg-brand-accent/20 text-cyan-100 text-sm font-semibold tracking-wide uppercase shadow-lg">
+                            ${data.metadata.documentId}
+                        </div>
+                        <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-4 text-white drop-shadow-sm">
+                            ${data.metadata.title} <br/> <span class="text-brand-accent">${data.metadata.subtitle}</span>
+                        </h1>
+                        <h2 class="text-2xl md:text-3xl font-light text-slate-300 mb-12 max-w-3xl leading-snug">
+                            ${data.metadata.description}
+                        </h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12 dark-glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl items-center">
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Facility</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.plant}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Mode</p>
+                                <p class="font-medium text-white text-lg flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-brand-accent shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span>
+                                    ${data.metadata.mode}
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Issue Date</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.date}</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8">
+
+                    <!-- PURPOSE & EXECUTIVE SUMMARY -->
+                    <div class="col-span-1 md:col-span-12">
+                        ${renderSectionTitle(data.sections.section7.title, data.sections.section1.title)}
+                    </div>
+
+                    <div class="col-span-1 md:col-span-8 md:col-start-3 space-y-10 text-xl font-light">
+                        <p class="text-slate-700 leading-relaxed">
+                            <strong class="font-semibold text-slate-900">Context:</strong> ${data.sections.section1.content} <br/><br/>
+                            <strong class="font-semibold text-slate-900">Anchoring:</strong> ${data.sections.section1.anchors}
+                        </p>
+                        
+                        <blockquote class="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden transform md:scale-105 my-12">
+                            <div class="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-cyan-400 to-brand-500"></div>
+                            <p class="relative z-10 text-2xl font-light leading-relaxed">
+                                ${data.sections.section7.statement}
+                            </p>
+                            <p class="relative z-10 mt-6 text-slate-300 text-lg">
+                                ${data.sections.section7.constrainingFactors}
+                            </p>
+                        </blockquote>
+
+                        <div class="bg-brand-50 border border-brand-100 rounded-3xl p-8 shadow-sm">
+                            <h4 class="text-xl font-bold text-brand-900 mb-6">Identified Solution Alignments</h4>
+                            <ul class="space-y-3 text-base text-brand-800 list-disc pl-5">
+                                ${data.sections.section7.solutionAlignments.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- HEATMAP (VISUALIZED PROGRESS BARS) -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.section4.title, data.sections.section4.note)}
+                        
+                        <div class="bg-white rounded-3xl p-8 shadow-lg border border-slate-200">
+                            <div class="space-y-6">
+                                ${data.sections.section3.items.map(domain => `
+                                    <div class="flex flex-col md:flex-row md:items-center gap-4 group">
+                                        <div class="w-full md:w-1/3 text-sm font-bold text-slate-700 group-hover:text-brand-600 transition-colors">
+                                            ${domain.domain}
+                                        </div>
+                                        <div class="w-full md:w-2/3 flex items-center gap-4">
+                                            <div class="flex-grow bg-slate-100 rounded-full h-4 overflow-hidden relative">
+                                                <div class="score-bar h-full rounded-full ${domain.score.toLowerCase().includes('val') ? 'bg-slate-300 w-[10%]' : 'bg-brand-500'}" 
+                                                     style="width: ${calculateWidth(domain.score)};"></div>
+                                            </div>
+                                            <div class="w-16 text-right font-mono font-bold text-slate-500 text-sm">
+                                                ${domain.score}
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="mt-8 pt-6 border-t border-slate-100 flex justify-between text-xs font-bold text-slate-400 uppercase">
+                                <span>Fragmented (1)</span>
+                                <span>Basic (2)</span>
+                                <span>Structured (3)</span>
+                                <span>Integrated (4)</span>
+                                <span>Optimized (5)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- DOMAIN ASSESSMENT MATRIX CARDS -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.section3.title, "Detailed breakdown of domain-specific constraints, scores, and risk classifications.")}
+                    </div>
+
+                    <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-12">
+                        ${data.sections.section3.items.map(domain => `
+                            <div class="bg-white rounded-[2rem] p-8 shadow-lg shadow-slate-200/50 border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group relative overflow-hidden">
+                                <div class="absolute top-0 left-0 w-full h-1.5 bg-slate-100 group-hover:bg-brand-400 transition-colors"></div>
+                                
+                                <div class="flex justify-between items-start mb-6 pt-2">
+                                    <h3 class="text-xl font-bold text-slate-800 tracking-tight leading-snug pr-4">${domain.domain}</h3>
+                                    <span class="px-3 py-1 rounded-xl text-sm font-bold border shrink-0 bg-slate-50 text-slate-700">Score: ${domain.score}</span>
+                                </div>
+                                
+                                <p class="text-slate-600 mb-8 flex-grow text-sm leading-relaxed">${domain.observation}</p>
+
+                                <div class="pt-5 border-t border-slate-100 mt-auto bg-slate-50 -mx-8 -mb-8 p-8 rounded-b-[2rem]">
+                                    <div class="flex justify-between items-center mb-4">
+                                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Risk Level</span>
+                                        <span class="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded border ${getRiskColor(domain.risk)}">
+                                            ${domain.risk}
+                                        </span>
+                                    </div>
+                                    <div class="text-xs text-slate-500 bg-white p-3 rounded-xl border border-slate-200 mb-3">
+                                        <strong class="text-slate-700">Evidence / Anchors:</strong><br/> ${domain.notes}
+                                    </div>
+                                    <div class="text-[10px] text-slate-400 font-mono break-words">
+                                        Src: ${domain.sources}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- STRUCTURAL OBSERVATIONS CASCADES -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.section5.title, 'Ripple effects of constraints mapping Operational, Business, and Digital impacts.')}
+                        
+                        <div class="grid grid-cols-1 gap-8 max-w-5xl mx-auto">
+                            ${data.sections.section5.items.map((obs, index) => `
+                                <div class="bg-white border border-slate-200 rounded-[2rem] p-8 md:p-10 shadow-sm relative overflow-hidden">
+                                    <div class="absolute top-0 right-0 p-8 text-8xl font-black text-slate-50 opacity-50 pointer-events-none select-none">
+                                        0${index + 1}
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-slate-800 mb-8 relative z-10 flex items-center gap-3">
+                                        <span class="w-4 h-4 rounded-full bg-red-500 shadow-sm"></span>
+                                        ${obs.title}
+                                    </h3>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
+                                        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                                            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block mb-2">Constraint</span>
+                                            <p class="text-sm text-slate-700 font-medium">${obs.constraint}</p>
+                                        </div>
+                                        <div class="bg-orange-50 p-5 rounded-2xl border border-orange-100">
+                                            <span class="text-[10px] font-bold uppercase tracking-widest text-orange-500 block mb-2">Operational Effect</span>
+                                            <p class="text-sm text-orange-800 font-medium">${obs.effect}</p>
+                                        </div>
+                                        <div class="bg-red-50 p-5 rounded-2xl border border-red-100">
+                                            <span class="text-[10px] font-bold uppercase tracking-widest text-red-500 block mb-2">Business Risk</span>
+                                            <p class="text-sm text-red-800 font-medium">${obs.risk}</p>
+                                        </div>
+                                        <div class="bg-brand-50 p-5 rounded-2xl border border-brand-100">
+                                            <span class="text-[10px] font-bold uppercase tracking-widest text-brand-500 block mb-2">Digital Implication</span>
+                                            <p class="text-sm text-brand-800 font-medium">${obs.implication}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-6 pt-4 border-t border-slate-100 relative z-10">
+                                        <p class="text-xs text-slate-500 font-mono"><strong class="text-slate-700 font-sans">Anchors:</strong> ${obs.anchors}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- SCORING MODEL & POSITIONING -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.section2.title, 'Architectural framework mapping maturity levels and risk exposure.')}
+                        
+                        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 max-w-7xl mx-auto">
+                            
+                            <!-- LEFT COLUMN: MATURITY SCALE -->
+                            <div class="xl:col-span-7 flex flex-col">
+                                <div class="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-lg border border-slate-200 h-full">
+                                    <h4 class="text-xl font-bold text-slate-800 mb-8">${data.sections.section2.subSection1.title}</h4>
+                                    <div class="space-y-4">
+                                        ${data.sections.section2.subSection1.data.map((scale, i) => `
+                                            <div class="flex flex-col sm:flex-row sm:items-center gap-4 bg-slate-50 p-5 rounded-2xl border border-slate-100 hover:border-brand-300 hover:bg-white transition-all shadow-sm">
+                                                <div class="flex items-center gap-4 min-w-[160px]">
+                                                    <span class="w-10 h-10 rounded-full bg-brand-100 text-brand-600 font-black flex items-center justify-center border border-brand-200 shrink-0 shadow-inner text-lg">${scale.score}</span>
+                                                    <span class="font-bold text-slate-800 text-lg">${scale.level}</span>
+                                                </div>
+                                                <div class="hidden sm:block w-full max-w-[100px] h-2 bg-slate-200 rounded-full overflow-hidden shrink-0">
+                                                    <div class="h-full bg-gradient-to-r from-cyan-400 to-brand-500" style="width: ${(parseInt(scale.score) / 5) * 100}%"></div>
+                                                </div>
+                                                <div class="text-sm text-slate-600 font-medium leading-relaxed">
+                                                    ${scale.definition}
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- RIGHT COLUMN: RISK MATRIX & POSITIONING -->
+                            <div class="xl:col-span-5 flex flex-col gap-8">
+                                
+                                <!-- RISK MATRIX CARDS -->
+                                <div class="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-lg border border-slate-200">
+                                    <h4 class="text-xl font-bold text-slate-800 mb-6">${data.sections.section2.subSection2.title}</h4>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        ${data.sections.section2.subSection2.data.map(risk => `
+                                            <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 flex flex-col justify-center items-start hover:shadow-md transition-shadow">
+                                                <p class="text-[10px] font-mono uppercase tracking-widest text-slate-400 mb-1">Score: <span class="text-slate-600 font-bold">${risk.range}</span></p>
+                                                <p class="text-lg font-black ${risk.level.includes('High') ? 'text-red-500' : (risk.level.includes('Moderate') ? 'text-orange-500' : (risk.level.includes('Optimized') ? 'text-brand-500' : 'text-emerald-500'))}">
+                                                    ${risk.level}
+                                                </p>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+
+                                <!-- MATURITY POSITIONING (CLEAN CARD) -->
+                                <div class="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-lg border border-slate-200 flex flex-col h-full">
+                                    <h4 class="text-xl font-bold text-slate-800 mb-4">${data.sections.section6.title}</h4>
+                                    
+                                    <p class="text-slate-500 text-xs italic mb-6 border-l-2 border-brand-300 pl-3 leading-relaxed">
+                                        ${data.sections.section6.rule}
+                                    </p>
+
+                                    <div class="space-y-3 relative z-10 flex-grow flex flex-col justify-center">
+                                        ${data.sections.section6.levels.map(level => {
+                                            const isCurrent = level.position.trim().length > 0;
+                                            return `
+                                            <div class="flex justify-between items-center p-4 rounded-2xl ${isCurrent ? 'bg-brand-50 border border-brand-200 shadow-sm' : 'bg-slate-50 border border-slate-100'} transition-all">
+                                                <div class="flex items-center gap-3">
+                                                    <span class="${isCurrent ? 'bg-brand-500 text-white shadow-inner' : 'bg-slate-200 text-slate-500'} w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0">${level.level}</span>
+                                                    <span class="${isCurrent ? 'text-brand-900 font-bold' : 'text-slate-600 font-medium'} text-sm">${level.description}</span>
+                                                </div>
+                                                ${isCurrent ? `<span class="bg-white text-brand-600 border border-brand-100 px-3 py-1 rounded-lg text-xs font-bold shadow-sm ml-2 text-right">${level.position}</span>` : ''}
+                                            </div>
+                                        `}).join('')}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONCLUSION -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.section8.title, "Final synthesis of the maturity baseline.")}
+                        
+                        <div class="bg-slate-900 rounded-[2.5rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden transform md:scale-105 my-12 max-w-5xl mx-auto">
+                            <div class="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-brand-400 to-cyan-500"></div>
+                            <p class="relative z-10 text-2xl font-light leading-relaxed">
+                                ${data.sections.section8.text}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- REFERENCE MAP -->
+                    <div class="col-span-1 md:col-span-12 mt-20 mb-24">
+                        ${renderSectionTitle(data.sections.customProperties.referenceMap.title, "Governance mapping and artifact lineage tracking.")}
+                        <div class="bg-brand-dark rounded-[2.5rem] p-6 md:p-10 overflow-hidden shadow-2xl border border-slate-800">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left min-w-[800px]">
+                                    <thead>
+                                        <tr class="text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+                                            <th class="p-4 pb-6 font-bold">Object Type</th>
+                                            <th class="p-4 pb-6 font-bold">Code(s)</th>
+                                            <th class="p-4 pb-6 font-bold">Source</th>
+                                            <th class="p-4 pb-6 font-bold">Used By</th>
+                                            <th class="p-4 pb-6 font-bold">Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-slate-300 text-sm divide-y divide-slate-800/60">
+                                        ${data.sections.customProperties.referenceMap.items.map(ref => `
+                                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                                <td class="p-4 py-5 font-bold text-white">${ref.object}</td>
+                                                <td class="p-4 py-5 font-mono text-cyan-300 text-xs">${ref.code}</td>
+                                                <td class="p-4 py-5">${ref.source}</td>
+                                                <td class="p-4 py-5">${ref.usedBy}</td>
+                                                <td class="p-4 py-5 text-slate-400 text-xs">${ref.notes}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
+            `;
+            
+            app.innerHTML = html;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Performance Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- GENERIC JSON DATA EMBED: Sections -> Sub-sections Structure -->
+    <script id="report-data" type="application/json">
+    {
+      "theme": { "primary": "#4f46e5", "accent": "#10b981", "dark": "#0f172a", "roadmapBg": "#1e293b" },
+      "metadata": {
+        "title": "Appendix J - Performance Scope",
+        "subtitle": "KPIs and Performance Measures",
+        "documentId": "INA-PL-GRP-APP-J",
+        "company": "PT Indonesia Asahan Aluminium",
+        "facility": "Green Plant (INA-PL-GRP)",
+        "date": "March 2026",
+        "status": "Baseline Document"
+      },
+      "sections": [
+        {
+          "sectionNumber": "Section 01",
+          "title": "Purpose of Appendix J",
+          "subtitle": "",
+          "subSections": [
+            {
+              "type": "narrative",
+              "customProperties": {
+                "text": "Appendix J defines the performance measurement baseline for Green Plant (INA-PL-GRP). It enumerates the authoritative KPI inventory governing production throughput/yield/stability, maintenance reliability and availability, quality and traceability discipline, planning and logistics continuity, and automation/data governance posture.",
+                "takeaway": "Appendix J serves as the KPI baseline for Appendix L (dimension scoring evidence), Appendix M (performance governance interpretation), and Step 17 (management narrative). No maturity scoring is declared in this section."
+              }
+            }
+          ]
+        },
+        {
+          "sectionNumber": "Section 02",
+          "title": "KPI Inventory Dashboard",
+          "subtitle": "Authoritative list categorised by deterministic rules",
+          "subSections": [
+            {
+              "type": "donutChart",
+              "customProperties": {
+                "total": 44,
+                "data": [
+                  { "label": "Production & Throughput", "value": 20, "color": "#4f46e5", "impact": "Very High" },
+                  { "label": "Quality & Sampling", "value": 9, "color": "#10b981", "impact": "High" },
+                  { "label": "Maintenance & Reliability", "value": 8, "color": "#f59e0b", "impact": "Critical" },
+                  { "label": "Energy & Utilities", "value": 5, "color": "#0ea5e9", "impact": "High" },
+                  { "label": "Inventory & Logistics", "value": 2, "color": "#8b5cf6", "impact": "Medium" }
+                ]
+              }
+            },
+            {
+              "type": "kpiCategoryList",
+              "customProperties": {
+                "categories": [
+                  {
+                    "title": "Production and Throughput",
+                    "interpretation": "The production/throughput KPI set emphasizes yield, utilization, reject control, stability, plan adherence, and runtime-based performance control. Findings and Issues explicitly reference below-maximum throughput and availability constraints, while also evidencing manual practices and absence of automated alarm logging—creating a governance dependence on consistent capture.",
+                    "kpis": [
+                      { "code": "INA-KPI-001", "name": "Carbon Yield (%)", "priority": "High", "granularity": "Daily", "definition": "% usable carbon output vs input; high cost driver; daily to detect recipe/process drift early." },
+                      { "code": "INA-KPI-002", "name": "Carbon Paste Batch Right-First-Time (%)", "priority": "High", "granularity": "Daily", "definition": "% paste batches meeting spec without rework; high impact to throughput and scrap; daily to prevent compounding defects." },
+                      { "code": "INA-KPI-003", "name": "Baking Furnace Utilization (%)", "priority": "High", "granularity": "Daily", "definition": "Utilization of baking capacity vs available hours; constrains anode supply; daily for short-cycle scheduling decisions." },
+                      { "code": "INA-KPI-004", "name": "Green Anode Reject Rate (%)", "priority": "High", "granularity": "Daily", "definition": "% green anodes rejected/held at forming; high because it reduces supply to potlines; daily to catch tooling/recipe issues." },
+                      { "code": "INA-KPI-006", "name": "Potline Current Efficiency (%)", "priority": "High", "granularity": "Shift", "definition": "Efficiency metric (metal produced vs theoretical); high because it drives output and energy; shift-level for operator actions/playbooks." },
+                      { "code": "INA-KPI-007", "name": "Anode Effect Frequency (events/cell-day)", "priority": "High", "granularity": "Shift", "definition": "Frequency of anode effects; high because it harms efficiency and stability; shift-level to drive immediate response actions." },
+                      { "code": "INA-KPI-008", "name": "Potline Stability Index (alarms + deviations)", "priority": "High", "granularity": "Shift", "definition": "Composite of critical alarm counts/deviation duration; high because instability causes losses; shift for real-time operational control." },
+                      { "code": "INA-KPI-009", "name": "Tap-to-Cast Lead Time (minutes)", "priority": "High", "granularity": "Shift", "definition": "Time from tapping to casting furnace receipt; high because molten quality decays with delay; shift to control logistics and exceptions." },
+                      { "code": "INA-KPI-010", "name": "Casting Yield (%)", "priority": "High", "granularity": "Daily", "definition": "% good product tons vs molten input; high because it reflects process loss/scrap; daily for rapid corrective action." },
+                      { "code": "INA-KPI-011", "name": "Casting Changeover Loss (tons or %)", "priority": "Med", "granularity": "Weekly", "definition": "Scrap/loss during changeovers; medium as it’s periodic; weekly to target SMED/standardization initiatives." },
+                      { "code": "INA-KPI-012", "name": "OEE (Availability/Performance/Quality) — Critical Lines", "priority": "High", "granularity": "Daily", "definition": "Standard runtime-based OEE for key lines; high to expose bottlenecks; daily to steer shift focus and maintenance priorities." },
+                      { "code": "INA-KPI-017", "name": "SCADA Critical Alarm Response Time (median minutes)", "priority": "High", "granularity": "Shift", "definition": "Median response time for critical alarms; high for safety/availability; shift-level to drive operator behavior." },
+                      { "code": "INA-KPI-018", "name": "Historian Tag Data Completeness (%)", "priority": "Med", "granularity": "Weekly", "definition": "% key tags with valid data (no gaps/outliers); medium but foundational for analytics; weekly governance review." },
+                      { "code": "INA-KPI-025", "name": "TRIR", "priority": "High", "granularity": "Monthly", "definition": "Total recordable incident rate; high safety KPI; monthly aligns to standard reporting and audit cycles." },
+                      { "code": "INA-KPI-026", "name": "PTW On-time Closeout (%)", "priority": "High", "granularity": "Weekly", "definition": "% permits closed with verification within SLA; high to avoid open hazards; weekly for supervisor action." },
+                      { "code": "INA-KPI-029", "name": "Near-Miss Reporting Rate (per 100 employees)", "priority": "Med", "granularity": "Monthly", "definition": "Indicator of reporting culture and hazard discovery; medium; monthly to trend participation and coaching." },
+                      { "code": "INA-KPI-030", "name": "Vehicle Zone/Proximity Violations (count)", "priority": "High", "granularity": "Weekly", "definition": "Safety mesh violation events; high for immediate risk; weekly to target hot-spots and enforce controls." },
+                      { "code": "INA-KPI-038", "name": "Production Plan Adherence (%)", "priority": "High", "granularity": "Weekly", "definition": "% actual vs planned output by area; high for throughput & customer promise; weekly aligns to planning cycle." },
+                      { "code": "INA-KPI-039", "name": "Schedule Stability (re-plans per week)", "priority": "Med", "granularity": "Weekly", "definition": "Count of schedule changes after freeze; medium (discipline indicator); weekly to reduce firefighting." },
+                      { "code": "INA-KPI-051", "name": "Asset Criticality Coverage (%)", "priority": "Med", "granularity": "Monthly", "definition": "% assets with criticality rating; medium foundational governance KPI; monthly to drive master data completion." }
+                    ]
+                  },
+                  {
+                    "title": "Maintenance and Reliability",
+                    "interpretation": "The maintenance KPI set defines governance across PM discipline, schedule adherence, backlog management, MTBF/MTTR, and CBM responsiveness/coverage. Enforcement maturity depends on consistent work execution and evidence capture, which is not explicitly evidenced as system-enforced.",
+                    "kpis": [
+                      { "code": "INA-KPI-019", "name": "Preventive Maintenance Compliance (%)", "priority": "High", "granularity": "Weekly", "definition": "% PM tasks completed on schedule; high because PM prevents unplanned stops; weekly suits planning cycle." },
+                      { "code": "INA-KPI-020", "name": "Maintenance Schedule Adherence (%)", "priority": "High", "granularity": "Weekly", "definition": "% planned work executed as scheduled; high to stabilize operations; weekly aligns to frozen schedule windows." },
+                      { "code": "INA-KPI-021", "name": "Maintenance Backlog (weeks)", "priority": "Med", "granularity": "Weekly", "definition": "Backlog workload vs capacity; medium as it’s a balancing metric; weekly to prevent overload/deferral spiral." },
+                      { "code": "INA-KPI-022", "name": "MTBF — Critical Assets (hours)", "priority": "High", "granularity": "Monthly", "definition": "Reliability indicator for critical assets; high for availability; monthly to smooth noise and reveal trends." },
+                      { "code": "INA-KPI-023", "name": "MTTR — Critical Assets (hours)", "priority": "High", "granularity": "Monthly", "definition": "Repair speed indicator; high for uptime; monthly to measure improvement initiatives and spares strategy." },
+                      { "code": "INA-KPI-024", "name": "CBM Alert Closure Lead Time (hours)", "priority": "High", "granularity": "Weekly", "definition": "Time from condition alert to verified close; high to prevent failures; weekly to drive maintenance response discipline." },
+                      { "code": "INA-KPI-052", "name": "CBM Coverage of Critical Assets (%)", "priority": "Med", "granularity": "Monthly", "definition": "% critical assets monitored by sensors/rules; medium maturity KPI; monthly to track rollout progress." },
+                      { "code": "INA-KPI-053", "name": "Vehicle PM Compliance (%)", "priority": "Med", "granularity": "Weekly", "definition": "% vehicle PM done on time; medium reliability KPI; weekly to align with workshop planning rhythm." }
+                    ]
+                  },
+                  {
+                    "title": "Quality and Sampling",
+                    "interpretation": "Quality KPIs emphasize genealogy/traceability completion, lab velocity, CoA issuance timing, NCR/CAPA governance, and SPC discipline. Execution evidence is largely file-based (Excel/PDF/email) rather than system-enforced real-time governance.",
+                    "kpis": [
+                      { "code": "INA-KPI-005", "name": "Anode Genealogy Completion (%)", "priority": "High", "granularity": "Daily", "definition": "% anodes with complete ID+status+location history; high for traceability and loss control; daily to correct scanning/transfer gaps." },
+                      { "code": "INA-KPI-027", "name": "LOTO Verification Compliance (%)", "priority": "High", "granularity": "Weekly", "definition": "% isolations verified/recorded correctly; high because it prevents severe incidents; weekly governance cadence." },
+                      { "code": "INA-KPI-028", "name": "Environmental Exceedance Events (count)", "priority": "High", "granularity": "Monthly", "definition": "Count of exceedances vs limits; high compliance risk; monthly to align with reporting and corrective action review." },
+                      { "code": "INA-KPI-041", "name": "Lab Turnaround Time (hours)", "priority": "High", "granularity": "Daily", "definition": "Sample receipt to approved result; high because it gates release; daily to keep production/shipping flowing." },
+                      { "code": "INA-KPI-042", "name": "CoA Issuance Lead Time (hours)", "priority": "High", "granularity": "Daily", "definition": "Time from lot ready to CoA issued; high for customer shipment; daily to prevent dispatch delays." },
+                      { "code": "INA-KPI-043", "name": "Nonconformance Rate (% lots with NCR)", "priority": "High", "granularity": "Weekly", "definition": "% lots triggering NCR; high for cost/quality risk; weekly to review patterns and containment effectiveness." },
+                      { "code": "INA-KPI-044", "name": "CAPA On-time Closure (%)", "priority": "High", "granularity": "Monthly", "definition": "% CAPA closed by due date with verification; high for audit risk; monthly suits governance cadence." },
+                      { "code": "INA-KPI-045", "name": "SPC Out-of-Control Occurrences (count)", "priority": "Med", "granularity": "Weekly", "definition": "Count of SPC rule breaches; medium early-warning KPI; weekly to prioritize investigations and kaizen." },
+                      { "code": "INA-KPI-046", "name": "Customer Complaint Cycle Time (days)", "priority": "Med", "granularity": "Monthly", "definition": "Days to close complaint with evidence; medium but customer-facing; monthly to track SLA compliance." }
+                    ]
+                  },
+                  {
+                    "title": "Inventory and Logistics",
+                    "interpretation": "The inventory/logistics KPI footprint is narrowly defined. Logistics continuity is a material risk domain, while KPI breadth in this area is relatively limited within the provided KPI inventory.",
+                    "kpis": [
+                      { "code": "INA-KPI-047", "name": "Inbound OTIF (critical RM) (%)", "priority": "Med", "granularity": "Weekly", "definition": "On-time-in-full for critical materials; medium but prevents production risk; weekly to manage carrier performance." },
+                      { "code": "INA-KPI-048", "name": "Shipment OTIF (%)", "priority": "High", "granularity": "Weekly", "definition": "On-time-in-full outbound delivery; high for customer trust/revenue; weekly to act on delays and exceptions." }
+                    ]
+                  },
+                  {
+                    "title": "Energy and Utilities",
+                    "interpretation": "Energy KPIs are defined with daily/weekly cadence around generation availability, intensity, peak demand control, outage minutes, and cost variance. Utility measurement enforcement mechanisms remain only partially evidenced.",
+                    "kpis": [
+                      { "code": "INA-KPI-013", "name": "Power Generation Availability (%)", "priority": "High", "granularity": "Daily", "definition": "% generation capacity available vs installed; high because smelter depends on reliable energy; daily for dispatch decisions." },
+                      { "code": "INA-KPI-014", "name": "Energy Intensity (kWh/ton Al)", "priority": "High", "granularity": "Daily", "definition": "kWh consumed per ton produced; high cost + sustainability driver; daily to flag abnormal consumption quickly." },
+                      { "code": "INA-KPI-015", "name": "Peak Demand vs Contract (MW)", "priority": "High", "granularity": "Daily", "definition": "Peak load vs contracted limit; high due to penalty/curtailment risk; daily for demand response control." },
+                      { "code": "INA-KPI-016", "name": "Unplanned Utility Outage Minutes", "priority": "High", "granularity": "Weekly", "definition": "Minutes of unplanned outages in transmission/supply; high for production risk; weekly for reliability review cadence." },
+                      { "code": "INA-KPI-040", "name": "Energy Cost Variance (% vs budget)", "priority": "Med", "granularity": "Monthly", "definition": "Energy cost vs budget baseline; medium finance KPI; monthly to match budgeting/reporting cadence." }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "sectionNumber": "Section 03",
+          "title": "KPI Coverage vs Findings (Gap Lens)",
+          "subtitle": "Mapping observed gaps to KPI codes where exact keyword overlap exists.",
+          "subSections": [
+            {
+              "type": "gapLensGrid",
+              "customProperties": {
+                "items": [
+                  { "gap": "Frequent breakdown and downtime in critical kneader line reduces availability and runtime performance governance.", "kpis": "INA-KPI-019, 020, 022, 023, 012", "status": "KPI defined, enforcement not evidenced", "anchor": "Issue: “frequent (KN-201/KN202) Downtime… shaft crack”" },
+                  { "gap": "Quarterly maintenance cadence and duration variance indicates schedule adherence exposure.", "kpis": "INA-KPI-020, 021", "status": "KPI defined, enforcement not evidenced", "anchor": "Issues: quarterly maintenance and duration exceeds target" },
+                  { "gap": "Inbound shipment delays and stockout events create inbound delivery reliability exposure.", "kpis": "INA-KPI-047", "status": "KPI measured via reporting artifacts", "anchor": "Issues: “Coke shipment delays…” and “RM HS stock habis…”" },
+                  { "gap": "Limited vessel schedule visibility and frequent re-plans increase schedule stability risk.", "kpis": "INA-KPI-039, 038", "status": "KPI measured via reporting artifacts", "anchor": "Issue: “Demurrage… vessel schedule visibility is limited”" },
+                  { "gap": "Manual QC recording and staged approvals slow laboratory feedback and release gating.", "kpis": "INA-KPI-041, 042", "status": "KPI measured via reporting artifacts", "anchor": "Findings: lab results written → transcribed → approvals → PDF email" },
+                  { "gap": "QC results arrive after material has been consumed, weakening release decision timing.", "kpis": "INA-KPI-041", "status": "KPI measured via reporting artifacts", "anchor": "Issue: “QC results arrive after material has already been consumed”" },
+                  { "gap": "Manual numbering/labeling causes duplicate/missing anode IDs, weakening genealogy discipline.", "kpis": "INA-KPI-005", "status": "KPI defined, enforcement not evidenced", "anchor": "Issue: “Manual numbering/labeling causes duplicate/missing anode IDs”" },
+                  { "gap": "No automated alarm logging limits ability to govern alarm response and stability indicators.", "kpis": "INA-KPI-017, 008", "status": "KPI defined, enforcement not evidenced", "anchor": "Findings: “Belum ada sistem alarm log otomatis”" },
+                  { "gap": "“No SPC is implemented” despite SPC KPI definition, weakening early-warning quality governance.", "kpis": "INA-KPI-045", "status": "KPI defined, enforcement not evidenced", "anchor": "Findings: “No SPC is implemented…”" },
+                  { "gap": "Absence of integrated database and offline/Excel handling reduces data completeness governance for analytics.", "kpis": "INA-KPI-018", "status": "KPI measured via reporting artifacts", "anchor": "Findings: “absence of a database slows audit…” and “Current operation is largely Excel/offline”" }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "sectionNumber": "Section 04",
+          "title": "KPI Maturity Assessment",
+          "subtitle": "Evaluating enforcement and visibility depths",
+          "subSections": [
+            {
+              "type": "maturityTable",
+              "customProperties": {
+                "rows": [
+                  { "dimension": "KPI Definition", "status": "Defined", "commentary": "KPI table definitions are populated and detailed across the KPI set, indicating strong definition discipline.", "anchor": "KPI table (Definitions populated across KPI inventory)" },
+                  { "dimension": "Real-Time Visibility", "status": "Fragmented", "commentary": "PLC and SCADA exist, but SCADA estate is multi-system and PLC-to-SCADA linkage is mixed; reporting artifacts and Findings indicate manual/offline practices and absence of alarm logging.", "anchor": "PLC table (mixed SCADA linkage), SCADA table, File Used, Findings" },
+                  { "dimension": "Integration", "status": "Fragmented", "commentary": "Findings/Issues explicitly reference “manual”, “Excel/offline”, “not integrated”, “email-based”, and “silo” behavior patterns.", "anchor": "Findings & Notes, Issues (visibility limits)" },
+                  { "dimension": "Governance Cadence", "status": "Defined", "commentary": "KPI Granularity spans multiple cadences (Daily/Weekly/Monthly/Shift), indicating cadence exists even if enforcement is manual.", "anchor": "KPI table (Granularity), File Used (SQA reports, schedules)" },
+                  { "dimension": "Predictive Layer", "status": "Partial", "commentary": "CBM and predictive governance is explicitly represented (CBM KPIs and maintenance procedures), but system enforcement depth remains To validate.", "anchor": "KPI table (INA-KPI-024, INA-KPI-052), Procedures, Findings" }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "sectionNumber": "Section 05",
+          "title": "Strategic Implications",
+          "subtitle": "",
+          "subSections": [
+            {
+              "type": "implicationsBlock",
+              "customProperties": {
+                "prioritiesTitle": "What the KPI Set Prioritizes",
+                "prioritiesText": "The KPI inventory emphasizes Production and Throughput (largest category by count) and maintains strong coverage across Maintenance and Reliability and Quality and Sampling with predominantly High priority KPIs.",
+                "breakdownsTitle": "Where KPI Governance Breaks Down",
+                "breakdownsList": [
+                  "Manual and offline reporting posture -> decisions depend on delayed feedback -> increased response latency.",
+                  "Absence of automated alarm logging -> response-time and stability KPIs cannot be evidenced through event history.",
+                  "Reliability constraints at critical equipment -> availability and throughput variability -> persistent capacity loss."
+                ],
+                "leverageTitle": "Digital Leverage Linkage",
+                "leverageList": [
+                  { "solution": "INA-SOL-18 (CMMS/EAM + Andon)", "alignment": "Aligns to PM compliance, schedule adherence, and breakdown response governance KPIs." },
+                  { "solution": "INA-SOL-08 (LIMS)", "alignment": "Aligns to Lab Turnaround Time and CoA issuance governance by supporting system-based capture." },
+                  { "solution": "INA-SOL-01 (Dual SCADA Architecture)", "alignment": "Aligns to alarm response and supervisory visibility consolidation." },
+                  { "solution": "INA-SOL-17 (Equipment Runtime Capture)", "alignment": "Aligns to OEE enforcement where runtime-based governance is required." }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "sectionNumber": "Section 06",
+          "title": "Reference Map",
+          "subtitle": "Traceability index of data inputs",
+          "subSections": [
+            {
+              "type": "referenceTable",
+              "customProperties": {
+                "tableTitle": "Output 11B — Reference Map",
+                "rows": [
+                  { "object": "KPI Inventory", "codes": "INA-KPI-001…INA-KPI-053 (44 KPIs)", "source": "List Of Related KPIs", "usedBy": "Appendix J Sections 2–5", "notes": "Categorized deterministically; Primary Owner set to 'To validate'." },
+                  { "object": "Gap Lens", "codes": "H-gap lens rows", "source": "List Of Issue; Findings; File Used", "usedBy": "Appendix J Sections 3–5", "notes": "Gaps anchored to Issue/Findings; mapping restricted to exact keyword overlap." },
+                  { "object": "Visibility Evidence", "codes": "PLC/SCADA estate references", "source": "List Of PLC; SCADA; Findings; File Used", "usedBy": "Appendix J Section 4", "notes": "Real-time visibility anchored to mixed PLC–SCADA linkage and 'no alarm log'." },
+                  { "object": "Digital Leverage", "codes": "INA-SOL-01, INA-SOL-08, INA-SOL-17, INA-SOL-18", "source": "List Of Related Solution Proposed", "usedBy": "Appendix J Section 5", "notes": "Capability alignment only; no implementation claims." }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <script>
+        const rawData = JSON.parse(document.getElementById('report-data').textContent);
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        report: {
+                            50: '#eef2ff', 100: '#e0e7ff', 500: rawData.theme.primary, 800: '#3730a3', 900: rawData.theme.dark, 
+                            accent: rawData.theme.accent, roadmapBg: rawData.theme.roadmapBg
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .dark-glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2670&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .table-container { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-report-500 selection:text-white">
+
+    <div id="app"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = JSON.parse(document.getElementById('report-data').textContent);
+            const app = document.getElementById('app');
+
+            // --- HELPER FUNCTIONS ---
+            const renderSectionTitle = (sectionNumber, titleText, subtitleText = '') => `
+                <div class="flex items-stretch gap-4 mb-8">
+                    <div class="w-1.5 bg-report-500 rounded-full"></div>
+                    <div class="py-1">
+                        <p class="text-report-500 font-bold tracking-widest uppercase text-xs mb-1">${sectionNumber}</p>
+                        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">${titleText}</h2>
+                        ${subtitleText ? `<p class="text-sm text-slate-500 mt-2">${subtitleText}</p>` : ''}
+                    </div>
+                </div>
+            `;
+
+            const getPriorityBadge = (priority) => {
+                const map = {
+                    'High': 'bg-red-50 text-red-700 border-red-200',
+                    'Med': 'bg-yellow-50 text-yellow-700 border-yellow-200',
+                    'Low': 'bg-slate-50 text-slate-700 border-slate-200'
+                };
+                return map[priority] || 'bg-slate-50 text-slate-700 border-slate-200';
+            };
+
+            const getGranularityBadge = (granularity) => {
+                const map = {
+                    'Daily': 'bg-blue-50 text-blue-700 border-blue-200',
+                    'Shift': 'bg-indigo-50 text-indigo-700 border-indigo-200',
+                    'Weekly': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                    'Monthly': 'bg-slate-100 text-slate-700 border-slate-200'
+                };
+                return map[granularity] || 'bg-slate-50 text-slate-700 border-slate-200';
+            };
+
+            const getStatusBadge = (status) => {
+                if(status.toLowerCase().includes('not evidenced') || status.toLowerCase().includes('fragmented')) return 'bg-orange-100 text-orange-800';
+                if(status.toLowerCase().includes('defined')) return 'bg-emerald-100 text-emerald-800';
+                if(status.toLowerCase().includes('partial')) return 'bg-yellow-100 text-yellow-800';
+                return 'bg-blue-100 text-blue-800';
+            };
+
+            const getCategoryIcon = (title) => {
+                if(title.includes('Production') || title.includes('Throughput')) return '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>';
+                if(title.includes('Maintenance') || title.includes('Reliability')) return '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>';
+                if(title.includes('Quality') || title.includes('Compliance')) return '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>';
+                if(title.includes('Inventory') || title.includes('Logistics')) return '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>';
+                if(title.includes('Energy') || title.includes('Utilities')) return '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>';
+                return '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>';
+            };
+
+            const getImpactBadge = (impact) => {
+                if (impact === 'Very High') return '<span class="px-3 py-1 rounded-md text-xs font-bold bg-orange-50 text-orange-600 border border-orange-200">Very High</span>';
+                if (impact === 'Critical') return '<span class="px-3 py-1 rounded-md text-xs font-bold bg-red-50 text-red-600 border border-red-200">Critical</span>';
+                if (impact === 'High') return '<span class="px-3 py-1 rounded-md text-xs font-bold bg-indigo-50 text-indigo-600 border border-indigo-200">High</span>';
+                return '<span class="px-3 py-1 rounded-md text-xs font-bold bg-slate-50 text-slate-600 border border-slate-200">Medium</span>';
+            };
+
+
+            // --- COMPONENT RENDERERS ---
+
+            const renderNarrative = (props) => `
+                <div class="max-w-4xl mx-auto space-y-10 text-xl font-light">
+                    <p class="text-slate-700 leading-relaxed">${props.text}</p>
+                    <blockquote class="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden transform md:scale-105 my-12">
+                        <div class="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-indigo-400 to-report-500"></div>
+                        <p class="relative z-10 text-2xl font-light leading-relaxed">${props.takeaway}</p>
+                    </blockquote>
+                </div>
+            `;
+
+            const renderDonutChart = (props) => {
+                let currentPct = 0;
+                const gradientString = props.data.map(item => {
+                    const pct = (item.value / props.total) * 100;
+                    const str = `${item.color} ${currentPct}% ${currentPct + pct}%`;
+                    currentPct += pct;
+                    return str;
+                }).join(', ');
+
+                return `
+                    <div class="flex flex-col lg:flex-row items-center gap-12 w-full mb-12 p-8 lg:p-10 bg-white border border-slate-100 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                        <div class="w-64 h-64 rounded-full flex-shrink-0 flex items-center justify-center relative" style="background: conic-gradient(${gradientString})">
+                            <div class="w-44 h-44 bg-white rounded-full flex flex-col items-center justify-center relative z-10 shadow-sm">
+                                <span class="text-5xl font-black text-slate-800 tracking-tight">${props.total}</span>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Total</span>
+                            </div>
+                        </div>
+                        <div class="flex-grow w-full space-y-4">
+                            ${props.data.map((item) => `
+                                <div class="flex items-center justify-between p-4 md:p-5 border border-slate-200 rounded-2xl hover:border-slate-300 transition-colors shadow-sm bg-white">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-4 h-4 rounded-full shrink-0" style="background-color: ${item.color}"></div>
+                                        <h4 class="text-lg font-bold text-slate-800">${item.label}</h4>
+                                    </div>
+                                    <div class="flex items-center gap-6 md:gap-10">
+                                        <div class="flex flex-col items-end gap-1 hidden sm:flex">
+                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Impact</span>
+                                            ${getImpactBadge(item.impact)}
+                                        </div>
+                                        <div class="w-px h-10 bg-slate-100 hidden sm:block"></div>
+                                        <div class="flex flex-col items-center min-w-[3rem] gap-0.5">
+                                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Count</span>
+                                            <span class="text-3xl font-black leading-none" style="color: ${item.color}">${item.value}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            };
+
+            const renderKpiCategoryList = (props) => `
+                <div class="space-y-12">
+                    ${props.categories.map(cat => `
+                        <div class="bg-white rounded-[2rem] shadow-xl border border-slate-200 overflow-hidden mb-8 group transition-all duration-300 hover:shadow-2xl">
+                            <div class="bg-gradient-to-br from-slate-50 to-white border-b border-slate-200 p-8 relative overflow-hidden">
+                                <div class="absolute right-0 top-0 w-64 h-64 bg-indigo-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                
+                                <div class="relative z-10 flex flex-col md:flex-row md:items-start gap-6">
+                                    <div class="w-16 h-16 rounded-2xl bg-white border border-slate-200 shadow-sm text-report-500 flex items-center justify-center shrink-0 group-hover:bg-report-500 group-hover:text-white group-hover:border-report-600 transition-all duration-300">
+                                        ${getCategoryIcon(cat.title)}
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="flex items-center gap-4 mb-3">
+                                            <h3 class="text-2xl font-extrabold text-slate-800">${cat.title}</h3>
+                                            <span class="bg-report-100 text-report-700 border border-report-200 font-bold px-3 py-1 rounded-full text-xs shadow-sm">${cat.kpis.length} KPIs</span>
+                                        </div>
+                                        <p class="text-sm text-slate-600 font-medium leading-relaxed max-w-4xl">${cat.interpretation}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-container overflow-x-auto">
+                                <table class="w-full text-left min-w-[1000px] border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-50/80 backdrop-blur-sm text-slate-500 uppercase text-[10px] tracking-widest border-b border-slate-200">
+                                            <th class="p-4 pl-8 font-bold">Code</th>
+                                            <th class="p-4 font-bold w-1/4">Name</th>
+                                            <th class="p-4 font-bold text-center">Priority</th>
+                                            <th class="p-4 font-bold text-center">Cadence</th>
+                                            <th class="p-4 pr-8 font-bold w-1/2">Definition</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-slate-700 text-sm divide-y divide-slate-100">
+                                        ${cat.kpis.map(kpi => `
+                                            <tr class="hover:bg-slate-50 transition-colors relative">
+                                                <td class="p-5 pl-8 font-mono font-medium text-slate-500 text-xs">${kpi.code}</td>
+                                                <td class="p-5 font-bold text-slate-800 text-base">${kpi.name}</td>
+                                                <td class="p-5 text-center">
+                                                    <span class="px-3 py-1 rounded-full text-[10px] font-bold border uppercase tracking-widest ${getPriorityBadge(kpi.priority)}">${kpi.priority}</span>
+                                                </td>
+                                                <td class="p-5 text-center">
+                                                    <span class="px-3 py-1.5 rounded-md text-xs font-bold border ${getGranularityBadge(kpi.granularity)}">${kpi.granularity}</span>
+                                                </td>
+                                                <td class="p-5 pr-8 text-xs leading-relaxed text-slate-600">${kpi.definition}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            const renderGapLensGrid = (props) => `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    ${props.items.map(gap => `
+                        <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-lg transition-shadow flex flex-col h-full relative overflow-hidden group">
+                            <div class="absolute top-0 left-0 w-1.5 h-full bg-slate-200 group-hover:bg-orange-400 transition-colors"></div>
+                            <p class="text-lg font-medium text-slate-800 mb-6 leading-relaxed flex-grow pr-4">${gap.gap}</p>
+                            
+                            <div class="space-y-4 border-t border-slate-100 pt-6">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Related Nodes/KPIs</span>
+                                    <span class="font-mono text-xs font-bold text-report-500">${gap.kpis}</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Status</span>
+                                    <span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase ${getStatusBadge(gap.status)}">${gap.status}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            const renderMaturityTable = (props) => `
+                <div class="bg-[#0f172a] rounded-[3rem] p-8 md:p-12 shadow-2xl border border-slate-800 relative overflow-hidden">
+                    <div class="absolute right-0 top-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+                    
+                    <table class="w-full text-left relative z-10 hidden md:table">
+                        <thead>
+                            <tr class="text-slate-400 uppercase text-xs tracking-widest border-b border-slate-800">
+                                <th class="p-4 pb-6 font-bold w-1/4">Dimension</th>
+                                <th class="p-4 pb-6 font-bold w-1/6">Status</th>
+                                <th class="p-4 pb-6 font-bold">Commentary & Anchor</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-300 text-sm divide-y divide-slate-800/60">
+                            ${props.rows.map(row => `
+                                <tr class="hover:bg-slate-800/40 transition-colors">
+                                    <td class="p-4 py-6 font-bold text-white text-base">${row.dimension}</td>
+                                    <td class="p-4 py-6">
+                                        <span class="px-3 py-1 rounded text-xs font-bold border border-transparent ${getStatusBadge(row.status)}">${row.status}</span>
+                                    </td>
+                                    <td class="p-4 py-6">
+                                        <p class="leading-relaxed mb-2">${row.commentary}</p>
+                                        <p class="text-[10px] font-mono text-indigo-300 uppercase tracking-widest bg-indigo-900/30 inline-block px-2 py-1 rounded border border-indigo-500/30">Evidence: ${row.anchor}</p>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+
+                    <!-- Mobile view for maturity assessment -->
+                    <div class="md:hidden space-y-6 relative z-10">
+                         ${props.rows.map(row => `
+                            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h4 class="font-bold text-white text-lg">${row.dimension}</h4>
+                                    <span class="px-2 py-1 rounded text-[10px] font-bold uppercase ${getStatusBadge(row.status)}">${row.status}</span>
+                                </div>
+                                <p class="text-slate-300 text-sm leading-relaxed mb-3">${row.commentary}</p>
+                                <p class="text-[10px] font-mono text-indigo-300 uppercase tracking-widest">Evidence: ${row.anchor}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            const renderImplicationsBlock = (props) => `
+                <div class="space-y-8">
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                        <h4 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">${props.prioritiesTitle}</h4>
+                        <p class="text-slate-800 font-medium text-lg leading-relaxed">${props.prioritiesText}</p>
+                    </div>
+
+                    <div class="bg-red-50 p-8 rounded-3xl border border-red-100 shadow-sm">
+                        <h4 class="text-sm font-bold text-red-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            ${props.breakdownsTitle}
+                        </h4>
+                        <ul class="space-y-4">
+                            ${props.breakdownsList.map(b => `
+                                <li class="flex items-start gap-3 text-red-900 text-sm font-medium">
+                                    <span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"></span>
+                                    ${b.replace(/->/g, '<span class="text-red-400 mx-1">→</span>')}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="bg-indigo-50 rounded-3xl p-8 border border-indigo-100 shadow-sm">
+                        <h4 class="text-sm font-bold text-indigo-500 uppercase tracking-widest mb-6">${props.leverageTitle}</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            ${props.leverageList.map(lev => `
+                                <div class="bg-white p-5 rounded-xl shadow-sm border border-indigo-50 hover:shadow-md transition-shadow">
+                                    <p class="font-bold text-indigo-900 text-sm mb-2">${lev.solution}</p>
+                                    <p class="text-slate-600 text-sm leading-relaxed">${lev.alignment}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const renderReferenceTable = (props) => `
+                <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
+                    <div class="bg-slate-50 border-b border-slate-200 px-6 py-4">
+                        <h4 class="text-sm font-bold text-slate-700 uppercase tracking-widest">${props.tableTitle}</h4>
+                    </div>
+                    <div class="p-0">
+                        <table class="w-full text-left text-xs">
+                            <tbody class="divide-y divide-slate-100 text-slate-600">
+                                ${props.rows.map(ref => `
+                                    <tr class="hover:bg-slate-50">
+                                        <td class="p-4 font-bold text-slate-800 w-1/3">${ref.object}</td>
+                                        <td class="p-4 font-mono text-[10px] break-words">${ref.codes}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+
+            // --- MAIN TEMPLATE RENDERER ---
+            const renderSubSection = (sub) => {
+                switch(sub.type) {
+                    case 'narrative': return renderNarrative(sub.customProperties);
+                    case 'donutChart': return renderDonutChart(sub.customProperties);
+                    case 'kpiCategoryList': return renderKpiCategoryList(sub.customProperties);
+                    case 'gapLensGrid': return renderGapLensGrid(sub.customProperties);
+                    case 'maturityTable': return renderMaturityTable(sub.customProperties);
+                    case 'implicationsBlock': return renderImplicationsBlock(sub.customProperties);
+                    case 'referenceTable': return renderReferenceTable(sub.customProperties);
+                    default: return '';
+                }
+            };
+
+            const sectionsHtml = data.sections.map((section, index) => `
+                <div class="col-span-1 md:col-span-12 ${index > 0 ? 'mt-12 border-t border-slate-200 pt-16' : ''}">
+                    ${renderSectionTitle(section.sectionNumber, section.title, section.subtitle)}
+                    ${section.subSections.map(sub => renderSubSection(sub)).join('\n')}
+                </div>
+            `).join('');
+
+            const html = `
+                <!-- HERO COMPONENT -->
+                <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent mix-blend-multiply"></div>
+                    <div class="relative z-10 max-w-5xl">
+                        <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-500/50 bg-report-500/20 text-indigo-100 text-sm font-semibold tracking-wide uppercase shadow-lg">
+                            ${data.metadata.documentId}
+                        </div>
+                        <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-4 text-white drop-shadow-sm">
+                            ${data.metadata.title.split('-')[0]} <br/> <span class="text-report-500">${data.metadata.title.split('-')[1]}</span>
+                        </h1>
+                        <h2 class="text-2xl md:text-3xl font-light text-slate-300 mb-12 max-w-3xl leading-snug">
+                            ${data.metadata.subtitle}
+                        </h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12 dark-glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl items-center">
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Facility</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.facility}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Company</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.company}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Issue Date</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.date}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Status</p>
+                                <p class="font-medium text-report-500 flex items-center gap-2 text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-report-500 animate-pulse shadow-[0_0_8px_rgba(79,70,229,0.8)]"></span>
+                                    ${data.metadata.status}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8">
+                    ${sectionsHtml}
+                </main>
+            `;
+            
+            app.innerHTML = html;
+        });
+    </script>
+</body>
+</html>

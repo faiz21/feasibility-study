@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Assessment Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- GENERIC JSON DATA EMBED: Sections -> Sub-sections Structure -->
+    <script id="report-data" type="application/json">
+    {
+      "theme": { 
+        "primary": "#4f46e5", 
+        "accent": "#06b6d4", 
+        "dark": "#0f172a", 
+        "roadmapBg": "#1e293b" 
+      },
+      "metadata": { 
+        "title": "Appendix E", 
+        "subtitle": "Supervisory Control Scope (SCADA/DCS Inventory)", 
+        "documentId": "INA-PL-GRP-APP-E", 
+        "company": "PT Indonesia Asahan Aluminium", 
+        "plant": "Green Plant (INA-PL-GRP)", 
+        "date": "March 2026", 
+        "status": "Draft Mode" 
+      },
+      "sections": {
+        "purpose": {
+          "title": "Purpose",
+          "text": "Appendix E establishes the supervisory control layer baseline (Level 2) for Green Plant (INA-PL-GRP). It defines the supervisory footprint, vendor landscape, protocol diversity, lifecycle posture, and coverage across Process Groups. This appendix functions as the authoritative reference for:",
+          "authoritativeReferences": [ 
+            "PLC-to-SCADA mapping (Appendix D)", 
+            "KPI automation visibility (Appendix J)", 
+            "Cybersecurity exposure alignment (Appendix L-D8 reference context)", 
+            "Vertical integration posture (Appendix N reference context)" 
+          ],
+          "takeaway": "No maturity score is declared in this section."
+        },
+        "landscapeSnapshot": {
+          "title": "SCADA / DCS Landscape Snapshot",
+          "metrics": [
+            { "label": "Total SCADA Systems", "value": "3", "subtext": "" }, 
+            { "label": "Vendors", "value": "3", "subtext": "Rockwell (1), Citect (1), To validate (1)" },
+            { "label": "Multi-SCADA", "value": "Yes", "subtext": "Fragmented Architecture" }, 
+            { "label": "Historian Unified Layer", "value": "Not evident", "subtext": "Data consolidation gap" },
+            { "label": "Standardization", "value": "Not Standardized", "subtext": "High architectural complexity" }, 
+            { "label": "Redundancy Model", "value": "Not defined", "subtext": "Availability posture unclear" }
+          ],
+          "lifecycle": {
+            "title": "Lifecycle Exposure Classification",
+            "chart": [ 
+              { "label": "Legacy (≥15 yrs)", "value": 1, "color": "#ef4444", "desc": "Built 2003" }, 
+              { "label": "Recent (<7 yrs)", "value": 1, "color": "#06b6d4", "desc": "Built 2022" }, 
+              { "label": "To validate", "value": 1, "color": "#cbd5e1", "desc": "Unknown year" } 
+            ],
+            "total": 3,
+            "implications": [
+              { "band": "Legacy (≥15 years)", "count": 1, "implication": "Increased lifecycle and support exposure; compatibility and security window widening" },
+              { "band": "Mid-Lifecycle (7–14 years)", "count": 0, "implication": "None identified" },
+              { "band": "Recent (<7 years)", "count": 1, "implication": "Lower lifecycle exposure; current platform generation" }
+            ]
+          }
+        },
+        "inventoryRegister": {
+          "title": "Inventory Register",
+          "subtitle": "SCADA systems mapping and footprint",
+          "items": [
+            { "code": "INA-SC-GRP-001", "name": "Granulation SCADA", "brand": "Citect", "version": "7.4", "year": "2003", "protocol": "To validate", "coverage": { "status": "Deterministically linked", "details": "PLC Granulation (INA-PLC-GRP-005) references SCADA ID INA-SC-GRP-001. Linked to Process Group: INA-PG-GRP-003 (Coke Receiving Control System)." }, "risk": { "condition": "Built in 2003 (Legacy lifecycle band).", "visibility": "Aging supervisory layer for coke receiving domain.", "governance": "Lifecycle support risk, compatibility limitations, and widened cybersecurity vulnerability window." } },
+            { "code": "INA-SC-GRP-002", "name": "Vibration SCADA", "brand": "Rockwell", "version": "To validate", "year": "2022", "protocol": "To validate", "coverage": { "status": "To validate", "details": "No PLC row references SCADA ID INA-SC-GRP-002. No deterministic keyword overlap between SCADA Name and Process Group names." }, "risk": { "condition": "Recent lifecycle (4 years).", "visibility": "Modern supervisory platform exists but coverage scope not deterministically mapped.", "governance": "Documentation gap (Version, License, Protocol not specified) limits clarity of governance posture." } },
+            { "code": "INA-SC-GRP-003", "name": "Tar Pitch SCADA", "brand": "To validate", "version": "To validate", "year": "To validate", "protocol": "To validate", "coverage": { "status": "Deterministically linked", "details": "PLC Tar Pitch System (INA-PLC-GRP-003) references SCADA ID INA-SC-GRP-003. Linked to Process Group: INA-PG-GRP-007 (Tar Pitch Receiving and Heating Oil Control System)." }, "risk": { "condition": "Year Built not specified (documentation gap).", "visibility": "Supervisory visibility present for pitch domain but lifecycle posture cannot be assessed.", "governance": "Missing Version, License, Protocol, and Year information creates documentation and lifecycle governance uncertainty." } }
+          ]
+        },
+        "coverageVsProcessGroups": {
+          "title": "SCADA Coverage vs Process Groups",
+          "note": "Coverage strictly follows deterministic PLC linkage and architectural posture.",
+          "items": [
+            { "pg": "INA-PG-GRP-001", "status": "Limited", "basis": "Relay/Hybrid posture (Appendix B)", "notes": "No PLC-SCADA linkage" }, 
+            { "pg": "INA-PG-GRP-002", "status": "To validate", "basis": "No PLC evidenced", "notes": "Utility control posture unclear" },
+            { "pg": "INA-PG-GRP-003", "status": "Connected", "basis": "PLC linkage (INA-PLC-GRP-005 → INA-SC-GRP-001)", "notes": "Granulation SCADA coverage" }, 
+            { "pg": "INA-PG-GRP-004", "status": "To validate", "basis": "No PLC evidenced", "notes": "Grinding SCADA linkage not evidenced" },
+            { "pg": "INA-PG-GRP-005", "status": "PLC-Local / No SCADA", "basis": "PLC present; SCADA ID = None", "notes": "Kneader standalone" }, 
+            { "pg": "INA-PG-GRP-006", "status": "PLC-Local / No SCADA", "basis": "PLC present; SCADA ID = None", "notes": "Forming standalone" },
+            { "pg": "INA-PG-GRP-007", "status": "Connected", "basis": "PLC linkage (INA-PLC-GRP-003 → INA-SC-GRP-003)", "notes": "Tar Pitch SCADA coverage" }, 
+            { "pg": "INA-PG-GRP-008", "status": "PLC-Local / No SCADA", "basis": "PLC present; SCADA ID = None", "notes": "Conveying standalone" }
+          ]
+        },
+        "architecturalObservations": {
+          "title": "Architectural Observations",
+          "items": [
+            { "id": "fragmentation", "title": "Platform Fragmentation", "trigger": "Distinct SCADA Brand count > 1 (Citect, Rockwell, To validate).", "observation": "Multi-vendor supervisory environment.", "effect": "Engineering environment dispersion and potential differences in alarm structuring practices.", "governance": "Increased architectural complexity and standardization challenge across platforms." },
+            { "id": "legacy", "title": "Legacy Exposure & Obsolescence", "trigger": "One SCADA system in Legacy lifecycle band (2003).", "observation": "Granulation SCADA age ≥ 23 years.", "effect": "Increased compatibility and OS dependency exposure.", "governance": "Expanded cybersecurity vulnerability window and vendor support lifecycle uncertainty." },
+            { "id": "historian", "title": "Historian & Data Consolidation", "trigger": "Historian Unified Layer = Not evident.", "observation": "No SCADA entry references historian keyword.", "effect": "Data likely fragmented across standalone supervisory systems.", "governance": "KPI automation consolidation and predictive analytics readiness constrained by absence of unified data layer." },
+            { "id": "alarm", "title": "Alarm Governance Posture", "trigger": "No evidence of alarm governance in SCADA fields.", "observation": "Alarm log not available.", "effect": "Event traceability and root-cause analysis capability reduced.", "governance": "Alarm rationalization and supervisory governance maturity limited." }
+          ],
+          "summary": {
+            "title": "Supervisory Coherence Summary",
+            "text": "The supervisory layer shows selective connectivity (2 deterministically linked domains) but remains fragmented across three SCADA entries with varying documentation completeness. Legacy exposure exists in a critical upstream domain (coke receiving), while historian and unified data consolidation are not evidenced. Supervisory visibility is therefore partial and uneven across Process Groups."
+          }
+        },
+        "maturityAssessment": {
+          "title": "Maturity Assessment",
+          "subtitle": "Control Layer Evaluation",
+          "items": [
+            { "dimension": "Platform Standardization", "posture": "Multi-vendor", "exposure": "High", "anchor": "SCADA table (Brand diversity)" },
+            { "dimension": "Redundancy", "posture": "Not clearly defined", "exposure": "High", "anchor": "SCADA fields (no redundancy reference)" },
+            { "dimension": "Historian Integration", "posture": "Not evident", "exposure": "High", "anchor": "Section 2.1; no historian keyword" },
+            { "dimension": "Alarm Governance", "posture": "Not evidenced", "exposure": "High", "anchor": "Findings (alarm log absence)" },
+            { "dimension": "Cybersecurity Compliance", "posture": "To validate", "exposure": "To validate", "anchor": "No explicit SCADA cybersecurity data" },
+            { "dimension": "Vertical Integration (ERP/MES)", "posture": "Limited", "exposure": "High", "anchor": "Fragmented supervisory coverage" }
+          ]
+        },
+        "executiveFraming": {
+          "title": "Executive Framing",
+          "items": [
+            "The supervisory layer is structurally present but fragmented across multiple SCADA systems with uneven documentation completeness.",
+            "Only two Process Groups are deterministically SCADA-connected; majority remain PLC-local or To validate.",
+            "Legacy exposure in Granulation SCADA (2003) creates lifecycle and cybersecurity risk concentration.",
+            "Absence of historian and alarm logging evidence constrains centralized KPI automation and predictive analytics readiness.",
+            "Supervisory modernization and consolidation readiness is directly dependent on lifecycle renewal and integration harmonization."
+          ]
+        },
+        "referenceMap": {
+          "title": "Reference Map",
+          "subtitle": "Documentation Traceability",
+          "footer": "Report completed under Draft Mode evidence discipline.",
+          "items": [
+            { "section": "Estate Metrics", "source": "List Of SCADA" }, 
+            { "section": "Lifecycle Classification", "source": "SCADA Year Built" }, 
+            { "section": "PLC Linkage", "source": "List Of PLC (SCADA ID mapping)" },
+            { "section": "Coverage Table", "source": "PLC.Process Group + PLC.SCADA ID" }, 
+            { "section": "Architectural Observations", "source": "SCADA Brand diversity; Findings (alarm absence)" }, 
+            { "section": "Maturity Assessment", "source": "SCADA table; PLC linkage; Findings" }
+          ]
+        }
+      }
+    }
+    </script>
+
+    <script>
+        // Apply dynamic Tailwind configuration from JSON Theme
+        const rawData = JSON.parse(document.getElementById('report-data').textContent);
+        document.title = `${rawData.metadata.documentId} | ${rawData.metadata.title}`;
+        
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        report: {
+                            50: '#eef2ff', 100: '#e0e7ff', 500: rawData.theme.primary, 800: '#3730a3', 900: rawData.theme.dark, 
+                            accent: rawData.theme.accent, roadmapBg: rawData.theme.roadmapBg
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .dark-glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(79, 70, 229, 0.6)), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2668&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .table-container { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-report-500 selection:text-white">
+
+    <div id="app"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = JSON.parse(document.getElementById('report-data').textContent);
+            const app = document.getElementById('app');
+
+            // Render section header component (Numbered UI removed entirely per request)
+            const renderSectionTitle = (titleText, subtitleText = '') => `
+                <div class="flex items-stretch gap-4 mb-10">
+                    <div class="w-2 bg-report-500 rounded-full"></div>
+                    <div class="py-1">
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">${titleText}</h2>
+                        ${subtitleText ? `<p class="text-base text-slate-500 mt-2 font-medium">${subtitleText}</p>` : ''}
+                    </div>
+                </div>
+            `;
+
+            // Status Badge Helpers
+            const getCoverageBadge = (status) => {
+                if(status === 'Connected') return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                if(status.includes('To validate') || status === 'Limited') return 'bg-yellow-50 text-yellow-700 border-yellow-200';
+                return 'bg-slate-100 text-slate-600 border-slate-200';
+            };
+            
+            const getRiskBadge = (exposure) => {
+                const map = {
+                    'High': 'bg-red-50 text-red-700 border-red-200',
+                    'Medium': 'bg-orange-50 text-orange-700 border-orange-200',
+                    'To validate': 'bg-slate-100 text-slate-600 border-slate-300'
+                };
+                return map[exposure] || 'bg-slate-50 text-slate-700 border-slate-200';
+            };
+
+            const renderDoughnutChart = (chart) => {
+                let currentPct = 0;
+                const gradientString = chart.chart.map(item => {
+                    const pct = (item.value / chart.total) * 100;
+                    const str = `${item.color} ${currentPct}% ${currentPct + pct}%`;
+                    currentPct += pct;
+                    return str;
+                }).join(', ');
+
+                return `
+                    <div class="flex flex-col xl:flex-row items-center justify-center gap-8 w-full p-8 bg-white rounded-3xl border border-slate-200 shadow-sm h-full">
+                        <div class="relative w-40 h-40 flex-shrink-0">
+                            <div class="absolute inset-0 rounded-full" style="background: conic-gradient(${gradientString})"></div>
+                            <div class="absolute inset-4 bg-white rounded-full flex items-center justify-center shadow-inner">
+                                <div class="text-center">
+                                    <span class="block text-2xl font-black text-slate-800">${chart.total}</span>
+                                    <span class="block text-[10px] uppercase font-bold text-slate-400">Systems</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4 w-full">
+                            ${chart.chart.map(item => `
+                                <div class="flex items-start gap-3">
+                                    <div class="w-4 h-4 rounded-full mt-0.5 shadow-sm shrink-0" style="background-color: ${item.color}"></div>
+                                    <div>
+                                        <p class="font-bold text-slate-800 leading-none">${item.label} <span class="text-slate-500 font-medium ml-1">(${item.value})</span></p>
+                                        <p class="text-xs text-slate-500 mt-1">${item.desc}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            };
+
+            const html = `
+                <!-- COVER COMPONENT -->
+                <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/60 to-transparent mix-blend-multiply"></div>
+                    <div class="relative z-10 max-w-5xl">
+                        <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-accent/50 bg-report-accent/20 text-cyan-50 text-sm font-semibold tracking-wide uppercase shadow-lg">
+                            ${data.metadata.documentId}
+                        </div>
+                        <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-4 text-white drop-shadow-sm">
+                            ${data.metadata.title}
+                        </h1>
+                        <h2 class="text-2xl md:text-4xl font-light text-slate-300 mb-12 max-w-3xl leading-snug">
+                            ${data.metadata.subtitle}
+                        </h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12 dark-glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl items-center">
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Facility</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.plant}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Company</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.company}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Issue Date</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.date}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Status</p>
+                                <p class="font-medium text-report-accent flex items-center gap-2 text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-report-accent animate-pulse shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span>
+                                    ${data.metadata.status}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8">
+
+                    <!-- SECTION: PURPOSE -->
+                    <div class="col-span-1 md:col-span-12">
+                        ${renderSectionTitle(data.sections.purpose.title)}
+                    </div>
+
+                    <div class="col-span-1 md:col-span-8 md:col-start-3 space-y-10 text-xl font-light">
+                        <p class="text-slate-700 leading-relaxed">
+                            ${data.sections.purpose.text}
+                        </p>
+                        
+                        <!-- Premium Callout Box -->
+                        <div class="bg-indigo-50 border border-indigo-100 rounded-3xl p-8 md:p-10 shadow-sm relative overflow-hidden my-10">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-report-500/10 rounded-bl-full -z-0"></div>
+                            <h4 class="text-lg font-bold text-report-800 mb-6 relative z-10 flex items-center gap-3">
+                                <svg class="w-6 h-6 text-report-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Key References & Linkages
+                            </h4>
+                            <ul class="space-y-4 relative z-10">
+                                ${data.sections.purpose.authoritativeReferences.map(b => `
+                                    <li class="flex items-start gap-4 text-slate-700 text-base font-medium">
+                                        <span class="w-2 h-2 rounded-full bg-report-500 mt-2 shrink-0"></span>
+                                        ${b}
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+
+                        <p class="text-slate-500 italic text-base border-l-4 border-slate-300 pl-4 py-1">
+                            ${data.sections.purpose.takeaway}
+                        </p>
+                    </div>
+
+                    <!-- SECTION: LANDSCAPE SNAPSHOT -->
+                    <div class="col-span-1 md:col-span-12 mt-8 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.landscapeSnapshot.title)}
+                        
+                        <!-- Metrics Grid -->
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
+                            ${data.sections.landscapeSnapshot.metrics.map(m => `
+                                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-center items-center text-center hover:border-report-500 transition-colors">
+                                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">${m.label}</p>
+                                    <p class="text-2xl font-black text-slate-800 mb-2">${m.value}</p>
+                                    ${m.subtext ? `<p class="text-xs text-slate-500 font-medium">${m.subtext}</p>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Lifecycle Split Section -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                            <div class="col-span-1 lg:col-span-5">
+                                ${renderDoughnutChart(data.sections.landscapeSnapshot.lifecycle)}
+                            </div>
+                            <div class="col-span-1 lg:col-span-7 bg-white rounded-3xl border border-slate-200 shadow-sm p-8 h-full">
+                                <h4 class="text-lg font-bold text-slate-800 mb-6">${data.sections.landscapeSnapshot.lifecycle.title}</h4>
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr class="text-slate-400 uppercase text-xs tracking-wider border-b border-slate-100">
+                                            <th class="pb-4 font-semibold">Lifecycle Band</th>
+                                            <th class="pb-4 font-semibold text-center">Count</th>
+                                            <th class="pb-4 font-semibold">Operational Implication</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-sm divide-y divide-slate-100">
+                                        ${data.sections.landscapeSnapshot.lifecycle.implications.map(imp => `
+                                            <tr class="hover:bg-slate-50 transition-colors">
+                                                <td class="py-4 font-medium text-slate-800 whitespace-nowrap">${imp.band}</td>
+                                                <td class="py-4 text-center font-bold ${imp.count > 0 ? 'text-report-500' : 'text-slate-400'}">${imp.count}</td>
+                                                <td class="py-4 text-slate-600 leading-relaxed">${imp.implication}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION: INVENTORY REGISTER -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.inventoryRegister.title, data.sections.inventoryRegister.subtitle)}
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-8">
+                            ${data.sections.inventoryRegister.items.map(scada => `
+                                <div class="bg-white rounded-[2rem] shadow-lg shadow-slate-200/50 border border-slate-200 flex flex-col h-full overflow-hidden group">
+                                    <!-- Header -->
+                                    <div class="bg-slate-900 p-8 text-white relative overflow-hidden">
+                                        <div class="absolute right-0 top-0 w-32 h-32 bg-report-500/20 rounded-bl-full"></div>
+                                        <p class="text-report-accent font-mono text-xs font-bold mb-2 tracking-widest relative z-10">${scada.code}</p>
+                                        <h3 class="text-2xl font-bold mb-4 relative z-10 tracking-tight">${scada.name}</h3>
+                                        <div class="flex flex-wrap gap-2 relative z-10">
+                                            <span class="px-2.5 py-1 rounded bg-white/10 text-xs font-medium backdrop-blur-sm border border-white/10">${scada.brand}</span>
+                                            <span class="px-2.5 py-1 rounded bg-white/10 text-xs font-medium backdrop-blur-sm border border-white/10">v${scada.version}</span>
+                                            <span class="px-2.5 py-1 rounded bg-white/10 text-xs font-medium backdrop-blur-sm border border-white/10">${scada.year}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Body -->
+                                    <div class="p-8 flex-grow flex flex-col gap-6">
+                                        <div>
+                                            <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Coverage Posture</h4>
+                                            <p class="inline-block px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-lg mb-2 border border-blue-100">${scada.coverage.status}</p>
+                                            <p class="text-sm text-slate-600 leading-relaxed">${scada.coverage.details}</p>
+                                        </div>
+                                        <div class="h-px w-full bg-slate-100"></div>
+                                        <div>
+                                            <h4 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Risk Profile</h4>
+                                            <ul class="space-y-3">
+                                                <li class="flex items-start gap-3 text-sm text-slate-700">
+                                                    <div class="mt-0.5 shrink-0 w-5 h-5 rounded flex items-center justify-center bg-slate-100 text-slate-500"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                                                    <span><strong class="font-semibold text-slate-900">Condition:</strong> ${scada.risk.condition}</span>
+                                                </li>
+                                                <li class="flex items-start gap-3 text-sm text-slate-700">
+                                                    <div class="mt-0.5 shrink-0 w-5 h-5 rounded flex items-center justify-center bg-slate-100 text-slate-500"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></div>
+                                                    <span><strong class="font-semibold text-slate-900">Visibility:</strong> ${scada.risk.visibility}</span>
+                                                </li>
+                                                <li class="flex items-start gap-3 text-sm text-slate-700">
+                                                    <div class="mt-0.5 shrink-0 w-5 h-5 rounded flex items-center justify-center bg-red-50 text-red-500"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg></div>
+                                                    <span><strong class="font-semibold text-slate-900">Governance:</strong> ${scada.risk.governance}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- SECTION: COVERAGE VS PROCESS GROUPS -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.coverageVsProcessGroups.title)}
+                        
+                        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden table-container overflow-x-auto">
+                            <table class="w-full text-left min-w-[800px] border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wider border-b border-slate-200">
+                                        <th class="p-5 font-bold">Process Group</th>
+                                        <th class="p-5 font-bold">Coverage Status</th>
+                                        <th class="p-5 font-bold">Basis</th>
+                                        <th class="p-5 font-bold">Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-800 text-sm divide-y divide-slate-100">
+                                    ${data.sections.coverageVsProcessGroups.items.map(row => `
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="p-5 font-mono font-medium text-slate-900">${row.pg}</td>
+                                            <td class="p-5">
+                                                <span class="px-3 py-1 rounded-full text-xs font-bold border ${getCoverageBadge(row.status)}">
+                                                    ${row.status}
+                                                </span>
+                                            </td>
+                                            <td class="p-5 text-slate-600">${row.basis}</td>
+                                            <td class="p-5 text-slate-600 italic">${row.notes}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-4 px-4 uppercase tracking-widest font-bold">${data.sections.coverageVsProcessGroups.note}</p>
+                    </div>
+
+                    <!-- SECTION: ARCHITECTURAL OBSERVATIONS -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.architecturalObservations.title)}
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                            ${data.sections.architecturalObservations.items.map(obs => `
+                                <div class="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm hover:shadow-lg transition-shadow group relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-1.5 h-full bg-slate-200 group-hover:bg-report-500 transition-colors"></div>
+                                    <h3 class="text-xl font-bold text-slate-800 mb-6 pl-4">${obs.title}</h3>
+                                    <div class="space-y-4 pl-4">
+                                        <div>
+                                            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Observation Trigger</p>
+                                            <p class="text-sm font-medium text-slate-700">${obs.trigger}</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] font-bold uppercase tracking-widest text-report-500 mb-1">Operational Effect</p>
+                                            <p class="text-sm text-slate-600">${obs.effect}</p>
+                                        </div>
+                                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 mt-2">
+                                            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-800 mb-1">Governance Implication</p>
+                                            <p class="text-sm text-slate-700 italic">${obs.governance}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <!-- Summary Block -->
+                        <div class="bg-indigo-50/50 rounded-2xl p-6 md:p-8 border border-indigo-100 text-lg font-light text-indigo-900 text-center max-w-5xl mx-auto leading-relaxed">
+                            <strong class="font-bold block mb-2 uppercase text-xs tracking-widest text-report-500">${data.sections.architecturalObservations.summary.title}</strong>
+                            ${data.sections.architecturalObservations.summary.text}
+                        </div>
+                    </div>
+
+                    <!-- SECTION: MATURITY ASSESSMENT -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.maturityAssessment.title, data.sections.maturityAssessment.subtitle)}
+                        
+                        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="bg-slate-900 text-white uppercase text-xs tracking-wider">
+                                        <th class="p-5 font-semibold">Dimension</th>
+                                        <th class="p-5 font-semibold">Current Posture</th>
+                                        <th class="p-5 font-semibold">Exposure Level</th>
+                                        <th class="p-5 font-semibold">Evidence Anchor</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-800 text-sm divide-y divide-slate-100">
+                                    ${data.sections.maturityAssessment.items.map(m => `
+                                        <tr class="hover:bg-slate-50">
+                                            <td class="p-5 font-bold text-slate-700">${m.dimension}</td>
+                                            <td class="p-5 font-medium">${m.posture}</td>
+                                            <td class="p-5">
+                                                <span class="px-3 py-1 rounded-full text-xs font-bold border ${getRiskBadge(m.exposure)}">
+                                                    ${m.exposure}
+                                                </span>
+                                            </td>
+                                            <td class="p-5 text-slate-600 italic text-xs">${m.anchor}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- SECTION: EXECUTIVE FRAMING & REFERENCE MAP -->
+                    <div class="col-span-1 md:col-span-12 flex flex-col gap-16 mt-12 border-t border-slate-200 pt-16 mb-24">
+                        
+                        <!-- Executive Framing -->
+                        <div class="bg-report-roadmapBg rounded-[3rem] p-10 md:p-16 text-white shadow-2xl relative overflow-hidden">
+                            <div class="absolute right-0 bottom-0 w-64 h-64 bg-report-500/20 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"></div>
+                            <div class="absolute left-0 top-0 w-64 h-64 bg-report-accent/10 rounded-full blur-3xl -translate-x-1/3 -translate-y-1/3"></div>
+                            
+                            <div class="relative z-10 mb-10">
+                                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">${data.sections.executiveFraming.title}</h2>
+                            </div>
+                            
+                            <ul class="space-y-6 relative z-10 max-w-4xl text-lg font-light text-slate-200">
+                                ${data.sections.executiveFraming.items.map(point => `
+                                    <li class="flex items-start gap-5">
+                                        <span class="w-8 h-8 rounded-full bg-report-500/20 border border-report-500 flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_12px_rgba(79,70,229,0.5)]">
+                                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                        </span>
+                                        <p class="leading-relaxed">${point}</p>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+
+                        <!-- Reference Map -->
+                        <div class="w-full">
+                            ${renderSectionTitle(data.sections.referenceMap.title, data.sections.referenceMap.subtitle)}
+                            
+                            <div class="bg-white rounded-[2rem] p-6 md:p-8 overflow-hidden shadow-sm border border-slate-200">
+                                <table class="w-full text-left">
+                                    <thead>
+                                        <tr class="text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-100">
+                                            <th class="p-3 pb-4 font-bold">Section</th>
+                                            <th class="p-3 pb-4 font-bold">Evidence Source</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-slate-700 text-sm divide-y divide-slate-50">
+                                        ${data.sections.referenceMap.items.map(ref => `
+                                            <tr class="hover:bg-slate-50 transition-colors">
+                                                <td class="p-3 py-4 font-bold text-slate-800 whitespace-nowrap">${ref.section}</td>
+                                                <td class="p-3 py-4 font-mono text-xs text-report-500">${ref.source}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-4 px-4 text-center uppercase tracking-widest font-bold">${data.sections.referenceMap.footer}</p>
+                        </div>
+
+                    </div>
+                </main>
+            `;
+            
+            app.innerHTML = html;
+        });
+    </script>
+</body>
+</html>

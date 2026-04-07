@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Integration Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- GENERIC JSON DATA EMBED: Sections -> Sub-sections Structure -->
+    <script id="report-data" type="application/json">
+    {
+      "theme": { "primary": "#4f46e5", "accent": "#14b8a6", "dark": "#0f172a", "roadmapBg": "#1e293b" },
+      "metadata": {
+        "title": "Appendix N - Vertical Integration",
+        "subtitle": "OT ↔ IT Systems Evaluation",
+        "company": "PT Indonesia Asahan Aluminium",
+        "plant": "INA-PL-GRP - Green Plant",
+        "date": "March 2026",
+        "status": "Draft / To Validate"
+      },
+      "sections": {
+        "executiveSummary": {
+          "sectionTitle": "Executive Interpretation & Purpose",
+          "subSections": {
+            "purpose": {
+              "content": "Evaluates vertical integration maturity between OT (L0–L2) and IT/enterprise layers (L3–L4). The evaluation focuses on data continuity, orchestration readiness, governance maturity, and fragmentation risk exposure."
+            },
+            "interpretation": {
+              "maturityBadgeLabel": "Overall Maturity",
+              "maturityValue": "To validate - insufficient evidence",
+              "content": "The OT foundation includes PLC-based control across multiple process groups with mixed SCADA linkage, and a multi-system supervisory footprint. The dominant orchestration weakness is at L3: quality reporting and approval workflows remain template/Excel/PDF driven and are distributed via email, creating latency.",
+              "bottleneckLabel": "Structural Bottleneck",
+              "bottleneckContent": "The primary structural bottleneck is the combination of fragmented data governance and incomplete event capture, which prevents consistent KPI automation and slows cross-functional governance closure."
+            }
+          }
+        },
+        "currentArchitecture": {
+          "sectionTitle": "Current Architecture",
+          "sectionSubtitle": "Segregated by Operational and Enterprise Layers",
+          "subSections": [
+            {
+              "title": "OT Layer (L0–L2)",
+              "items": [
+                "PLC landscape shows multi-vendor control assets across key process groups.",
+                "Mixed connectivity: several PLC rows lack SCADA linkage while others are linked.",
+                "SCADA footprint is multi-system (INA-SC-GRP-001/002/003), indicating supervisory fragmentation.",
+                "Control completion gaps and instrumentation limitations are evidenced via monitoring blind spots."
+              ]
+            },
+            {
+              "title": "IT / L3 Layer (Operations)",
+              "items": [
+                "Cytech is used to calculate/allocate consumption per bin/line; stated as “not integrated” for ATC.",
+                "Anode tracking system captures PLC data (temperature, bin level, mixing power).",
+                "Quality workflow artifacts are document-centric (templates, Excel/PDF, email distribution).",
+                "Historian platform not evidenced in the provided dataset."
+              ]
+            },
+            {
+              "title": "Enterprise / L4 Layer",
+              "items": [
+                "ERP presence implied via “Macro-based SAP Upload Sheet”, indicating periodic/manual enterprise sync mechanisms.",
+                "No real-time enterprise integration evidenced within the provided dataset."
+              ]
+            }
+          ]
+        },
+        "integrationMapping": {
+          "sectionTitle": "OT ↔ IT Integration Mapping",
+          "headers": ["Integration Point", "Current State", "Maturity (1-5)", "Risk Exposure"],
+          "rows": [
+            { "point": "PLC → SCADA", "state": "A subset of PLCs is linked to SCADA while others remain PLC-local.", "maturity": 3, "displayMaturity": "3", "risk": "Medium" },
+            { "point": "PLC → Historian", "state": "Historian is not evidenced; local reporting/logging artifacts exist instead.", "maturity": 2, "displayMaturity": "2", "risk": "Medium-High" },
+            { "point": "SCADA → KPI Dashboards", "state": "Some KPIs are measurable via control layer, but governance is fragmented.", "maturity": 3, "displayMaturity": "3", "risk": "Medium" },
+            { "point": "QC Lab → Production", "state": "Lab results are recorded on templates and distributed as PDF/email with delayed feedback.", "maturity": 1, "displayMaturity": "1", "risk": "High" },
+            { "point": "Production → Maintenance", "state": "Planned cadence exists but evidence indicates breakdown-driven interruptions.", "maturity": 2.5, "displayMaturity": "2-3", "risk": "Medium-High" },
+            { "point": "Inventory → Production", "state": "Inventory and scheduling are operator-driven with shipment delays and trust gaps.", "maturity": 2.5, "displayMaturity": "2-3", "risk": "Medium-High" },
+            { "point": "OT → ERP", "state": "Enterprise sync is evidenced as file-based/manual upload rather than real-time interface.", "maturity": 2, "displayMaturity": "2", "risk": "Medium-High" },
+            { "point": "Condition Monitoring → CMMS", "state": "Condition monitoring intent exists but CMMS workflow linkage is not evidenced.", "maturity": 2, "displayMaturity": "2", "risk": "Medium-High" }
+          ]
+        },
+        "gapRegister": {
+          "sectionTitle": "Vertical Integration Gaps",
+          "labels": {
+            "operational": "Operational Implication",
+            "governance": "Governance Implication"
+          },
+          "gaps": [
+            { "id": "N-GAP-01", "title": "QC feedback latency to production", "description": "QC lab reporting and approval are document-driven, creating delayed feedback and late containment relative to production use.", "operational": "Decisions occur after material consumption; corrective actions are delayed.", "governance": "No closed-loop quality release enforcement across production." },
+            { "id": "N-GAP-02", "title": "Historian / unified layer not evidenced", "description": "No consolidated historian baseline is evidenced; measurement relies on reports, templates, and local artifacts.", "operational": "Trending and diagnostics require manual consolidation and slow retrieval.", "governance": "Analytics readiness and KPI automation feasibility remain fragmented." },
+            { "id": "N-GAP-03", "title": "Alarm/event logging not governed", "description": "Automated alarm logging and event history are not evidenced as systematically recorded.", "operational": "Troubleshooting and loss accounting depend on manual recall and local observation.", "governance": "Event-to-governance discipline cannot be consistently enforced." },
+            { "id": "N-GAP-04", "title": "Inventory-to-production sync is manual", "description": "Stock visibility and transaction capture are incomplete (yard transfer transactions not recorded; silo level trust gaps).", "operational": "Scheduling shocks and operator-driven re-plans persist.", "governance": "Inventory governance cannot be orchestrated with production execution." },
+            { "id": "N-GAP-05", "title": "OT-to-ERP integration is file-based", "description": "Enterprise sync is evidenced through macro-based upload artifacts rather than real-time interface.", "operational": "Reporting and reconciliation cycles are periodic and manual.", "governance": "Enterprise visibility is delayed; integration posture remains non-real-time." }
+          ]
+        },
+        "maturityAndRisk": {
+          "sectionTitle": "Maturity Scoring & Risk Exposure",
+          "subSections": {
+            "layerScoring": {
+              "title": "Layer Scoring Baseline",
+              "maxScore": 5,
+              "scores": [
+                { "layer": "L0-L1 (Control)", "score": 3, "interpretation": "PLC-to-SCADA linkage is partially structured; connectivity is present but not complete." },
+                { "layer": "L2 (Supervisory)", "score": 3, "interpretation": "SCADA exists and can support visibility for some KPIs, but governance remains fragmented." },
+                { "layer": "L3 (Operations Systems)", "score": 1.9, "displayScore": "1.8-2.0", "interpretation": "L3 points constrained by lack of historian and manual quality loops; maintenance linkage is partial." },
+                { "layer": "L4 (Enterprise Sync)", "score": 2, "interpretation": "Enterprise sync is present via file-based artifacts rather than real-time interface." }
+              ]
+            },
+            "riskExposure": {
+              "title": "Risk Exposure Analysis",
+              "subtitle": "Critical vulnerabilities identified across operational dimensions.",
+              "headers": ["Dimension", "Risk Level"],
+              "risks": [
+                { "dimension": "Production Stability", "level": "High", "commentary": "Lower bound maturity is constrained by limited event-driven linkage between production and maintenance." },
+                { "dimension": "Quality Governance", "level": "High", "commentary": "Quality loop is manual and delayed; risk escalates due to result latency and document-based approvals." },
+                { "dimension": "Capacity Optimization", "level": "High", "commentary": "KPI visibility is fragmented and inventory-to-production alignment is operator-driven." },
+                { "dimension": "Cyber Exposure", "level": "Medium-High", "commentary": "Multi-SCADA environment and legacy lifecycle indicators prevent Low risk classification." },
+                { "dimension": "Data Governance", "level": "High", "commentary": "Absence of historian evidence and document-centric data handling are amplified by blind spots." }
+              ]
+            }
+          }
+        },
+        "targetState": {
+          "sectionTitle": "Target-State Architecture Vision",
+          "subSections": {
+            "principles": {
+              "title": "Trajectory Principles",
+              "items": [
+                "Consolidate supervisory governance before expanding analytics coverage.",
+                "Establish a single governed data backbone to enable KPI automation.",
+                "Convert maintenance workflows from calendar-driven to event-driven.",
+                "Tighten QC feedback loops to prevent 'results after consumption' decision latency.",
+                "Improve inventory transaction capture and measurement trust."
+              ]
+            },
+            "trajectory": {
+              "title": "Implementation Trajectory",
+              "items": [
+                "Establish governed supervisory architecture standardization (INA-SOL-01).",
+                "Define planning and scheduling orchestration (INA-SOL-02).",
+                "Digitize core execution confirmation and event capture (INA-SOL-04).",
+                "Implement lab result workflow digitization (INA-SOL-08).",
+                "Close-loop nonconformance and CAPA governance (INA-SOL-09).",
+                "Link alarms/events to maintenance workflows (INA-SOL-18).",
+                "Expand condition monitoring governance and closure discipline (INA-SOL-19, INA-SOL-20)."
+              ]
+            }
+          }
+        },
+        "referenceMap": {
+          "sectionTitle": "Output 15B",
+          "sectionSubtitle": "Reference Map",
+          "headers": ["Object Type", "Code(s) Produced", "Used By"],
+          "rows": [
+            { "objectType": "Appendix Document ID", "code": "INA-PL-GRP-APP-N", "usedBy": "Step 17, App L-D9, App M" },
+            { "objectType": "Integration Mapping", "code": "Section 3 table rows", "usedBy": "Step 17, App M" },
+            { "objectType": "Gap Register", "code": "N-GAP-01…N-GAP-05", "usedBy": "Step 17" },
+            { "objectType": "Layer Scores", "code": "L0-L1…L4", "usedBy": "App M, Step 17" }
+          ]
+        }
+      }
+    }
+    </script>
+
+    <script>
+        const rawData = JSON.parse(document.getElementById('report-data').textContent);
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        report: {
+                            50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 500: rawData.theme.primary, 800: '#3730a3', 900: rawData.theme.dark, 
+                            accent: rawData.theme.accent, roadmapBg: rawData.theme.roadmapBg
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .dark-glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(79, 70, 229, 0.5)), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2668&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .table-container { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+        
+        .timeline-container::before {
+            content: ''; position: absolute; top: 0; bottom: 0; left: 16px; width: 2px;
+            background: rgba(255, 255, 255, 0.1); z-index: 0;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-report-500 selection:text-white">
+
+    <div id="app"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = JSON.parse(document.getElementById('report-data').textContent);
+            const app = document.getElementById('app');
+
+            // Utilities
+            const renderSectionTitle = (sectionNumber, titleText, subtitleText = '') => `
+                <div class="flex items-stretch gap-4 mb-8">
+                    <div class="w-1.5 bg-report-500 rounded-full"></div>
+                    <div class="py-1">
+                        <p class="text-report-500 font-bold tracking-widest uppercase text-xs mb-1">Section ${sectionNumber}</p>
+                        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">${titleText}</h2>
+                        ${subtitleText ? `<p class="text-sm text-slate-500 mt-2">${subtitleText}</p>` : ''}
+                    </div>
+                </div>
+            `;
+
+            const getScoreBadge = (scoreNum) => {
+                if (scoreNum <= 1) return 'bg-red-50 text-red-700 border-red-200';
+                if (scoreNum <= 2.5) return 'bg-orange-50 text-orange-700 border-orange-200';
+                if (scoreNum <= 3) return 'bg-yellow-50 text-yellow-700 border-yellow-200';
+                return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+            };
+
+            const getRiskBadge = (exposure) => {
+                const lower = exposure.toLowerCase();
+                if(lower.includes('high') && !lower.includes('medium')) return 'bg-red-50 text-red-700 border-red-200 shadow-sm';
+                if(lower.includes('medium-high') || lower.includes('high')) return 'bg-orange-50 text-orange-700 border-orange-200 shadow-sm';
+                return 'bg-slate-100 text-slate-600 border-slate-300';
+            };
+
+            // Pre-defined Tailwind palettes for dynamic loop mapping
+            const archPalettes = [
+                { bg: 'bg-blue-50', border: 'border-blue-100', text: 'text-blue-900', icon: 'text-blue-500', dot: 'bg-blue-400' },
+                { bg: 'bg-teal-50', border: 'border-teal-100', text: 'text-teal-900', icon: 'text-teal-500', dot: 'bg-teal-400' },
+                { bg: 'bg-indigo-50', border: 'border-indigo-100', text: 'text-indigo-900', icon: 'text-indigo-500', dot: 'bg-indigo-400' }
+            ];
+
+            const html = `
+                <!-- COVER COMPONENT -->
+                <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/50 to-transparent mix-blend-multiply"></div>
+                    <div class="relative z-10 max-w-5xl">
+                        <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-500/50 bg-report-500/30 text-indigo-50 text-sm font-semibold tracking-wide uppercase shadow-lg">
+                            ${data.metadata.plant}
+                        </div>
+                        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-4 text-white drop-shadow-sm">
+                            ${data.metadata.title.split('-')[0]} <br/> <span class="text-report-accent">${data.metadata.title.split('-')[1] || ''}</span>
+                        </h1>
+                        <h2 class="text-2xl md:text-3xl font-light text-slate-200 mb-12 max-w-3xl leading-snug">
+                            ${data.metadata.subtitle}
+                        </h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12 dark-glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl items-center">
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Company</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.company}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Plant Scope</p>
+                                <p class="font-medium text-white text-lg font-mono text-sm">${data.metadata.plant.split(' - ')[0]}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Issue Date</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.date}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Status</p>
+                                <p class="font-medium text-orange-400 flex items-center gap-2 text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-orange-400 animate-pulse shadow-[0_0_8px_rgba(251,146,60,0.8)]"></span>
+                                    ${data.metadata.status}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8">
+
+                    <!-- SECTION 1: EXECUTIVE INTERPRETATION -->
+                    <div class="col-span-1 md:col-span-12">
+                        ${renderSectionTitle('01', data.sections.executiveSummary.sectionTitle)}
+                    </div>
+
+                    <div class="col-span-1 md:col-span-10 md:col-start-2 space-y-10">
+                        <p class="text-xl font-light text-slate-700 leading-relaxed max-w-4xl">
+                            ${data.sections.executiveSummary.subSections.purpose.content}
+                        </p>
+
+                        <div class="bg-slate-900 rounded-[2.5rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden transform md:scale-[1.02] my-12 border border-slate-800">
+                            <div class="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-report-accent to-report-500"></div>
+                            
+                            <!-- Maturity Warning Badge inside Quote -->
+                            <div class="mb-8 inline-flex items-center gap-3 px-5 py-2.5 rounded-xl bg-orange-500/10 border border-orange-500/30 text-orange-400 font-semibold text-sm">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                ${data.sections.executiveSummary.subSections.interpretation.maturityBadgeLabel}: ${data.sections.executiveSummary.subSections.interpretation.maturityValue.toUpperCase()}
+                            </div>
+
+                            <p class="relative z-10 text-2xl font-light leading-relaxed mb-8">
+                                ${data.sections.executiveSummary.subSections.interpretation.content}
+                            </p>
+                            
+                            <div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700/50 mt-8">
+                                <p class="text-report-accent font-bold uppercase tracking-widest text-xs mb-2">
+                                    ${data.sections.executiveSummary.subSections.interpretation.bottleneckLabel}
+                                </p>
+                                <p class="text-lg text-slate-300 font-light leading-relaxed">
+                                    ${data.sections.executiveSummary.subSections.interpretation.bottleneckContent}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 2: CURRENT ARCHITECTURE -->
+                    <div class="col-span-1 md:col-span-12 mt-8 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle('02', data.sections.currentArchitecture.sectionTitle, data.sections.currentArchitecture.sectionSubtitle)}
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+                            ${data.sections.currentArchitecture.subSections.map((sub, idx) => {
+                                const p = archPalettes[idx % archPalettes.length];
+                                return `
+                                <div class="${p.bg} border ${p.border} rounded-[2rem] p-8 shadow-sm hover:shadow-md transition-shadow h-full">
+                                    <h3 class="text-xl font-bold ${p.text} mb-6 flex items-center gap-3">
+                                        <svg class="w-6 h-6 ${p.icon}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                                        ${sub.title}
+                                    </h3>
+                                    <ul class="space-y-4 ${p.text} text-sm leading-relaxed">
+                                        ${sub.items.map(i => `<li class="flex gap-3"><span class="w-1.5 h-1.5 rounded-full ${p.dot} mt-2 shrink-0"></span><span>${i}</span></li>`).join('')}
+                                    </ul>
+                                </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: INTEGRATION MAPPING -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle('03', data.sections.integrationMapping.sectionTitle)}
+                        
+                        <div class="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+                            <table class="w-full text-left min-w-[1000px] border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-900 text-white uppercase text-xs tracking-wider">
+                                        ${data.sections.integrationMapping.headers.map((h, i) => `
+                                            <th class="p-5 font-semibold ${i === 1 ? 'w-2/5' : ''} ${i === 2 ? 'text-center' : ''}">${h}</th>
+                                        `).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-700 text-sm divide-y divide-slate-100">
+                                    ${data.sections.integrationMapping.rows.map(row => `
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="p-5 font-bold text-slate-800 whitespace-nowrap flex items-center gap-3">
+                                                <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                                ${row.point}
+                                            </td>
+                                            <td class="p-5 leading-relaxed">${row.state}</td>
+                                            <td class="p-5 text-center">
+                                                <span class="inline-flex px-3 py-1 rounded-full text-xs font-bold border ${getScoreBadge(row.maturity)}">
+                                                    Score: ${row.displayMaturity || row.maturity}
+                                                </span>
+                                            </td>
+                                            <td class="p-5">
+                                                <span class="px-3 py-1.5 rounded-md text-xs font-bold border ${getRiskBadge(row.risk)}">
+                                                    ${row.risk}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4: GAP REGISTER -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle('04', data.sections.gapRegister.sectionTitle)}
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            ${data.sections.gapRegister.gaps.map(gap => `
+                                <div class="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm hover:shadow-lg transition-shadow relative overflow-hidden group">
+                                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
+                                    <div class="relative z-10">
+                                        <div class="flex items-center gap-3 mb-4">
+                                            <span class="bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-full font-mono">${gap.id}</span>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-slate-900 mb-4 tracking-tight leading-snug">${gap.title}</h3>
+                                        <p class="text-slate-600 text-sm leading-relaxed mb-6 font-light">${gap.description}</p>
+                                        
+                                        <div class="space-y-4 pt-6 border-t border-slate-100">
+                                            <div>
+                                                <p class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">${data.sections.gapRegister.labels.operational}</p>
+                                                <p class="text-sm text-slate-700 leading-snug">${gap.operational}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-[10px] font-bold text-report-500 uppercase tracking-widest mb-1">${data.sections.gapRegister.labels.governance}</p>
+                                                <p class="text-sm text-slate-700 leading-snug">${gap.governance}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- SECTION 5: MATURITY SCORING & RISK EXPOSURE -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle('05', data.sections.maturityAndRisk.sectionTitle)}
+                        
+                        <div class="flex flex-col gap-16">
+                            <!-- Upside: Layer Scores Stack with Graphic Visualization -->
+                            <div>
+                                <h4 class="text-lg font-bold text-slate-800 mb-6 uppercase tracking-wider text-sm flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-report-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                                    ${data.sections.maturityAndRisk.subSections.layerScoring.title}
+                                </h4>
+                                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200">
+                                    <div class="space-y-6">
+                                        ${data.sections.maturityAndRisk.subSections.layerScoring.scores.slice().reverse().map((layer) => {
+                                            const parsedScore = parseFloat(layer.score) || 1;
+                                            const maxScore = data.sections.maturityAndRisk.subSections.layerScoring.maxScore || 5;
+                                            const widthPct = (parsedScore / maxScore) * 100;
+                                            return `
+                                                <div class="flex flex-col lg:flex-row items-start lg:items-center gap-6 group">
+                                                    <!-- Layer Label -->
+                                                    <div class="w-full lg:w-48 flex-shrink-0">
+                                                        <h5 class="font-bold text-slate-900">${layer.layer}</h5>
+                                                        <p class="text-xs text-slate-400 font-mono mt-1">Score: ${layer.displayScore || layer.score} / ${maxScore}</p>
+                                                    </div>
+                                                    
+                                                    <!-- Visual Bar -->
+                                                    <div class="w-full lg:w-1/3 h-8 bg-slate-100 rounded-full overflow-hidden relative shadow-inner flex-shrink-0">
+                                                        <div class="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-report-500 to-report-accent transition-all duration-1000 ease-out" style="width: ${widthPct}%"></div>
+                                                    </div>
+                                                    
+                                                    <!-- Interpretation -->
+                                                    <div class="w-full lg:w-auto">
+                                                        <p class="text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100 group-hover:border-report-200 group-hover:bg-report-50/30 transition-colors">
+                                                            ${layer.interpretation}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            `;
+                                        }).join('')}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Downside: Risk Exposure Analysis Highlight -->
+                            <div class="bg-red-50/50 border border-red-100 rounded-[2.5rem] p-8 md:p-12 shadow-sm">
+                                <div class="flex items-center gap-4 mb-8">
+                                    <div class="w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center shrink-0 shadow-inner">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-2xl font-extrabold text-slate-900 tracking-tight">${data.sections.maturityAndRisk.subSections.riskExposure.title}</h4>
+                                        <p class="text-red-800 text-sm mt-1 font-medium">${data.sections.maturityAndRisk.subSections.riskExposure.subtitle}</p>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    ${data.sections.maturityAndRisk.subSections.riskExposure.risks.map(risk => `
+                                        <div class="bg-white border-t-4 ${risk.level.includes('High') ? 'border-red-500' : 'border-orange-500'} rounded-2xl p-6 shadow-lg shadow-red-100/50 hover:-translate-y-1 transition-transform duration-300">
+                                            <div class="flex justify-between items-start mb-4">
+                                                <h5 class="font-bold text-slate-800 text-lg">${risk.dimension}</h5>
+                                                <span class="px-3 py-1 rounded-md text-xs font-bold border ${getRiskBadge(risk.level)} shadow-sm">
+                                                    ${risk.level}
+                                                </span>
+                                            </div>
+                                            <p class="text-slate-600 text-sm leading-relaxed">${risk.commentary}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 6: TARGET-STATE ARCHITECTURE (ROADMAP) -->
+                    <div class="col-span-1 md:col-span-12 mt-24">
+                        <div class="bg-report-roadmapBg rounded-[3rem] p-12 md:p-16 text-white shadow-2xl relative overflow-hidden border border-slate-700">
+                            
+                            <div class="mb-12">
+                                <p class="text-report-accent font-bold tracking-widest uppercase text-xs mb-4">Section 06</p>
+                                <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-8">${data.sections.targetState.sectionTitle}</h2>
+                            </div>
+
+                            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                                <!-- Principles -->
+                                <div class="col-span-1">
+                                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-6">${data.sections.targetState.subSections.principles.title}</h4>
+                                    <ul class="space-y-5 text-slate-300 font-light text-base leading-relaxed">
+                                        ${data.sections.targetState.subSections.principles.items.map(p => `
+                                            <li class="flex items-start gap-4">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-report-accent mt-2 shrink-0 shadow-[0_0_8px_rgba(20,184,166,0.8)]"></span>
+                                                <p>${p}</p>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+
+                                <!-- Timeline -->
+                                <div class="col-span-1 lg:col-span-2 relative timeline-container">
+                                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-8 ml-8">${data.sections.targetState.subSections.trajectory.title}</h4>
+                                    <div class="space-y-8">
+                                        ${data.sections.targetState.subSections.trajectory.items.map((step, i) => `
+                                            <div class="relative z-10 flex items-start gap-6">
+                                                <div class="w-8 h-8 rounded-full border-4 border-report-roadmapBg bg-report-500 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 z-10">
+                                                    ${i + 1}
+                                                </div>
+                                                <p class="text-lg font-medium text-slate-200 leading-relaxed bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50 w-full">
+                                                    ${step.replace(/\(([A-Z0-9-]+[A-Z0-9,-]*\s*[A-Z0-9,-]*)\)/g, match => `<span class="text-report-accent font-mono text-sm ml-2 bg-slate-900 px-2 py-0.5 rounded border border-slate-700">${match.replace(/[()]/g,'')}</span>`)}
+                                                </p>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 7: REFERENCE MAP (FOOTER) -->
+                    <div class="col-span-1 md:col-span-12 mt-24 mb-16">
+                        ${renderSectionTitle('07', data.sections.referenceMap.sectionTitle, data.sections.referenceMap.sectionSubtitle)}
+                        
+                        <div class="bg-white rounded-[2.5rem] p-6 md:p-10 overflow-hidden shadow-lg border border-slate-200">
+                            <table class="w-full text-left table-auto">
+                                <thead>
+                                    <tr class="text-slate-500 uppercase text-[10px] tracking-wider border-b border-slate-200">
+                                        ${data.sections.referenceMap.headers.map(h => `<th class="p-4 pb-6 font-bold">${h}</th>`).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-700 text-sm divide-y divide-slate-100">
+                                    ${data.sections.referenceMap.rows.map(ref => `
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="p-4 py-6 font-bold text-slate-900 whitespace-nowrap">${ref.objectType}</td>
+                                            <td class="p-4 py-6 font-mono text-xs text-report-800 font-semibold leading-relaxed">${ref.code}</td>
+                                            <td class="p-4 py-6 text-slate-600">${ref.usedBy}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </main>
+            `;
+            
+            app.innerHTML = html;
+        });
+    </script>
+</body>
+</html>

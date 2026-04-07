@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NSI-FG-002 — Production Execution Strategic Assessment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+
+  <script id="report-data" type="application/json">
+  {
+    "theme": { "primary": "#4f46e5", "accent": "#10b981", "dark": "#0f172a", "roadmapBg": "#1e293b" },
+    "metadata": {
+      "title": "Production Execution",
+      "subtitle": "Function Group Strategic Assessment Report",
+      "documentId": "NSI-FG-002",
+      "company": "PT Nippon Shokubai Indonesia",
+      "functionGroup": "NSI-FG-002 — Production Execution",
+      "date": "March 2026",
+      "preparedBy": "Digital Transformation Team",
+      "version": "1.0",
+      "classification": "Confidential — Client Internal",
+      "status": "Final Assessment"
+    },
+    "sections": {
+      "executiveSummary": {
+        "context": "Production Execution is the operational core of PT Nippon Shokubai Indonesia's manufacturing value chain. This function group governs the full execution cycle — from production order release through batch completion, shift handover, quality-linked traceability, and rework disposition — directly determining throughput yield, schedule adherence, traceability integrity, and cost absorption accuracy across the company's monomer, polymer, and SAP processing lines.",
+        "currentState": "The current state assessment reveals that Production Execution operates with significant manual dependency, fragmented data flows, and limited real-time visibility across its execution, quality, maintenance, energy, and warehousing domains. While operational teams have developed effective compensating controls — spreadsheet-based coordination, verbal escalation, and hero-based problem solving — these mechanisms do not scale and introduce structural risk to margin, compliance, and growth capacity.",
+        "coreIssues": [
+          "Execution Visibility Gap: Production evidence is spread across DCS displays, Excel logs, messaging tools, and local documents with no unified execution-layer system of record.",
+          "Quality-Production Disconnect: QA/QC sampling, release decisions, and investigation records are distributed across multiple spreadsheets and local records, disconnected from batch execution data.",
+          "Energy & Utilities Blind Spot: Energy monitoring relies on low-resolution historian sampling (~1 min) and manual meter reads, hiding transient disturbances and preventing real-time anomaly detection.",
+          "Maintenance Reactivity: Maintenance work orders, history, and scheduling are tracked in spreadsheets rather than centralized systems, with asset registry and calibration data distributed across departments.",
+          "Inventory & Material Fragmentation: Inventory information is fragmented across tank farms, warehouse storage, and manual reconciliation records with no integrated visibility."
+        ],
+        "riskImpact": [
+          { "category": "Financial", "exposure": "Untracked yield losses from delayed deviation detection; energy waste from unmonitored anomalies; overtime from manual reporting and rescheduling.", "severity": "High" },
+          { "category": "Operational", "exposure": "Low schedule adherence; extended batch cycle times from manual coordination; rework loops from delayed quality feedback.", "severity": "High" },
+          { "category": "Compliance", "exposure": "Traceability gaps in batch genealogy; sustainability mass balance relies on manual records (ISCC); COA delays impacting customer release timelines.", "severity": "Medium–High" },
+          { "category": "Strategic", "exposure": "Cannot scale production volume without proportional headcount growth; unable to support new product introduction with current manual infrastructure.", "severity": "High" },
+          { "category": "Cultural", "exposure": "Hero-based firefighting culture; knowledge concentration in 1–2 key staff per domain; operational continuity at risk during absences or turnover.", "severity": "Medium" }
+        ],
+        "solutions": [
+          { "code": "NSI-SOL-005", "name": "Energy & Utilities Monitoring System", "priority": "P0" },
+          { "code": "NSI-SOL-003", "name": "Manufacturing Execution System", "priority": "P1" },
+          { "code": "NSI-SOL-009", "name": "Quality Management System", "priority": "P1" },
+          { "code": "NSI-SOL-014", "name": "Maintenance & Engineering (CMMS)", "priority": "P1" },
+          { "code": "NSI-SOL-006", "name": "Warehouse Management System", "priority": "P2" }
+        ],
+        "transformationOpportunity": "Digitizing this function group through 5 integrated solutions creates a high-leverage control tower across production, quality, maintenance, energy, and warehousing. This is not an IT project — it is an operational architecture redesign enabled by digital systems, unlocking margin improvement, compliance readiness, and volume scalability simultaneously."
+      },
+      "diagnostic": {
+        "processLandscape": [
+          { "dimension": "Standardization", "current": "Partially Standardized", "observation": "20 procedures documented across Production and Quality (D6). Execution evidence shows variation: operational logs in spreadsheets, patrols on paper checksheets. SOPs exist but enforcement depends on individual discipline." },
+          { "dimension": "Planning-to-Execution Handoff", "current": "Semi-Structured", "observation": "Production planning relies on spreadsheet-based weekly planning and manual recalculation. PPS generates weekly schedule via spreadsheet. No automated handoff to execution layer." },
+          { "dimension": "Exception Handling", "current": "Systematic Design, Reactive Execution", "observation": "Process Deviation entity (NSI-ENT-015) has a 5-state lifecycle indicating a designed process. However, current execution relies on verbal reports and spreadsheets." },
+          { "dimension": "Shift Handover", "current": "Paper/Spreadsheet-Based", "observation": "Shift reports recorded in Excel and logbooks (NSI-107). E-logbook/shift handover is within MES scope (NSI-SOL-003), confirming current state is non-digital." },
+          { "dimension": "Patrol & Field Rounds", "current": "Paper-Based", "observation": "Patrols executed using paper checksheets with limited traceability and inconsistent follow-up. Combine Patrol Procedure (NSI-PRC-077) spans 18 sections — widest procedural footprint." },
+          { "dimension": "Work Order Lifecycle", "current": "Spreadsheet-Based", "observation": "Maintenance work orders, history, and scheduling tracked in spreadsheets. CMMS Work Order Management module (NSI-MOD-14-003) proposed to address this." },
+          { "dimension": "Quality Sampling & Release", "current": "Manual / Multi-System", "observation": "QA/QC sampling, release decisions, and investigation records distributed across multiple spreadsheets. Manual flow from sample collection → lab testing → batch release." },
+          { "dimension": "Hazardous Area Documentation", "current": "Paper-Based with Delayed Entry", "observation": "Field activities in hazardous areas depend on paper-based documentation and delayed digital entry in safe areas." }
+        ],
+        "systemArch": [
+          { "dimension": "System of Record", "current": "ERP (SAP R/3) + Excel + Paper + DCS", "gap": "No execution-layer system of record. All 5 proposed solutions are new — none currently deployed. SAP handles transactional planning/finance but does not serve as shopfloor execution system." },
+          { "dimension": "Data Entry Model", "current": "After-the-fact / Batch", "gap": "Operational logs and shift reports recorded in spreadsheets post-event. Quality results entered manually. No event-driven capture." },
+          { "dimension": "Integration Maturity", "current": "Manual Rekeying / File-Based", "gap": "5 procedures have 'Also uses' cross-solution notes indicating recognized cross-domain dependencies managed by manual coordination, not system integration." },
+          { "dimension": "Data Latency", "current": "Daily to Weekly", "gap": "Historian sampling at ~1 minute resolution. Most KPIs target daily granularity but current data availability is daily-to-weekly at best." },
+          { "dimension": "Version Control", "current": "At-Risk", "gap": "Multiple spreadsheets across departments create version control risk. Complaint investigations require manual reconstruction across spreadsheets, logbooks, emails, and separate systems." }
+        ],
+        "governance": [
+          { "dimension": "Process Ownership", "current": "Defined on Paper", "gap": "All 20 procedures have assigned department owners. Ownership clear at department level but escalation paths during cross-functional exceptions remain implicit." },
+          { "dimension": "KPI Discipline", "current": "Designed but Not Yet Instrumented", "gap": "22 KPIs defined with priority and solution linkage (D7). These are target-state metrics — current measurement relies on manual compilation from spreadsheets." },
+          { "dimension": "Escalation Logic", "current": "Implicit / Person-Dependent", "gap": "Abnormalities reported via verbal report and spreadsheets (NSI-110). No system-triggered escalation. Depends on individual judgment and relationships." },
+          { "dimension": "Compliance Posture", "current": "Reactive with Manual Evidence", "gap": "Sustainability compliance requires manual records: production reports, mass balance sheets, inspection forms, and stock movement records." },
+          { "dimension": "Continuous Improvement", "current": "Inconsistent", "gap": "Improvement initiatives and operational problem tracking are inconsistent and not centrally recorded. MOC module (NSI-MOD-03-006) proposed, confirming current gap." }
+        ]
+      },
+      "painPoints": [
+        { "theme": "Theme 1", "title": "Execution Visibility & Control Gap", "evidence": "Operational execution evidence spread across DCS displays, Excel logs, messaging tools, and local documents. Historian sampling ~1 min resolution hides transient process disturbances.", "impact": "Schedule deviations undetected until post-shift reporting. Short-duration losses invisible. Manual shift handover creates information gaps between crews.", "frequency": "Every shift (daily, continuous)", "rootCause": "No execution-layer system of record between ERP (planning) and DCS (control). Production context exists only in human memory and paper/Excel artifacts.", "solution": "NSI-SOL-003 (MES)", "kpis": "NSI-KPI-023, NSI-KPI-028, NSI-KPI-020", "severity": "High" },
+        { "theme": "Theme 2", "title": "Quality-Production Disconnect", "evidence": "QA/QC sampling, release decisions, and investigation records distributed across multiple spreadsheets. Complaint investigations require manual reconstruction across spreadsheets, logbooks, emails, and separate systems.", "impact": "Delayed FG release. Rework due to late quality feedback. Traceability gaps across 8 sections. COA issuance delays impacting customer shipment.", "frequency": "Per batch / per shipment (daily)", "rootCause": "Quality and production operate on separate, disconnected data sets. No system linkage between batch execution and quality decisions.", "solution": "NSI-SOL-009 (QMS) + NSI-SOL-003 (MES)", "kpis": "NSI-KPI-011, NSI-KPI-018, NSI-KPI-019", "severity": "High" },
+        { "theme": "Theme 3", "title": "Energy & Utilities Blind Spot", "evidence": "Historian sampling ~1 min resolution hides transient process disturbances. No centralized energy monitoring or anomaly detection. EUMS rated P0, indicating critical urgency.", "impact": "Energy anomalies undetected or detected late. No cost allocation by cost center. Unable to report CO₂e per product/plant with accuracy. Sustainability compliance manual and labor-intensive.", "frequency": "Continuous (real-time gap); monthly reporting lag", "rootCause": "No dedicated energy monitoring layer between SCADA and business reporting. Meter data not systematically acquired, validated, or analyzed.", "solution": "NSI-SOL-005 (EUMS)", "kpis": "NSI-KPI-009, NSI-KPI-010, NSI-KPI-012, NSI-KPI-029", "severity": "High" },
+        { "theme": "Theme 4", "title": "Maintenance Reactivity & Asset Visibility Gap", "evidence": "Maintenance work orders, history, and scheduling tracked in spreadsheets. Asset registry, calibration schedules, and equipment lifecycle information distributed across departments.", "impact": "Reactive maintenance increases unplanned downtime. Calibration overdue risk for critical instruments. Annual shutdown coordination relies on manual planning.", "frequency": "Daily (corrective); monthly (PM); annual (shutdown)", "rootCause": "No centralized maintenance execution system. Asset data fragmented across departments. Maintenance-production interface is verbal/manual.", "solution": "NSI-SOL-014 (CMMS) + NSI-SOL-003 (MES)", "kpis": "NSI-KPI-013, NSI-KPI-015, NSI-KPI-020, NSI-KPI-021", "severity": "High" },
+        { "theme": "Theme 5", "title": "Inventory & Material Fragmentation", "evidence": "Inventory information fragmented across tank farms, warehouse storage, and manual reconciliation records. SAP Stock Movement Table confirms reliance on ERP-level stock data without warehouse execution detail.", "impact": "Inaccurate inventory visibility. Manual cycle counting. Risk of production delay from material unavailability at line-side. Replenishment based on informal triggers.", "frequency": "Daily (staging); weekly (reconciliation); monthly (count)", "rootCause": "No warehouse execution system. ERP inventory module lacks bin-level control, barcode/RFID capability, and real-time integration.", "solution": "NSI-SOL-006 (WMS) + NSI-SOL-003 (MES)", "kpis": "NSI-KPI-028, NSI-KPI-024", "severity": "Medium–High" },
+        { "theme": "Theme 6", "title": "Cross-Domain Data Fragmentation & Coordination Overhead", "evidence": "Operational performance constrained by fragmented information flow. Production reporting produced through manual compilation of multiple spreadsheets. 5 procedures explicitly reference cross-solution dependencies managed manually.", "impact": "Manual reconciliation effort across domains. Delayed cross-functional decision-making. Reporting overhead consuming leadership time.", "frequency": "Daily (operational); weekly (reporting); per event (complaint)", "rootCause": "No integration layer between domains. File-based data exchange. Each function operates its own data silo.", "solution": "All 5 solutions — integrated architecture", "kpis": "NSI-KPI-014, NSI-KPI-020, NSI-KPI-021", "severity": "High" }
+      ],
+      "rootCauses": {
+        "structural": [
+          { "id": "S1", "desc": "No execution-layer system of record between ERP and DCS", "themes": "T1, T6", "explanation": "All 5 solutions in D4 are proposed (not deployed). The manufacturing execution layer is entirely absent — production context exists only in human memory, paper, and Excel." },
+          { "id": "S2", "desc": "Quality and production operate on physically separate data sets", "themes": "T2", "explanation": "QMS and MES domains have no system linkage. Quality decisions are disconnected from batch execution data. Three procedures cross both domains but are coordinated manually." },
+          { "id": "S3", "desc": "No dedicated energy monitoring layer", "themes": "T3", "explanation": "SCADA provides raw process data but no energy-specific analytics, cost allocation, or anomaly detection. EUMS rated P0 indicates this is the highest-urgency structural gap." },
+          { "id": "S4", "desc": "Maintenance data distributed across departments", "themes": "T4", "explanation": "Asset registry, calibration schedules, and maintenance history have no single owner system. CMMS is proposed to create this, confirming the structural absence." },
+          { "id": "S5", "desc": "No warehouse execution capability below ERP level", "themes": "T5", "explanation": "ERP (SAP R/3) handles stock transactions but lacks bin-level control, barcode/RFID, and real-time staging integration. WMS is proposed at P2 to fill this gap." }
+        ],
+        "systemic": [
+          { "id": "Y1", "desc": "File-based data exchange between all domains", "themes": "T1, T2, T5, T6", "explanation": "Cross-domain information flows via spreadsheets, email, and verbal communication. Five procedures explicitly note cross-solution dependencies that are currently manual handoffs." },
+          { "id": "Y2", "desc": "Batch data recording instead of event-driven capture", "themes": "T1, T3", "explanation": "Production and energy data recorded after-the-fact. 12 of 22 KPIs target daily or better granularity, but current data collection is daily-to-weekly at best." },
+          { "id": "Y3", "desc": "Sequential quality workflow without parallel integration", "themes": "T2", "explanation": "Quality flow (NSI-116 → NSI-117 → NSI-118) is fully sequential and disconnected from production batch progress. No automated trigger from batch completion to sample request." }
+        ],
+        "behavioral": [
+          { "id": "B1", "desc": "Hero-based problem solving and verbal escalation culture", "themes": "T1, T4, T6", "explanation": "Abnormalities reported via verbal report and spreadsheets (NSI-110). Escalation depends on individual judgment and personal relationships rather than system-triggered workflows." },
+          { "id": "B2", "desc": "Manual reporting accepted as normal operating practice", "themes": "T1, T2, T6", "explanation": "Production reporting through manual compilation of multiple spreadsheets is the established norm. This behavioral pattern sustains data fragmentation because the manual workaround 'works' — until volume or complexity increases." }
+        ]
+      },
+      "strategicImplications": [
+        { "dimension": "Financial", "implication": "Yield losses from delayed deviation detection (MTTD gap); energy waste from unmonitored anomalies; overtime from manual reporting and rescheduling; expediting cost when schedule adherence fails.", "severity": "High", "horizon": "Immediate" },
+        { "dimension": "Operational", "implication": "Schedule adherence below target due to reactive adjustments; extended batch cycle times from manual quality handoffs; rework loops from delayed quality feedback; downtime from reactive maintenance.", "severity": "High", "horizon": "Immediate" },
+        { "dimension": "Quality & Compliance", "implication": "Traceability gaps in batch genealogy; sustainability mass balance relies on manual records (ISCC risk); COA delays impacting customer release timelines; complaint investigation requires manual data reconstruction.", "severity": "Medium–High", "horizon": "6–12 months" },
+        { "dimension": "Risk", "implication": "Key-person dependency across execution, maintenance, and quality domains; calibration overdue risk for critical instruments; undetected process deviations.", "severity": "Medium", "horizon": "Ongoing" },
+        { "dimension": "Strategic", "implication": "Cannot scale production volume without proportional headcount growth; unable to support new product introduction with current manual infrastructure; limited ability to benchmark across lines/plants.", "severity": "High", "horizon": "12–24 months" },
+        { "dimension": "Sustainability", "implication": "Cannot report energy/CO₂e per product with accuracy or granularity; sustainability compliance labor-intensive and audit-vulnerable; unable to demonstrate improvement trends.", "severity": "Medium", "horizon": "12–24 months" }
+      ],
+      "maturity": {
+        "overall": "Level 2 — Controlled but Fragmented",
+        "radarData": [
+          { "dimension": "Process Standardization", "current": 2, "target": 4 },
+          { "dimension": "System Integration", "current": 1, "target": 4 },
+          { "dimension": "Data Reliability", "current": 2, "target": 4 },
+          { "dimension": "Governance Discipline", "current": 2, "target": 4 },
+          { "dimension": "Scalability Readiness", "current": 1, "target": 4 }
+        ],
+        "dimensions": [
+          { "dimension": "Process Standardization", "score": 2, "explanation": "20 procedures documented with department ownership, but execution varies: patrols use paper checksheets, logs recorded in Excel post-event, improvement initiatives inconsistent." },
+          { "dimension": "System Integration", "score": 1, "explanation": "All 5 proposed solutions are new — none deployed. Current state is ERP + DCS + Excel + Paper with no integration between execution domains." },
+          { "dimension": "Data Reliability", "score": 2, "explanation": "Data exists but is fragmented and manually compiled. Historian at ~1 min resolution misses transients. Complaint investigation requires manual reconstruction across multiple sources." },
+          { "dimension": "Governance Discipline", "score": 2, "explanation": "22 KPIs designed with priority/granularity (D7) but not yet instrumented. Escalation is implicit and person-dependent." },
+          { "dimension": "Scalability Readiness", "score": 1, "explanation": "Every domain relies on manual processes. Volume increase would require proportional headcount. Combine Patrol alone spans 18 sections — coordination overhead grows exponentially with scale." }
+        ],
+        "bySolution": [
+          { "sol": "MES (NSI-SOL-003)", "proc": 2, "sys": 1, "data": 2, "gov": 2, "scale": 1, "avg": 1.6 },
+          { "sol": "EUMS (NSI-SOL-005)", "proc": 1, "sys": 1, "data": 1, "gov": 1, "scale": 1, "avg": 1.0 },
+          { "sol": "WMS (NSI-SOL-006)", "proc": 1, "sys": 1, "data": 2, "gov": 1, "scale": 1, "avg": 1.2 },
+          { "sol": "QMS (NSI-SOL-009)", "proc": 2, "sys": 1, "data": 2, "gov": 3, "scale": 2, "avg": 2.0 },
+          { "sol": "CMMS (NSI-SOL-014)", "proc": 1, "sys": 1, "data": 1, "gov": 2, "scale": 1, "avg": 1.2 }
+        ]
+      },
+      "targetOperatingModel": {
+        "processShift": [
+          { "domain": "Production Execution", "from": "Excel logs, paper logbooks, verbal shift handover, DCS-only monitoring", "to": "Digital shift log with structured handover; real-time process monitoring with alarms; automated production reporting per batch/shift" },
+          { "domain": "Quality Control", "from": "Manual sample tracking, Excel-based results, paper COA", "to": "Integrated sampling-to-release workflow; automated spec comparison; digital COA generation linked to batch" },
+          { "domain": "Maintenance", "from": "Spreadsheet WOs, distributed asset registry, calendar-based PM", "to": "Condition-informed PM with digital work orders; centralized asset register with calibration tracking" },
+          { "domain": "Warehouse", "from": "Manual tank monitoring, ERP-level stock only, periodic reconciliation", "to": "Barcode/RFID-driven WMS with bin-level visibility; real-time tank monitoring; policy-based replenishment" },
+          { "domain": "Energy", "from": "Manual meter reads, monthly reporting, no anomaly detection", "to": "Real-time metering with SCADA integration; automated anomaly alerting; cost allocation by cost center" },
+          { "domain": "Patrol & Inspection", "from": "Paper checksheets, inconsistent follow-up, no timestamp validation", "to": "Digital patrol with GPS/timestamp evidence; automated deviation escalation; compliance dashboarding" }
+        ],
+        "systemShift": [
+          { "layer": "Execution Layer", "current": "No MES — DCS + Excel + verbal", "target": "NSI-SOL-003 (MES) as shopfloor system of record" },
+          { "layer": "Quality Layer", "current": "Spreadsheets + lab instruments (standalone)", "target": "NSI-SOL-009 (QMS) integrated to MES and WMS" },
+          { "layer": "Maintenance Layer", "current": "Spreadsheet WOs + distributed asset data", "target": "NSI-SOL-014 (CMMS) integrated to MES for equipment context" },
+          { "layer": "Warehouse Layer", "current": "SAP R/3 inventory module + manual", "target": "NSI-SOL-006 (WMS) with barcode/RFID and ERP sync" },
+          { "layer": "Energy Layer", "current": "SCADA historian (1-min) + manual meter reads", "target": "NSI-SOL-005 (EUMS) with SCADA integration and ERP cost allocation" },
+          { "layer": "Integration Model", "current": "Manual rekeying / file exchange / verbal", "target": "API/middleware-based event-driven integration" }
+        ],
+        "governanceShift": [
+          { "dimension": "Process Ownership", "current": "Department-level ownership defined on paper; escalation implicit", "target": "Named process owners per solution domain with RACI; system-enforced escalation paths" },
+          { "dimension": "KPI Cadence", "current": "22 KPIs designed but not instrumented; reporting manual", "target": "Daily operational (auto-captured), weekly tactical (system-generated), monthly strategic (dashboard-driven)" },
+          { "dimension": "Exception Management", "current": "Verbal reporting, spreadsheet-based follow-up", "target": "System-triggered escalation with SLA tracking; deviation entity lifecycle enforced digitally" },
+          { "dimension": "Continuous Improvement", "current": "Inconsistent, not centrally recorded", "target": "Data-driven CI with loss-tree analytics; MOC module for controlled change management" },
+          { "dimension": "Audit Readiness", "current": "Manual evidence gathering; sustainability compliance via paper", "target": "Always-on compliance data; on-demand traceability and mass balance reporting; digital PSSR records" }
+        ]
+      },
+      "payoff": {
+        "efficiency": [
+          { "opp": "Elimination of manual production log compilation", "impact": "Awaiting baseline measurement of hours/week spent on manual reporting", "driver": "MES (NSI-MOD-03-003) automated production reporting" },
+          { "opp": "Faster shift handover", "impact": "Awaiting baseline measurement of handover duration", "driver": "MES (NSI-MOD-03-001) digital e-logbook" },
+          { "opp": "Automated patrol compliance tracking", "impact": "Eliminate manual checksheet processing for 18-section patrol procedure", "driver": "MES (NSI-MOD-03-004) digital patrol" },
+          { "opp": "Automated COA generation", "impact": "Awaiting baseline measurement of COA preparation time", "driver": "QMS (NSI-MOD-09-003) release-to-COA automation" },
+          { "opp": "Automated energy data acquisition", "impact": "Eliminate manual meter reading and spreadsheet compilation", "driver": "EUMS (NSI-MOD-05-002) SCADA-integrated data capture" }
+        ],
+        "financial": [
+          { "opp": "Yield loss reduction through faster deviation detection", "impact": "Awaiting baseline off-spec tonnage and MTTD data", "driver": "MES (NSI-KPI-020 MTTD improvement) + QMS integration" },
+          { "opp": "Energy cost reduction via anomaly detection", "impact": "Awaiting baseline SEC and anomaly frequency data", "driver": "EUMS (NSI-KPI-029 SEC, NSI-KPI-010 anomaly response)" },
+          { "opp": "Reduced unplanned downtime", "impact": "Awaiting baseline downtime hours and maintenance cost", "driver": "CMMS (PM optimization) + MES (NSI-KPI-015 downtime tracking)" },
+          { "opp": "Reduced rework/off-spec production", "impact": "Awaiting baseline rework % and tonnage", "driver": "QMS (NSI-KPI-019 First Pass Yield) + MES batch control" }
+        ],
+        "riskReduction": [
+          { "risk": "Key-person dependency", "current": "High — operational continuity depends on 1–2 staff per domain", "post": "Low — process systemized, knowledge captured digitally", "driver": "MES + QMS + CMMS process digitization" },
+          { "risk": "Traceability gap during recall", "current": "Medium–High — manual batch reconstruction", "post": "Low — full genealogy from MES + QMS", "driver": "MES (NSI-MOD-03-003) + QMS (NSI-MOD-09-003)" },
+          { "risk": "Calibration overdue for critical instruments", "current": "Medium — spreadsheet-based tracking", "post": "Low — automated alerting with compliance dashboard", "driver": "MES (NSI-MOD-03-007) + CMMS (NSI-MOD-14-002)" },
+          { "risk": "Undetected energy anomalies", "current": "High — no monitoring system", "post": "Low — real-time alerting", "driver": "EUMS (NSI-MOD-05-005)" },
+          { "risk": "Sustainability compliance failure", "current": "Medium — manual evidence", "post": "Low — automated mass balance and energy reporting", "driver": "MES (NSI-ENT-011) + EUMS (NSI-MOD-05-006)" }
+        ],
+        "strategic": [
+          { "capability": "Volume scaling without headcount growth", "value": "Growth leverage — decouple production capacity from manual effort", "solution": "MES + WMS + QMS automation" },
+          { "capability": "Sustainability reporting readiness (ISCC, CO₂e)", "value": "Compliance confidence + brand value", "solution": "EUMS + MES (mass balance)" },
+          { "capability": "Data-driven continuous improvement", "value": "Margin improvement via loss-tree analytics", "solution": "All solutions — integrated analytics layer" },
+          { "capability": "Faster new product introduction", "value": "Reduced setup and qualification cycle", "solution": "MES (recipes, batch control) + QMS (spec management)" },
+          { "capability": "Predictive maintenance capability", "value": "Asset reliability uplift", "solution": "CMMS + MES (condition data)" }
+        ]
+      },
+      "roadmap": {
+        "phases": [
+          { "phase": "Phase 1", "title": "Stabilize & Foundation", "duration": "0–3 Months", "focus": "KPI baseline measurement across all 5 domains, OT/IT infrastructure readiness assessment, master data cleansing, energy meter infrastructure deployment, and process documentation review and update." },
+          { "phase": "Phase 2", "title": "Core Deployment", "duration": "3–9 Months", "focus": "EUMS full deployment (P0, 6 modules), MES core — production order, e-logbook, batch reporting (P1), QMS core — sampling to release to COA, CMMS core — asset register, PM program, work orders, MES-QMS and MES-CMMS integrations." },
+          { "phase": "Phase 3", "title": "Expand & Integrate", "duration": "9–18 Months", "focus": "WMS full deployment (P2, 5 modules), MES remaining modules (issue/downtime, MOC, calibration, staging), QMS stability/retention and reporting, CMMS spare parts and reporting, cross-system integration hardening." },
+          { "phase": "Phase 4", "title": "Optimize & Scale", "duration": "18–24 Months", "focus": "Advanced analytics and loss-tree analysis, predictive maintenance models, full KPI automation and executive dashboarding (all 22 KPIs), sustainability reporting automation, APC scope evaluation." }
+        ],
+        "ganttMermaid": "gantt\n    title NSI-FG-002 — Transformation Roadmap\n    dateFormat YYYY-MM-DD\n    axisFormat %b %Y\n    section Phase 1 — Foundation\n    KPI Baseline and Master Data :p1_base, 2025-07-01, 90d\n    OT/IT Infrastructure Readiness :p1_infra, 2025-07-01, 90d\n    section EUMS P0\n    Meter Infrastructure Deployment :p0_meter, 2025-07-01, 90d\n    EUMS Full Deployment (6 modules) :p0_eums, 2025-10-01, 180d\n    section MES P1\n    MES Core (Order, Monitoring, Batch) :p1_mes1, 2025-10-01, 180d\n    MES Expanded (Issue, MOC, Staging) :p1_mes3, 2026-04-01, 270d\n    section QMS P1\n    QMS Core (Sampling, Testing, COA) :p1_qms1, 2025-10-01, 180d\n    QMS Expanded (Stability, Reporting) :p1_qms2, 2026-04-01, 270d\n    section CMMS P1\n    CMMS Core (Asset, PM, WO) :p1_cmms1, 2025-10-01, 180d\n    CMMS Expanded (Spares, Reporting) :p1_cmms2, 2026-04-01, 270d\n    section WMS P2\n    WMS Full Deployment (5 modules) :p2_wms, 2026-04-01, 270d\n    section Phase 4 — Optimize\n    Advanced Analytics and Predictive :p4_opt, 2027-01-01, 180d"
+      },
+      "traceability": [
+        { "sol": "MES — NSI-SOL-003 (P1)", "modules": [
+          { "mod": "Production Order & Instruction Mgmt", "code": "NSI-MOD-03-001", "pain": "T1, T6", "kpi": "NSI-KPI-028" },
+          { "mod": "Process & Runtime Monitoring", "code": "NSI-MOD-03-002", "pain": "T1, T3", "kpi": "NSI-KPI-020, NSI-KPI-023" },
+          { "mod": "Production Reporting, Batch & Traceability", "code": "NSI-MOD-03-003", "pain": "T1, T2, T6", "kpi": "NSI-KPI-014, NSI-KPI-023, NSI-KPI-024" },
+          { "mod": "Patrol & Field Rounds", "code": "NSI-MOD-03-004", "pain": "T1, T6", "kpi": "NSI-KPI-026" },
+          { "mod": "Issue & Downtime Management", "code": "NSI-MOD-03-005", "pain": "T1, T4, T6", "kpi": "NSI-KPI-015, NSI-KPI-020, NSI-KPI-021" },
+          { "mod": "Management of Change (MOC)", "code": "NSI-MOD-03-006", "pain": "T6", "kpi": "Governance KPI — TBD" },
+          { "mod": "Asset, Calibration & Housekeeping", "code": "NSI-MOD-03-007", "pain": "T4", "kpi": "NSI-KPI-013" },
+          { "mod": "Production Inventory Interface & Staging", "code": "NSI-MOD-03-008", "pain": "T5", "kpi": "NSI-KPI-028" }
+        ]},
+        { "sol": "EUMS — NSI-SOL-005 (P0)", "modules": [
+          { "mod": "Meter & Utilities Asset Register", "code": "NSI-MOD-05-001", "pain": "T3", "kpi": "NSI-KPI-009" },
+          { "mod": "Data Acquisition & Validation", "code": "NSI-MOD-05-002", "pain": "T3, T6", "kpi": "NSI-KPI-009, NSI-KPI-030" },
+          { "mod": "Consumption & KPI Monitoring", "code": "NSI-MOD-05-003", "pain": "T3", "kpi": "NSI-KPI-029, NSI-KPI-030" },
+          { "mod": "Cost Allocation & Budget Tracking", "code": "NSI-MOD-05-004", "pain": "T3", "kpi": "NSI-KPI-016" },
+          { "mod": "Anomaly Detection, Alarms & Improvement", "code": "NSI-MOD-05-005", "pain": "T3, T4", "kpi": "NSI-KPI-010, NSI-KPI-022" },
+          { "mod": "Reporting, Sustainability & Integration", "code": "NSI-MOD-05-006", "pain": "T3, T6", "kpi": "NSI-KPI-012, NSI-KPI-017" }
+        ]},
+        { "sol": "WMS — NSI-SOL-006 (P2)", "modules": [
+          { "mod": "Bulk Tank Inventory & Monitoring", "code": "NSI-MOD-06-001", "pain": "T5", "kpi": "Inventory accuracy — TBD" },
+          { "mod": "Racking Warehouse Management", "code": "NSI-MOD-06-002", "pain": "T5", "kpi": "Inventory accuracy — TBD" },
+          { "mod": "Indirect Inventory (Spares & Consumables)", "code": "NSI-MOD-06-003", "pain": "T4, T5", "kpi": "Spare availability — TBD" },
+          { "mod": "Department Store & Internal Transfer", "code": "NSI-MOD-06-004", "pain": "T5", "kpi": "Transfer accuracy — TBD" },
+          { "mod": "Replenishment & PR Generator", "code": "NSI-MOD-06-005", "pain": "T5", "kpi": "Stockout rate — TBD" }
+        ]},
+        { "sol": "QMS — NSI-SOL-009 (P1)", "modules": [
+          { "mod": "Sampling & Lab Request Mgmt", "code": "NSI-MOD-09-001", "pain": "T2", "kpi": "NSI-KPI-027" },
+          { "mod": "Testing & Result Recording", "code": "NSI-MOD-09-002", "pain": "T2", "kpi": "NSI-KPI-019" },
+          { "mod": "Release, Hold, Reject & COA", "code": "NSI-MOD-09-003", "pain": "T2, T6", "kpi": "NSI-KPI-011, NSI-KPI-018" },
+          { "mod": "Stability, Retention & Retest", "code": "NSI-MOD-09-004", "pain": "T2", "kpi": "Shelf-life compliance — TBD" },
+          { "mod": "QMS Reporting & Integration", "code": "NSI-MOD-09-005", "pain": "T2, T6", "kpi": "NSI-KPI-025" }
+        ]},
+        { "sol": "CMMS — NSI-SOL-014 (P1)", "modules": [
+          { "mod": "Asset & Location Register", "code": "NSI-MOD-14-001", "pain": "T4", "kpi": "Asset data completeness — TBD" },
+          { "mod": "Preventive Maintenance Program", "code": "NSI-MOD-14-002", "pain": "T4", "kpi": "PM compliance rate — TBD" },
+          { "mod": "Work Order Management", "code": "NSI-MOD-14-003", "pain": "T4, T6", "kpi": "WO completion rate — TBD" },
+          { "mod": "Spare Parts & Maintenance Inventory", "code": "NSI-MOD-14-004", "pain": "T4, T5", "kpi": "Spare availability — TBD" },
+          { "mod": "Maintenance Reporting & Integration", "code": "NSI-MOD-14-005", "pain": "T4, T6", "kpi": "MTBF, MTTR — TBD" }
+        ]}
+      ],
+      "crossFunction": {
+        "sectionImpact": [
+          { "code": "NSI-SEC-001", "name": "Production Planning Support", "mes": "●", "eums": "○", "wms": "○", "qms": "○", "cmms": "○", "intensity": "Medium" },
+          { "code": "NSI-SEC-002", "name": "Operation Production Service", "mes": "●", "eums": "—", "wms": "—", "qms": "○", "cmms": "—", "intensity": "Medium" },
+          { "code": "NSI-SEC-003", "name": "Production Operation", "mes": "●", "eums": "●", "wms": "○", "qms": "●", "cmms": "—", "intensity": "High" },
+          { "code": "NSI-SEC-004", "name": "Production Operation Shift", "mes": "●", "eums": "●", "wms": "—", "qms": "○", "cmms": "—", "intensity": "High" },
+          { "code": "NSI-SEC-005", "name": "Day Time 1", "mes": "●", "eums": "—", "wms": "—", "qms": "○", "cmms": "—", "intensity": "Medium" },
+          { "code": "NSI-SEC-006", "name": "Day Time 2", "mes": "●", "eums": "—", "wms": "—", "qms": "○", "cmms": "—", "intensity": "Medium" },
+          { "code": "NSI-SEC-007", "name": "Day Time 3", "mes": "●", "eums": "—", "wms": "—", "qms": "○", "cmms": "—", "intensity": "Medium" },
+          { "code": "NSI-SEC-008", "name": "Production Technical", "mes": "●", "eums": "●", "wms": "—", "qms": "○", "cmms": "●", "intensity": "High" },
+          { "code": "NSI-SEC-009", "name": "Quality Control", "mes": "●", "eums": "○", "wms": "—", "qms": "●", "cmms": "—", "intensity": "High" },
+          { "code": "NSI-SEC-010", "name": "Quality Assurance", "mes": "○", "eums": "○", "wms": "—", "qms": "●", "cmms": "—", "intensity": "High" },
+          { "code": "NSI-SEC-012", "name": "Shipping", "mes": "●", "eums": "—", "wms": "●", "qms": "○", "cmms": "—", "intensity": "Medium" },
+          { "code": "NSI-SEC-013", "name": "Receiving", "mes": "○", "eums": "—", "wms": "●", "qms": "—", "cmms": "—", "intensity": "Medium" },
+          { "code": "NSI-SEC-015", "name": "Maintenance & Engineering", "mes": "●", "eums": "●", "wms": "○", "qms": "—", "cmms": "●", "intensity": "High" },
+          { "code": "NSI-SEC-016", "name": "Purchasing", "mes": "—", "eums": "—", "wms": "●", "qms": "○", "cmms": "●", "intensity": "Medium" },
+          { "code": "NSI-SEC-021", "name": "Information and Technology", "mes": "●", "eums": "●", "wms": "●", "qms": "●", "cmms": "●", "intensity": "High" }
+        ],
+        "changeIntensity": [
+          { "intensity": "High", "count": 7, "sections": "SEC-003, 004, 008, 009, 010, 015, 021", "implication": "Full training, process redesign, role adjustment required. Prioritize for super-user programs and UAT involvement." },
+          { "intensity": "Medium", "count": 10, "sections": "SEC-001, 002, 005, 006, 007, 011, 012, 013, 016, 020", "implication": "Targeted training, interface familiarization, SOP update." },
+          { "intensity": "Low", "count": 5, "sections": "SEC-014, 017, 022, 023, 025", "implication": "Awareness communication, minimal process change." }
+        ]
+      },
+      "dataArchitecture": {
+        "entities": [
+          { "code": "NSI-ENT-006", "name": "Certificate of Analysis (COA)", "solution": "NSI-SOL-009", "states": 6, "purpose": "Batch release certification to customer. Revocation after issuance requires full audit trail." },
+          { "code": "NSI-ENT-007", "name": "Energy Meter Reading", "solution": "NSI-SOL-005", "states": 0, "purpose": "Time-series utility consumption data acquisition." },
+          { "code": "NSI-ENT-009", "name": "Lab Sample", "solution": "NSI-SOL-009", "states": 5, "purpose": "Sample chain-of-custody and test linkage. Requested → Collected → In Testing → Completed." },
+          { "code": "NSI-ENT-010", "name": "Lab Test Result", "solution": "NSI-SOL-009", "states": 5, "purpose": "Structured test outcomes for release decisions. Approval gate prevents unauthorized COA generation." },
+          { "code": "NSI-ENT-013", "name": "Patrol Round", "solution": "NSI-SOL-003", "states": 5, "purpose": "Patrol execution record and timestamps. Closed state locks record for audit." },
+          { "code": "NSI-ENT-014", "name": "PSSR Record", "solution": "NSI-SOL-003", "states": 5, "purpose": "Pre-startup safety review and authorization. Approval gates startup — safety-critical decision point." },
+          { "code": "NSI-ENT-015", "name": "Process Deviation", "solution": "NSI-SOL-003", "states": 5, "purpose": "Deviation capture, investigation, and closure. Action Created requires verified closure — open deviations are compliance risk." },
+          { "code": "NSI-ENT-016", "name": "Production Batch/Lot", "solution": "NSI-SOL-003", "states": 6, "purpose": "Core genealogy record for processing. Full lifecycle traceability from Created → Closed." },
+          { "code": "NSI-ENT-017", "name": "Production Order", "solution": "NSI-SOL-003", "states": 6, "purpose": "Executable production instruction. Released status confirms resource/material readiness." },
+          { "code": "NSI-ENT-018", "name": "Tank Monitoring Reading", "solution": "NSI-SOL-006", "states": 0, "purpose": "Time-series liquid storage level and status tracking." }
+        ],
+        "dataFlows": [
+          { "from": "ERP (SAP R/3)", "to": "NSI-SOL-003 (MES)", "trigger": "Schedule confirmation", "freq": "Per order", "current": "Manual rekeying", "target": "API event-driven" },
+          { "from": "NSI-SOL-003 (MES)", "to": "ERP (SAP R/3)", "trigger": "Batch close", "freq": "Per batch", "current": "Manual entry", "target": "API event-driven" },
+          { "from": "NSI-SOL-003 (MES)", "to": "NSI-SOL-009 (QMS)", "trigger": "Batch status = Completed", "freq": "Per batch", "current": "Manual notification", "target": "API event-driven" },
+          { "from": "NSI-SOL-009 (QMS)", "to": "NSI-SOL-006 (WMS)", "trigger": "Release decision", "freq": "Per batch", "current": "Manual update", "target": "API event-driven" },
+          { "from": "SCADA/DCS", "to": "NSI-SOL-003 (MES)", "trigger": "Continuous", "freq": "Real-time", "current": "DCS display only", "target": "SCADA-MES integration" },
+          { "from": "SCADA/DCS", "to": "NSI-SOL-005 (EUMS)", "trigger": "Continuous", "freq": "Real-time", "current": "Manual meter reads", "target": "SCADA-EUMS integration" },
+          { "from": "NSI-SOL-005 (EUMS)", "to": "ERP (SAP R/3)", "trigger": "Period close", "freq": "Monthly", "current": "Manual spreadsheet", "target": "API batch upload" },
+          { "from": "NSI-SOL-003 (MES)", "to": "NSI-SOL-014 (CMMS)", "trigger": "Issue detection", "freq": "Per event", "current": "Verbal / paper", "target": "API event-driven" },
+          { "from": "NSI-SOL-014 (CMMS)", "to": "NSI-SOL-003 (MES)", "trigger": "WO status change", "freq": "Per WO", "current": "Verbal notification", "target": "API event-driven" },
+          { "from": "NSI-SOL-003 (MES)", "to": "NSI-SOL-006 (WMS)", "trigger": "Production order release", "freq": "Per order", "current": "Manual pull", "target": "API event-driven" },
+          { "from": "NSI-SOL-006 (WMS)", "to": "ERP (SAP R/3)", "trigger": "Transaction event", "freq": "Per transaction", "current": "SAP stock movement", "target": "API real-time sync" }
+        ]
+      },
+      "dxGovernance": {
+        "reporting": [
+          { "layer": "Operational Dashboard", "purpose": "Real-time execution visibility", "frequency": "Continuous / Shift", "audience": "Shift leaders, operators", "kpis": "OEE, Schedule Adherence, Downtime, Patrol Completion, Calibration Overdue, Total Energy" },
+          { "layer": "Tactical Review", "purpose": "Week-over-week performance trends", "frequency": "Weekly", "audience": "Section heads, dept managers", "kpis": "Downtime weekly, FG Release Lead Time, Anomalies detected vs resolved, Patrol weekly, RM Release Lead Time" },
+          { "layer": "Management Report", "purpose": "Strategic performance and transformation progress", "frequency": "Monthly", "audience": "Plant manager, functional heads", "kpis": "All 22 KPIs monthly roll-up + maturity progress + roadmap milestone status" },
+          { "layer": "Executive Steering Report", "purpose": "DX program health and business case realization", "frequency": "Monthly / Quarterly", "audience": "C-level, steering committee", "kpis": "Budget vs actuals, milestone delivery, benefit realization, strategic risk register" },
+          { "layer": "Compliance & Audit Report", "purpose": "Regulatory and internal compliance posture", "frequency": "Quarterly / On-demand", "audience": "QA, Safety, External auditors", "kpis": "Data Completeness, Calibration, COA On-Time, CO₂e, mass balance completeness" }
+        ],
+        "principles": [
+          { "principle": "Single Source of Truth", "desc": "Each data entity has one authoritative system.", "impl": "MES owns execution data; QMS owns quality data; WMS owns inventory data; CMMS owns asset/maintenance data; EUMS owns energy data." },
+          { "principle": "Event-Driven Integration", "desc": "Systems communicate via events, not batch files.", "impl": "Batch completion triggers quality sampling; release decision triggers WMS availability; issue detection triggers maintenance WO." },
+          { "principle": "Separation of Layers", "desc": "ERP for planning/finance, MES for execution, SCADA for control.", "impl": "No direct SCADA-to-ERP. MES/EUMS mediates execution context. SAP R/3 does not become shopfloor system." },
+          { "principle": "Master Data Governance", "desc": "Material, equipment, and recipe masters maintained centrally.", "impl": "Master data cleanliness (materials, assets, meters) is Phase 1 prerequisite — not a parallel workstream." },
+          { "principle": "Auditability by Design", "desc": "All status transitions logged with user, timestamp, reason.", "impl": "All 9 entities with status lifecycles designed with immutable audit trails — 48 status transitions total." }
+        ]
+      },
+      "dxReadiness": [
+        { "dimension": "Leadership Commitment", "score": 3, "note": "Company executing multi-phase DX program. Governance structure existence to be confirmed. [Inferred — Needs Validation]" },
+        { "dimension": "Org Change Readiness", "score": 2, "note": "Manual workaround culture deeply embedded. 8 of 20 findings reference manual/spreadsheet practices. Change management intensity is High for 7 sections. [Inferred — Needs Validation]" },
+        { "dimension": "IT/OT Infrastructure", "score": 2, "note": "SCADA/DCS backbone exists with historian. However, historian resolution (~1 min) may need upgrade. Network capacity for 5 new solutions unknown. [Inferred — Needs Validation]" },
+        { "dimension": "Data Readiness", "score": 2, "note": "SAP R/3 provides master data foundation. Asset registry distributed. Inventory data fragmented. 10 reference files in D13 are mostly spreadsheets/PDFs — not structured master data. [Inferred — Needs Validation]" },
+        { "dimension": "Process Documentation", "score": 3, "note": "20 procedures documented with department ownership (D6). 16 process elicitation steps captured (D12). This is above average for pre-DX assessment." },
+        { "dimension": "Integration Readiness", "score": 1, "note": "No current system-to-system integration exists. All cross-domain flows are manual. ERP API capability unknown. Middleware not in place. [Inferred — Needs Validation]" },
+        { "dimension": "User Capability", "score": 2, "note": "Users operate DCS and SAP R/3 — basic system literacy exists. 5 new solutions simultaneously is significant adoption load. [Inferred — Needs Validation]" }
+      ],
+      "dxRisks": [
+        { "id": "DX-R01", "desc": "Scope creep from expanding FG boundaries mid-project (e.g., APC scope noted as 'to be confirmed')", "probability": "Medium", "impact": "High", "mitigation": "Strict scope control via change control board; APC deferred to Phase 4 evaluation" },
+        { "id": "DX-R02", "desc": "Integration complexity between 5 solutions underestimated — 13 cross-system data flows identified", "probability": "High", "impact": "High", "mitigation": "Dedicated integration architect (NSI-SEC-021); phased integration aligned to solution priority; integration testing in Phase 3" },
+        { "id": "DX-R03", "desc": "Master data not clean at go-live (asset registry distributed, inventory fragmented)", "probability": "High", "impact": "High", "mitigation": "Data cleansing workstream starting Phase 1; master data governance established before Phase 2 deployment" },
+        { "id": "DX-R04", "desc": "User adoption resistance on shopfloor (8 of 20 findings reference deeply embedded manual practices)", "probability": "High", "impact": "Medium", "mitigation": "Super-user program from 7 High-intensity sections; early UAT involvement; phased rollout per priority" },
+        { "id": "DX-R05", "desc": "Vendor delivery delays impacting phased rollout (5 solutions potentially from multiple vendors)", "probability": "Medium", "impact": "High", "mitigation": "Contractual milestones with penalty clauses; vendor accountability matrix; parallel planning for P1 solutions" },
+        { "id": "DX-R06", "desc": "OT/IT network infrastructure not ready for real-time data flow (historian at ~1 min, network capacity unknown)", "probability": "Medium", "impact": "High", "mitigation": "Infrastructure readiness assessment in Phase 1; SCADA upgrade scope included in EUMS P0 deployment" },
+        { "id": "DX-R07", "desc": "Simultaneous deployment of 4 P0/P1 solutions in Phase 2 overloads organizational capacity", "probability": "Medium", "impact": "Medium", "mitigation": "Stagger MES, QMS, CMMS core deployments within Phase 2; EUMS as standalone P0 track" },
+        { "id": "DX-R08", "desc": "ISCC/sustainability compliance gap during transition from manual to digital records", "probability": "Low", "impact": "High", "mitigation": "Maintain parallel manual records during transition; define digital handover gate criteria" }
+      ],
+      "dxValueRealization": [
+        { "category": "Operational Efficiency", "metric": "Manual reporting effort (hours/week)", "kpi": "NSI-KPI-014", "baseline": "TBD — Awaiting baseline", "t12": "TBD", "t24": "TBD", "method": "Time study pre/post deployment" },
+        { "category": "Schedule Performance", "metric": "Plan vs actual adherence %", "kpi": "NSI-KPI-028", "baseline": "TBD — Awaiting baseline", "t12": "TBD", "t24": "TBD", "method": "MES automated calculation" },
+        { "category": "Quality Performance", "metric": "First Pass Yield %", "kpi": "NSI-KPI-019", "baseline": "TBD — Awaiting baseline", "t12": "TBD", "t24": "TBD", "method": "QMS batch data" },
+        { "category": "Asset Utilization", "metric": "OEE %", "kpi": "NSI-KPI-023", "baseline": "TBD — Awaiting baseline", "t12": "TBD", "t24": "TBD", "method": "MES automated OEE" },
+        { "category": "Energy Efficiency", "metric": "SEC kWh/ton", "kpi": "NSI-KPI-029", "baseline": "TBD — Awaiting baseline", "t12": "TBD", "t24": "TBD", "method": "EUMS monitoring" },
+        { "category": "Compliance Readiness", "metric": "Audit finding closure rate %", "kpi": "NSI-KPI-014, NSI-KPI-013", "baseline": "TBD — Awaiting baseline", "t12": "TBD", "t24": "TBD", "method": "System-generated compliance score" },
+        { "category": "Traceability", "metric": "Batch history completeness %", "kpi": "NSI-KPI-014", "baseline": "TBD — Awaiting baseline", "t12": "TBD", "t24": "TBD", "method": "MES data completeness score" }
+      ],
+      "dxESG": [
+        { "esg": "Environmental — Carbon", "relevance": "CO₂e per ton by product and plant; ISCC compliance", "enabler": "NSI-SOL-005 (EUMS) — NSI-MOD-05-006", "reporting": "Monthly CO₂e report (NSI-KPI-012)" },
+        { "esg": "Environmental — Waste", "relevance": "Off-spec production, rework, material losses", "enabler": "NSI-SOL-003 (MES) — NSI-MOD-03-003 + NSI-SOL-009 (QMS)", "reporting": "Monthly off-spec/rework rate (NSI-KPI-024)" },
+        { "esg": "Environmental — Water/Utilities", "relevance": "Steam, water, compressed air consumption monitoring", "enabler": "NSI-SOL-005 (EUMS) — NSI-MOD-05-003", "reporting": "Monthly utility intensity (NSI-KPI-029, NSI-KPI-030)" },
+        { "esg": "Social — Safety", "relevance": "PSSR compliance, patrol discipline, emergency response tracking", "enabler": "NSI-SOL-003 (MES) — NSI-ENT-014 (PSSR), NSI-ENT-013 (Patrol), NSI-ENT-008 (Emergency)", "reporting": "Daily patrol completion (NSI-KPI-026); emergency response SLA" },
+        { "esg": "Governance — Traceability", "relevance": "Full batch genealogy and product identification audit trail", "enabler": "NSI-SOL-003 (MES) — NSI-ENT-016, NSI-ENT-017 + NSI-SOL-009 (QMS)", "reporting": "Recall readiness SLA; batch history completeness (NSI-KPI-014)" },
+        { "esg": "Governance — Data Integrity", "relevance": "Audit-ready, tamper-evident records across 9 entity lifecycles", "enabler": "All solutions — 48 status transitions with user/timestamp/reason", "reporting": "Data integrity compliance score; system audit log availability" }
+      ]
+    }
+  }
+  </script>
+
+  <script>
+    const rawData = JSON.parse(document.getElementById('report-data').textContent);
+    tailwind.config = {
+      theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] },
+        colors: { report: { 50:'#eef2ff', 100:'#e0e7ff', 300:'#a5b4fc', 500: rawData.theme.primary, 800:'#3730a3', 900: rawData.theme.dark, accent: rawData.theme.accent } }
+      }}
+    };
+  </script>
+
+  <style>
+    [data-animate]{opacity:0;transform:translateY(28px);transition:opacity .6s ease-out,transform .6s ease-out}
+    [data-animate="fade-up"].is-visible{opacity:1;transform:translateY(0)}
+    [data-animate="zoom-in"]{opacity:0;transform:scale(.93);transition:opacity .5s ease-out,transform .5s ease-out}
+    [data-animate="zoom-in"].is-visible{opacity:1;transform:scale(1)}
+    [data-animate="fade-left"]{opacity:0;transform:translateX(-28px);transition:opacity .6s ease-out,transform .6s ease-out}
+    [data-animate="fade-left"].is-visible{opacity:1;transform:translateX(0)}
+    [data-stagger]>*{opacity:0;transform:translateY(20px);transition:opacity .5s ease-out,transform .5s ease-out}
+    [data-stagger]>*.is-visible{opacity:1;transform:translateY(0)}
+    .glass-card{background:rgba(255,255,255,.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.4)}
+    .dark-glass{background:rgba(15,23,42,.85);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.1)}
+    .hero-bg{background-image:linear-gradient(to right,rgba(15,23,42,.95),rgba(15,23,42,.65)),url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2670&auto=format&fit=crop');background-size:cover;background-position:center}
+    .table-container{scrollbar-width:thin;scrollbar-color:#cbd5e1 transparent}
+    .table-container::-webkit-scrollbar{height:8px}
+    .table-container::-webkit-scrollbar-thumb{background-color:#cbd5e1;border-radius:4px}
+    .score-bar{transition:width 1.2s ease-out}
+    .timeline-container::before{content:'';position:absolute;top:12px;left:0;right:0;height:2px;background:rgba(255,255,255,.1);z-index:0}
+    .mermaid{background:transparent!important}
+    .nav-dot{cursor:pointer;transition:all .3s}
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-indigo-600 selection:text-white">
+<div id="app"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const data = JSON.parse(document.getElementById('report-data').textContent);
+  const meta = data.metadata;
+  const s = data.sections;
+
+  // ── Helpers ──
+  const getRiskBadge = l => ({ 'High':'bg-red-50 text-red-700 border-red-200','Medium–High':'bg-orange-50 text-orange-600 border-orange-200','Medium':'bg-amber-50 text-amber-700 border-amber-200','Low':'bg-emerald-50 text-emerald-700 border-emerald-200' }[l] || 'bg-slate-50 text-slate-600 border-slate-200');
+  const getProbBadge = p => p==='High'?'bg-red-100 text-red-700 border-red-200':p==='Medium'?'bg-orange-100 text-orange-700 border-orange-200':'bg-slate-100 text-slate-600 border-slate-200';
+  const getMatColor = n => n<=1?{dot:'bg-red-500',bar:'bg-red-500',text:'text-red-600'}:n<=2?{dot:'bg-orange-500',bar:'bg-orange-500',text:'text-orange-600'}:n<=3?{dot:'bg-amber-500',bar:'bg-amber-500',text:'text-amber-600'}:{dot:'bg-emerald-500',bar:'bg-emerald-500',text:'text-emerald-600'};
+  const dot = n => { const c=getMatColor(n); return `<span class="inline-flex items-center justify-center w-8 h-8 rounded-full font-bold text-white text-xs ${c.dot}">${n}</span>`; };
+  const secTitle = (num,title,sub='') => `<div class="col-span-1 md:col-span-12" data-animate="fade-up"><div class="border-l-[6px] border-report-500 pl-8 py-2 mb-10"><p class="text-report-500 font-bold tracking-widest uppercase text-sm mb-3">${num}</p><h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">${title}</h2>${sub?`<p class="text-sm text-slate-500 mt-2">${sub}</p>`:''}</div></div>`;
+  const divider = () => `<div class="col-span-1 md:col-span-12 border-t border-slate-200 pt-4"></div>`;
+
+  // ── S01 HERO ──
+  const renderHero = () => `
+  <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent"></div>
+    <div class="relative z-10 max-w-5xl">
+      <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-indigo-400/50 bg-indigo-500/20 text-blue-100 text-sm font-semibold tracking-wide uppercase shadow-lg">${meta.documentId}</div>
+      <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-4 text-white drop-shadow-sm">${meta.title}</h1>
+      <h2 class="text-2xl md:text-3xl font-light text-slate-300 mb-12 max-w-3xl leading-snug">${meta.subtitle}</h2>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 dark-glass rounded-3xl p-8 shadow-2xl items-center">
+        <div><p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Company</p><p class="font-medium text-white">${meta.company}</p></div>
+        <div><p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Function Group</p><p class="font-medium text-white">${meta.functionGroup}</p></div>
+        <div><p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Issue Date</p><p class="font-medium text-white">${meta.date}</p></div>
+        <div><p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Status</p><p class="font-medium text-indigo-300 flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse shadow-[0_0_8px_rgba(129,140,248,0.8)]"></span>${meta.status}</p></div>
+      </div>
+    </div>
+  </section>`;
+
+  // ── S01 EXEC SUMMARY ──
+  const renderExec = () => `
+  ${secTitle('Section 01','Executive Summary','Strategic context and transformation imperative')}
+  <div class="col-span-1 md:col-span-8 md:col-start-3" data-animate="fade-up">
+    <p class="text-slate-600 text-xl font-light leading-relaxed mb-6">${s.executiveSummary.context}</p>
+    <p class="text-slate-600 text-xl font-light leading-relaxed">${s.executiveSummary.currentState}</p>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <div class="bg-[#0f172a] rounded-[2rem] p-8 md:p-10 shadow-xl relative overflow-hidden border border-slate-800">
+      <div class="absolute right-0 top-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+      <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3 relative z-10">
+        <svg class="w-7 h-7 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        Core Structural Issues Identified
+      </h3>
+      <ul class="space-y-4 relative z-10">${s.executiveSummary.coreIssues.map(i=>`<li class="flex items-start gap-4 text-slate-300 text-lg font-light leading-relaxed"><span class="w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.8)] mt-2.5 shrink-0"></span><p>${i}</p></li>`).join('')}</ul>
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-2xl font-bold text-slate-800 mb-6">Risk Exposure Overview</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4" data-stagger>
+      ${s.executiveSummary.riskImpact.map(r=>`<div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden"><div class="absolute top-0 left-0 w-full h-1.5 bg-slate-200 group-hover:bg-report-500 transition-colors"></div><span class="text-xs font-bold px-2 py-0.5 rounded-full border ${getRiskBadge(r.severity)} mb-3 inline-block">${r.severity}</span><p class="font-bold text-slate-800 mb-2">${r.category}</p><p class="text-xs text-slate-500 leading-relaxed">${r.exposure}</p></div>`).join('')}
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="zoom-in">
+    <blockquote class="bg-slate-900 rounded-[2.5rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden transform md:scale-105 my-4">
+      <div class="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-indigo-400 to-emerald-500"></div>
+      <p class="relative z-10 text-2xl font-light leading-relaxed">${s.executiveSummary.transformationOpportunity}</p>
+    </blockquote>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4">Proposed Solution Stack</h3>
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4" data-stagger>
+      ${s.executiveSummary.solutions.map(sol=>`<div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group relative overflow-hidden"><div class="absolute top-0 left-0 w-full h-1.5 bg-slate-200 group-hover:bg-report-500 transition-colors"></div><span class="inline-block text-xs font-bold px-2 py-0.5 rounded-full mb-3 ${sol.priority==='P0'?'bg-red-100 text-red-700 border border-red-200':sol.priority==='P1'?'bg-indigo-100 text-indigo-700 border border-indigo-200':'bg-slate-100 text-slate-600 border border-slate-200'}">${sol.priority}</span><p class="font-mono text-xs text-slate-400 mb-1">${sol.code}</p><p class="font-bold text-slate-800 text-sm leading-snug">${sol.name}</p></div>`).join('')}
+    </div>
+  </div>`;
+
+  // ── S02 DIAGNOSTIC ──
+  const renderDiagnostic = () => `
+  ${secTitle('Section 02','Current State Diagnostic','Process landscape, system architecture, and governance assessment')}
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4">2.1 Process Landscape</h3>
+    <div class="space-y-3">
+      ${s.diagnostic.processLandscape.map(r=>`<div class="flex flex-col md:flex-row md:items-start gap-4 bg-white p-5 rounded-2xl border border-slate-100 hover:border-report-300 hover:bg-slate-50 transition-all shadow-sm" data-animate="fade-up"><div class="w-full md:w-1/4 text-sm font-bold text-slate-800">${r.dimension}</div><div class="w-full md:w-1/4 text-sm font-semibold text-indigo-600">${r.current}</div><div class="w-full md:w-2/4 text-sm text-slate-500 leading-relaxed">${r.observation}</div></div>`).join('')}
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">2.2 System & Data Architecture</h3>
+    <div class="space-y-3">
+      ${s.diagnostic.systemArch.map(r=>`<div class="flex flex-col md:flex-row md:items-start gap-4 bg-white p-5 rounded-2xl border border-slate-100 hover:border-report-300 hover:bg-slate-50 transition-all shadow-sm" data-animate="fade-up"><div class="w-full md:w-1/4 text-sm font-bold text-slate-800">${r.dimension}</div><div class="w-full md:w-1/4 text-sm font-semibold text-indigo-600">${r.current}</div><div class="w-full md:w-2/4 text-sm text-orange-600 leading-relaxed">${r.gap}</div></div>`).join('')}
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">2.3 Governance & Accountability</h3>
+    <div class="space-y-3">
+      ${s.diagnostic.governance.map(r=>`<div class="flex flex-col md:flex-row md:items-start gap-4 bg-white p-5 rounded-2xl border border-slate-100 hover:border-report-300 hover:bg-slate-50 transition-all shadow-sm" data-animate="fade-up"><div class="w-full md:w-1/4 text-sm font-bold text-slate-800">${r.dimension}</div><div class="w-full md:w-1/4 text-sm font-semibold text-indigo-600">${r.current}</div><div class="w-full md:w-2/4 text-sm text-orange-600 leading-relaxed">${r.gap}</div></div>`).join('')}
+    </div>
+  </div>`;
+
+  // ── S03 PAIN POINTS ──
+  const renderPainPoints = () => `
+  ${secTitle('Section 03','Pain Point Clusters','6 confirmed structural pain themes across NSI-FG-002')}
+  <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-8" data-stagger>
+    ${s.painPoints.map(pp=>`<div class="bg-white rounded-[2rem] p-8 shadow-lg shadow-slate-200/50 border border-slate-100 flex flex-col h-full group relative overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"><div class="absolute top-0 left-0 w-full h-1.5 bg-slate-200 group-hover:bg-report-500 transition-colors"></div><div class="flex items-start justify-between mb-4 mt-2"><span class="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full">${pp.theme}</span><span class="text-xs font-bold px-2 py-1 rounded-full border ${getRiskBadge(pp.severity)}">${pp.severity}</span></div><h3 class="text-xl font-bold text-slate-800 mb-4 leading-snug">${pp.title}</h3><div class="space-y-3 flex-1"><div><p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Evidence</p><p class="text-sm text-slate-600 leading-relaxed">${pp.evidence}</p></div><div><p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Operational Impact</p><p class="text-sm text-slate-600 leading-relaxed">${pp.impact}</p></div><div><p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Root Cause</p><p class="text-sm text-slate-500 italic leading-relaxed">${pp.rootCause}</p></div></div><div class="mt-5 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2"><p class="text-xs text-slate-400">${pp.frequency}</p><span class="text-xs font-mono bg-indigo-50 text-indigo-600 px-3 py-1 rounded-lg border border-indigo-100">${pp.kpis}</span></div></div>`).join('')}
+  </div>`;
+
+  // ── S04 ROOT CAUSE ──
+  const rcCard = (item, color) => `<div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-shadow" data-animate="fade-up"><div class="flex items-center gap-3 mb-2"><span class="w-8 h-8 rounded-full ${color} text-white text-xs font-bold flex items-center justify-center shrink-0">${item.id}</span><div><p class="font-bold text-slate-800 text-sm">${item.desc}</p><p class="text-xs text-slate-400 font-mono">Themes: ${item.themes}</p></div></div><p class="text-xs text-slate-500 leading-relaxed mt-2 pl-11">${item.explanation}</p></div>`;
+  const renderRootCause = () => `
+  ${secTitle('Section 04','Root Cause Analysis','Structural, systemic, and behavioral root causes mapped to pain clusters')}
+  <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div data-animate="fade-up">
+      <div class="flex items-center gap-2 mb-5"><span class="w-3 h-3 rounded-full bg-red-500"></span><h3 class="text-lg font-bold text-slate-800">Structural (S1–S5)</h3></div>
+      <div class="space-y-4">${s.rootCauses.structural.map(i=>rcCard(i,'bg-red-500')).join('')}</div>
+    </div>
+    <div data-animate="fade-up">
+      <div class="flex items-center gap-2 mb-5"><span class="w-3 h-3 rounded-full bg-orange-500"></span><h3 class="text-lg font-bold text-slate-800">Systemic (Y1–Y3)</h3></div>
+      <div class="space-y-4">${s.rootCauses.systemic.map(i=>rcCard(i,'bg-orange-500')).join('')}</div>
+    </div>
+    <div data-animate="fade-up">
+      <div class="flex items-center gap-2 mb-5"><span class="w-3 h-3 rounded-full bg-amber-500"></span><h3 class="text-lg font-bold text-slate-800">Behavioral (B1–B2)</h3></div>
+      <div class="space-y-4">${s.rootCauses.behavioral.map(i=>rcCard(i,'bg-amber-500')).join('')}</div>
+    </div>
+  </div>`;
+
+  // ── S05 STRATEGIC IMPLICATIONS ──
+  const renderStrategic = () => `
+  ${secTitle('Section 05','Strategic Implications','Cross-dimensional risk and opportunity analysis')}
+  <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" data-stagger>
+    ${s.strategicImplications.map(si=>`<div class="bg-white rounded-[2rem] p-7 border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group relative overflow-hidden"><div class="absolute top-0 left-0 w-full h-1.5 bg-slate-200 group-hover:bg-report-500 transition-colors"></div><div class="flex items-center justify-between mb-3 mt-1"><p class="font-bold text-slate-800">${si.dimension}</p><span class="text-xs font-bold px-2 py-0.5 rounded-full border ${getRiskBadge(si.severity)}">${si.severity}</span></div><p class="text-sm text-slate-600 leading-relaxed mb-3">${si.implication}</p><p class="text-xs text-indigo-500 font-semibold">Horizon: ${si.horizon}</p></div>`).join('')}
+  </div>`;
+
+  // ── S06 MATURITY ──
+  const renderMaturity = () => `
+  ${secTitle('Section 06','Maturity Scorecard','Function group and solution domain maturity assessment')}
+  <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div data-animate="fade-left">
+      <h3 class="text-xl font-bold text-slate-800 mb-6">FG-Level Maturity — Current vs Target</h3>
+      <div class="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-lg"><canvas id="maturity-radar" height="320"></canvas></div>
+      <div class="mt-6 text-center"><div class="inline-flex items-center gap-3 bg-orange-50 border border-orange-200 rounded-2xl px-6 py-4"><span class="text-3xl font-black text-orange-600">Level 2</span><span class="text-slate-500 font-medium">— Controlled but Fragmented</span></div></div>
+    </div>
+    <div data-animate="fade-up">
+      <h3 class="text-xl font-bold text-slate-800 mb-6">Dimension Detail</h3>
+      <div class="space-y-4">${s.maturity.dimensions.map(d=>{const c=getMatColor(d.score),pct=(d.score/5)*100;return`<div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm"><div class="flex items-center justify-between mb-2"><p class="font-semibold text-slate-800">${d.dimension}</p><span class="text-sm font-bold ${c.text}">${d.score}/5</span></div><div class="h-2 bg-slate-100 rounded-full mb-3 overflow-hidden"><div class="score-bar h-full rounded-full ${c.bar}" style="width:0" data-target-width="${pct}"></div></div><p class="text-xs text-slate-500 leading-relaxed">${d.explanation}</p></div>`;}).join('')}</div>
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-6 mt-4">6.2 Maturity by Solution Domain</h3>
+    <div class="bg-white rounded-[2rem] shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+      <table class="w-full text-left min-w-[700px]">
+        <thead><tr class="bg-slate-900 text-white uppercase text-xs tracking-wider"><th class="p-4 font-semibold rounded-tl-[2rem]">Solution Domain</th><th class="p-4 font-semibold text-center">Process</th><th class="p-4 font-semibold text-center">System</th><th class="p-4 font-semibold text-center">Data</th><th class="p-4 font-semibold text-center">Governance</th><th class="p-4 font-semibold text-center">Scalability</th><th class="p-4 font-semibold text-center rounded-tr-[2rem]">Avg</th></tr></thead>
+        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">${s.maturity.bySolution.map(r=>{const avgC=getMatColor(Math.round(r.avg));return`<tr class="hover:bg-slate-50 transition-colors"><td class="p-4 font-semibold text-slate-800">${r.sol}</td>${[r.proc,r.sys,r.data,r.gov,r.scale].map(n=>`<td class="p-4 text-center">${dot(n)}</td>`).join('')}<td class="p-4 text-center"><span class="font-black text-lg ${avgC.text}">${r.avg.toFixed(1)}</span></td></tr>`;}).join('')}</tbody>
+      </table>
+    </div>
+    <p class="text-xs text-slate-400 mt-3">Color scale: 🔴 1=No capability, 🟠 2=Manual/basic, 🟡 3=Defined, 🟢 4=Managed, 🔵 5=Optimized</p>
+  </div>`;
+
+  // ── S07 TARGET OPERATING MODEL ──
+  const renderTOM = () => `
+  ${secTitle('Section 07','Target Operating Model','Future state across process, system, and governance dimensions')}
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4">7.1 Process Shift</h3>
+    <div class="bg-white rounded-[2rem] shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+      <table class="w-full text-left min-w-[700px]">
+        <thead><tr class="bg-slate-900 text-white uppercase text-xs tracking-wider"><th class="p-4 font-semibold rounded-tl-[2rem]">Domain</th><th class="p-4 font-semibold">From (Current)</th><th class="p-4 font-semibold rounded-tr-[2rem]">To (Target)</th></tr></thead>
+        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">${s.targetOperatingModel.processShift.map(r=>`<tr class="hover:bg-slate-50 transition-colors"><td class="p-4 font-bold text-slate-800 w-48">${r.domain}</td><td class="p-4 text-red-500">${r.from}</td><td class="p-4 text-emerald-600 font-medium">${r.to}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">7.2 System Architecture Shift</h3>
+    <div class="bg-white rounded-[2rem] shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+      <table class="w-full text-left min-w-[700px]">
+        <thead><tr class="bg-slate-900 text-white uppercase text-xs tracking-wider"><th class="p-4 font-semibold rounded-tl-[2rem]">Layer</th><th class="p-4 font-semibold">Current</th><th class="p-4 font-semibold rounded-tr-[2rem]">Target</th></tr></thead>
+        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">${s.targetOperatingModel.systemShift.map(r=>`<tr class="hover:bg-slate-50 transition-colors"><td class="p-4 font-bold text-slate-800 w-48">${r.layer}</td><td class="p-4 text-red-500">${r.current}</td><td class="p-4 text-emerald-600 font-medium">${r.target}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">7.3 Governance Model Shift</h3>
+    <div class="bg-white rounded-[2rem] shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+      <table class="w-full text-left min-w-[700px]">
+        <thead><tr class="bg-slate-900 text-white uppercase text-xs tracking-wider"><th class="p-4 font-semibold rounded-tl-[2rem]">Dimension</th><th class="p-4 font-semibold">Current</th><th class="p-4 font-semibold rounded-tr-[2rem]">Target</th></tr></thead>
+        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">${s.targetOperatingModel.governanceShift.map(r=>`<tr class="hover:bg-slate-50 transition-colors"><td class="p-4 font-bold text-slate-800 w-48">${r.dimension}</td><td class="p-4 text-red-500">${r.current}</td><td class="p-4 text-emerald-600 font-medium">${r.target}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-8 md:col-start-3 mt-4" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4">Target System Architecture (ISA-95)</h3>
+    <div class="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-lg overflow-x-auto">
+      <div class="mermaid">
+flowchart TD
+    subgraph L1["Level 4 — Business Planning"]
+        ERP["SAP R/3 ERP"]
+    end
+    subgraph L2["Level 3 — Manufacturing Operations"]
+        MES["NSI-SOL-003 MES"]
+        QMS["NSI-SOL-009 QMS"]
+        CMMS["NSI-SOL-014 CMMS"]
+        WMS["NSI-SOL-006 WMS"]
+        EUMS["NSI-SOL-005 EUMS"]
+    end
+    subgraph L3["Level 2 — Control"]
+        SCADA["SCADA / DCS"]
+    end
+    subgraph L4["Level 0-1 — Field"]
+        FIELD["Instruments / Meters / PLCs"]
+    end
+    ERP <-->|"Prod Orders, Actuals"| MES
+    ERP <-->|"Spare Parts, PO"| CMMS
+    ERP <-->|"Inventory Sync"| WMS
+    ERP <-->|"Cost Allocation"| EUMS
+    MES <-->|"Batch Results"| QMS
+    MES <-->|"Maint Requests"| CMMS
+    MES <-->|"Staging, Consumption"| WMS
+    QMS <-->|"Release Gating"| WMS
+    SCADA -->|"Process Data"| MES
+    SCADA -->|"Energy Data"| EUMS
+    FIELD --> SCADA
+      </div>
+    </div>
+  </div>`;
+
+  // ── S08 PAYOFF ──
+  const renderPayoff = () => `
+  ${secTitle('Section 08','Opportunity & Payoff Logic','Efficiency, financial, risk, and strategic payoff dimensions')}
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4">8.1 Efficiency Payoff</h3>
+    <div class="space-y-3">${s.payoff.efficiency.map(r=>`<div class="flex flex-col md:flex-row md:items-start gap-3 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:border-report-300 hover:bg-slate-50 transition-all"><div class="w-full md:w-2/5 text-sm font-bold text-slate-800">${r.opp}</div><div class="w-full md:w-1/4 text-sm text-slate-500 italic">${r.impact}</div><div class="w-full md:w-1/3 text-xs font-mono text-indigo-600">${r.driver}</div></div>`).join('')}</div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">8.2 Financial Payoff</h3>
+    <div class="space-y-3">${s.payoff.financial.map(r=>`<div class="flex flex-col md:flex-row md:items-start gap-3 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:border-report-300 hover:bg-slate-50 transition-all"><div class="w-full md:w-2/5 text-sm font-bold text-slate-800">${r.opp}</div><div class="w-full md:w-1/4 text-sm text-slate-500 italic">${r.impact}</div><div class="w-full md:w-1/3 text-xs font-mono text-indigo-600">${r.driver}</div></div>`).join('')}</div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">8.3 Risk Reduction</h3>
+    <div class="bg-white rounded-[2rem] shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+      <table class="w-full text-left min-w-[700px]">
+        <thead><tr class="bg-slate-900 text-white uppercase text-xs tracking-wider"><th class="p-4 font-semibold rounded-tl-[2rem]">Risk Mitigated</th><th class="p-4 font-semibold">Current Exposure</th><th class="p-4 font-semibold">Post-Transformation</th><th class="p-4 font-semibold rounded-tr-[2rem]">Driver</th></tr></thead>
+        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">${s.payoff.riskReduction.map(r=>`<tr class="hover:bg-slate-50 transition-colors"><td class="p-4 font-bold text-slate-800">${r.risk}</td><td class="p-4 text-red-500">${r.current}</td><td class="p-4 text-emerald-600 font-medium">${r.post}</td><td class="p-4 font-mono text-xs text-indigo-600">${r.driver}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">8.4 Strategic Enablement</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4" data-stagger>${s.payoff.strategic.map(r=>`<div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group relative overflow-hidden"><div class="absolute top-0 left-0 w-full h-1.5 bg-slate-200 group-hover:bg-emerald-500 transition-colors"></div><p class="font-bold text-slate-800 text-sm mb-2">${r.capability}</p><p class="text-xs text-emerald-600 font-semibold mb-2">${r.value}</p><p class="font-mono text-xs text-slate-400">${r.solution}</p></div>`).join('')}</div>
+  </div>`;
+
+  // ── S09 ROADMAP ──
+  const renderRoadmap = () => `
+  ${secTitle('Section 09','Transformation Roadmap','24-month phased deployment plan')}
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <div class="rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-slate-800 overflow-hidden" style="background:#1e293b">
+      <div class="relative timeline-container grid grid-cols-1 md:grid-cols-4 gap-8 pt-8">
+        ${s.roadmap.phases.map(ph=>`<div class="relative flex flex-col items-start gap-4 pt-12"><div class="absolute top-0 left-4 w-6 h-6 rounded-full bg-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.6)] -mt-3 z-10" style="border:4px solid #1e293b"></div><div class="bg-white/5 rounded-2xl p-6 w-full border border-white/10 hover:border-white/20 transition-colors"><p class="text-xs text-emerald-400 font-bold uppercase tracking-widest mb-1">${ph.phase}</p><p class="text-white font-bold text-xl mb-1">${ph.title}</p><p class="text-slate-400 text-xs mb-3">${ph.duration}</p><p class="text-slate-300 text-sm leading-relaxed">${ph.focus}</p></div></div>`).join('')}
+      </div>
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-6">Gantt View — Solution Deployment Timeline</h3>
+    <div class="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-lg overflow-x-auto">
+      <div class="mermaid" style="min-width:800px">${s.roadmap.ganttMermaid}</div>
+    </div>
+  </div>`;
+
+  // ── S10 TRACEABILITY ──
+  const renderTraceability = () => `
+  ${secTitle('Section 10','Solution-to-Pain Traceability Matrix','Module-level mapping to pain clusters and KPIs across all 5 solutions')}
+  ${s.traceability.map(sol=>`
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-lg font-bold text-slate-800 mb-3">${sol.sol}</h3>
+    <div class="bg-white rounded-[2rem] shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+      <table class="w-full text-left min-w-[700px]">
+        <thead><tr class="bg-slate-900 text-white uppercase text-xs tracking-wider"><th class="p-4 font-semibold rounded-tl-[2rem]">Module</th><th class="p-4 font-semibold">Code</th><th class="p-4 font-semibold">Linked Pain</th><th class="p-4 font-semibold rounded-tr-[2rem]">Target KPIs</th></tr></thead>
+        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">${sol.modules.map(m=>`<tr class="hover:bg-slate-50 transition-colors"><td class="p-4 font-semibold text-slate-800">${m.mod}</td><td class="p-4 font-mono text-xs text-indigo-600">${m.code}</td><td class="p-4">${m.pain.split(',').map(t=>`<span class="inline-block mr-1 mb-1 px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs border border-indigo-100 font-semibold">${t.trim()}</span>`).join('')}</td><td class="p-4 text-xs text-slate-500 font-mono">${m.kpi}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>`).join('')}`;
+
+  // ── S11 CROSS-FUNCTION ──
+  const impDot = v => v==='●'?'<span class="text-indigo-600 font-bold text-base">●</span>':v==='○'?'<span class="text-slate-300 text-base">○</span>':'<span class="text-slate-200 text-base">—</span>';
+  const renderCrossFunction = () => `
+  ${secTitle('Section 11','Cross-Function Dependency Map','Section-level impact matrix and change management implications')}
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4">11.1 Section-Level Impact Matrix</h3>
+    <div class="bg-white rounded-[2rem] shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+      <table class="w-full text-left min-w-[700px]">
+        <thead><tr class="bg-slate-900 text-white uppercase text-xs tracking-wider"><th class="p-4 font-semibold rounded-tl-[2rem]">Section</th><th class="p-4 font-semibold">Name</th><th class="p-4 font-semibold text-center">MES</th><th class="p-4 font-semibold text-center">EUMS</th><th class="p-4 font-semibold text-center">WMS</th><th class="p-4 font-semibold text-center">QMS</th><th class="p-4 font-semibold text-center">CMMS</th><th class="p-4 font-semibold text-center rounded-tr-[2rem]">Intensity</th></tr></thead>
+        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">${s.crossFunction.sectionImpact.map(r=>`<tr class="hover:bg-slate-50 transition-colors"><td class="p-4 font-mono text-xs text-slate-500">${r.code}</td><td class="p-4 font-semibold text-slate-800">${r.name}</td><td class="p-4 text-center">${impDot(r.mes)}</td><td class="p-4 text-center">${impDot(r.eums)}</td><td class="p-4 text-center">${impDot(r.wms)}</td><td class="p-4 text-center">${impDot(r.qms)}</td><td class="p-4 text-center">${impDot(r.cmms)}</td><td class="p-4 text-center"><span class="px-2 py-0.5 rounded-full text-xs font-bold border ${r.intensity==='High'?'bg-red-50 text-red-700 border-red-200':r.intensity==='Medium'?'bg-amber-50 text-amber-700 border-amber-200':'bg-emerald-50 text-emerald-700 border-emerald-200'}">${r.intensity}</span></td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+    <p class="text-xs text-slate-400 mt-2">● = Primary impact, ○ = Supporting involvement, — = No direct impact</p>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">11.2 Change Management Implications</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6" data-stagger>${s.crossFunction.changeIntensity.map(ci=>`<div class="rounded-2xl p-6 border shadow-sm ${ci.intensity==='High'?'bg-red-50 border-red-200':ci.intensity==='Medium'?'bg-amber-50 border-amber-200':'bg-emerald-50 border-emerald-200'}"><div class="flex items-center gap-3 mb-3"><span class="text-3xl font-black ${ci.intensity==='High'?'text-red-600':ci.intensity==='Medium'?'text-amber-600':'text-emerald-600'}">${ci.count}</span><div><p class="font-bold text-slate-800">${ci.intensity} Intensity</p><p class="text-xs text-slate-500 font-mono">${ci.sections}</p></div></div><p class="text-sm text-slate-600 leading-relaxed">${ci.implication}</p></div>`).join('')}</div>
+  </div>`;
+
+  // ── S12 DATA ARCHITECTURE ──
+  const renderDataArch = () => `
+  ${secTitle('Section 12','Data Architecture Summary','Entity landscape, lifecycle complexity, and cross-system data flows')}
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4">12.1 Entity Landscape</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" data-stagger>
+      ${s.dataArchitecture.entities.map(e=>`<div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden"><div class="absolute top-0 left-0 w-full h-1.5 bg-slate-200 group-hover:bg-report-500 transition-colors"></div><div class="flex items-center justify-between mb-2 mt-1"><span class="font-mono text-xs text-indigo-600">${e.code}</span>${e.states>0?`<span class="text-xs bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-0.5 rounded-full font-semibold">${e.states} states</span>`:'<span class="text-xs bg-slate-100 text-slate-500 border border-slate-200 px-2 py-0.5 rounded-full">Time-series</span>'}</div><p class="font-bold text-slate-800 text-sm mb-2">${e.name}</p><p class="text-xs text-slate-500 leading-relaxed mb-2">${e.purpose}</p><p class="font-mono text-xs text-slate-400">${e.solution}</p></div>`).join('')}
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">12.2 Cross-System Data Flows</h3>
+    <div class="bg-white rounded-[2rem] shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+      <table class="w-full text-left min-w-[900px]">
+        <thead><tr class="bg-slate-900 text-white uppercase text-xs tracking-wider"><th class="p-4 font-semibold rounded-tl-[2rem]">From</th><th class="p-4 font-semibold">To</th><th class="p-4 font-semibold">Trigger</th><th class="p-4 font-semibold">Frequency</th><th class="p-4 font-semibold">Current Method</th><th class="p-4 font-semibold rounded-tr-[2rem]">Target Method</th></tr></thead>
+        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">${s.dataArchitecture.dataFlows.map(f=>`<tr class="hover:bg-slate-50 transition-colors"><td class="p-4 font-semibold text-slate-800">${f.from}</td><td class="p-4 text-slate-600">${f.to}</td><td class="p-4 text-slate-500 text-xs">${f.trigger}</td><td class="p-4 text-slate-500 text-xs">${f.freq}</td><td class="p-4 text-red-500 text-xs">${f.current}</td><td class="p-4 text-emerald-600 font-medium text-xs">${f.target}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>`;
+
+  // ── S13 DX 360 ──
+  const renderDX = () => `
+  ${secTitle('Section 13','Digital Transformation 360° Assessment','Governance, reporting, readiness, risks, value realization, and ESG alignment')}
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4">13.1 DX Governance Framework</h3>
+    <div class="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-lg overflow-x-auto">
+      <div class="mermaid">
+flowchart TD
+    SC["DX Steering Committee (Monthly)"]
+    PO["DX Program Owner"]
+    CCB["Change Control Board"]
+    SC --> PO
+    PO --> CCB
+    subgraph WS["Solution Workstreams"]
+      WS1["MES Lead (Production)"]
+      WS2["EUMS Lead (Maint &amp; Eng)"]
+      WS3["WMS Lead (Ship &amp; Recv)"]
+      WS4["QMS Lead (Quality)"]
+      WS5["CMMS Lead (Maint &amp; Eng)"]
+    end
+    PO --> WS1
+    PO --> WS2
+    PO --> WS3
+    PO --> WS4
+    PO --> WS5
+    subgraph SUP["Support Functions"]
+      IA["Integration Architect (NSI-SEC-021)"]
+      VM["Vendor Management"]
+    end
+    PO --> IA
+    PO --> VM
+      </div>
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">13.2 DX Reporting Cascade</h3>
+    <div class="space-y-3">${s.dxGovernance.reporting.map((r,i)=>`<div class="flex flex-col md:flex-row gap-4 bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:border-report-300 transition-all" data-animate="fade-up"><div class="w-full md:w-1/4"><div class="flex items-center gap-2 mb-1"><span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">${i+1}</span><p class="font-bold text-slate-800 text-sm">${r.layer}</p></div><p class="text-xs text-indigo-500 font-semibold">${r.frequency}</p></div><div class="w-full md:w-1/4 text-sm text-slate-600">${r.purpose}</div><div class="w-full md:w-1/4 text-xs text-slate-500 italic">${r.audience}</div><div class="w-full md:w-1/4 text-xs font-mono text-slate-400">${r.kpis}</div></div>`).join('')}</div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">13.3 DX Integration Architecture Principles</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4" data-stagger>${s.dxGovernance.principles.map(p=>`<div class="bg-[#0f172a] rounded-2xl p-5 border border-slate-800 shadow-lg relative overflow-hidden"><div class="absolute right-0 top-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div><p class="font-bold text-white text-sm mb-2 relative z-10">${p.principle}</p><p class="text-xs text-slate-400 mb-3 relative z-10">${p.desc}</p><p class="text-xs text-emerald-400 leading-relaxed relative z-10">${p.impl}</p></div>`).join('')}</div>
+  </div>
+  <div class="col-span-1 md:col-span-12 grid grid-cols-1 md:grid-cols-2 gap-12 mt-4">
+    <div data-animate="fade-left">
+      <h3 class="text-xl font-bold text-slate-800 mb-6">13.4 DX Readiness Assessment</h3>
+      <div class="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-lg"><canvas id="dx-radar" height="340"></canvas></div>
+    </div>
+    <div data-animate="fade-up">
+      <h3 class="text-xl font-bold text-slate-800 mb-6">Readiness Dimension Detail</h3>
+      <div class="space-y-4">${s.dxReadiness.map(d=>{const pct=(d.score/5)*100,c=getMatColor(d.score);return`<div class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm"><div class="flex items-center justify-between mb-2"><p class="font-semibold text-slate-800 text-sm">${d.dimension}</p><span class="text-sm font-bold ${c.text}">${d.score}/5</span></div><div class="h-2 bg-slate-100 rounded-full mb-2 overflow-hidden"><div class="score-bar h-full rounded-full ${c.bar}" style="width:0" data-target-width="${pct}"></div></div><p class="text-xs text-slate-400 italic">${d.note}</p></div>`;}).join('')}</div>
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">13.5 DX Risk Register</h3>
+    <div class="space-y-3" data-stagger>${s.dxRisks.map(r=>`<div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm hover:shadow-md hover:border-report-300 transition-all"><div class="flex items-start gap-3 flex-wrap"><span class="font-mono text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-lg border border-slate-200 shrink-0">${r.id}</span><div class="flex gap-2 flex-wrap shrink-0"><span class="text-xs font-bold px-2 py-0.5 rounded-full border ${getProbBadge(r.probability)}">P: ${r.probability}</span><span class="text-xs font-bold px-2 py-0.5 rounded-full border ${getRiskBadge(r.impact)}">I: ${r.impact}</span></div><div class="flex-1"><p class="font-semibold text-slate-800 text-sm mb-1">${r.desc}</p><p class="text-xs text-slate-500 leading-relaxed"><span class="font-bold text-emerald-600">Mitigation:</span> ${r.mitigation}</p></div></div></div>`).join('')}</div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">13.6 DX Value Realization Framework</h3>
+    <div class="bg-white rounded-[2rem] shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+      <table class="w-full text-left min-w-[800px]">
+        <thead><tr class="bg-slate-900 text-white uppercase text-xs tracking-wider"><th class="p-4 font-semibold rounded-tl-[2rem]">Value Category</th><th class="p-4 font-semibold">Key Metric</th><th class="p-4 font-semibold">KPI(s)</th><th class="p-4 font-semibold">Baseline</th><th class="p-4 font-semibold">Target 12M</th><th class="p-4 font-semibold">Target 24M</th><th class="p-4 font-semibold rounded-tr-[2rem]">Measurement Method</th></tr></thead>
+        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">${s.dxValueRealization.map(r=>`<tr class="hover:bg-slate-50 transition-colors"><td class="p-4 font-bold text-slate-800">${r.category}</td><td class="p-4 text-slate-600">${r.metric}</td><td class="p-4 font-mono text-xs text-indigo-600">${r.kpi}</td><td class="p-4 text-amber-600 text-xs italic">${r.baseline}</td><td class="p-4 text-slate-400 text-xs italic">${r.t12}</td><td class="p-4 text-slate-400 text-xs italic">${r.t24}</td><td class="p-4 text-xs text-slate-500">${r.method}</td></tr>`).join('')}</tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-span-1 md:col-span-12" data-animate="fade-up">
+    <h3 class="text-xl font-bold text-slate-800 mb-4 mt-4">13.7 DX Sustainability & ESG Alignment</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" data-stagger>${s.dxESG.map(e=>`<div class="bg-white rounded-[2rem] p-6 border border-slate-100 shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300 group relative overflow-hidden"><div class="absolute top-0 left-0 w-full h-1.5 bg-slate-200 group-hover:bg-emerald-500 transition-colors"></div><div class="flex items-start justify-between mb-3 mt-1"><span class="text-xs font-bold px-2 py-0.5 rounded-full border ${e.esg.startsWith('Environmental')?'bg-emerald-50 text-emerald-700 border-emerald-200':'bg-blue-50 text-blue-700 border-blue-200'}">${e.esg.split(' — ')[0]}</span></div><p class="font-bold text-slate-800 text-sm mb-2">${e.esg.split(' — ')[1]}</p><div class="space-y-2"><div><p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Relevance</p><p class="text-xs text-slate-600 leading-relaxed">${e.relevance}</p></div><div><p class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-2">Digital Enabler</p><p class="text-xs font-mono text-indigo-600">${e.enabler}</p></div><div><p class="text-xs font-bold text-slate-400 uppercase tracking-wider mt-2">Reporting Requirement</p><p class="text-xs text-emerald-600 font-semibold">${e.reporting}</p></div></div></div>`).join('')}</div>
+  </div>`;
+
+  // ── FOOTER ──
+  const renderFooter = () => `
+  <footer class="col-span-1 md:col-span-12 border-t border-slate-200 pt-12 mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+    <div><p class="font-bold text-slate-600">${meta.company}</p><p>${meta.functionGroup} — ${meta.date}</p></div>
+    <div class="text-center"><p>${meta.classification}</p><p>Document Version ${meta.version} — Prepared by ${meta.preparedBy}</p></div>
+    <div class="text-right"><p class="font-mono">${meta.documentId}</p><p>${meta.status}</p></div>
+  </footer>`;
+
+  // ── BUILD ──
+  const parts = [
+    renderHero(),
+    `<main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8">`,
+    renderExec(), divider(),
+    renderDiagnostic(), divider(),
+    renderPainPoints(), divider(),
+    renderRootCause(), divider(),
+    renderStrategic(), divider(),
+    renderMaturity(), divider(),
+    renderTOM(), divider(),
+    renderPayoff(), divider(),
+    renderRoadmap(), divider(),
+    renderTraceability(), divider(),
+    renderCrossFunction(), divider(),
+    renderDataArch(), divider(),
+    renderDX(),
+    renderFooter(),
+    `</main>`,
+    `<button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-8 right-8 z-50 bg-slate-900 text-white p-4 rounded-full shadow-2xl border border-slate-700 hover:bg-report-500 hover:border-report-300 transition-all duration-300 hover:scale-110 group"><svg class="w-5 h-5 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg></button>`
+  ];
+  document.getElementById('app').innerHTML = parts.join('');
+
+  // ── ANIMATIONS ──
+  function attachScrollAnimations() {
+    const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){e.target.classList.add('is-visible');obs.unobserve(e.target);} }), {threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('[data-animate]').forEach(el=>obs.observe(el));
+    const sObs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting){Array.from(e.target.children).forEach((c,i)=>setTimeout(()=>c.classList.add('is-visible'),i*80));sObs.unobserve(e.target);} }), {threshold:0.05});
+    document.querySelectorAll('[data-stagger]').forEach(el=>sObs.observe(el));
+  }
+  function animateProgressBars() {
+    document.querySelectorAll('.score-bar[data-target-width]').forEach(b=>setTimeout(()=>{b.style.width=b.getAttribute('data-target-width')+'%';},500));
+  }
+  function initMaturityRadar() {
+    const d = s.maturity.radarData;
+    new Chart(document.getElementById('maturity-radar'),{type:'radar',data:{labels:d.map(x=>x.dimension),datasets:[{label:'Current State',data:d.map(x=>x.current),backgroundColor:'rgba(79,70,229,0.15)',borderColor:'#4f46e5',pointBackgroundColor:'#4f46e5',borderWidth:2.5},{label:'Target State',data:d.map(x=>x.target),backgroundColor:'rgba(16,185,129,0.08)',borderColor:'#10b981',pointBackgroundColor:'#10b981',borderDash:[6,3],borderWidth:2}]},options:{scales:{r:{min:0,max:5,ticks:{stepSize:1,color:'#94a3b8',font:{size:11}},pointLabels:{font:{size:12,weight:'600'},color:'#334155'},grid:{color:'#e2e8f0'},angleLines:{color:'#e2e8f0'}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:20,font:{size:12}}}},animation:{duration:1200,easing:'easeInOutQuart'}}});
+  }
+  function initDXRadar() {
+    const d = s.dxReadiness;
+    new Chart(document.getElementById('dx-radar'),{type:'radar',data:{labels:d.map(x=>x.dimension),datasets:[{label:'DX Readiness Score',data:d.map(x=>x.score),backgroundColor:'rgba(79,70,229,0.2)',borderColor:'#4f46e5',pointBackgroundColor:'#4f46e5',borderWidth:2.5},{label:'Threshold (3)',data:d.map(()=>3),backgroundColor:'rgba(16,185,129,0.05)',borderColor:'#10b981',borderDash:[4,4],borderWidth:1.5,pointRadius:0}]},options:{scales:{r:{min:0,max:5,ticks:{stepSize:1,color:'#94a3b8',font:{size:10}},pointLabels:{font:{size:11,weight:'600'},color:'#334155'},grid:{color:'#e2e8f0'},angleLines:{color:'#e2e8f0'}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,padding:16,font:{size:11}}}},animation:{duration:1000,easing:'easeInOutQuart'}}});
+  }
+  mermaid.initialize({startOnLoad:false,theme:'default',securityLevel:'loose',themeVariables:{primaryColor:'#eef2ff',primaryTextColor:'#1e293b',lineColor:'#94a3b8',edgeLabelBackground:'#f8fafc',fontSize:'13px'}});
+  mermaid.run({nodes:document.querySelectorAll('.mermaid')});
+  attachScrollAnimations();
+  animateProgressBars();
+  initMaturityRadar();
+  initDXRadar();
+});
+</script>
+</body>
+</html>

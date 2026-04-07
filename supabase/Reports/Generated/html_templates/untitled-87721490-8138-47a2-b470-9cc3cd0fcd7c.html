@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Assessment Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GENERIC JSON DATA EMBED: Sections -> Sub-sections Structure -->
+    <script id="report-data" type="application/json">
+    {
+      "theme": {
+        "primary": "#4f46e5",
+        "accent": "#818cf8",
+        "dark": "#0f172a",
+        "roadmapBg": "#1e1b4b"
+      },
+      "metadata": {
+        "title": "Process Architecture",
+        "subtitle": "Process Groups Inventory",
+        "documentId": "INA-PL-GRP-APP-B",
+        "company": "PT Indonesia Asahan Aluminium",
+        "facility": "Green Plant (INA-PL-GRP)",
+        "date": "March 2026",
+        "status": "Authoritative Baseline"
+      },
+      "sections": [
+        {
+          "title": "Purpose of Document",
+          "type": "purpose",
+          "data": {
+            "text": "This document establishes the authoritative Process Group architecture baseline for the facility. It defines process boundaries within the plant scope and clarifies the control posture across groups (relay-dominant, PLC-controlled, and SCADA-connected where evidenced).",
+            "takeaway": "Process Groups in this document act as the structural anchors for subsequent equipment, control, evidence, and evaluation layers—ensuring all later interpretation remains aligned to a consistent architectural segmentation. No maturity score is assigned in this section."
+          }
+        },
+        {
+          "title": "Process Group Scope Snapshot",
+          "subsections": [
+            {
+              "title": "Deterministic Metrics",
+              "type": "metrics_with_venn",
+              "data": [
+                { "label": "Total Process Groups", "value": "8" },
+                { "label": "PLC-Based Groups", "value": "5" },
+                { "label": "SCADA-Connected Groups", "value": "2" },
+                { "label": "Relay or Hybrid Groups", "value": "1" },
+                { "label": "Modern PLC Groups (≥ 2017)", "value": "4" },
+                { "label": "Legacy PLC Groups (< 2017)", "value": "1" }
+              ]
+            },
+            {
+              "title": "Architectural Posture Classification",
+              "type": "cards",
+              "data": [
+                { "title": "Relay-Dominant", "desc": "No PLC evidence and relay/manual exposure implied by description." },
+                { "title": "PLC-Controlled", "desc": "PLC present; SCADA linkage not evidenced." },
+                { "title": "PLC with SCADA Integration", "desc": "PLC present and SCADA ID is not None." },
+                { "title": "Hybrid (Relay + PLC)", "desc": "Description indicates a mixed posture (e.g., PLC only covers subset; relay/manual remains dominant)." }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Process Group Register",
+          "subsections": [
+            {
+              "title": "Process Group Register Table",
+              "type": "table",
+              "data": {
+                "headers": ["Code", "Process Group", "Category", "Architectural Posture", "PLC Presence", "SCADA Exposure"],
+                "rows": [
+                  ["INA-PG-GRP-001", "GRP Green Scrap and Butt Receiving Control System", "Main", "Hybrid (Relay + PLC)", "No", "None"],
+                  ["INA-PG-GRP-002", "GRP Cooling Water Control System", "Auxiliary", "To validate", "No", "None"],
+                  ["INA-PG-GRP-003", "GRP Coke Receiving Control System", "Main", "PLC with SCADA Integration", "Yes", "Connected"],
+                  ["INA-PG-GRP-004", "GRP Coke Grinding Control System", "Main", "To validate", "No", "None"],
+                  ["INA-PG-GRP-005", "GRP Blending and Kneading Control System", "Main", "PLC-Controlled", "Yes", "PLC-Local"],
+                  ["INA-PG-GRP-006", "GRP Anode Forming Control System", "Main", "PLC-Controlled", "Yes", "PLC-Local"],
+                  ["INA-PG-GRP-007", "GRP Tar Pitch Receiving and Heating Oil Control System", "Main", "PLC with SCADA Integration", "Yes", "Connected"],
+                  ["INA-PG-GRP-008", "GRP Green Block Line Conveying Control System", "Auxiliary", "PLC-Controlled", "Yes", "PLC-Local"]
+                ]
+              }
+            },
+            {
+              "title": "Scope Description & Risk Profile",
+              "type": "risk_profiles",
+              "data": [
+                {
+                  "code": "INA-PG-GRP-001", "name": "Green Scrap and Butt Receiving",
+                  "scope": "Covers receipt, conveying, screening/separation, crushing, and buffering/storage of recycle streams (butt and green scrap) prior to reuse. Current posture indicates PLC coverage limited to weighing scale, while conveyors/elevators remain relay controlled.",
+                  "observation": "Relay-controlled sections remain dominant while PLC sequencing coverage is partial.",
+                  "effect": "Limited event visibility and higher dependency on manual intervention during abnormal flow.",
+                  "implication": "Sequencing traceability and standardized alarm/event governance cannot be consistently enforced across the recycle handling chain.",
+                  "target": "Migrate relay-controlled sections into PLC sequencing with SCADA-ready tags."
+                },
+                {
+                  "code": "INA-PG-GRP-002", "name": "Cooling Water Control System",
+                  "scope": "Covers cooling loop functions including pumps, cooling tower, and instrumentation, positioned as a utility enabler for stable cooling performance.",
+                  "observation": "PLC implementation is described as a target state, but PLC presence is not evidenced in the PLC register.",
+                  "effect": "Monitoring/performance assurance remains dependent on local checks or To validate instrumentation coverage.",
+                  "implication": "Utility performance cannot be reliably incorporated into centralized monitoring or alarm governance without confirmed integration.",
+                  "target": "PLC-based control with SCADA-ready status/alarms."
+                },
+                {
+                  "code": "INA-PG-GRP-003", "name": "Coke Receiving Control System",
+                  "scope": "Covers receiving-to-storage movement (conveyors, bucket elevators, belt scale, screening, and silo distribution) and supports inventory/throughput control and SCADA readiness.",
+                  "observation": "SCADA-connected PLC exists, yet Findings describe manual RPM setting, manual dampers, inaccurate silo level due to dust, and choking detection sensors removed.",
+                  "effect": "Flow consistency and stock accuracy are unstable; choking/trip behaviors increase downtime and require manual recovery actions.",
+                  "implication": "KPI-grade consolidation is limited without trusted measurement and event logging.",
+                  "target": "SCADA readiness and improved inventory/throughput control via governed tags."
+                },
+                {
+                  "code": "INA-PG-GRP-004", "name": "Coke Grinding Control System",
+                  "scope": "Covers coke grinding and granulation control boundary including crusher, conveyors, trommel, cyclone, and bins. Indicates renewal of controls.",
+                  "observation": "Manual pressure instruments remain in use; replacement to digital transmitter is only proposed; alarm trip logging is not captured.",
+                  "effect": "Control actions and abnormal events are not traceably recorded, constraining repeatable troubleshooting.",
+                  "implication": "Process stability governance is constrained by missing event history and reliance on manual measurement.",
+                  "target": "PLC sequencing with SCADA visibility (renewal intent)."
+                },
+                {
+                  "code": "INA-PG-GRP-005", "name": "Blending and Kneading Control System",
+                  "scope": "Covers feeders, screw conveyors, pre-heating, and kneader sequencing as the core recipe execution and homogenization stage.",
+                  "observation": "Kneader is a critical point with frequent downtime and operation below design throughput. Partial parameter capture not fully in PLC.",
+                  "effect": "Throughput and availability degrade, and operating policy becomes conservative to protect uptime.",
+                  "implication": "Root-cause analysis and governance over mixing stability remain constrained (no SPC/integrated database).",
+                  "target": "Renewal to stabilize recipe execution and support parameter capture completeness."
+                },
+                {
+                  "code": "INA-PG-GRP-006", "name": "Anode Forming Control System",
+                  "scope": "Covers shaking machine and forming line control, including interlocks and permissives for compaction/forming.",
+                  "observation": "Forming is controlled by PLC but SCADA linkage is not evidenced; Findings include startup scrap and forming cycle control dependency.",
+                  "effect": "Scrap exposure increases during startup/ramp conditions, and visibility outside local control is limited.",
+                  "implication": "Cross-process traceability and centralized performance governance is constrained without supervisory integration.",
+                  "target": "PLC modernization within forming boundary only."
+                },
+                {
+                  "code": "INA-PG-GRP-007", "name": "Tar Pitch Receiving and Heating Oil",
+                  "scope": "Covers pitch storage/transfer and heating oil circulation; positioned as a utilities-to-process interface for recipe readiness.",
+                  "observation": "PLCs are SCADA-linked, but tar pitch charging is not automatically controlled, pitch pumps require CBM, and viscosity sensing is requested.",
+                  "effect": "Pitch charging and heating quality assurance depends on manual controls/verification.",
+                  "implication": "Quality-critical utility-to-process linkage remains insufficiently governed through instrumented confirmation.",
+                  "target": "Renewal and integration of modules to improve integration and monitoring readiness."
+                },
+                {
+                  "code": "INA-PG-GRP-008", "name": "Green Block Line Conveying",
+                  "scope": "Covers transfer conveyors with sequencing and safety chain monitoring for Green Block conveying interfaces.",
+                  "observation": "PLC exists but SCADA visibility is not evidenced; Findings show lack of transaction logging for yard transfer.",
+                  "effect": "Material movement visibility relies on manual practices, increasing traceability gaps and reconciliation effort.",
+                  "implication": "Without transaction logging and supervisory visibility, transfer governance and traceability integrity are weakened.",
+                  "target": "Renewal/standardization of PLC."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Architecture Layering (L0-L2 View)",
+          "subsections": [
+            {
+              "title": "Layer Definition",
+              "type": "definitions",
+              "data": [
+                "L0–L1: Field devices and relay logic where evidenced (relay/manual keywords).",
+                "L1: PLC control where Process Group appears in PLC table.",
+                "L2: Supervisory control where PLC has a non-None SCADA ID."
+              ]
+            },
+            {
+              "title": "Clustered Layer Mapping",
+              "type": "clusters",
+              "data": [
+                { "name": "Receiving / Intake", "tags": ["INA-PG-GRP-003"] },
+                { "name": "Crushing / Screening / Grinding", "tags": ["INA-PG-GRP-004"] },
+                { "name": "Recycle / Scrap Handling", "tags": ["INA-PG-GRP-001"] },
+                { "name": "Mixing / Blending / Thermal Conditioning", "tags": ["INA-PG-GRP-005", "INA-PG-GRP-007"] },
+                { "name": "Forming / Compaction / Output Handling", "tags": ["INA-PG-GRP-006", "INA-PG-GRP-008"] },
+                { "name": "Utilities", "tags": ["INA-PG-GRP-002"] }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Architectural Observations",
+          "type": "observations",
+          "data": [
+            { "title": "Platform Fragmentation", "text": "Evidence indicates multiple PLC brands (Rockwell Automation, OMRON, Siemens) and multiple SCADA brands. This creates engineering support complexity and reduces standardization consistency across alarm practices." },
+            { "title": "Relay and Legacy Exposure", "text": "Relay/hybrid exposure is explicitly indicated in INA-PG-GRP-001. Legacy PLC exposure (Year < 2017) is evidenced for INA-PG-GRP-006. This limits event logging and amplifies dependency on manual intervention." },
+            { "title": "Critical Bottleneck Concentration", "text": "Bottleneck themes concentrate in mixing (INA-PG-GRP-005) and upstream supply stability (INA-PG-GRP-003). These groups directly constrain throughput and represent the highest-control leverage points." },
+            { "title": "Integration and Visibility Gap", "text": "Three PLC-controlled groups have no SCADA linkage. Multi-SCADA posture exists, while alarm logging/historian integration is not evidenced, constraining KPI consolidation." },
+            { "title": "Architectural Coherence Summary", "text": "The plant shows strong structural segmentation into discrete boundaries. However, modernization is unevenly distributed, with a tight dependency between control maturity and process stability outcomes." }
+          ]
+        },
+        {
+          "title": "Process Architecture Maturity Assessment",
+          "type": "table",
+          "data": {
+            "headers": ["Dimension", "Current Posture", "Exposure Level", "Notes"],
+            "rows": [
+              ["PLC Coverage", "Partial (5/8 groups PLC-based)", "Medium", "Three process groups have no PLC evidence; some renewal intent exists."],
+              ["SCADA Integration", "Limited (2 PLC-linked groups connected)", "High", "Majority of PLC groups are PLC-local; multi-SCADA present."],
+              ["Historian Integration", "Not evidenced", "High", "Alarm log not available; historian is not referenced in dataset."],
+              ["Alarm Governance", "Not evidenced", "High", "Alarm logging explicitly stated as absent."],
+              ["Cross-System Orchestration", "Limited / Not evidenced", "High", "Visibility fragmentation limits consolidated KPI and governance workflows."]
+            ]
+          }
+        },
+        {
+          "title": "Executive Framing",
+          "type": "executive",
+          "data": [
+            "The Process Group architecture is clearly segmented (8 groups) and provides a stable structural baseline for control and evaluation layers.",
+            "PLC coverage exists for core production nodes (coke receiving, kneading, forming, conveying, pitch), but supervisory visibility is limited to only two SCADA-connected groups.",
+            "Operational bottlenecks concentrate upstream (material availability/receiving) and in the kneading critical path, aligning with downtime and under-capacity findings.",
+            "Platform fragmentation across PLC and SCADA vendors increases engineering complexity and reduces standardization consistency.",
+            "The dominant structural constraint is visibility and event traceability: PLC-local control and absent alarm logging constrain governance, KPI consolidation, and repeatable root-cause analysis."
+          ]
+        },
+        {
+          "title": "Reference Map",
+          "type": "table_dark",
+          "data": {
+            "headers": ["Report Section", "Evidence Source"],
+            "rows": [
+              ["Sections 1–3", "List Of Process Groups; List Of PLC; List Of SCADA"],
+              ["Snapshot Metrics", "Process Groups row count; PLC distinct Process Group; PLC SCADA ID presence; Process Group description keywords; PLC Year"],
+              ["Per-Group Risk Profiles", "Process Groups Description/Extended Description; Findings & Notes; Issue"],
+              ["Layering and Clustering", "Process Group names + scope text; PLC/SCADA linkage evidence"],
+              ["Architectural Observations", "PLC brands; SCADA brands; Findings (manual/relay exposure, alarm logging absence, chokings, inventory drift)"],
+              ["Maturity Assessment", "PLC/SCADA linkage; Findings (alarm logging absence); absence of historian evidence"]
+            ]
+          }
+        }
+      ]
+    }
+    </script>
+
+    <script>
+        // Synchronously load theme colors into Tailwind config before rendering
+        const rawData = JSON.parse(document.getElementById('report-data').textContent);
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        report: {
+                            50: '#eef2ff', 
+                            100: '#e0e7ff', 
+                            500: rawData.theme.primary, 
+                            800: '#3730a3', 
+                            900: rawData.theme.dark, 
+                            accent: rawData.theme.accent, 
+                            roadmapBg: rawData.theme.roadmapBg
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .dark-glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2670&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .table-container { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-report-500 selection:text-white">
+
+    <div id="app"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = JSON.parse(document.getElementById('report-data').textContent);
+            const app = document.getElementById('app');
+
+            // UTILITIES
+            const getRiskBadge = (exposure) => {
+                const map = {
+                    'High': 'bg-red-50 text-red-700 border-red-200',
+                    'Medium': 'bg-orange-50 text-orange-700 border-orange-200',
+                    'Low': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                    'To validate': 'bg-slate-100 text-slate-600 border-slate-300'
+                };
+                return map[exposure] || 'bg-slate-50 text-slate-700 border-slate-200';
+            };
+
+            const formatTitle = (title) => {
+                const words = title.split(' ');
+                if(words.length > 2) {
+                    return `${words[0]} <br/> <span class="text-report-500">${words.slice(1).join(' ')}</span>`;
+                }
+                return title;
+            };
+
+            // COMPONENT RENDERERS
+            const renderSectionTitle = (title, isSub = false) => {
+                if (isSub) {
+                    return `<h3 class="text-2xl font-bold text-[#0f172a] tracking-tight mb-8 mt-10">${title}</h3>`;
+                }
+                return `
+                    <div class="flex items-stretch gap-4 mb-10">
+                        <div class="w-2 bg-[#0f172a] rounded-sm"></div>
+                        <div class="py-1">
+                            <h2 class="text-3xl font-bold text-[#0f172a] tracking-tight leading-none flex items-center h-full">${title}</h2>
+                        </div>
+                    </div>
+                `;
+            };
+
+            // New component rendering the cards + a beautiful overlapping CSS Venn diagram
+            const renderMetricsWithVenn = (dataArray) => {
+                const cardsHtml = `
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 xl:gap-5 mb-10">
+                        ${dataArray.map(m => `
+                            <div class="bg-white rounded-2xl py-10 px-4 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col justify-center items-center text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                                <p class="text-5xl font-extrabold text-[#0f172a] mb-5 tracking-tight">${m.value}</p>
+                                <p class="text-[11px] font-bold text-slate-500 uppercase tracking-[0.15em] leading-relaxed max-w-[120px]">${m.label}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                const vennHtml = `
+                    <div class="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col lg:flex-row items-center gap-12 mt-8">
+                        
+                        <!-- VENN DIAGRAM GRAPHIC -->
+                        <div class="relative w-80 h-80 shrink-0 flex items-center justify-center">
+                            
+                            <!-- Outer Universe (Total 8) -->
+                            <div class="absolute inset-0 rounded-full border-2 border-dashed border-slate-200 bg-slate-50/50 flex items-start justify-center pt-8">
+                                <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Total Process Groups (8)</span>
+                            </div>
+
+                            <!-- PLC Based -->
+                            <div class="absolute top-16 left-6 w-48 h-48 rounded-full mix-blend-multiply bg-blue-100 border border-blue-200 flex flex-col items-center justify-center shadow-sm z-10 hover:scale-105 transition-transform cursor-default">
+                                <span class="text-blue-900 font-bold text-4xl mb-1">5</span>
+                                <span class="text-blue-700 text-[10px] font-bold uppercase tracking-widest text-center leading-tight">PLC-Based</span>
+                            </div>
+
+                            <!-- SCADA Connected -->
+                            <div class="absolute top-28 left-36 w-36 h-36 rounded-full mix-blend-multiply bg-teal-100 border border-teal-200 flex flex-col items-center justify-center shadow-sm z-20 hover:scale-105 transition-transform cursor-default">
+                                <span class="text-teal-900 font-bold text-3xl mb-1">2</span>
+                                <span class="text-teal-700 text-[10px] font-bold uppercase tracking-widest text-center leading-tight">SCADA<br>Linked</span>
+                            </div>
+                            
+                            <!-- Relay/Hybrid -->
+                            <div class="absolute bottom-10 right-10 w-28 h-28 rounded-full mix-blend-multiply bg-orange-100 border border-orange-200 flex flex-col items-center justify-center shadow-sm z-30 hover:scale-105 transition-transform cursor-default">
+                                <span class="text-orange-900 font-bold text-2xl mb-1">1</span>
+                                <span class="text-orange-700 text-[9px] font-bold uppercase tracking-widest text-center leading-tight">Relay /<br>Hybrid</span>
+                            </div>
+                        </div>
+
+                        <!-- EXPLANATION/LEGEND -->
+                        <div class="flex-grow space-y-6">
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-800 mb-2">Architectural Coverage Breakdown</h4>
+                                <p class="text-slate-600 text-sm leading-relaxed">This diagram visualizes the intersection of control capabilities across the 8 process groups within the plant.</p>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-3 h-3 rounded-full bg-blue-400 mt-1.5 shrink-0"></div>
+                                    <div>
+                                        <p class="font-bold text-slate-800 text-sm">PLC-Based Dominance</p>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">5 out of 8 groups feature programmable logic controllers, forming the foundation for any digital transformation, with 4 identified as modern.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-3 h-3 rounded-full bg-teal-400 mt-1.5 shrink-0"></div>
+                                    <div>
+                                        <p class="font-bold text-slate-800 text-sm">Supervisory Gap (SCADA)</p>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Only 2 of the 5 PLC-based groups have confirmed SCADA integration, highlighting a critical visibility gap for centralized monitoring.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-3 h-3 rounded-full bg-orange-400 mt-1.5 shrink-0"></div>
+                                    <div>
+                                        <p class="font-bold text-slate-800 text-sm">Legacy / Relay Exposure</p>
+                                        <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">1 group explicitly relies on relay-dominant/hybrid controls, preventing systematic stop-cause capture. (Note: 2 remaining groups require validation).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                return cardsHtml + vennHtml;
+            };
+
+            const renderMetrics = (dataArray) => `
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 xl:gap-5 mb-12">
+                    ${dataArray.map(m => `
+                        <div class="bg-white rounded-2xl py-10 px-4 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-slate-100 flex flex-col justify-center items-center text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                            <p class="text-5xl font-extrabold text-[#0f172a] mb-5 tracking-tight">${m.value}</p>
+                            <p class="text-[11px] font-bold text-slate-500 uppercase tracking-[0.15em] leading-relaxed max-w-[120px]">${m.label}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            const renderCards = (dataArray) => `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    ${dataArray.map(p => `
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm h-full flex flex-col">
+                            <h5 class="font-bold text-slate-800 mb-2">${p.title}</h5>
+                            <p class="text-sm text-slate-600 flex-grow">${p.desc}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            const renderTable = (tableData) => `
+                <div class="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto mb-16">
+                    <table class="w-full text-left min-w-[1000px] border-collapse">
+                        <thead>
+                            <tr class="bg-slate-900 text-white uppercase text-xs tracking-wider">
+                                ${tableData.headers.map((h, i) => `<th class="p-4 font-semibold ${i===0?'rounded-tl-3xl':''}">${h}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-700 text-sm divide-y divide-slate-100">
+                            ${tableData.rows.map(row => `
+                                <tr class="hover:bg-slate-50 transition-colors">
+                                    ${row.map((cell, i) => {
+                                        if (['High', 'Medium', 'Low', 'To validate'].includes(cell)) {
+                                            return `<td class="p-4"><span class="px-3 py-1 rounded-full text-xs font-bold border ${getRiskBadge(cell)}">${cell}</span></td>`;
+                                        }
+                                        if (i === 0 && cell.includes('-')) {
+                                            return `<td class="p-4 font-mono font-bold text-indigo-700 whitespace-nowrap">${cell}</td>`;
+                                        }
+                                        return `<td class="p-4">${cell}</td>`;
+                                    }).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            const renderTableDark = (tableData) => `
+                <div class="bg-[#0f172a] rounded-[2.5rem] p-8 md:p-12 overflow-hidden shadow-2xl border border-slate-800">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-800">
+                                ${tableData.headers.map((h, i) => `<th class="p-4 pb-4 font-bold ${i===0?'w-1/4':''}">${h}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-300 text-sm divide-y divide-slate-800/60">
+                            ${tableData.rows.map(row => `
+                                <tr class="hover:bg-slate-800/40 transition-colors">
+                                    <td class="p-4 py-5 font-bold text-white whitespace-nowrap">${row[0]}</td>
+                                    <td class="p-4 py-5 leading-relaxed text-indigo-300 max-w-2xl">${row[1]}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            const renderRiskProfiles = (dataArray) => `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    ${dataArray.map(g => `
+                        <div class="bg-white rounded-[2rem] p-8 shadow-md border border-slate-200 flex flex-col h-full hover:shadow-xl transition-shadow relative overflow-hidden">
+                            <div class="absolute top-0 left-0 w-full h-1.5 bg-indigo-500"></div>
+                            <div class="mb-6">
+                                <span class="text-[10px] font-mono font-bold bg-slate-100 text-slate-500 px-2 py-1 rounded">${g.code}</span>
+                                <h4 class="text-xl font-bold text-slate-800 mt-3 leading-tight">${g.name}</h4>
+                            </div>
+                            <p class="text-slate-600 text-sm mb-6 pb-6 border-b border-slate-100 leading-relaxed">${g.scope}</p>
+                            <div class="space-y-4 flex-grow">
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                                        <span class="w-1.5 h-1.5 bg-orange-400 rounded-full"></span> Observation
+                                    </p>
+                                    <p class="text-sm text-slate-600 leading-relaxed">${g.observation}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                                        <span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Operational Effect
+                                    </p>
+                                    <p class="text-sm text-slate-600 leading-relaxed">${g.effect}</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-800 uppercase tracking-wide mb-1 flex items-center gap-1.5">
+                                        <span class="w-1.5 h-1.5 bg-blue-500 rounded-full"></span> Governance Implication
+                                    </p>
+                                    <p class="text-sm text-slate-600 leading-relaxed">${g.implication}</p>
+                                </div>
+                            </div>
+                            <div class="pt-6 mt-6 border-t border-slate-100 bg-slate-50 -mx-8 -mb-8 p-8 rounded-b-[2rem]">
+                                <p class="text-[10px] uppercase font-bold text-indigo-500 mb-2 tracking-widest">Target State</p>
+                                <p class="text-sm font-medium text-slate-800 leading-snug">${g.target}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            const renderPurpose = (dataObj) => `
+                <div class="space-y-10 text-xl font-light">
+                    <p class="text-slate-700 leading-relaxed max-w-4xl">${dataObj.text}</p>
+                    <blockquote class="bg-slate-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden max-w-4xl">
+                        <div class="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-indigo-400 to-report-500"></div>
+                        <p class="relative z-10 text-xl font-light leading-relaxed">${dataObj.takeaway}</p>
+                    </blockquote>
+                </div>
+            `;
+
+            const renderExecutive = (dataArray) => `
+                <div class="bg-indigo-50 border border-indigo-100 rounded-3xl p-8 shadow-sm max-w-4xl">
+                    <h4 class="text-xl font-bold text-indigo-900 mb-6 flex items-center gap-3">
+                        <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Key Takeaways
+                    </h4>
+                    <ul class="space-y-4 text-base text-indigo-800 list-disc pl-5">
+                        ${dataArray.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            const renderObservations = (dataArray) => `
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-4">
+                    ${dataArray.map((obs, index) => `
+                        <div class="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-lg shadow-slate-200/50 hover:-translate-y-2 transition-transform">
+                            <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                                <div class="px-3 py-1 rounded-full bg-indigo-50 text-indigo-600 font-bold text-sm border border-indigo-100">0${index+1}</div>
+                                <h3 class="text-lg font-bold text-slate-800 leading-tight">${obs.title}</h3>
+                            </div>
+                            <p class="text-slate-600 text-sm leading-relaxed">${obs.text}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            const renderDefinitions = (dataArray) => `
+                <div class="bg-slate-900 rounded-[2rem] p-8 text-white shadow-xl mb-8">
+                    <ul class="space-y-4">
+                        ${dataArray.map(d => `
+                            <li class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span class="text-sm font-light text-slate-300">${d}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            `;
+
+            const renderClusters = (dataArray) => `
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    ${dataArray.map(cluster => `
+                        <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm">
+                            <h5 class="text-sm font-bold text-slate-500 uppercase tracking-wide mb-3">${cluster.name}</h5>
+                            <div class="flex flex-wrap gap-2">
+                                ${cluster.tags.map(t => `<span class="bg-indigo-50 text-indigo-700 text-xs font-mono font-bold px-2 py-1 rounded border border-indigo-100">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            const renderComponent = (type, componentData) => {
+                switch (type) {
+                    case 'purpose': return renderPurpose(componentData);
+                    case 'metrics': return renderMetrics(componentData);
+                    case 'metrics_with_venn': return renderMetricsWithVenn(componentData);
+                    case 'cards': return renderCards(componentData);
+                    case 'table': return renderTable(componentData);
+                    case 'table_dark': return renderTableDark(componentData);
+                    case 'risk_profiles': return renderRiskProfiles(componentData);
+                    case 'executive': return renderExecutive(componentData);
+                    case 'observations': return renderObservations(componentData);
+                    case 'definitions': return renderDefinitions(componentData);
+                    case 'clusters': return renderClusters(componentData);
+                    default: return `<p class="text-red-500">Unknown component type: ${type}</p>`;
+                }
+            };
+
+            // MAIN RENDERING
+            let mainHtml = `
+                <!-- HERO SECTION -->
+                <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent mix-blend-multiply"></div>
+                    <div class="relative z-10 max-w-5xl">
+                        <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-500/50 bg-report-500/20 text-indigo-100 text-sm font-semibold tracking-wide uppercase shadow-lg">
+                            ${data.metadata.documentId}
+                        </div>
+                        <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-4 text-white drop-shadow-sm">
+                            ${formatTitle(data.metadata.title)}
+                        </h1>
+                        <h2 class="text-2xl md:text-3xl font-light text-slate-300 mb-12 max-w-3xl leading-snug">
+                            ${data.metadata.subtitle}
+                        </h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12 dark-glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl items-center">
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Facility</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.facility}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Company</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.company}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Issue Date</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.date}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Status</p>
+                                <p class="font-medium text-report-500 flex items-center gap-2 text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-report-500 animate-pulse shadow-[0_0_8px_rgba(79,70,229,0.8)]"></span>
+                                    ${data.metadata.status}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-16 gap-x-8">
+            `;
+
+            // DYNAMIC SECTION RENDERING
+            data.sections.forEach((section) => {
+                let sectionContent = '';
+                
+                sectionContent += renderSectionTitle(section.title);
+
+                if (section.subsections && section.subsections.length > 0) {
+                    section.subsections.forEach((sub) => {
+                        sectionContent += renderSectionTitle(sub.title, true);
+                        sectionContent += renderComponent(sub.type, sub.data);
+                    });
+                } else if (section.type) {
+                    sectionContent += `<div class="mt-8">` + renderComponent(section.type, section.data) + `</div>`;
+                }
+
+                mainHtml += `<div class="col-span-1 md:col-span-12 mt-8 border-t border-slate-200 pt-16">${sectionContent}</div>`;
+            });
+
+            mainHtml += `</main>`;
+            app.innerHTML = mainHtml;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appendix C - Asset Scope Report</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- GENERIC JSON DATA EMBED: Sections -> Sub-sections Structure -->
+    <script id="report-data" type="application/json">
+    {
+      "theme": {
+        "primary": "#6366f1",
+        "primaryLight": "#e0e7ff",
+        "dark": "#0f172a",
+        "accent": "#f59e0b",
+        "accentLight": "#fef3c7",
+        "success": "#10b981",
+        "danger": "#ef4444",
+        "info": "#3b82f6"
+      },
+      "metadata": {
+        "documentId": "INA-PL-GRP-APP-C",
+        "title": "Appendix C",
+        "subtitle": "Asset Scope",
+        "description": "Equipment Inventory Baseline for Green Plant",
+        "limit": "INA-PL-GRP",
+        "totalAssets": "120 Items",
+        "outputMode": "Output 4A",
+        "status": "Draft Mode Evidence",
+        "date": "March 2026"
+      },
+      "sections": {
+        "s1_purpose": {
+          "title": "Purpose of Appendix C",
+          "paragraphs": [
+            "Appendix C establishes the authoritative equipment baseline for Green Plant (INA-PL-GRP). It defines the full equipment inventory within plant scope and aligns each asset to its corresponding Process Group.",
+            "This appendix links the equipment landscape to PLC/SCADA mapping posture (as defined in Appendix B), supports maintenance governance analysis, and provides the structural basis for identifying critical and bottleneck-prone assets."
+          ],
+          "rule": "No new equipment outside the Equipment table is introduced."
+        },
+        "s2_snapshot": {
+          "title": "Scope Snapshot",
+          "subtitle": "Green Plant equipment landscape",
+          "metrics": {
+            "title": "Deterministic Metrics",
+            "items": [
+              { "label": "Total equipment items", "value": "120" },
+              { "label": "Process groups covered", "value": "7" }
+            ],
+            "categories": {
+              "label": "Primary Equipment Categories",
+              "list": ["Vessel", "Transport", "Tank", "Motor", "Conveyor", "Elevator", "Crusher", "Trommel", "Cyclone", "Bin", "Machine", "Pump"]
+            }
+          },
+          "dominance": {
+            "title": "Material-Handling Dominance",
+            "keywords": ["Conveyor", "Elevator", "Bin", "Transport"],
+            "targetPercentage": 55,
+            "description": "Equipment types containing structural keywords exceed 50% of total equipment count.",
+            "conclusion": "The plant asset base is material-handling dominant. This aligns with the process architecture where receiving, screening, binning, conveying, and transfer stages form the structural backbone of operations."
+          },
+          "utilities": {
+            "title": "Utility Systems Within Scope",
+            "list": [
+              "Cooling Water (INA-PG-GRP-002)",
+              "Heating Oil (INA-PG-GRP-007)",
+              "Tar Pitch heating and storage",
+              "Pumps (multiple entries)",
+              "Cooling tower (referenced in Process Group description)"
+            ],
+            "conclusion": "Utilities are therefore materially embedded in the production chain and not peripheral."
+          },
+          "bottleneckLinkage": {
+            "title": "Critical Bottleneck Evidence Linkage",
+            "description": "Keyword overlap between Findings/Issues and Equipment references identifies:",
+            "list": [
+              "KN-201 / KN-202 (Kneader) — shaft crack, throughput below design",
+              "Crusher / Screening / Trommel systems — choking and trip events (TF-201)",
+              "Silo Level / Belt scale areas — measurement inaccuracy",
+              "Pitch Pump systems — CBM requirement"
+            ],
+            "conclusion": "These assets are flagged as operationally sensitive nodes."
+          }
+        },
+        "s3_inventory": {
+          "title": "Equipment Inventory Register",
+          "subtitle": "Authoritative index — sorted by Code as provided",
+          "note": "Register truncated here for formatting brevity in chat output. Full authoritative register must include all rows exactly as in Equipment table.",
+          "columns": ["System Code", "Client Code", "Equipment Name", "Process Group", "Equipment Type"],
+          "rows": [
+            { "col1": "INA-EQ-GRP-001", "col2": "EQ-GRP-001", "col3": "Coke Vessel Unloading", "col4": "INA-PG-GRP-003", "col5": "Vessel" },
+            { "col1": "INA-EQ-GRP-002", "col2": "EQ-GRP-002", "col3": "Coke Receiving Conveyor", "col4": "INA-PG-GRP-003", "col5": "Conveyor" },
+            { "col1": "INA-EQ-GRP-003", "col2": "EQ-GRP-003", "col3": "Coke Bucket Elevator", "col4": "INA-PG-GRP-003", "col5": "Elevator" },
+            { "col1": "INA-EQ-GRP-004", "col2": "EQ-GRP-004", "col3": "Coke Belt Scale", "col4": "INA-PG-GRP-003", "col5": "Conveyor" },
+            { "col1": "INA-EQ-GRP-005", "col2": "EQ-GRP-005", "col3": "Coke Silo HS", "col4": "INA-PG-GRP-003", "col5": "Bin" },
+            { "col1": "INA-EQ-GRP-006", "col2": "EQ-GRP-006", "col3": "Coke Silo LS", "col4": "INA-PG-GRP-003", "col5": "Bin" },
+            { "col1": "INA-EQ-GRP-007", "col2": "EQ-GRP-007", "col3": "Coke Crusher", "col4": "INA-PG-GRP-004", "col5": "Crusher" },
+            { "col1": "INA-EQ-GRP-008", "col2": "EQ-GRP-008", "col3": "Coke Trommel", "col4": "INA-PG-GRP-004", "col5": "Trommel" },
+            { "col1": "INA-EQ-GRP-009", "col2": "EQ-GRP-009", "col3": "Coke Cyclone", "col4": "INA-PG-GRP-004", "col5": "Cyclone" },
+            { "col1": "INA-EQ-GRP-010", "col2": "EQ-GRP-010", "col3": "Coke Bin 18mm", "col4": "INA-PG-GRP-004", "col5": "Bin" },
+            { "col1": "INA-EQ-GRP-014", "col2": "EQ-GRP-014", "col3": "Kneader KN-201", "col4": "INA-PG-GRP-005", "col5": "Machine" },
+            { "col1": "INA-EQ-GRP-018", "col2": "EQ-GRP-018", "col3": "Cooling Water Pump P-213A", "col4": "INA-PG-GRP-002", "col5": "Pump" },
+            { "col1": "INA-EQ-GRP-020", "col2": "EQ-GRP-020", "col3": "Tar Pitch Storage Tank", "col4": "INA-PG-GRP-007", "col5": "Tank" }
+          ]
+        },
+        "s4_observations": {
+          "title": "Critical Observations",
+          "subtitle": "Risk and automation evidence linkage",
+          "density": {
+            "title": "Equipment Density Pattern",
+            "points": ["Conveyors", "Bins", "Elevators", "Screening and crushing devices"],
+            "conclusion": "This confirms a structurally distributed bulk-material architecture rather than a compact transformation cell layout. High density in material-handling equipment increases dependency on sequencing reliability and flow continuity."
+          },
+          "automation": {
+            "title": "Automation Exposure",
+            "subtitle": "Linking to Appendix B posture",
+            "categories": [
+              { "label": "PLC Local", "values": ["Coke Receiving", "Kneading", "Forming", "Conveying", "Tar Pitch system"] },
+              { "label": "SCADA", "values": ["Coke Receiving", "Tar Pitch system"] },
+              { "label": "Legacy", "values": ["Forming (PLC year normalized to 2014)"] }
+            ],
+            "pattern": "High asset count with local PLC control but limited supervisory integration. Relay/hybrid exposure persists in recycle handling chain."
+          },
+          "bottlenecks": {
+            "title": "Bottleneck Risk (Evidence-Linked)",
+            "items": [
+              {
+                "equipment": "Kneader KN-201 / KN-202",
+                "observation": "Shaft crack and reduced throughput (25–29 ton/hr vs 30 ton/hr design).",
+                "effect": "Availability limited to ~80%; production conservatism applied.",
+                "implication": "No SPC; partial parameter capture; limited centralized analysis."
+              },
+              {
+                "equipment": "Crusher / Screening / Trommel Systems",
+                "observation": "Trip events (TF-201); foreign material choke; alarm logging absent.",
+                "effect": "Unpredictable downtime; manual inspection dependency.",
+                "implication": "Lack of alarm history prevents event-pattern recognition."
+              },
+              {
+                "equipment": "Coke Silo / Belt Scale Areas",
+                "observation": "12% mass flow deviation; dust-induced level inaccuracy.",
+                "effect": "Inventory planning uncertainty.",
+                "implication": "Measurement trust deficit undermines KPI consolidation."
+              },
+              {
+                "equipment": "Pitch Pump Systems",
+                "observation": "CBM required; viscosity sensing requested.",
+                "effect": "Heating quality variability risk.",
+                "implication": "No condition analytics integration evidenced."
+              }
+            ]
+          }
+        },
+        "s5_governance": {
+          "title": "Governance Readiness",
+          "items": [
+            {
+              "title": "PLC Mapping Readiness",
+              "description": "Core production nodes have PLC anchors; however, three Process Groups have no confirmed PLC linkage.",
+              "status": "warning"
+            },
+            {
+              "title": "SCADA Coverage Gap Potential",
+              "description": "Only 2 Process Groups show SCADA connection; centralized visibility gap remains significant.",
+              "status": "critical"
+            },
+            {
+              "title": "Maintenance Governance Leverage",
+              "description": "Equipment register clarity supports asset tagging alignment; however, lack of historian and alarm log constrains predictive analysis.",
+              "status": "warning"
+            },
+            {
+              "title": "CBM Prioritization Basis",
+              "description": "Explicit CBM trigger present for pitch pump; kneader mechanical failures indicate high-priority monitoring candidate. No formal KPI-based CBM governance evidenced.",
+              "status": "info"
+            }
+          ]
+        },
+        "s6_referenceMap": {
+          "title": "Output 4B — Reference Map",
+          "subtitle": "Appendix C completed under Draft Mode evidence discipline.",
+          "columns": ["Appendix C Section", "Evidence Source Mapping"],
+          "rows": [
+            { "col1": "Snapshot Metrics", "col2": "List Of Equipments (row count, type distribution, process group mapping)" },
+            { "col1": "Material-Handling Dominance", "col2": "Equipment Type keyword analysis" },
+            { "col1": "Utility Scope", "col2": "Process Group descriptions; Equipment names" },
+            { "col1": "Bottleneck Evidence", "col2": "Findings & Notes; Issue; Equipment name matching" },
+            { "col1": "Automation Exposure", "col2": "Appendix B posture (PLC/SCADA mapping); PLC table year field" },
+            { "col1": "Governance Readiness", "col2": "PLC table; SCADA table; Findings (alarm logging absence, CBM reference)" }
+          ]
+        }
+      }
+    }
+    </script>
+
+    <script>
+        // Initialization and Tailwind Dynamic Config Mapping
+        const rawData = JSON.parse(document.getElementById('report-data').textContent);
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        report: {
+                            50: rawData.theme.primaryLight,
+                            100: '#c7d2fe',
+                            500: rawData.theme.primary,
+                            800: '#3730a3',
+                            900: rawData.theme.dark,
+                            accent: rawData.theme.accent,
+                            accentLight: rawData.theme.accentLight,
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .dark-glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.6)), url('https://images.unsplash.com/photo-1587582423116-ec07293f0395?q=80&w=2670&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .table-container { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-report-500 selection:text-white">
+
+    <div id="app"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = JSON.parse(document.getElementById('report-data').textContent);
+            const app = document.getElementById('app');
+
+            // Helper to generate consistent section headers
+            let sectionCounter = 1;
+            const renderSectionTitle = (title, subtitle = '') => {
+                const numStr = sectionCounter.toString().padStart(2, '0');
+                sectionCounter++;
+                return `
+                <div class="flex items-stretch gap-4 mb-10">
+                    <div class="w-1.5 bg-report-900 rounded-full"></div>
+                    <div class="py-1">
+                        <p class="text-report-500 font-bold tracking-widest uppercase text-xs mb-1">Section ${numStr}</p>
+                        <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">${title}</h2>
+                        ${subtitle ? `<p class="text-sm text-slate-500 mt-2">${subtitle}</p>` : ''}
+                    </div>
+                </div>
+                `;
+            };
+
+            // Dynamic badge styling based on content
+            const getBadgeStyle = (type) => {
+                const keyword = type.toLowerCase();
+                if (['conveyor', 'elevator', 'transport'].some(k => keyword.includes(k))) return 'bg-amber-50 text-amber-700 border-amber-200';
+                if (['bin', 'silo', 'tank', 'vessel'].some(k => keyword.includes(k))) return 'bg-blue-50 text-blue-700 border-blue-200';
+                if (['crusher', 'trommel', 'cyclone'].some(k => keyword.includes(k))) return 'bg-purple-50 text-purple-700 border-purple-200';
+                return 'bg-slate-50 text-slate-700 border-slate-200';
+            };
+
+            // Status icon helper
+            const getGovernanceIcon = (status) => {
+                const s = status.toLowerCase();
+                if(s === 'critical' || s === 'danger') return `<span class="w-3 h-3 rounded-full" style="background-color: ${data.theme.danger}"></span>`;
+                if(s === 'warning') return `<span class="w-3 h-3 rounded-full" style="background-color: ${data.theme.accent}"></span>`;
+                if(s === 'success') return `<span class="w-3 h-3 rounded-full" style="background-color: ${data.theme.success}"></span>`;
+                return `<span class="w-3 h-3 rounded-full" style="background-color: ${data.theme.info}"></span>`;
+            };
+
+            // Constructing DOM based strictly on generic JSON architecture mapping
+            const html = `
+                <!-- COVER SECTION -->
+                <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/50 to-transparent mix-blend-multiply"></div>
+                    <div class="relative z-10 max-w-5xl">
+                        <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-500/50 bg-report-500/20 text-report-50 text-sm font-semibold tracking-wide uppercase shadow-lg">
+                            ${data.metadata.documentId}
+                        </div>
+                        <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-4 text-white drop-shadow-sm">
+                            ${data.metadata.title} <br/> <span class="text-report-500">${data.metadata.subtitle}</span>
+                        </h1>
+                        <h2 class="text-2xl md:text-3xl font-light text-slate-300 mb-12 max-w-3xl leading-snug">
+                            ${data.metadata.description}
+                        </h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12 dark-glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl items-center">
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Scope Limit</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.limit}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Total Assets</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.totalAssets}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Output Mode</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.outputMode}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Status</p>
+                                <p class="font-medium text-report-500 flex items-center gap-2 text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-report-500 animate-pulse shadow-[0_0_8px_currentColor]"></span>
+                                    ${data.metadata.status}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8">
+
+                    <!-- SECTION 1: PURPOSE -->
+                    <div class="col-span-1 md:col-span-12">
+                        ${renderSectionTitle(data.sections.s1_purpose.title)}
+                    </div>
+
+                    <div class="col-span-1 md:col-span-8 md:col-start-3 space-y-8 text-xl font-light text-slate-700">
+                        ${data.sections.s1_purpose.paragraphs.map(p => `<p class="leading-relaxed">${p}</p>`).join('')}
+                        
+                        <blockquote class="bg-report-900 rounded-[2.5rem] p-10 text-white shadow-2xl relative overflow-hidden transform md:scale-105 my-12 border border-slate-800">
+                            <div class="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-report-500 to-indigo-400"></div>
+                            <p class="relative z-10 text-2xl font-light leading-relaxed">
+                                <strong class="font-semibold text-white">Rule: </strong> ${data.sections.s1_purpose.rule}
+                            </p>
+                        </blockquote>
+                    </div>
+
+                    <!-- SECTION 2: SCOPE SNAPSHOT -->
+                    <div class="col-span-1 md:col-span-12 mt-8 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.s2_snapshot.title, data.sections.s2_snapshot.subtitle)}
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-8">
+                            <!-- Metrics Grid -->
+                            <div class="col-span-1 lg:col-span-7 grid grid-cols-2 gap-6">
+                                ${data.sections.s2_snapshot.metrics.items.map(m => `
+                                    <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-200 flex flex-col justify-center">
+                                        <p class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-2">${m.label}</p>
+                                        <p class="text-5xl font-black text-slate-800">${m.value}</p>
+                                    </div>
+                                `).join('')}
+                                
+                                <div class="col-span-2 bg-report-50 rounded-[2rem] p-8 shadow-sm border border-indigo-100/50">
+                                    <p class="text-sm font-bold text-report-500 uppercase tracking-wider mb-3">${data.sections.s2_snapshot.metrics.categories.label}</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${data.sections.s2_snapshot.metrics.categories.list.map(cat => `
+                                            <span class="bg-white px-3 py-1.5 rounded-lg text-sm font-medium text-slate-700 border border-slate-200 shadow-sm">${cat}</span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Material Handling Dominance Visualization -->
+                            <div class="col-span-1 lg:col-span-5 flex flex-col">
+                                <div class="flex-grow bg-report-900 rounded-[2rem] p-10 shadow-xl border border-slate-800 flex flex-col justify-center text-white relative overflow-hidden">
+                                    <div class="absolute right-0 top-0 w-64 h-64 bg-report-accent/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+                                    <h4 class="text-2xl font-bold mb-6 relative z-10 flex items-center gap-3">
+                                        <svg class="w-7 h-7 text-report-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                                        ${data.sections.s2_snapshot.dominance.title}
+                                    </h4>
+                                    
+                                    <div class="mb-10 relative z-10">
+                                        <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Target Keywords</p>
+                                        <p class="text-report-accentLight font-mono bg-white/5 p-3 rounded-xl border border-white/10 text-sm break-words">${data.sections.s2_snapshot.dominance.keywords.join(' / ')}</p>
+                                    </div>
+
+                                    <div class="w-full bg-slate-800 rounded-full h-5 mb-3 relative z-10 flex overflow-hidden shadow-inner">
+                                        <div class="bg-report-accent h-5" style="width: ${data.sections.s2_snapshot.dominance.targetPercentage}%"></div>
+                                        <div class="bg-report-500 h-5" style="width: ${100 - data.sections.s2_snapshot.dominance.targetPercentage}%"></div>
+                                    </div>
+                                    <div class="flex justify-between text-xs font-bold uppercase tracking-widest text-slate-400 relative z-10 mb-10">
+                                        <span class="text-report-accent">> ${data.sections.s2_snapshot.dominance.targetPercentage}% Target</span>
+                                        <span>Other Assets</span>
+                                    </div>
+
+                                    <p class="text-slate-300 font-light leading-relaxed relative z-10 border-t border-slate-700 pt-6">
+                                        ${data.sections.s2_snapshot.dominance.conclusion}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Utilities and Bottleneck Linkage (Sub-sections dynamically captured) -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Utility Scope -->
+                            <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-200">
+                                <h4 class="text-xl font-bold text-slate-800 mb-6">${data.sections.s2_snapshot.utilities.title}</h4>
+                                <ul class="space-y-3 mb-6">
+                                    ${data.sections.s2_snapshot.utilities.list.map(sys => `
+                                        <li class="flex items-center gap-3 text-slate-700 text-sm">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-report-500 shrink-0"></div>
+                                            ${sys}
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                                <p class="text-sm text-report-800 font-medium bg-report-50 p-4 rounded-xl border border-indigo-100">
+                                    ${data.sections.s2_snapshot.utilities.conclusion}
+                                </p>
+                            </div>
+
+                            <!-- Bottleneck Linkage -->
+                            <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-200">
+                                <h4 class="text-xl font-bold text-slate-800 mb-4">${data.sections.s2_snapshot.bottleneckLinkage.title}</h4>
+                                <p class="text-sm text-slate-500 mb-6">${data.sections.s2_snapshot.bottleneckLinkage.description}</p>
+                                <ul class="space-y-4 mb-6">
+                                    ${data.sections.s2_snapshot.bottleneckLinkage.list.map(item => {
+                                        let split = item.split('—');
+                                        let prefix = split[0] ? split[0].trim() : '';
+                                        let suffix = split[1] ? `— ${split[1].trim()}` : '';
+                                        return `
+                                        <li class="flex items-start gap-3 text-sm">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-report-accent shrink-0 mt-1.5"></div>
+                                            <p><span class="font-bold text-slate-700">${prefix}</span> <span class="text-slate-500">${suffix}</span></p>
+                                        </li>
+                                        `;
+                                    }).join('')}
+                                </ul>
+                                <p class="text-sm text-amber-900 font-medium bg-amber-50 p-4 rounded-xl border border-amber-100">
+                                    ${data.sections.s2_snapshot.bottleneckLinkage.conclusion}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: INVENTORY REGISTER -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.s3_inventory.title, data.sections.s3_inventory.subtitle)}
+                        
+                        <div class="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto">
+                            <table class="w-full text-left min-w-[1000px] border-collapse">
+                                <thead>
+                                    <tr class="bg-report-900 text-white uppercase text-xs tracking-wider">
+                                        ${data.sections.s3_inventory.columns.map((col, index) => `
+                                            <th class="p-5 font-semibold ${index === 0 ? 'rounded-tl-3xl' : ''}">${col}</th>
+                                        `).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-700 text-sm divide-y divide-slate-100">
+                                    ${data.sections.s3_inventory.rows.map(row => `
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="p-5 font-mono font-medium text-slate-900">${row.col1}</td>
+                                            <td class="p-5 text-slate-500">${row.col2}</td>
+                                            <td class="p-5 font-bold text-slate-800">${row.col3}</td>
+                                            <td class="p-5">
+                                                <span class="font-mono text-xs text-report-800 bg-report-50 border border-report-100 px-2 py-1 rounded shadow-sm">${row.col4}</span>
+                                            </td>
+                                            <td class="p-5">
+                                                <span class="px-3 py-1.5 border rounded-lg text-xs font-bold shadow-sm ${getBadgeStyle(row.col5)}">${row.col5}</span>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                            <div class="p-5 bg-slate-50 text-center border-t border-slate-200 text-sm text-slate-500 italic">
+                                *${data.sections.s3_inventory.note}*
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4: OBSERVATIONS -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.s4_observations.title, data.sections.s4_observations.subtitle)}
+                        
+                        <!-- Density & Exposure (Stacked Horizontal) -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                            <!-- Density Pattern -->
+                            <div class="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-sm">
+                                <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-report-50 flex items-center justify-center">
+                                        <svg class="w-4 h-4 text-report-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                                    </div>
+                                    ${data.sections.s4_observations.density.title}
+                                </h3>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    ${data.sections.s4_observations.density.points.map(p => `<span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-semibold">${p}</span>`).join('')}
+                                </div>
+                                <p class="text-sm text-slate-600 leading-relaxed">${data.sections.s4_observations.density.conclusion}</p>
+                            </div>
+
+                            <!-- Automation Exposure -->
+                            <div class="bg-white rounded-[2rem] p-8 border border-slate-200 shadow-sm">
+                                <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-report-50 flex items-center justify-center">
+                                        <svg class="w-4 h-4 text-report-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+                                    </div>
+                                    ${data.sections.s4_observations.automation.title}
+                                </h3>
+                                <div class="space-y-3 mb-6">
+                                    ${data.sections.s4_observations.automation.categories.map(cat => `
+                                        <div class="flex items-start gap-4">
+                                            <span class="text-xs font-bold text-slate-400 uppercase w-20 shrink-0 mt-0.5">${cat.label}</span>
+                                            <p class="text-sm text-slate-700 font-medium">${cat.values.join(', ')}</p>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <p class="text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-4">${data.sections.s4_observations.automation.pattern}</p>
+                            </div>
+                        </div>
+
+                        <!-- Bottleneck Cards Grid -->
+                        <h3 class="text-2xl font-bold text-slate-800 mb-8 tracking-tight">${data.sections.s4_observations.bottlenecks.title}</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            ${data.sections.s4_observations.bottlenecks.items.map(b => `
+                                <div class="bg-white rounded-[2rem] p-8 shadow-md border border-slate-200 hover:shadow-xl transition-shadow relative overflow-hidden group">
+                                    <div class="absolute top-0 right-0 w-32 h-32 bg-report-accent/10 rounded-bl-full -z-0 transition-transform group-hover:scale-110"></div>
+                                    <h4 class="text-xl font-bold text-slate-800 mb-6 relative z-10 pr-12">${b.equipment}</h4>
+                                    <div class="space-y-5 relative z-10">
+                                        <div>
+                                            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1.5">Observation</p>
+                                            <p class="text-slate-700 text-sm leading-relaxed">${b.observation}</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] uppercase font-bold text-report-accent tracking-widest mb-1.5">Operational Effect</p>
+                                            <p class="text-amber-900 text-sm bg-amber-50 p-3 rounded-xl border border-amber-100 leading-relaxed">${b.effect}</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] uppercase font-bold text-report-500 tracking-widest mb-1.5">Digital Implication</p>
+                                            <p class="text-slate-700 text-sm border-l-2 border-report-200 pl-4 py-1 leading-relaxed">${b.implication}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- SECTION 5: GOVERNANCE READINESS -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.s5_governance.title)}
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            ${data.sections.s5_governance.items.map(item => `
+                                <div class="flex items-start gap-5 bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shrink-0 border border-slate-100 mt-0.5 shadow-inner">
+                                        ${getGovernanceIcon(item.status)}
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-800 text-lg mb-2">${item.title}</h4>
+                                        <p class="text-slate-600 text-sm leading-relaxed">${item.description}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- SECTION 6: REFERENCE MAP -->
+                    <div class="col-span-1 md:col-span-12 mt-16 mb-24">
+                        ${renderSectionTitle(data.sections.s6_referenceMap.title, data.sections.s6_referenceMap.subtitle)}
+                        
+                        <div class="bg-report-900 rounded-[2.5rem] p-6 md:p-10 overflow-hidden shadow-2xl border border-slate-800">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="text-slate-400 uppercase text-[10px] tracking-wider border-b border-slate-700">
+                                        ${data.sections.s6_referenceMap.columns.map((col, index) => `
+                                            <th class="p-4 pb-6 font-bold ${index === 0 ? 'w-1/3' : ''}">${col}</th>
+                                        `).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-300 text-sm divide-y divide-slate-800/60">
+                                    ${data.sections.s6_referenceMap.rows.map(row => `
+                                        <tr class="hover:bg-slate-800/50 transition-colors">
+                                            <td class="p-4 py-5 font-bold text-white">${row.col1}</td>
+                                            <td class="p-4 py-5 leading-relaxed text-slate-400">${row.col2}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </main>
+            `;
+            
+            app.innerHTML = html;
+        });
+    </script>
+</body>
+</html>

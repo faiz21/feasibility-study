@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appendix K - Evidence Registers</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- GENERIC JSON DATA EMBED: Sections -> Sub-sections Structure -->
+    <script id="report-data" type="application/json">
+    {
+      "theme": {
+        "primary": "#10b981",
+        "accent": "#059669",
+        "dark": "#0f172a",
+        "roadmapBg": "#064e3b"
+      },
+      "metadata": {
+        "title": "Appendix K - Evidence Registers",
+        "subtitle": "Findings, Notes, and Issues (Structured Audit Register)",
+        "documentId": "INA-PL-GRP-APP-K",
+        "plant": "INA-PL-GRP - Green Plant",
+        "mode": "Draft",
+        "date": "March 2026",
+        "facilityLabel": "Facility / Scope",
+        "dateLabel": "Issue Date",
+        "modeLabel": "Mode"
+      },
+      "sections": {
+        "section_01": {
+          "title": "Purpose & Unification Rules",
+          "subtitle": "The traceable evidence base used to support downstream automation evaluation, risk exposure, and prioritization.",
+          "sub_sections": {
+            "narrative": {
+              "text": "Appendix K consolidates all elicited findings, observed conditions, and confirmed issues for the facility into a single structured audit register. The register is the traceable evidence base used to support downstream evaluation and synthesis, including automation maturity assessment, operational risk exposure interpretation, and prioritization framing.",
+              "takeaway": "This appendix distinguishes between (1) Findings & Notes as observed statements or conditions collected during elicitation, and (2) Issues as explicit problem statements with stated impact."
+            }
+          }
+        },
+        "section_02": {
+          "title": "Dashboard Metrics",
+          "subtitle": "Quantitative summary of register items",
+          "sub_sections": {
+            "kpi_cards": {
+              "totalRows": {
+                "value": 121,
+                "label": "Total"
+              },
+              "issues": {
+                "value": 22,
+                "label": "Total Issues",
+                "description": "Explicit problem statements",
+                "colorClass": "text-red-500"
+              },
+              "highRisk": {
+                "value": 49,
+                "label": "High-Risk",
+                "description": "Capacity/Quality/Downtime",
+                "colorClass": "text-orange-500"
+              }
+            },
+            "doughnut_chart": [
+              { "label": "Maintenance", "value": 25, "color": "#ef4444", "impact": "Critical", "impactClass": "text-red-600 border-red-200 bg-red-50" },
+              { "label": "Inventory & Logistics", "value": 17, "color": "#f97316", "impact": "Very High", "impactClass": "text-orange-600 border-orange-200 bg-orange-50" },
+              { "label": "Quality Governance", "value": 17, "color": "#10b981", "impact": "High", "impactClass": "text-emerald-600 border-emerald-200 bg-emerald-50" },
+              { "label": "Automation Gap", "value": 10, "color": "#8b5cf6", "impact": "High", "impactClass": "text-purple-600 border-purple-200 bg-purple-50" },
+              { "label": "Other Findings", "value": 52, "color": "#3b82f6", "impact": "Moderate", "impactClass": "text-blue-600 border-blue-200 bg-blue-50" }
+            ]
+          }
+        },
+        "section_03": {
+          "title": "Audit Observations Summary",
+          "subtitle": "Consultant view grouping evidence patterns into thematic operational risks.",
+          "sub_sections": {
+            "observation_cards": [
+              {
+                "title": "Capacity and Throughput Risk",
+                "pattern": "Capacity and Throughput and OEE and Performance items indicate throughput sensitivity to logistics delays and equipment performance constraints.",
+                "effect": "Recurring loss of productive time and constrained output stability.",
+                "risk": "Sustained performance variability against internal demand expectations.",
+                "implication": "Throughput governance remains dependent on local operating practices and does not yet appear enforced through consistent measurement."
+              },
+              {
+                "title": "Maintenance Maturity Gap",
+                "pattern": "Downtime and Maintenance Strategy items show recurring breakdown and stoppage exposure and maintenance cadence impacts.",
+                "effect": "Repeated disruption and recovery cycles that erode stable execution windows.",
+                "risk": "Reduced reliability baseline and increased dependency on reactive intervention.",
+                "implication": "Event capture, condition signals, and disciplined maintenance workflow evidence remain incomplete or inconsistent."
+              },
+              {
+                "title": "Inventory and Planning Exposure",
+                "pattern": "Inventory and Logistics evidence indicates material continuity and measurement-trust constraints.",
+                "effect": "Supply variability and planning uncertainty due to shipment timing, vessel coordination, and stock accuracy limitations.",
+                "risk": "Production continuity disruption and schedule volatility.",
+                "implication": "Logistics visibility and measurement accuracy form a structural dependency for any higher-layer orchestration."
+              },
+              {
+                "title": "Quality Governance Gap",
+                "pattern": "Quality Governance evidence indicates manual recording, delayed feedback loops, and traceability exposure.",
+                "effect": "Slower containment and correction when quality signals arrive after consumption or when records are fragmented.",
+                "risk": "Delayed corrective action and reduced audit agility.",
+                "implication": "Quality workflow discipline is constrained by manual data handling and weak near-real-time linkage to production decisions."
+              },
+              {
+                "title": "Automation Completion and Visibility Gaps",
+                "pattern": "Automation Gap items indicate incomplete measurement capture and local/manual dependencies across operational touchpoints.",
+                "effect": "Inconsistent visibility across steps and limited ability to standardize control and monitoring.",
+                "risk": "Constrained scalability of operational governance and reduced consistency of decision support.",
+                "implication": "L0-L2 completion (instrumentation, capture, and supervisory exposure) remains a gating dependency."
+              },
+              {
+                "title": "Data Integration and Monitoring Blind Spots",
+                "pattern": "Data Integration and Historian and Monitoring evidence indicates manual/offline data handling plus missing alarm/event history capture.",
+                "effect": "Slow retrieval of evidence and limited ability to correlate events to causes.",
+                "risk": "Delayed root cause closure and weakened governance traceability.",
+                "implication": "Monitoring and data consolidation posture is not yet sufficient for robust performance governance."
+              }
+            ]
+          }
+        },
+        "section_04": {
+          "title": "Finding Summary",
+          "subtitle": "Quantitative summary metrics and evidence traceability.",
+          "sub_sections": {
+            "metrics": [
+              { "label": "Total Structured Evidence Rows", "value": "121" },
+              { "label": "Issue Rows", "value": "22" },
+              { "label": "Finding Rows", "value": "99" },
+              { "label": "High-Risk Rows", "value": "49" }
+            ],
+            "traceability": {
+              "title": "Traceability Statement",
+              "text": "Every register entry above is traceable to a single source row in List Of Findings & Notes or List Of Issue. Related Process Group mapping is deterministically bounded to the Process Groups table (or set to Plant-wide/Multiple/To validate in Draft Mode where required). This appendix serves as the evidence base for scoring in Appendix L and synthesis positioning in Appendix M."
+            }
+          }
+        },
+        "section_05": {
+          "title": "Structured Findings & Issues Register",
+          "subtitle": "Consolidated dataset combining Issue and Finding rows, mapping observations to impacts and owners.",
+          "sub_sections": {
+            "table_headers": {
+              "c": "Code", "t": "Type", "cat": "Category", "a": "Area / Process", "obs": "Observation", "imp": "Impact", "f": "Frequency", "w": "Workaround", "ow": "Owner", "s": "Status"
+            },
+            "table_data": [
+              {"c":"K-01","t":"Issue","cat":"Downtime","p":"INA-PL-GRP","a":"Maintenance & downtime","obs":"Tar and Butt Chocking, process Downtime","imp":"Unplanned stops/downtime reducing throughput","f":"To validate","w":"To validate","ow":"To validate","s":"Open","pg":"Multiple"},
+              {"c":"K-02","t":"Issue","cat":"Downtime","p":"INA-PL-GRP","a":"Maintenance & downtime","obs":"Maintenance Strategy Issues, Quarterly maintenance with a one-week target and frequent equipment breakdowns.","imp":"Unplanned stops/downtime reducing throughput","f":"Quarterly","w":"To validate","ow":"To validate","s":"Open","pg":"Plant-wide"},
+              {"c":"K-03","t":"Issue","cat":"Inventory and Logistics","p":"INA-PL-GRP","a":"Inventory / supply","obs":"RM HS stock habis karena menunggu pengiriman selama seminggu","imp":"Material shortage risk causing production disruption","f":"To validate","w":"To validate","ow":"To validate","s":"Open","pg":"Plant-wide"},
+              {"c":"K-04","t":"Issue","cat":"Downtime","p":"INA-PL-GRP","a":"Maintenance & downtime","obs":"frequent (KN-201/KN202)Downtime in main process, shaft crack","imp":"Unplanned stops/downtime reducing throughput","f":"Frequent","w":"To validate","ow":"To validate","s":"Open","pg":"INA-PG-GRP-005"},
+              {"c":"K-06","t":"Issue","cat":"OEE and Performance","p":"INA-PL-GRP","a":"Coke receiving & silo inventory","obs":"Coke shipment delays reduce coke availability at silos.","imp":"Production output can drop when coke is late.","f":"To validate","w":"Rely on minimum stock level","ow":"Tim Logistik / SMM","s":"Open","pg":"INA-PG-GRP-003"},
+              {"c":"K-07","t":"Issue","cat":"Maintenance Strategy","p":"INA-PL-GRP","a":"Maintenance planning","obs":"Quarterly maintenance duration exceeds target and contributes to capacity loss.","imp":"Lost production time contributes to annual capacity gap.","f":"Quarterly","w":"Accept planned outage","ow":"Maintenance + Operations","s":"Open","pg":"Plant-wide"},
+              {"c":"K-23","t":"Finding","cat":"Inventory and Logistics","p":"INA-PL-GRP","a":"[Transport] - SCP & SRP","obs":"angkat Green Block (GB) untuk cooling selama 9 jam menggunakan stacker crane","imp":"Production continuity risk due to material/logistics disruption.","f":"To validate","w":"Manual workaround in place.","ow":"INA-FG-009","s":"Open","pg":"INA-PG-GRP-008"},
+              {"c":"K-24","t":"Finding","cat":"Downtime","p":"INA-PL-GRP","a":"Maintenance & downtime","obs":"Tar and Butt Chocking, process Downtime","imp":"Throughput loss and schedule instability risk.","f":"To validate","w":"To validate","ow":"INA-FG-001","s":"Open","pg":"Multiple"},
+              {"c":"K-25","t":"Finding","cat":"Quality Governance","p":"INA-PL-GRP","a":"Visual QC","obs":"Menggunakan manual QC untuk visual hasil baked green block","imp":"Quality exposure and delayed corrective action risk.","f":"To validate","w":"Manual operation/recording.","ow":"INA-FG-008","s":"Open","pg":"Plant-wide"}
+            ]
+          }
+        },
+        "section_06": {
+          "title": "Reference Map",
+          "subtitle": "Object output linkage mapping.",
+          "sub_sections": {
+            "mapping_headers": {
+              "type": "Object Type", "codes": "Code(s) Produced", "source": "Source", "usedBy": "Used By"
+            },
+            "mapping_table": [
+              { "type": "Evidence Register Rows", "codes": "K-01 to K-121", "source": "List Of Issue + List Of Findings & Notes", "usedBy": "Appendix L, Appendix M, Step 17" },
+              { "type": "Appendix K Summary Themes", "codes": "Section 3 (Themes)", "source": "Appendix K register categories and impacts", "usedBy": "Step 17" },
+              { "type": "Appendix K Summary Metrics", "codes": "Section 4.1", "source": "Appendix K register counts", "usedBy": "Appendix L, Appendix M" }
+            ]
+          }
+        }
+      }
+    }
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Retrieve JSON directly from the embedded script tag instead of external source
+            const rawData = JSON.parse(document.getElementById('report-data').textContent);
+            
+            // Dynamic Tailwind Configuration based on JSON Theme
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: { sans: ['Inter', 'sans-serif'] },
+                        colors: {
+                            report: {
+                                primary: rawData.theme.primary,
+                                accent: rawData.theme.accent,
+                                dark: rawData.theme.dark,
+                                bg: rawData.theme.roadmapBg
+                            }
+                        }
+                    }
+                }
+            };
+
+            const app = document.getElementById('app');
+
+            // --- UI Helper Functions ---
+            const renderSectionTitle = (number, title, subtitle = '') => `
+                <div class="flex flex-col mb-10 border-l-[6px] border-[${rawData.theme.primary}] pl-6 py-1">
+                    <p class="text-[${rawData.theme.primary}] font-bold tracking-[0.2em] uppercase text-xs mb-2">Section 0${number}</p>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">${title}</h2>
+                    ${subtitle ? `<p class="text-lg text-slate-500 mt-3 font-light max-w-3xl">${subtitle}</p>` : ''}
+                </div>
+            `;
+
+            const renderDoughnutChart = (breakdownData, totalValue, totalLabel) => {
+                let currentPct = 0;
+                const gradientString = breakdownData.map(item => {
+                    const pct = (item.value / totalValue) * 100;
+                    const str = `${item.color} ${currentPct}% ${currentPct + pct}%`;
+                    currentPct += pct;
+                    return str;
+                }).join(', ');
+
+                return `
+                    <div class="bg-white rounded-[2rem] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-slate-100 flex flex-col xl:flex-row items-center gap-10 w-full h-full">
+                        
+                        <!-- Left: Doughnut Chart -->
+                        <div class="relative w-56 h-56 rounded-full flex-shrink-0 flex items-center justify-center" style="background: conic-gradient(${gradientString})">
+                            <div class="absolute w-40 h-40 bg-white rounded-full flex flex-col items-center justify-center shadow-[inset_0_2px_10px_rgba(0,0,0,0.02)]">
+                                <span class="text-5xl font-black text-slate-800 tracking-tight">${totalValue}</span>
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">${totalLabel}</span>
+                            </div>
+                        </div>
+
+                        <!-- Right: Legend Rows -->
+                        <div class="flex flex-col gap-3 w-full">
+                            ${breakdownData.map(item => `
+                                <div class="flex items-center justify-between p-4 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-4 h-4 rounded-full shadow-sm" style="background-color: ${item.color}"></div>
+                                        <span class="font-bold text-slate-700 text-sm md:text-base">${item.label}</span>
+                                    </div>
+                                    <div class="flex items-center gap-5 md:gap-8">
+                                        ${item.impact ? `
+                                        <div class="flex flex-col items-end hidden sm:flex">
+                                            <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Impact</span>
+                                            <span class="px-2.5 py-1 rounded text-[10px] font-bold border ${item.impactClass}">${item.impact}</span>
+                                        </div>
+                                        <div class="w-px h-8 bg-slate-200 hidden sm:block"></div>
+                                        ` : ''}
+                                        <div class="flex flex-col items-center min-w-[3rem]">
+                                            <span class="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Count</span>
+                                            <span class="text-2xl md:text-3xl font-black" style="color: ${item.color}">${item.value}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            };
+
+            // Setup variables based on dynamic generic JSON structure
+            const s1 = rawData.sections.section_01;
+            const s2 = rawData.sections.section_02;
+            const s3 = rawData.sections.section_03;
+            const s4 = rawData.sections.section_04;
+            const s5 = rawData.sections.section_05;
+            const s6 = rawData.sections.section_06;
+            
+            const kpiCards = s2.sub_sections.kpi_cards;
+            const tableHeaders = s5.sub_sections.table_headers;
+            const mapHeaders = s6.sub_sections.mapping_headers;
+
+            // --- Main Layout Generation ---
+            const html = `
+                <!-- 1. HERO COVER -->
+                <section class="min-h-[80vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 relative overflow-hidden bg-slate-900">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-[${rawData.theme.dark}] via-slate-800 to-[${rawData.theme.roadmapBg}] opacity-90"></div>
+                    <!-- Decorative background patterns -->
+                    <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-[${rawData.theme.primary}] rounded-full blur-[150px] opacity-10 translate-x-1/3 -translate-y-1/3"></div>
+                    
+                    <div class="relative z-10 max-w-6xl">
+                        <div class="mb-6 inline-flex items-center gap-3">
+                            <span class="px-4 py-1.5 rounded-full border border-[${rawData.theme.primary}]/50 bg-[${rawData.theme.primary}]/20 text-[${rawData.theme.primary}] text-sm font-bold tracking-widest uppercase shadow-lg shadow-[${rawData.theme.primary}]/20">
+                                ${rawData.metadata.documentId}
+                            </span>
+                            <span class="px-4 py-1.5 rounded-full border border-slate-500/50 bg-slate-800/50 text-slate-300 text-sm font-bold tracking-widest uppercase shadow-lg">
+                                ${rawData.metadata.modeLabel}: ${rawData.metadata.mode}
+                            </span>
+                        </div>
+                        
+                        <h1 class="text-6xl md:text-8xl font-black tracking-tight mb-6 text-white leading-[1.1]">
+                            ${rawData.metadata.title.split(' - ')[0]} <br/> 
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[${rawData.theme.primary}] to-emerald-300">
+                                ${rawData.metadata.title.split(' - ').slice(1).join(' - ') || rawData.metadata.title}
+                            </span>
+                        </h1>
+                        <h2 class="text-2xl md:text-3xl font-light text-slate-300 mb-16 max-w-4xl leading-relaxed">
+                            ${rawData.metadata.subtitle}
+                        </h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 pt-8 border-t border-white/10">
+                            <div>
+                                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">${rawData.metadata.facilityLabel}</p>
+                                <p class="font-medium text-white text-lg">${rawData.metadata.plant}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mb-2">${rawData.metadata.dateLabel}</p>
+                                <p class="font-medium text-white text-lg">${rawData.metadata.date}</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 space-y-32">
+
+                    <!-- SECTION 1 & 2 COMBINED: PURPOSE & DASHBOARD METRICS -->
+                    <section class="grid grid-cols-1 xl:grid-cols-12 gap-12 items-center">
+                        <div class="xl:col-span-5">
+                            ${renderSectionTitle('1', s1.title, s1.subtitle)}
+                            
+                            <div class="space-y-8 text-lg font-light text-slate-700 leading-relaxed">
+                                <p>${s1.sub_sections.narrative.text}</p>
+                                
+                                <div class="bg-slate-900 text-white rounded-[2rem] p-8 shadow-2xl relative overflow-hidden">
+                                    <div class="absolute top-0 left-0 w-2 h-full bg-[${rawData.theme.primary}]"></div>
+                                    <p class="relative z-10 italic">"${s1.sub_sections.narrative.takeaway}"</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dashboard Metrics Widget -->
+                        <div class="xl:col-span-7 h-full flex flex-col gap-6">
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-center">
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">${kpiCards.issues.label}</p>
+                                    <p class="text-5xl font-black ${kpiCards.issues.colorClass} mb-1">${kpiCards.issues.value}</p>
+                                    <p class="text-sm text-slate-500 font-medium mt-auto">${kpiCards.issues.description}</p>
+                                </div>
+                                <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm flex flex-col justify-center">
+                                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">${kpiCards.highRisk.label}</p>
+                                    <p class="text-5xl font-black ${kpiCards.highRisk.colorClass} mb-1">${kpiCards.highRisk.value}</p>
+                                    <p class="text-sm text-slate-500 font-medium mt-auto">${kpiCards.highRisk.description}</p>
+                                </div>
+                            </div>
+                            
+                            ${renderDoughnutChart(s2.sub_sections.doughnut_chart, kpiCards.totalRows.value, kpiCards.totalRows.label)}
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3: CONSULTANT OBSERVATIONS -->
+                    <section>
+                        ${renderSectionTitle('3', s3.title, s3.subtitle)}
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            ${s3.sub_sections.observation_cards.map(obs => `
+                                <div class="bg-white rounded-[2rem] p-8 md:p-10 shadow-lg shadow-slate-200/50 border border-slate-100 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col h-full group">
+                                    <div class="w-14 h-14 rounded-2xl bg-[${rawData.theme.primary}]/10 text-[${rawData.theme.primary}] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-slate-900 mb-6 leading-tight">${obs.title}</h3>
+                                    
+                                    <div class="space-y-6 flex-grow">
+                                        <div>
+                                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Evidence Pattern</p>
+                                            <p class="text-sm text-slate-600 leading-relaxed">${obs.pattern}</p>
+                                        </div>
+                                        <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                                                <p class="text-[10px] font-black text-red-500 uppercase tracking-widest mb-1">Op. Effect</p>
+                                                <p class="text-xs text-slate-700">${obs.effect}</p>
+                                            </div>
+                                            <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                                                <p class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-1">Biz Risk</p>
+                                                <p class="text-xs text-slate-700">${obs.risk}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="pt-6 border-t border-slate-100 mt-6">
+                                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Digital Implication</p>
+                                        <p class="text-sm font-medium text-slate-800 leading-relaxed">${obs.implication}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </section>
+
+                    <!-- SECTION 4: FINDING SUMMARY -->
+                    <section>
+                        ${renderSectionTitle('4', s4.title, s4.subtitle)}
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                            <!-- Metrics Cards -->
+                            <div class="lg:col-span-4 flex flex-col justify-center gap-5">
+                                ${s4.sub_sections.metrics.map(m => `
+                                    <div class="bg-white rounded-[1.5rem] p-6 border border-slate-200 shadow-[0_4px_15px_rgb(0,0,0,0.03)] flex justify-between items-center group hover:border-[${rawData.theme.primary}] transition-colors">
+                                        <span class="text-sm font-bold text-slate-500 uppercase tracking-widest w-2/3 group-hover:text-slate-800 transition-colors">${m.label}</span>
+                                        <span class="text-5xl font-black text-[${rawData.theme.primary}]">${m.value}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <!-- Traceability Statement -->
+                            <div class="lg:col-span-8 flex">
+                                <div class="bg-[#0f172a] rounded-[2.5rem] p-10 lg:p-14 text-white shadow-2xl relative overflow-hidden flex flex-col justify-center w-full border border-slate-800">
+                                    <div class="absolute right-0 top-0 w-64 h-64 bg-[${rawData.theme.primary}]/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+                                    <div class="absolute left-0 top-0 w-2.5 h-full bg-gradient-to-b from-[${rawData.theme.primary}] to-blue-500"></div>
+                                    
+                                    <h4 class="text-3xl font-bold mb-6 relative z-10">${s4.sub_sections.traceability.title}</h4>
+                                    <p class="text-xl font-light text-slate-300 leading-relaxed relative z-10">
+                                        ${s4.sub_sections.traceability.text}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 5: EVIDENCE REGISTER TABLE -->
+                    <section>
+                        ${renderSectionTitle('5', s5.title, s5.subtitle)}
+                        
+                        <div class="bg-white rounded-[2rem] shadow-xl border border-slate-200 overflow-hidden">
+                            <div class="overflow-x-auto w-full max-h-[800px] overflow-y-auto" style="scrollbar-width: thin; scrollbar-color: #cbd5e1 #f8fafc;">
+                                <table class="w-full text-left border-collapse min-w-[1500px]">
+                                    <thead class="bg-slate-900 text-white sticky top-0 z-20">
+                                        <tr>
+                                            <th class="p-4 font-semibold text-xs uppercase tracking-wider whitespace-nowrap sticky left-0 z-30 bg-slate-900 shadow-[2px_0_5px_rgba(0,0,0,0.1)]">${tableHeaders.c}</th>
+                                            <th class="p-4 font-semibold text-xs uppercase tracking-wider whitespace-nowrap">${tableHeaders.t}</th>
+                                            <th class="p-4 font-semibold text-xs uppercase tracking-wider whitespace-nowrap">${tableHeaders.cat}</th>
+                                            <th class="p-4 font-semibold text-xs uppercase tracking-wider whitespace-nowrap">${tableHeaders.a}</th>
+                                            <th class="p-4 font-semibold text-xs uppercase tracking-wider w-80">${tableHeaders.obs}</th>
+                                            <th class="p-4 font-semibold text-xs uppercase tracking-wider w-80">${tableHeaders.imp}</th>
+                                            <th class="p-4 font-semibold text-xs uppercase tracking-wider whitespace-nowrap">${tableHeaders.f}</th>
+                                            <th class="p-4 font-semibold text-xs uppercase tracking-wider whitespace-nowrap">${tableHeaders.w}</th>
+                                            <th class="p-4 font-semibold text-xs uppercase tracking-wider whitespace-nowrap">${tableHeaders.ow}</th>
+                                            <th class="p-4 font-semibold text-xs uppercase tracking-wider whitespace-nowrap">${tableHeaders.s}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-slate-700 text-sm divide-y divide-slate-100">
+                                        ${s5.sub_sections.table_data.map(row => `
+                                            <tr class="hover:bg-slate-50 transition-colors group">
+                                                <td class="p-4 font-mono text-xs font-bold text-slate-900 sticky left-0 bg-white group-hover:bg-slate-50 shadow-[2px_0_5px_rgba(0,0,0,0.02)] whitespace-nowrap">${row.c}</td>
+                                                <td class="p-4 whitespace-nowrap">
+                                                    <span class="px-2.5 py-1 rounded-md text-[10px] font-black uppercase tracking-widest ${row.t === 'Issue' ? 'bg-red-50 text-red-600 border border-red-200 shadow-sm' : 'bg-blue-50 text-blue-600 border border-blue-200'}">
+                                                        ${row.t}
+                                                    </span>
+                                                </td>
+                                                <td class="p-4 font-medium text-slate-800 whitespace-nowrap">${row.cat}</td>
+                                                <td class="p-4 text-xs text-slate-500 max-w-[150px] truncate" title="${row.a}">${row.a}</td>
+                                                <td class="p-4 text-sm text-slate-700 leading-relaxed">${row.obs}</td>
+                                                <td class="p-4 text-sm text-slate-600 leading-relaxed">${row.imp}</td>
+                                                <td class="p-4 text-xs text-slate-500 whitespace-nowrap">${row.f}</td>
+                                                <td class="p-4 text-xs text-slate-500 max-w-[150px] truncate" title="${row.w}">${row.w}</td>
+                                                <td class="p-4 text-xs font-medium text-slate-600 whitespace-nowrap">${row.ow}</td>
+                                                <td class="p-4 whitespace-nowrap">
+                                                    <span class="flex items-center gap-1.5 text-xs font-bold text-emerald-600">
+                                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>${row.s}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="bg-slate-50 border-t border-slate-200 p-4 text-center text-xs font-medium text-slate-500">
+                                Displaying representative excerpt of registers. Scroll horizontally to view all columns.
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 6: REFERENCE MAP -->
+                    <section class="pb-24">
+                        ${renderSectionTitle('6', s6.title, s6.subtitle)}
+                        
+                        <div class="bg-[#0f172a] rounded-[2.5rem] p-8 md:p-12 overflow-hidden shadow-2xl border border-slate-800">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left min-w-[800px]">
+                                    <thead>
+                                        <tr class="text-slate-400 uppercase text-[10px] tracking-widest border-b border-slate-800">
+                                            <th class="p-4 pb-6 font-bold">${mapHeaders.type}</th>
+                                            <th class="p-4 pb-6 font-bold">${mapHeaders.codes}</th>
+                                            <th class="p-4 pb-6 font-bold">${mapHeaders.source}</th>
+                                            <th class="p-4 pb-6 font-bold">${mapHeaders.usedBy}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-slate-300 text-sm divide-y divide-slate-800/60">
+                                        ${s6.sub_sections.mapping_table.map(ref => `
+                                            <tr class="hover:bg-slate-800/40 transition-colors">
+                                                <td class="p-4 py-6 font-bold text-white whitespace-nowrap">${ref.type}</td>
+                                                <td class="p-4 py-6 font-mono text-xs text-[${rawData.theme.primary}] whitespace-nowrap">${ref.codes}</td>
+                                                <td class="p-4 py-6 leading-relaxed text-slate-400">${ref.source}</td>
+                                                <td class="p-4 py-6 text-slate-300 font-medium whitespace-nowrap">${ref.usedBy}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+
+                </main>
+            `;
+            
+            app.innerHTML = html;
+        });
+    </script>
+    <style>
+        /* Custom styling enhancements */
+        ::selection { background-color: #10b981; color: white; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+    <div id="app"></div>
+</body>
+</html>

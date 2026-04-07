@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functional Scope Report Template</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Modern Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GENERIC JSON DATA EMBED: Sections -> Sub-sections Structure -->
+    <script id="report-data" type="application/json">
+    {
+      "theme": {
+        "primary": "#10b981",
+        "accent": "#059669",
+        "dark": "#0f172a",
+        "roadmapBg": "#1e293b"
+      },
+      "metadata": {
+        "title": "Appendix H - Functional Scope",
+        "subtitle": "Function Groups & Value Streams",
+        "documentId": "INA-PL-GRP-APP-H",
+        "company": "PT Indonesia Asahan Aluminium",
+        "plant": "Green Plant (INA-PL-GRP)",
+        "date": "March 2026",
+        "status": "Executive Final"
+      },
+      "sections": {
+        "purpose": {
+          "sectionTitle": "Section 01",
+          "titleText": "Purpose of Appendix H",
+          "subtitleText": "",
+          "content": "Appendix H defines the functional coverage boundary of Green Plant (INA-PL-GRP) within the broader operating model, based strictly on the Function Groups / Value Streams evidence provided. It clarifies which Function Groups directly affect plant operations and the automation evaluation, and how value flows across Production, Maintenance, Quality, Utilities, Logistics, and Planning.",
+          "takeaway": "Appendix H establishes the functional baseline for subsequent evaluation of procedures (Appendix I), performance measures (Appendix J), and evidence thematic mapping (Appendix K). No maturity classification is declared in this section."
+        },
+        "snapshot": {
+          "sectionTitle": "Section 02",
+          "titleText": "Functional Scope Snapshot",
+          "subtitleText": "Deterministic Metrics",
+          "metrics": [
+            { "label": "Function Groups", "value": "9", "subtext": "Directly Involved" },
+            { "label": "Procedures", "value": "51", "subtext": "In Scope" },
+            { "label": "KPIs", "value": "44", "subtext": "In Scope" },
+            { "label": "Dependency", "value": "Critical", "subtext": "Smelting, Potline, Utilities" },
+            { "label": "Digital Leverage", "value": "High", "subtext": "MES, LIMS, CMMS, DSS" },
+            { "label": "Integration Posture", "value": "Fragmented", "subtext": "Manual/Excel/Offline" }
+          ]
+        },
+        "inventory": {
+          "sectionTitle": "Section 03",
+          "titleText": "Function Group Inventory",
+          "subtitleText": "",
+          "tableHeaders": [
+            "Code", "Name", "Included Work Scope", "Plant Relevance"
+          ],
+          "tableData": [
+            { "code": "INA-FG-001", "name": "Production", "scope": "Carbon production, smelting, potline operations, casting", "relevance": "Core" },
+            { "code": "INA-FG-002", "name": "Utilities", "scope": "Hydropower generation, transmission, energy supply", "relevance": "Supporting" },
+            { "code": "INA-FG-003", "name": "Plant Maintenance", "scope": "Mechanical, electrical, and plant maintenance", "relevance": "Critical" },
+            { "code": "INA-FG-004", "name": "Safety", "scope": "K3, HSE compliance, incident management", "relevance": "Supporting" },
+            { "code": "INA-FG-007", "name": "Planning & Budgeting", "scope": "Production, maintenance, and utility planning", "relevance": "Moderate" },
+            { "code": "INA-FG-008", "name": "Quality", "scope": "Quality (RM, WIP, FG), lab/testing, inspection, NC/CAPA, CoA", "relevance": "High" },
+            { "code": "INA-FG-009", "name": "RM & FG Logistics", "scope": "Raw material receiving & handling, finished goods shipping", "relevance": "Critical" },
+            { "code": "INA-FG-011", "name": "Asset Maintenance", "scope": "Reliability governance, criticality, spares, lifecycle", "relevance": "Critical" },
+            { "code": "INA-FG-012", "name": "Vehicle Maintenance", "scope": "PM/CM for fleet & heavy equipment, inspections", "relevance": "Critical" }
+          ],
+          "commentaryTitle": "Detailed Operational Touchpoints",
+          "touchpointsLabel": "Operational Touchpoints",
+          "digitalExposureLabel": "Digital Exposure",
+          "commentaryData": [
+            {
+              "code": "INA-FG-001", "name": "Production", "relevance": "Core",
+              "touchpoints": [
+                "Coke receiving & silo stocking",
+                "Material preparation & screening",
+                "Mixing & pre-heating and Kneader Mixing",
+                "Anode forming",
+                "Cooling/aging/labeling"
+              ],
+              "digital": "PLC exists for key production stages, SCADA exists but multiple Findings indicate manual/Excel/offline practices and missing alarm logging."
+            },
+            {
+              "code": "INA-FG-002", "name": "Utilities", "relevance": "Supporting",
+              "touchpoints": [
+                "Cooling water control system",
+                "Industrial water measurement points and instrumentation gaps",
+                "Compressed air distribution visibility/control needs"
+              ],
+              "digital": "Utility monitoring needs are explicitly stated; SCADA connectivity for some items is 'To validate'."
+            },
+            {
+              "code": "INA-FG-003", "name": "Plant Maintenance", "relevance": "Critical",
+              "touchpoints": [
+                "Maintenance planning & scheduling",
+                "Preventive & breakdown maintenance execution",
+                "Shutdown/turnaround governance",
+                "Condition monitoring and predictive analytics"
+              ],
+              "digital": "Evidence indicates reactive/breakdown behavior and downtime; also mentions CBM needs for pumps and vibration sensors for screens."
+            },
+            {
+              "code": "INA-FG-004", "name": "Safety", "relevance": "Supporting",
+              "touchpoints": [
+                "Permit-to-work and LOTO/isolation",
+                "Safety incident reporting and closure",
+                "Risk assessment governance",
+                "Emergency drills"
+              ],
+              "digital": "Safety execution procedures exist; some safety monitoring gaps are evidenced as sensor absence and reliance on visual checks."
+            },
+            {
+              "code": "INA-FG-008", "name": "Quality", "relevance": "High",
+              "touchpoints": [
+                "Receiving inspection",
+                "In-process/final inspection",
+                "Nonconformance & CAPA and CoA issuance",
+                "QC results arrive after material consumed; slow reporting"
+              ],
+              "digital": "Strong procedural governance exists, but evidence shows manual capture (templates/Excel/PDF/email) and latency."
+            },
+            {
+              "code": "INA-FG-009", "name": "RM & FG Logistics", "relevance": "Critical",
+              "touchpoints": [
+                "Coke unloading & silo distribution",
+                "HS/LS segregation logistics rules",
+                "Issues: coke shipment delays; rain stops unloading",
+                "Findings: no transaction recording when moving yard stock"
+              ],
+              "digital": "Logistics control is evidenced as manual/email/spreadsheet dependent with visibility gaps."
+            }
+          ]
+        },
+        "valueStreams": {
+          "sectionTitle": "Section 04",
+          "titleText": "Value Stream Mapping",
+          "subtitleText": "",
+          "primaryTitle": "Primary Value Stream",
+          "primaryData": [
+            "Inbound Receiving", "Silo Stocking & HS/LS Classification", "Screening / Sizing",
+            "Feeder Weight Dosing & Pre-heating", "Kneader Mixing", "Anode Forming (Shaking)",
+            "Cooling / Aging", "Labeling", "Transfer / Dispatch to Baking"
+          ],
+          "supportingTitle": "Supporting Value Streams",
+          "supportingData": [
+            {
+              "title": "Reliability and Asset Health Stream",
+              "groups": "INA-FG-003, INA-FG-011",
+              "bullets": [
+                "Preventive maintenance planning/execution",
+                "Breakdown response and closeout",
+                "Condition monitoring and alerts"
+              ]
+            },
+            {
+              "title": "Quality Assurance Stream",
+              "groups": "INA-FG-008, INA-FG-001",
+              "bullets": [
+                "Incoming QC and in-process sampling",
+                "Release/hold governance and reporting workflow",
+                "Nonconformance and CAPA workflow"
+              ]
+            },
+            {
+              "title": "Planning and Capacity Stream",
+              "groups": "INA-FG-007, INA-FG-009, INA-FG-001, INA-FG-003",
+              "bullets": [
+                "Inbound scheduling and unloading coordination",
+                "Capacity allocation and availability-driven targets",
+                "Maintenance cadence dependency"
+              ]
+            },
+            {
+              "title": "Utilities and Energy Stream",
+              "groups": "INA-FG-002, INA-FG-001",
+              "bullets": [
+                "Cooling water system monitoring needs",
+                "Compressed air distribution visibility needs"
+              ]
+            }
+          ]
+        },
+        "gapExposure": {
+          "sectionTitle": "Section 05",
+          "titleText": "Functional Gap Exposure",
+          "subtitleText": "Evidence-Based Constraints",
+          "impactLabel": "Operational Impact",
+          "digitalLabel": "Digital Implication",
+          "gapData": [
+            {
+              "id": "H-GAP-01",
+              "statement": "Frequent breakdown/downtime in critical kneader line",
+              "groups": "INA-FG-003, INA-FG-001, INA-FG-011",
+              "impact": "Throughput loss vs design; availability instability",
+              "digital": "No closed-loop reliability governance; limited event analytics",
+              "commentary": "Breakdown evidence in KN-201/KN202 indicates a reliability constraint at a production-critical node. This reduces operational availability and drives output below target. Business risk is persistent capacity loss and instability."
+            },
+            {
+              "id": "H-GAP-02",
+              "statement": "Material flow interruptions due to choking/overflow with removed/disabled sensors",
+              "groups": "INA-FG-001, INA-FG-003",
+              "impact": "Downtime and manual clearing; spill/handling disruption",
+              "digital": "Detection gaps prevent early warning; weak condition/event logging",
+              "commentary": "Sensor removal/disablement due to false trips and lack of overflow/choking detection creates repeated manual intervention and downtime. Operationally it interrupts material continuity and increases handling disruption."
+            },
+            {
+              "id": "H-GAP-03",
+              "statement": "Inventory visibility gaps (silo level drift; yard stock not recorded)",
+              "groups": "INA-FG-009, INA-FG-007",
+              "impact": "Planning and supply decisions less reliable; stock shock risk",
+              "digital": "Data latency/low trust prevents orchestration and planning discipline",
+              "commentary": "Silo level inaccuracies from dust and lack of yard transaction records reduce inventory trust. Operationally this undermines supply assurance and planning. Business risk is material shortfall shocks."
+            },
+            {
+              "id": "H-GAP-04",
+              "statement": "Unplanned supply disruption and shipment delays affecting production",
+              "groups": "INA-FG-009, INA-FG-001, INA-FG-007",
+              "impact": "Production shortfall risk; reactive scheduling",
+              "digital": "Siloed logistics reporting prevents proactive response",
+              "commentary": "Shipment delays and stockout evidence show logistics-to-production coupling. Operational effect is production curtailment when coke availability slips. Governance implication: logistics visibility and dispatch coordination are manual."
+            },
+            {
+              "id": "H-GAP-05",
+              "statement": "Quality feedback latency and manual reporting/approvals",
+              "groups": "INA-FG-008, INA-FG-001",
+              "impact": "Late decisions; inability to contain material before use",
+              "digital": "Manual workflows create data lag; weak traceability and fast containment",
+              "commentary": "Manual QC capture and staged approvals slow feedback loops; evidence shows results can arrive after consumption. Operationally it delays containment and decision-making."
+            },
+            {
+              "id": "H-GAP-06",
+              "statement": "Absence of integrated database and automated alarm/event history",
+              "groups": "INA-FG-008, INA-FG-005, INA-FG-001",
+              "impact": "RCA and audit evidence retrieval slow; troubleshooting depends on people",
+              "digital": "Fragmented data prevents KPI consolidation and analytics readiness",
+              "commentary": "The dataset explicitly states absence of an integrated database and no automated alarm logging. Operational effect is slow audit/RCA and troubleshooting dependency."
+            },
+            {
+              "id": "H-GAP-07",
+              "statement": "Lack of formal scheduling discipline in silo operations",
+              "groups": "INA-FG-007, INA-FG-009",
+              "impact": "Operator-dependent variability; supply-to-line instability",
+              "digital": "No governed planning loop; limited standard decision traceability",
+              "commentary": "Evidence of no planned silo scheduling indicates planning discipline weakness. Operational effect is variability and operator habit dependency. Scheduling cannot be audited or optimized."
+            }
+          ]
+        },
+        "maturity": {
+          "sectionTitle": "Section 06",
+          "titleText": "Digital Maturity Assessment",
+          "subtitleText": "",
+          "tableHeaders": [
+            "Function", "Current Maturity", "Exposure Level", "Notes"
+          ],
+          "tableData": [
+            { "function": "Production", "score": "Medium", "exposure": "Medium", "notes": "PLC/SCADA exist for key stages, but Findings show manual practices, OEE below max, and missing event logging" },
+            { "function": "Maintenance", "score": "Medium", "exposure": "High", "notes": "Procedures/KPIs exist (PM, MTBF/MTTR) but Issues show frequent breakdown-driven behavior" },
+            { "function": "Quality", "score": "Low", "exposure": "High", "notes": "Strong procedure set, but manual recording/transcription + approval latency; results can arrive after consumption" },
+            { "function": "Logistics", "score": "Low-Medium", "exposure": "High", "notes": "Email/spreadsheet planning, shipment delay impacts, inventory visibility issues" },
+            { "function": "Planning", "score": "Low-Medium", "exposure": "Medium", "notes": "Capacity targets set by availability; silo scheduling informal; vessel schedule is email+spreadsheet" },
+            { "function": "Asset Governance", "score": "Low-Medium", "exposure": "Medium", "notes": "Reliability governance intent via procedures/KPIs, but limited evidence of integrated execution and analytics" }
+          ]
+        },
+        "executiveFraming": {
+          "sectionTitle": "Section 07",
+          "titleText": "Executive Framing",
+          "subtitleText": "",
+          "summary": "Functionally, Green Plant (INA-PL-GRP) has clear coverage across nine Function Groups with strong anchors in Production supported by Logistics, Maintenance, Quality, and Planning. The dominant constraints are concentrated in reliability-driven downtime (kneader line), material-flow interruption events, inventory visibility drift, and quality latency.",
+          "prioritiesTitle": "Strategic Recommendations",
+          "prioritiesData": [
+            "Stabilize production execution by reducing downtime coupling at critical mixing/forming nodes.",
+            "Convert maintenance posture from reactive response to governed reliability workflows aligned to PM and MTBF/MTTR discipline.",
+            "Reduce quality latency by tightening feedback loops between sampling, approvals, and production decisions.",
+            "Improve logistics and planning synchronization to reduce stock shocks and schedule disruptions."
+          ]
+        },
+        "referenceMap": {
+          "sectionTitle": "Output 9B",
+          "titleText": "Reference Map",
+          "subtitleText": "Baseline Verification",
+          "tableHeaders": [
+            "Object Type", "Source", "Evidence Linkage / Codes", "Used By"
+          ],
+          "tableData": [
+            { "objectType": "Function Groups", "source": "List Of Related Function Group / Value Stream", "codes": "INA-FG-001…INA-FG-012", "usage": "Appendix H Sections 2–7" },
+            { "objectType": "Procedures", "source": "List Of Related Procedures", "codes": "INA-PRC-001…138 (51 items)", "usage": "Appendix H Sections 3–6" },
+            { "objectType": "KPIs", "source": "List Of Related KPIs", "codes": "INA-KPI-001…053 (44 items)", "usage": "Appendix H Sections 2, 5, 6" },
+            { "objectType": "Value Stream Steps", "source": "Process Elicitation Result", "codes": "INA-34…40, INA-73…76", "usage": "Appendix H Section 4" },
+            { "objectType": "Operational Constraints", "source": "Findings & Notes; Issue table", "codes": "Findings tags + Issue entries", "usage": "Appendix H Sections 5–7" },
+            { "objectType": "Digital Leverage", "source": "List Of Related Solution Proposed", "codes": "INA-SOL-02/04/07/08/18", "usage": "Appendix H Section 2" },
+            { "objectType": "Integration Evidence", "source": "List Of File Used", "codes": "Files Used (email/PDF/Excel)", "usage": "Appendix H Sections 2, 5, 6" }
+          ]
+        }
+      }
+    }
+    </script>
+
+    <script>
+        const rawData = JSON.parse(document.getElementById('report-data').textContent);
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        report: {
+                            50: '#ecfdf5', 100: '#d1fae5', 500: rawData.theme.primary, 800: '#065f46', 900: rawData.theme.dark, 
+                            accent: rawData.theme.accent, roadmapBg: rawData.theme.roadmapBg
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .dark-glass { background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2670&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+        }
+        .table-container { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+        .table-container::-webkit-scrollbar { height: 8px; }
+        .table-container::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed selection:bg-report-500 selection:text-white">
+
+    <div id="app"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const data = JSON.parse(document.getElementById('report-data').textContent);
+            const app = document.getElementById('app');
+
+            // Dynamic section title builder
+            const renderSectionTitle = (sectionNumber, titleText, subtitleText = '') => `
+                <div class="flex items-stretch gap-4 mb-8">
+                    <div class="w-1.5 bg-[#0f172a] rounded-full"></div>
+                    <div class="py-1">
+                        <p class="text-report-500 font-bold tracking-widest uppercase text-xs mb-1">${sectionNumber}</p>
+                        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">${titleText}</h2>
+                        ${subtitleText ? `<p class="text-sm text-slate-500 mt-2">${subtitleText}</p>` : ''}
+                    </div>
+                </div>
+            `;
+
+            // Generic styling helpers based on textual matching
+            const getRelevanceBadge = (relevance) => {
+                if (!relevance) return 'bg-slate-100 text-slate-600 border-slate-300';
+                const normalized = relevance.toLowerCase();
+                if(normalized.includes('core')) return 'bg-purple-100 text-purple-700 border-purple-200';
+                if(normalized.includes('critical')) return 'bg-red-50 text-red-700 border-red-200';
+                if(normalized.includes('high')) return 'bg-orange-50 text-orange-700 border-orange-200';
+                if(normalized.includes('moderate')) return 'bg-blue-50 text-blue-700 border-blue-200';
+                return 'bg-slate-100 text-slate-600 border-slate-300';
+            };
+
+            const getMaturityBadge = (score) => {
+                if (!score) return 'bg-slate-100 text-slate-600 border-slate-300';
+                const normalized = score.toLowerCase();
+                if(normalized.includes('low')) return 'bg-red-50 text-red-700 border-red-200';
+                if(normalized.includes('medium')) return 'bg-orange-50 text-orange-700 border-orange-200';
+                return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+            };
+
+            const html = `
+                <!-- COVER COMPONENT -->
+                <section class="h-[95vh] flex flex-col justify-end p-8 md:p-16 lg:p-24 hero-bg text-white relative">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent mix-blend-multiply"></div>
+                    <div class="relative z-10 max-w-5xl">
+                        <div class="mb-6 inline-flex items-center px-4 py-1.5 rounded-full border border-report-500/50 bg-report-500/20 text-emerald-100 text-sm font-semibold tracking-wide uppercase shadow-lg">
+                            ${data.metadata.documentId}
+                        </div>
+                        <h1 class="text-6xl md:text-8xl font-bold tracking-tight mb-4 text-white drop-shadow-sm">
+                            ${data.metadata.title.split('-')[0] || data.metadata.title} <br/> 
+                            <span class="text-report-500">${data.metadata.title.split('-')[1] || ''}</span>
+                        </h1>
+                        <h2 class="text-2xl md:text-3xl font-light text-slate-300 mb-12 max-w-3xl leading-snug">
+                            ${data.metadata.subtitle}
+                        </h2>
+
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 border-t border-white/20 pt-8 mt-12 dark-glass rounded-3xl p-8 shadow-2xl backdrop-blur-xl items-center">
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Facility</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.plant}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Company</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.company}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Issue Date</p>
+                                <p class="font-medium text-white text-lg">${data.metadata.date}</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Status</p>
+                                <p class="font-medium text-report-500 flex items-center gap-2 text-lg">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-report-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                                    ${data.metadata.status}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <main class="max-w-[1440px] mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-12 gap-y-20 gap-x-8">
+
+                    <!-- DYNAMIC SECTION: PURPOSE -->
+                    <div class="col-span-1 md:col-span-12">
+                        ${renderSectionTitle(data.sections.purpose.sectionTitle, data.sections.purpose.titleText, data.sections.purpose.subtitleText)}
+                    </div>
+
+                    <div class="col-span-1 md:col-span-8 md:col-start-3 space-y-8 text-xl font-light">
+                        <p class="text-slate-700 leading-relaxed">
+                            ${data.sections.purpose.content}
+                        </p>
+                        <blockquote class="bg-slate-900 rounded-[2rem] p-8 text-white shadow-xl relative overflow-hidden">
+                            <div class="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-emerald-400 to-report-500"></div>
+                            <p class="relative z-10 text-lg font-light leading-relaxed">
+                                ${data.sections.purpose.takeaway}
+                            </p>
+                        </blockquote>
+                    </div>
+                    
+                    <!-- DYNAMIC SECTION: SNAPSHOT METRICS -->
+                    <div class="col-span-1 md:col-span-12 mt-8 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.snapshot.sectionTitle, data.sections.snapshot.titleText, data.sections.snapshot.subtitleText)}
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-8">
+                            ${data.sections.snapshot.metrics.map(m => {
+                                // Default styling for general numeric cards (Emerald themed)
+                                let cardClass = "bg-[#f0fdf4] border-[#bbf7d0]";
+                                let textClass = "text-[#15803d]";
+                                let labelClass = "text-[#4ade80]";
+                                let subtextClass = "text-slate-500";
+                                
+                                // Conditional styling matching the exact reference image tones
+                                if (m.value === 'Critical') {
+                                    cardClass = "bg-[#fef2f2] border-[#fecaca]"; // light red bg, soft red border
+                                    textClass = "text-[#b91c1c]"; // dark red text
+                                    labelClass = "text-[#f87171]"; // medium red label
+                                    subtextClass = "text-[#64748b]"; // slightly darker subtext for contrast
+                                } else if (m.value === 'High') {
+                                    cardClass = "bg-[#fff7ed] border-[#fed7aa]"; // light orange bg, soft orange border
+                                    textClass = "text-[#c2410c]"; // dark orange text
+                                    labelClass = "text-[#fb923c]"; // medium orange label
+                                    subtextClass = "text-[#64748b]"; 
+                                } else if (m.value === 'Fragmented') {
+                                    cardClass = "bg-[#f8fafc] border-[#e2e8f0]"; // light slate bg, soft slate border
+                                    textClass = "text-[#334155]"; // dark slate text
+                                    labelClass = "text-[#94a3b8]"; // medium slate label
+                                    subtextClass = "text-[#64748b]"; 
+                                }
+
+                                return `
+                                    <div class="rounded-[24px] p-6 md:py-8 border-[1.5px] flex flex-col justify-center items-center text-center shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 ${cardClass}">
+                                        <p class="text-[11px] font-bold uppercase tracking-[0.15em] mb-3 ${labelClass}">${m.label}</p>
+                                        <p class="text-4xl font-extrabold mb-3 tracking-tight ${textClass}">${m.value}</p>
+                                        <p class="text-xs font-medium leading-relaxed px-1 ${subtextClass}">${m.subtext}</p>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+
+                    <!-- DYNAMIC SECTION: INVENTORY REGISTER & COMMENTARY -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.inventory.sectionTitle, data.sections.inventory.titleText, data.sections.inventory.subtitleText)}
+                        
+                        <div class="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden table-container overflow-x-auto mb-16">
+                            <table class="w-full text-left min-w-[800px] border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-900 text-white uppercase text-xs tracking-wider">
+                                        ${data.sections.inventory.tableHeaders.map((header, index) => `
+                                            <th class="p-4 font-semibold ${index === 0 ? 'rounded-tl-3xl' : ''}">${header}</th>
+                                        `).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-700 text-sm divide-y divide-slate-100">
+                                    ${data.sections.inventory.tableData.map(row => `
+                                        <tr class="hover:bg-slate-50 transition-colors">
+                                            <td class="p-4 font-mono font-medium text-slate-900">${row.code}</td>
+                                            <td class="p-4 font-bold text-slate-800 whitespace-nowrap">${row.name}</td>
+                                            <td class="p-4 text-slate-600">${row.scope}</td>
+                                            <td class="p-4">
+                                                <span class="px-3 py-1 rounded-full text-xs font-bold border ${getRelevanceBadge(row.relevance)}">${row.relevance}</span>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 class="text-2xl font-bold text-slate-800 mb-8">${data.sections.inventory.commentaryTitle}</h3>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            ${data.sections.inventory.commentaryData.map(item => `
+                                <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-200 flex flex-col h-full relative overflow-hidden group hover:shadow-xl transition-all">
+                                    <div class="absolute top-0 left-0 w-full h-1.5 bg-slate-100 group-hover:bg-report-500 transition-colors"></div>
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div>
+                                            <p class="text-xs font-mono text-slate-400 mb-1">${item.code}</p>
+                                            <h4 class="text-2xl font-bold text-slate-800">${item.name}</h4>
+                                        </div>
+                                        <span class="px-3 py-1 rounded-full text-xs font-bold border ${getRelevanceBadge(item.relevance)}">${item.relevance}</span>
+                                    </div>
+                                    
+                                    <div class="mb-6 flex-grow">
+                                        <p class="text-xs uppercase font-bold text-report-500 tracking-widest mb-3">${data.sections.inventory.touchpointsLabel}</p>
+                                        <ul class="space-y-2 text-slate-600 text-sm">
+                                            ${item.touchpoints.map(t => `<li class="flex items-start gap-2"><div class="w-1.5 h-1.5 rounded-full bg-slate-300 mt-1.5 shrink-0"></div><p>${t}</p></li>`).join('')}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="pt-5 border-t border-slate-100 mt-auto bg-slate-50 -mx-8 -mb-8 p-8 rounded-b-[2rem]">
+                                        <p class="text-xs uppercase font-bold text-slate-400 tracking-widest mb-2">${data.sections.inventory.digitalExposureLabel}</p>
+                                        <p class="text-sm font-medium text-slate-700 leading-relaxed">${item.digital}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- DYNAMIC SECTION: VALUE STREAMS -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.valueStreams.sectionTitle, data.sections.valueStreams.titleText, data.sections.valueStreams.subtitleText)}
+                        
+                        <div class="bg-[#0b1120] rounded-[2.5rem] p-10 md:p-14 shadow-2xl text-white mb-12">
+                            <h3 class="text-xl md:text-2xl font-bold text-white mb-10 flex items-center gap-4">
+                                <span class="w-8 h-8 rounded-full bg-[#10b981] flex items-center justify-center text-sm font-bold text-white shadow-[0_0_10px_rgba(16,185,129,0.5)]">1</span>
+                                ${data.sections.valueStreams.primaryTitle}
+                            </h3>
+                            
+                            <div class="flex flex-wrap items-center gap-x-4 gap-y-6">
+                                ${data.sections.valueStreams.primaryData.map((step, i) => `
+                                    <div class="flex items-center gap-4">
+                                        <div class="bg-[#1e293b] border border-slate-700/60 px-5 py-3 rounded-xl text-sm font-semibold shadow-md text-slate-200">
+                                            ${step}
+                                        </div>
+                                        ${i < data.sections.valueStreams.primaryData.length - 1 ? `
+                                            <svg class="w-5 h-5 text-[#10b981]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                        ` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-800 mb-6">${data.sections.valueStreams.supportingTitle}</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            ${data.sections.valueStreams.supportingData.map(stream => `
+                                <div class="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                                    <h4 class="text-lg font-bold text-slate-800 mb-2">${stream.title}</h4>
+                                    <p class="text-xs font-mono text-report-500 mb-5 pb-5 border-b border-slate-100">${stream.groups}</p>
+                                    <ul class="space-y-3 text-sm text-slate-600">
+                                        ${stream.bullets.map(b => `<li class="flex items-start gap-2"><span class="text-report-500 font-bold mt-0.5">›</span> <p>${b}</p></li>`).join('')}
+                                    </ul>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- DYNAMIC SECTION: GAP EXPOSURE -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.gapExposure.sectionTitle, data.sections.gapExposure.titleText, data.sections.gapExposure.subtitleText)}
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            ${data.sections.gapExposure.gapData.map(gap => `
+                                <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-slate-200 relative overflow-hidden flex flex-col">
+                                    <div class="absolute right-0 top-0 bg-red-50 text-red-700 font-bold px-4 py-2 rounded-bl-2xl text-xs border-b border-l border-red-100">
+                                        ${gap.id}
+                                    </div>
+                                    <h4 class="text-xl font-bold text-slate-800 mt-4 mb-2 pr-16">${gap.statement}</h4>
+                                    <p class="text-xs font-mono text-slate-400 mb-6">${gap.groups}</p>
+                                    
+                                    <div class="bg-slate-50 p-5 rounded-xl border border-slate-100 mb-6 text-sm text-slate-700 italic">
+                                        "${gap.commentary}"
+                                    </div>
+
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-auto">
+                                        <div>
+                                            <p class="text-[10px] uppercase font-bold text-red-500 tracking-widest mb-1">${data.sections.gapExposure.impactLabel}</p>
+                                            <p class="text-sm font-medium text-slate-800">${gap.impact}</p>
+                                        </div>
+                                        <div>
+                                            <p class="text-[10px] uppercase font-bold text-slate-400 tracking-widest mb-1">${data.sections.gapExposure.digitalLabel}</p>
+                                            <p class="text-sm font-medium text-slate-600">${gap.digital}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- DYNAMIC SECTION: MATURITY ASSESSMENT -->
+                    <div class="col-span-1 md:col-span-12 mt-12 border-t border-slate-200 pt-16">
+                        ${renderSectionTitle(data.sections.maturity.sectionTitle, data.sections.maturity.titleText, data.sections.maturity.subtitleText)}
+                        
+                        <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                            <table class="w-full text-left">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wider border-b border-slate-200">
+                                        ${data.sections.maturity.tableHeaders.map(header => `<th class="p-5 font-bold">${header}</th>`).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-800 text-sm divide-y divide-slate-100">
+                                    ${data.sections.maturity.tableData.map(row => `
+                                        <tr class="hover:bg-slate-50">
+                                            <td class="p-5 font-bold text-slate-700 whitespace-nowrap">${row.function}</td>
+                                            <td class="p-5 whitespace-nowrap">
+                                                <span class="px-3 py-1 rounded-full text-xs font-bold border ${getMaturityBadge(row.score)}">${row.score}</span>
+                                            </td>
+                                            <td class="p-5 whitespace-nowrap">
+                                                <span class="px-3 py-1 rounded-full text-xs font-bold border ${getRelevanceBadge(row.exposure)}">${row.exposure}</span>
+                                            </td>
+                                            <td class="p-5 text-slate-600 leading-relaxed">${row.notes}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- DYNAMIC SECTION: EXEC FRAMING & REFERENCE MAP -->
+                    <div class="col-span-1 md:col-span-12 flex flex-col gap-16 mt-12 border-t border-slate-200 pt-16 mb-24">
+                        
+                        <!-- Exec Framing (Dark Indigo Theme matching Reference image, no graphical backgrounds) -->
+                        <div class="w-full">
+                            <div class="bg-[#1c1938] rounded-[2rem] p-10 md:p-14 shadow-2xl text-white">
+                                <p class="text-indigo-400 font-bold tracking-widest uppercase text-[10px] mb-3">${data.sections.executiveFraming.sectionTitle}</p>
+                                <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-6">${data.sections.executiveFraming.titleText}</h2>
+                                
+                                <p class="text-base md:text-lg text-slate-300 leading-relaxed font-light mb-12">
+                                    ${data.sections.executiveFraming.summary}
+                                </p>
+                                
+                                <h4 class="text-lg font-bold text-white mb-8 border-b-2 border-slate-600 pb-2 inline-block">${data.sections.executiveFraming.prioritiesTitle}</h4>
+                                <ul class="space-y-6">
+                                    ${data.sections.executiveFraming.prioritiesData.map((priority, i) => `
+                                        <li class="flex items-start gap-4">
+                                            <div class="w-6 h-6 rounded-full border border-indigo-400 text-indigo-300 font-semibold flex items-center justify-center shrink-0 mt-0.5 text-xs">
+                                                ${i+1}
+                                            </div>
+                                            <p class="text-slate-300 text-sm leading-relaxed">${priority}</p>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Reference Map (Light Minimalist Theme) -->
+                        <div class="w-full mt-4">
+                            <div class="mb-8 border-l-[3px] border-blue-600 pl-4 py-0.5">
+                                <p class="text-blue-600 font-bold tracking-widest uppercase text-[10px] mb-1">${data.sections.referenceMap.sectionTitle}</p>
+                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">${data.sections.referenceMap.titleText}</h2>
+                                <p class="text-xs text-slate-500 mt-1">${data.sections.referenceMap.subtitleText}</p>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 overflow-x-auto table-container">
+                                <table class="w-full text-left min-w-[900px]">
+                                    <thead>
+                                        <tr class="text-slate-500 uppercase text-[10px] tracking-wider border-b border-slate-200 bg-slate-50/50">
+                                            ${data.sections.referenceMap.tableHeaders.map(header => `<th class="p-5 font-bold">${header}</th>`).join('')}
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-slate-600 text-xs divide-y divide-slate-100">
+                                        ${data.sections.referenceMap.tableData.map(ref => `
+                                            <tr class="hover:bg-slate-50 transition-colors">
+                                                <td class="p-5 font-bold text-slate-800 whitespace-nowrap">${ref.objectType || ''}</td>
+                                                <td class="p-5 leading-relaxed text-slate-500">${ref.source || ''}</td>
+                                                <td class="p-5 font-mono text-[11px] text-blue-600 font-medium">${ref.codes || ''}</td>
+                                                <td class="p-5 text-slate-400">${ref.usage || ''}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </main>
+            `;
+            
+            app.innerHTML = html;
+        });
+    </script>
+</body>
+</html>
