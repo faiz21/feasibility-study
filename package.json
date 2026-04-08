@@ -1,10 +1,17 @@
 {
   "private": true,
+  "config": {
+    "docker_image": "mvdevops/feasibility-study",
+    "docker_tag": "latest"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "docker:build:image": "bash -lc 'IMAGE=\"${npm_package_config_docker_image}\"; TAG=\"${DOCKER_TAG:-${npm_package_config_docker_tag}}\"; docker build -t \"$IMAGE:$TAG\" .'",
+    "docker:push:image": "bash -lc 'IMAGE=\"${npm_package_config_docker_image}\"; TAG=\"${DOCKER_TAG:-${npm_package_config_docker_tag}}\"; docker push \"$IMAGE:$TAG\"'",
+    "docker:build-push:image": "bash -lc 'IMAGE=\"${npm_package_config_docker_image}\"; TAG=\"${DOCKER_TAG:-${npm_package_config_docker_tag}}\"; docker build -t \"$IMAGE:$TAG\" . && docker push \"$IMAGE:$TAG\"'",
     "docker:up": "bash -lc '(docker compose version >/dev/null 2>&1 && docker compose --env-file docker/.env.docker up -d --build) || docker-compose --env-file docker/.env.docker up -d --build'",
     "docker:down": "bash -lc '(docker compose version >/dev/null 2>&1 && docker compose --env-file docker/.env.docker down) || docker-compose --env-file docker/.env.docker down'",
     "docker:logs": "bash -lc '(docker compose version >/dev/null 2>&1 && docker compose --env-file docker/.env.docker logs -f --tail=200) || docker-compose --env-file docker/.env.docker logs -f --tail=200'",
