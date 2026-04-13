@@ -1,5 +1,6 @@
 import { getProfile, requireAuthenticatedUser } from "@/lib/portal/auth";
 import { logAccess } from "@/lib/portal/logging";
+import { safeNextPath } from "@/lib/portal/redirect";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -14,10 +15,16 @@ function getEmailDomain(email: string): string | null {
   return normalized.length > 0 ? normalized : null;
 }
 
-export default async function PostLoginPage() {
+export default async function PostLoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ next?: string }>;
+}) {
   const user = await requireAuthenticatedUser();
   const supabase = await createClient();
+  const params = await searchParams;
   let profile = await getProfile(user.id);
+  const next = safeNextPath(params.next, "");
 
   const roleHint = user.user_metadata?.role_hint;
   const role = profile ? profile.role : (roleHint === "admin" ? "admin" : "client");
@@ -92,6 +99,10 @@ export default async function PostLoginPage() {
     action: "login",
     metadata: { source: "magic_link" },
   });
+
+  if (next) {
+    redirect(next);
+  }
 
   if (profile.role === "admin") {
     redirect("/admin/reports");

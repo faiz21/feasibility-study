@@ -1,14 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
+import { safeNextPath } from "@/lib/portal/redirect";
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 import { type NextRequest } from "next/server";
-
-function safeNextPath(next: string | null): string {
-  if (!next || !next.startsWith("/") || next.startsWith("//")) {
-    return "/";
-  }
-  return next;
-}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);

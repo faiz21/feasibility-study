@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { ShieldCheck, UserRound } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { buildPostLoginPath, safeNextPath } from "@/lib/portal/redirect";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -30,7 +31,7 @@ function readStored() {
   }
 }
 
-export function MagicLinkLoginForm() {
+export function MagicLinkLoginForm({ nextPath }: { nextPath?: string }) {
   const stored = useMemo(readStored, []);
   const router = useRouter();
   const [email, setEmail] = useState(stored?.email ?? "");
@@ -63,6 +64,9 @@ export function MagicLinkLoginForm() {
 
       const supabase = createClient();
       const origin = window.location.origin;
+      const next = safeNextPath(nextPath ?? null, "");
+      const emailRedirectUrl = new URL("/auth/confirm", origin);
+      emailRedirectUrl.searchParams.set("next", buildPostLoginPath(next));
 
       if (role === "admin") {
         const { error: adminSignInError } = await supabase.auth.signInWithPassword({
@@ -83,7 +87,7 @@ export function MagicLinkLoginForm() {
       const { error: signInError } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${origin}/auth/confirm?next=/auth/post-login`,
+          emailRedirectTo: emailRedirectUrl.toString(),
           data:
             role === "client"
               ? { role_hint: role, position: trimmedPosition }
