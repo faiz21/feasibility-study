@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { ShieldCheck, UserRound } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { getPublicSiteUrl } from "@/lib/site-url";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -62,7 +63,7 @@ export function MagicLinkLoginForm() {
       }
 
       const supabase = createClient();
-      const origin = window.location.origin;
+      const siteUrl = getPublicSiteUrl();
 
       if (role === "admin") {
         const { error: adminSignInError } = await supabase.auth.signInWithPassword({
@@ -83,7 +84,7 @@ export function MagicLinkLoginForm() {
       const { error: signInError } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${origin}/auth/confirm?next=/auth/post-login`,
+          emailRedirectTo: `${siteUrl}/auth/confirm?next=/auth/post-login`,
           data:
             role === "client"
               ? { role_hint: role, position: trimmedPosition }

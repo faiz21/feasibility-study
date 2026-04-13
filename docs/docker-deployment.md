@@ -10,10 +10,17 @@
    cp docker/.env.docker.example docker/.env.docker
    ```
 2. Update secrets and passwords in `docker/.env.docker`.
-3. Ensure `.env.local` exists for app runtime values (for example, Supabase keys):
+3. Ensure `.env.local` exists for app runtime values (for example, Supabase keys and public site URL):
    ```bash
    cp .env.example .env.local
    ```
+4. For VPS/domain deployments, set:
+   ```bash
+   NEXT_PUBLIC_SITE_URL=https://feasibility-study.machinevision.global
+   ```
+5. In Supabase Auth URL configuration, add both:
+   - `https://feasibility-study.machinevision.global/auth/confirm`
+   - `https://feasibility-study.machinevision.global/auth/update-password`
 
 ## First-Time Startup
 ```bash

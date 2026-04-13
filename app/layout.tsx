@@ -7,11 +7,10 @@ import "@fontsource/ibm-plex-sans/700.css";
 import "@fontsource/source-serif-4/500.css";
 import "@fontsource/source-serif-4/600.css";
 import "@fontsource/source-serif-4/700.css";
+import { getPublicSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+const defaultUrl = getPublicSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),

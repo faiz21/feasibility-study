@@ -1,6 +1,14 @@
 import { createServerClient } from "@supabase/ssr";
+import { type EmailOtpType } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import { hasEnvVars } from "../utils";
+
+function safeNextPath(next: string | null) {
+  if (!next || !next.startsWith("/") || next.startsWith("//")) {
+    return "/";
+  }
+  return next;
+}
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -37,6 +45,47 @@ export async function updateSession(request: NextRequest) {
       },
     },
   );
+
+  const code = request.nextUrl.searchParams.get("code");
+  const tokenHash = request.nextUrl.searchParams.get("token_hash");
+  const type = request.nextUrl.searchParams.get("type") as EmailOtpType | null;
+
+  if (request.nextUrl.pathname === "/" && (code || (tokenHash && type))) {
+    const next = safeNextPath(request.nextUrl.searchParams.get("next"));
+
+    if (tokenHash && type) {
+      const { error } = await supabase.auth.verifyOtp({
+        type,
+        token_hash: tokenHash,
+      });
+
+      if (error) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/auth/error";
+        url.searchParams.set("error", error.message);
+        return NextResponse.redirect(url);
+      }
+    } else if (code) {
+      const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+      if (error) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/auth/error";
+        url.searchParams.set("error", error.message);
+        return NextResponse.redirect(url);
+      }
+    }
+
+    const url = request.nextUrl.clone();
+    url.pathname = next;
+    url.search = "";
+
+    const redirectResponse = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach(({ name, value, ...options }) => {
+      redirectResponse.cookies.set(name, value, options);
+    });
+    return redirectResponse;
+  }
 
   // Do not run code between createServerClient and
   // supabase.auth.getClaims(). A simple mistake could make it very hard to debug
