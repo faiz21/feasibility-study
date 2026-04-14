@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect } from "next/navigation";
 import { toLocale, type Locale } from "@/lib/i18n/dictionaries";
 import type { Profile } from "@/lib/portal/types";
@@ -11,8 +12,8 @@ export async function getCurrentUser() {
 }
 
 export async function getProfile(userId: string): Promise<Profile | null> {
-  const supabase = await createClient();
-  const { data, error } = await supabase
+  const supabaseAdmin = createAdminClient();
+  const { data, error } = await supabaseAdmin
     .from("profiles")
     .select("user_id, role, client_id, locale")
     .eq("user_id", userId)
@@ -73,8 +74,8 @@ export async function resolveLocaleForUser(profile: Profile): Promise<Locale> {
 
   if (!profile.client_id) return "en";
 
-  const supabase = await createClient();
-  const { data } = await supabase
+  const supabaseAdmin = createAdminClient();
+  const { data } = await supabaseAdmin
     .from("clients")
     .select("default_locale")
     .eq("id", profile.client_id)

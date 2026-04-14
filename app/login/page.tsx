@@ -12,8 +12,8 @@ export default async function LoginPage({
     <AuthShell
       eyebrow="Secure Entry"
       title="Welcome back to the report workspace."
-      description="Choose the right role, continue with email access for clients, or enter the admin dashboard without breaking the operational flow."
-      footer="Magic-link delivery stays powered by Supabase while the interface keeps role intent explicit."
+      description="Sign in with your account username and password, then continue into the workspace mapped to your tenant."
+      footer="Authentication stays Supabase-backed while tenant access is still resolved from the signed-in user's email domain."
     >
       <MagicLinkLoginForm nextPath={params.next} />
     </AuthShell>

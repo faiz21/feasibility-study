@@ -1,8 +1,11 @@
 import { getProfile, requireAuthenticatedUser } from "@/lib/portal/auth";
 import { logAccess } from "@/lib/portal/logging";
 import { safeNextPath } from "@/lib/portal/redirect";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { redirect } from "next/navigation";
+
+const ADMIN_LOGIN_EMAIL =
+  process.env.NEXT_PUBLIC_ADMIN_LOGIN_EMAIL?.trim().toLowerCase() || "admin@machinevision.global";
 
 function normalizeDomain(value: string): string {
   return value.trim().toLowerCase().replace(/^www\./, "");
@@ -21,13 +24,13 @@ export default async function PostLoginPage({
   searchParams: Promise<{ next?: string }>;
 }) {
   const user = await requireAuthenticatedUser();
-  const supabase = await createClient();
+  const supabaseAdmin = createAdminClient();
   const params = await searchParams;
   let profile = await getProfile(user.id);
   const next = safeNextPath(params.next, "");
+  const normalizedEmail = (user.email ?? "").trim().toLowerCase();
 
-  const roleHint = user.user_metadata?.role_hint;
-  const role = profile ? profile.role : (roleHint === "admin" ? "admin" : "client");
+  const role = profile ? profile.role : normalizedEmail === ADMIN_LOGIN_EMAIL ? "admin" : "client";
 
   let clientId: string | null = profile?.client_id ?? null;
 
@@ -38,10 +41,10 @@ export default async function PostLoginPage({
       redirect("/auth/error?error=Unauthorized:+Invalid+email");
     }
 
-    const { data: domainClient, error: domainLookupError } = await supabase
+    const { data: domainClient, error: domainLookupError } = await supabaseAdmin
         .from("clients")
         .select("id,domain")
-        .eq("domain", userDomain)
+        .ilike("domain", userDomain)
         .maybeSingle();
     if (domainLookupError) {
       redirect(`/auth/error?error=${encodeURIComponent(domainLookupError.message)}`);
@@ -54,7 +57,7 @@ export default async function PostLoginPage({
     if (!clientId || clientId !== domainClient.id) {
       clientId = domainClient.id;
       if (profile) {
-        const { error: updateProfileError } = await supabase
+        const { error: updateProfileError } = await supabaseAdmin
           .from("profiles")
           .update({ client_id: clientId, updated_at: new Date().toISOString() })
           .eq("user_id", user.id);
@@ -71,7 +74,7 @@ export default async function PostLoginPage({
   }
 
   if (!profile) {
-    const { error } = await supabase.from("profiles").upsert(
+    const { error } = await supabaseAdmin.from("profiles").upsert(
       {
         user_id: user.id,
         role,
@@ -97,7 +100,7 @@ export default async function PostLoginPage({
     roleText: profile.role,
     clientId: profile.client_id,
     action: "login",
-    metadata: { source: "magic_link" },
+    metadata: { source: "password" },
   });
 
   if (next) {
