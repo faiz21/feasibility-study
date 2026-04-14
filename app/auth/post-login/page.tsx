@@ -2,6 +2,7 @@ import { getProfile, requireAuthenticatedUser } from "@/lib/portal/auth";
 import { logAccess } from "@/lib/portal/logging";
 import { safeNextPath } from "@/lib/portal/redirect";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
 const ADMIN_LOGIN_EMAIL =
@@ -24,7 +25,8 @@ export default async function PostLoginPage({
   searchParams: Promise<{ next?: string }>;
 }) {
   const user = await requireAuthenticatedUser();
-  const supabaseAdmin = createAdminClient();
+  const supabaseUser = await createClient();
+  const supabaseAdmin = createAdminClient() ?? supabaseUser;
   const params = await searchParams;
   let profile = await getProfile(user.id);
   const next = safeNextPath(params.next, "");

@@ -13,7 +13,8 @@ export async function getCurrentUser() {
 
 export async function getProfile(userId: string): Promise<Profile | null> {
   const supabaseAdmin = createAdminClient();
-  const { data, error } = await supabaseAdmin
+  const supabase = supabaseAdmin ?? await createClient();
+  const { data, error } = await supabase
     .from("profiles")
     .select("user_id, role, client_id, locale")
     .eq("user_id", userId)
@@ -75,7 +76,8 @@ export async function resolveLocaleForUser(profile: Profile): Promise<Locale> {
   if (!profile.client_id) return "en";
 
   const supabaseAdmin = createAdminClient();
-  const { data } = await supabaseAdmin
+  const supabase = supabaseAdmin ?? await createClient();
+  const { data } = await supabase
     .from("clients")
     .select("default_locale")
     .eq("id", profile.client_id)
