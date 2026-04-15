@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { LockKeyhole, UserRound } from "lucide-react";
+import { LoaderCircle, LockKeyhole, UserRound } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { buildPostLoginPath, safeNextPath } from "@/lib/portal/redirect";
 import { Button } from "@/components/ui/button";
@@ -67,9 +67,9 @@ export function MagicLinkLoginForm({ nextPath }: { nextPath?: string }) {
 
       router.replace(buildPostLoginPath(next));
       router.refresh();
+      return;
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Login failed");
-    } finally {
       setLoading(false);
     }
   }
@@ -139,7 +139,14 @@ export function MagicLinkLoginForm({ nextPath }: { nextPath?: string }) {
       ) : null}
 
       <Button type="submit" disabled={loading} className="w-full">
-        {loading ? "Signing in..." : "Login"}
+        {loading ? (
+          <>
+            <LoaderCircle className="animate-spin" />
+            Signing in...
+          </>
+        ) : (
+          "Login"
+        )}
       </Button>
     </form>
   );

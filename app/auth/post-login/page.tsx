@@ -1,6 +1,7 @@
 import { getProfile, requireAuthenticatedUser } from "@/lib/portal/auth";
 import { logAccess } from "@/lib/portal/logging";
 import { safeNextPath } from "@/lib/portal/redirect";
+import type { Profile } from "@/lib/portal/types";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -76,13 +77,15 @@ export default async function PostLoginPage({
   }
 
   if (!profile) {
+    const insertedProfile: Profile = {
+      user_id: user.id,
+      role,
+      client_id: role === "client" ? clientId : null,
+      locale: "en",
+    };
+
     const { error } = await supabaseAdmin.from("profiles").upsert(
-      {
-        user_id: user.id,
-        role,
-        client_id: role === "client" ? clientId : null,
-        locale: "en",
-      },
+      insertedProfile,
       { onConflict: "user_id" },
     );
 
@@ -90,7 +93,7 @@ export default async function PostLoginPage({
       redirect(`/auth/error?error=${encodeURIComponent(error.message)}`);
     }
 
-    profile = await getProfile(user.id);
+    profile = (await getProfile(user.id)) ?? insertedProfile;
     if (!profile) {
       redirect("/auth/error?error=Unable+to+initialize+profile");
     }
