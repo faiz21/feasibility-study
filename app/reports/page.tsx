@@ -19,6 +19,7 @@ type AccessTemplate = {
 type EntityRow = {
   id: string;
   name: string;
+  description?: string | null;
   granularity_id: string;
   photo_url?: string | null;
 };
@@ -154,7 +155,7 @@ export default async function ReportsPage() {
     supabase.from("granularities").select("id,name,code"),
     supabase
       .from("report_entities")
-      .select("id,name,granularity_id,photo_url")
+      .select("id,name,description,granularity_id,photo_url")
       .eq("client_id", profile.client_id)
       .order("name", { ascending: true }),
     supabase
@@ -220,6 +221,7 @@ export default async function ReportsPage() {
       existing.push({
         id: entity.id,
         name: entity.name,
+        description: entity.description ?? null,
         granularity_id: entity.granularity_id,
         photo_url: resolveClientAssetUrl(entity.photo_url),
       });
@@ -389,13 +391,22 @@ export default async function ReportsPage() {
                           />
                         ) : null}
                         <CardHeader className="pb-3">
-                          <CardTitle
-                            className="flex items-center gap-2 text-lg font-semibold tracking-tight"
-                            style={{ color: reportsTheme.textPrimary }}
-                          >
-                            <Building2 className="h-4 w-4" style={{ color: reportsTheme.accent }} />
-                            {entity.name}
-                          </CardTitle>
+                          <div className="flex items-start gap-2">
+                            <Building2 className="mt-1 h-4 w-4 shrink-0" style={{ color: reportsTheme.accent }} />
+                            <div className="min-w-0">
+                              <CardTitle
+                                className="text-lg font-semibold tracking-tight"
+                                style={{ color: reportsTheme.textPrimary }}
+                              >
+                                {entity.description?.trim() || entity.name}
+                              </CardTitle>
+                              {entity.description?.trim() ? (
+                                <p className="text-sm font-medium" style={{ color: reportsTheme.textSecondary }}>
+                                  {entity.name}
+                                </p>
+                              ) : null}
+                            </div>
+                          </div>
                         </CardHeader>
                         <CardContent className="space-y-2">
                           {accessibleTemplates.length === 0 ? (
