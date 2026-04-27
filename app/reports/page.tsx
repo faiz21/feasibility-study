@@ -339,9 +339,9 @@ export default async function ReportsPage() {
               }}
             >
               <CardHeader className="pb-3">
-                <CardTitle className="flex select-none items-center gap-2 text-lg tracking-tight" style={{ color: reportsTheme.textPrimary }}>
+                <CardTitle className="flex min-w-0 select-none flex-wrap items-center gap-2 text-lg tracking-tight" style={{ color: reportsTheme.textPrimary }}>
                   <span
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-2xl border"
+                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border"
                     style={{
                       borderColor: reportsTheme.borderStrong,
                       background: reportsTheme.surfaceMuted,
@@ -349,10 +349,10 @@ export default async function ReportsPage() {
                   >
                     <Layers3 className="h-4 w-4" style={{ color: reportsTheme.accent }} />
                   </span>
-                  <span className="font-semibold">{granularityLabelById.get(granularityId) ?? granularityId}</span>
+                  <span className="min-w-0 break-words font-semibold">{granularityLabelById.get(granularityId) ?? granularityId}</span>
                   <Badge
                     variant="secondary"
-                    className="ml-1"
+                    className="shrink-0"
                     style={{
                       borderColor: reportsTheme.borderStrong,
                       background: reportsTheme.surfaceMuted,
@@ -364,7 +364,7 @@ export default async function ReportsPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3">
                   {entities.map((entity) => {
                     const accessibleTemplates = Array.from(templatesById.values()).filter(
                       (template) => template.granularity_id === entity.granularity_id,
@@ -395,7 +395,7 @@ export default async function ReportsPage() {
                             <Building2 className="mt-1 h-4 w-4 shrink-0" style={{ color: reportsTheme.accent }} />
                             <div className="min-w-0">
                               <CardTitle
-                                className="text-lg font-semibold tracking-tight"
+                                className="break-words text-lg font-semibold tracking-tight"
                                 style={{ color: reportsTheme.textPrimary }}
                               >
                                 {entity.description?.trim() || entity.name}
@@ -420,25 +420,25 @@ export default async function ReportsPage() {
                                 <Link
                                   key={`${entity.id}-${template.id}`}
                                   href={`/reports/${template.id}/${targetReport.id}`}
-                                  className="flex items-start justify-between rounded-[1.1rem] border px-4 py-3 text-sm transition-all duration-200 hover:-translate-y-0.5"
+                                  className="flex min-w-0 flex-col gap-3 rounded-[1.1rem] border px-4 py-3 text-sm transition-all duration-200 hover:-translate-y-0.5"
                                   style={{
                                     borderColor: reportsTheme.borderStrong,
                                     background: reportsTheme.surfaceMuted,
                                     color: reportsTheme.textPrimary,
                                   }}
                                 >
-                                  <span className="flex flex-col gap-2">
-                                    <span className="inline-flex items-center gap-2">
+                                  <span className="flex min-w-0 flex-col gap-2">
+                                    <span className="flex min-w-0 flex-wrap items-center gap-2">
                                       <FileText className="h-3.5 w-3.5" style={{ color: reportsTheme.accent }} />
                                       {template.category ? (
                                         <Badge
-                                          className="border"
+                                          className="shrink-0 border"
                                           style={getCategoryBadgeStyle(template.category, reportsTheme)}
                                         >
                                           {template.category}
                                         </Badge>
                                       ) : null}
-                                      <span className="font-medium" style={{ color: reportsTheme.textPrimary }}>
+                                      <span className="min-w-0 break-words font-medium" style={{ color: reportsTheme.textPrimary }}>
                                         {template.name}
                                       </span>
                                     </span>
@@ -468,9 +468,9 @@ export default async function ReportsPage() {
                                       )}
                                     </span>
                                   </span>
-                                  <span className="inline-flex flex-col items-end gap-1">
+                                  <span className="flex flex-wrap items-center gap-2">
                                     <Badge
-                                      className="border"
+                                      className="shrink-0 border"
                                       style={{
                                         borderColor: reportsTheme.borderStrong,
                                         background: reportsTheme.accentSoft,
@@ -487,7 +487,7 @@ export default async function ReportsPage() {
                               ) : (
                                 <div
                                   key={`${entity.id}-${template.id}`}
-                                  className="pointer-events-none flex items-center justify-between rounded-[1.1rem] border border-dashed border-border/60 px-4 py-3 text-sm"
+                                  className="pointer-events-none flex min-w-0 flex-wrap items-center gap-2 rounded-[1.1rem] border border-dashed border-border/60 px-4 py-3 text-sm"
                                   style={{
                                     borderColor: reportsTheme.border,
                                     background: reportsTheme.surfaceElevated,
@@ -495,16 +495,16 @@ export default async function ReportsPage() {
                                     opacity: 0.9,
                                   }}
                                 >
-                                  <span className="inline-flex items-center gap-2">
+                                  <span className="flex min-w-0 flex-wrap items-center gap-2">
                                     {template.category ? (
                                       <Badge
-                                        className="border"
+                                        className="shrink-0 border"
                                         style={getCategoryBadgeStyle(template.category, reportsTheme)}
                                       >
                                         {template.category}
                                       </Badge>
                                     ) : null}
-                                    <span className="font-medium">{template.name}</span>
+                                    <span className="min-w-0 break-words font-medium">{template.name}</span>
                                   </span>
                                 </div>
                               );
