@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "next-themes";
 import type { ReportsUiTheme } from "@/lib/report-view-theme";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { StatusBanner } from "@/components/ui/status-banner";
 
 type ReportPage = {
   id: string;
@@ -226,35 +223,18 @@ export function ReportViewer({
   reportId,
   locale,
   pages,
-  initialRatingsByPageId,
   previewMode,
   reportTheme,
 }: {
   reportId: string;
   locale: "en" | "id" | "ja";
   pages: ReportPage[];
-  initialRatingsByPageId?: Record<
-    string,
-    {
-      rating: number;
-      comment: string;
-      hasExisting: boolean;
-    }
-  >;
   previewMode?: boolean;
   reportTheme?: ReportsUiTheme;
 }) {
   const { resolvedTheme } = useTheme();
   const [activePageId, setActivePageId] = useState<string | null>(null);
   const [showGoTop, setShowGoTop] = useState(false);
-  const [rating, setRating] = useState(5);
-  const [comment, setComment] = useState("");
-  const [ratingsByPageId, setRatingsByPageId] = useState(initialRatingsByPageId ?? {});
-  const [hasSubmittedRating, setHasSubmittedRating] = useState(false);
-  const [ratingSubmitting, setRatingSubmitting] = useState(false);
-  const [ratingMessage, setRatingMessage] = useState<string | null>(null);
-  const [lastSyncAt, setLastSyncAt] = useState<Date | null>(null);
-  const initializedFromProps = useRef(false);
 
   useEffect(() => {
     const onScroll = () => setShowGoTop(window.scrollY > 360);
@@ -273,27 +253,11 @@ export function ReportViewer({
   );
 
   useEffect(() => {
-    if (!initializedFromProps.current) {
-      setRatingsByPageId(initialRatingsByPageId ?? {});
-      initializedFromProps.current = true;
-    }
-  }, [initialRatingsByPageId]);
-
-  useEffect(() => {
     const currentActiveExists = activePageId && sorted.some((page) => page.id === activePageId);
     if (currentActiveExists) return;
     const firstPage = sorted[0];
     if (firstPage) setActivePageId(firstPage.id);
   }, [activePageId, sorted]);
-
-  useEffect(() => {
-    if (!activePageId) return;
-    const existing = ratingsByPageId[activePageId];
-    setRating(existing?.rating ?? 5);
-    setComment(existing?.comment ?? "");
-    setHasSubmittedRating(Boolean(existing?.hasExisting));
-    setRatingMessage(null);
-  }, [activePageId, ratingsByPageId]);
 
   useEffect(() => {
     if (previewMode) return;
@@ -328,10 +292,7 @@ export function ReportViewer({
             }),
           }),
         ]);
-
-        if (activityRes.ok && resumeRes.ok) {
-          setLastSyncAt(new Date());
-        }
+        if (activityRes.ok && resumeRes.ok) return;
       } catch {
         return;
       }
@@ -341,10 +302,6 @@ export function ReportViewer({
   }, [activePageId, locale, previewMode, reportId]);
 
   const activePage = sorted.find((page) => page.id === activePageId) ?? sorted[0] ?? null;
-  const reviewedPageIds = useMemo(
-    () => new Set(Object.entries(ratingsByPageId).filter(([, v]) => v?.hasExisting).map(([key]) => key)),
-    [ratingsByPageId],
-  );
   const activePageHtml = useMemo(() => {
     if (!activePage) return null;
     if (!isFullDocumentHtml(activePage.html)) return activePage.html;
@@ -362,7 +319,6 @@ export function ReportViewer({
         <nav className="fixed right-4 top-1/2 z-50 hidden -translate-y-1/2 flex-col gap-3 rounded-[1.6rem] border border-border/70 bg-card/85 px-2 py-4 shadow-panel backdrop-blur-xl xl:flex 2xl:right-8">
           {sorted.map((page) => {
             const isActive = activePageId === page.id;
-            const isReviewed = reviewedPageIds.has(page.id);
             return (
               <button
                 key={`nav-${page.id}`}
@@ -415,17 +371,8 @@ export function ReportViewer({
                           color: viewerTheme.textSecondary,
                         }
                   }
-                >
-                  {page.code ?? `P${page.page_order}`}
-                  {isReviewed ? (
-                    <span
-                      className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full border"
-                      style={{
-                        background: viewerTheme.success,
-                        borderColor: viewerTheme.surfaceElevated,
-                      }}
-                    />
-                  ) : null}
+                  >
+                    {page.code ?? `P${page.page_order}`}
                 </span>
               </button>
             );
@@ -479,129 +426,6 @@ export function ReportViewer({
             )}
           </section>
         ) : null}
-
-        <section
-          className="relative overflow-hidden rounded-[1.6rem] border p-6 md:p-8"
-          style={{
-            borderColor: viewerTheme.borderStrong,
-            background: viewerTheme.surfaceElevated,
-            boxShadow: "0 10px 35px -24px rgba(15, 23, 42, 0.35)",
-          }}
-        >
-          <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div className="space-y-2">
-              <Badge variant="secondary">Reader feedback</Badge>
-              <h3 className="text-3xl font-bold tracking-tight" style={{ color: viewerTheme.textPrimary }}>
-                Rate this report
-              </h3>
-              <p className="max-w-2xl text-base leading-7" style={{ color: viewerTheme.textSecondary }}>
-                Your feedback helps us improve reporting clarity, visual structure, and follow-up quality.
-              </p>
-            </div>
-            {activePage ? (
-              <div className="text-sm font-medium" style={{ color: viewerTheme.textSecondary }}>
-                Active page: {activePage.code ?? `P${activePage.page_order}`} {activePage.title}
-              </div>
-            ) : null}
-          </div>
-          {previewMode ? (
-            <StatusBanner tone="info" className="mb-4">
-              Admin preview mode: interaction tracking and rating submission are disabled.
-            </StatusBanner>
-          ) : null}
-          {lastSyncAt ? (
-            <p className="mb-4 text-xs uppercase tracking-[0.14em] text-muted-foreground">
-              Reading progress synced at {lastSyncAt.toLocaleTimeString()}.
-            </p>
-          ) : null}
-          <div className="flex flex-col items-start gap-4 lg:flex-row lg:items-center">
-            <div
-              className="flex rounded-2xl border p-1.5"
-              style={{ background: viewerTheme.surfaceMuted, borderColor: viewerTheme.borderStrong }}
-            >
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  onClick={() => setRating(star)}
-                  className={`h-11 w-12 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                    rating >= star
-                      ? "shadow-sm"
-                      : "hover:-translate-y-0.5"
-                  }`}
-                  style={
-                    rating >= star
-                      ? { background: viewerTheme.accent, color: viewerTheme.accentContrast }
-                      : {
-                          background: viewerTheme.surfaceElevated,
-                          color: viewerTheme.textSecondary,
-                          border: `1px solid ${viewerTheme.border}`,
-                        }
-                  }
-                >
-                  {star}
-                </button>
-              ))}
-            </div>
-            <Input
-              value={comment}
-              onChange={(event) => setComment(event.target.value)}
-              placeholder="Optional review note"
-              className="max-w-md"
-              style={{
-                borderColor: viewerTheme.borderStrong,
-                background: viewerTheme.surfaceElevated,
-                color: viewerTheme.textPrimary,
-              }}
-            />
-            <Button
-              disabled={ratingSubmitting || previewMode}
-              className="min-w-[12rem]"
-              style={{
-                background: viewerTheme.accent,
-                color: viewerTheme.accentContrast,
-              }}
-              onClick={async () => {
-                if (previewMode) return;
-                if (!activePageId) {
-                  setRatingMessage("No page selected.");
-                  return;
-                }
-                setRatingSubmitting(true);
-                setRatingMessage(null);
-                try {
-                  const response = await fetch(`/api/reports/${reportId}/rating`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ rating, comment: comment.trim() || null, reportPageId: activePageId }),
-                  });
-                  if (!response.ok) {
-                    const payload = (await response.json().catch(() => null)) as { error?: string } | null;
-                    setRatingMessage(payload?.error ?? "Failed to submit rating.");
-                    return;
-                  }
-                  setRatingsByPageId((prev) => ({
-                    ...prev,
-                    [activePageId]: {
-                      rating,
-                      comment: comment.trim(),
-                      hasExisting: true,
-                    },
-                  }));
-                  const pageCode = activePage?.code ?? `P${activePage?.page_order ?? ""}`;
-                  setRatingMessage(hasSubmittedRating ? `Feedback updated for ${pageCode}.` : `Feedback saved for ${pageCode}.`);
-                  setHasSubmittedRating(true);
-                } finally {
-                  setRatingSubmitting(false);
-                }
-              }}
-            >
-              {ratingSubmitting ? "Submitting..." : "Submit Feedback"}
-            </Button>
-          </div>
-          {ratingMessage ? (
-            <p className="mt-4 text-sm text-muted-foreground" style={{ color: viewerTheme.textSecondary }}>{ratingMessage}</p>
-          ) : null}
-        </section>
       </div>
 
       {showGoTop ? (

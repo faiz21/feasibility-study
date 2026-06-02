@@ -63,17 +63,6 @@ export default async function ReportDetailPage({
       .maybeSingle(),
   ]);
 
-  const [{ data: ratingRows }] = isAdminPreview
-    ? [{ data: [] as Array<{ report_page_id: string | null; rating: number; comment: string | null }> }]
-    : await Promise.all([
-        supabase
-          .from("report_ratings")
-          .select("report_page_id,rating,comment")
-          .eq("report_id", reportId)
-          .eq("user_id", user.id)
-          .not("report_page_id", "is", null),
-      ]);
-
   const reportsUiTheme = resolveReportsUiTheme();
   const brandingPayload = {
     client: {
@@ -153,19 +142,6 @@ export default async function ReportDetailPage({
     };
   });
 
-  const initialRatingsByPageId = Object.fromEntries(
-    (ratingRows ?? [])
-      .filter((row) => Boolean(row.report_page_id))
-      .map((row) => [
-        row.report_page_id as string,
-        {
-          rating: row.rating ?? 5,
-          comment: row.comment ?? "",
-          hasExisting: true,
-        },
-      ]),
-  ) as Record<string, { rating: number; comment: string; hasExisting: boolean }>;
-
   if (!isAdminPreview) {
     await supabase.from("report_resume").upsert(
       {
@@ -192,7 +168,6 @@ export default async function ReportDetailPage({
       reportId={reportId}
       locale={locale}
       pages={resolved}
-      initialRatingsByPageId={initialRatingsByPageId}
       previewMode={isAdminPreview}
       reportTheme={reportsUiTheme}
     />
